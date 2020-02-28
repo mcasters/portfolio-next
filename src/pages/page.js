@@ -2,11 +2,11 @@ import Markdown from 'react-markdown';
 import Layout from '../components/Layout';
 
 export default () => {
-    return (
-        <Layout>
-            <div className="markdown">
-                <Markdown
-                    source={`
+  return (
+    <Layout>
+      <div className="markdown">
+        <Markdown
+          source={`
 This is our blog post.
 Yes. We can have a [link](/link).
 And we can have a title as well.
@@ -15,9 +15,9 @@ And we can have a title as well.
 
 And here's the content.
       `}
-                />
-            </div>
-            <style jsx global>{`
+        />
+      </div>
+      <style jsx global>{`
         .markdown {
           font-family: 'Arial';
         }
@@ -37,6 +37,6 @@ And here's the content.
           text-transform: uppercase;
         }
       `}</style>
-        </Layout>
-    );
+    </Layout>
+  );
 };
