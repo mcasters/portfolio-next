@@ -1,62 +1,98 @@
-import { User } from '../../models';
+import { AuthenticationError, UserInputError } from 'apollo-server-micro';
+import cookie from 'cookie';
+import jwt from 'jsonwebtoken';
+import getConfig from 'next/config';
 import bcrypt from 'bcrypt';
-import config from '../../../../next.config';
+
+import { User } from '../../models/index';
+
+const JWT_SECRET = getConfig().auth.jwt.secret;
+
+function createUser(data) {
+  const salt = bcrypt.genSaltSync();
+
+  return {
+    username: data.username,
+    email: data.email,
+    password: bcrypt.hashSync(data.password, salt),
+  };
+}
+
+function validPassword(user, password) {
+  return bcrypt.compareSync(password, user.password);
+}
 
 export default {
   Query: {
-    getAllUsers: () => User.findAll(),
-    getUser: (parent, { username }) => User.findOne({ where: { username } }),
-    checkIsAdmin: (_, __, { context }) => context.session.isAdmin
-  },
+    async getUser(_parent, _args, context, _info) {
+      const { token } = cookie.parse(context.req.headers.cookie ?? '');
+      if (token) {
+        try {
+          const { username } = jwt.verify(token, JWT_SECRET);
 
+          return User.findOne(user => user.username === username);
+        } catch {
+          throw new AuthenticationError("Token d'authentication invalide");
+        }
+      }
+    },
+  },
   Mutation: {
-    signup: async (parent, { input }, { context }) => {
-      const lookupUser = await User.findOne({
-        where: { username: input.username },
-      });
+    async signUp(_parent, args, _context, _info) {
+      const lookupUser = await User.findOne(
+        user => user.username === args.input.username,
+      );
 
       if (lookupUser) {
-        throw new Error('Utilisateur déjà existant');
+        throw new AuthenticationError('Utilisateur déjà existant');
       }
+      const user = createUser(args.input);
 
-      const hashPassword = await bcrypt.hash(input.password, 10);
+      const newUser = await User.create(user);
 
-      if (!hashPassword) {
-        throw new Error('Erreur de hashing du mot de passe');
-      }
-
-      const newUser = await User.create({
-        username: input.username,
-        email: input.email,
-        password: hashPassword,
-      });
-
-      if (!newUser) throw new Error('Erreur à la création du user en BDD');
-
-      context.session.userId = newUser.id;
-
-      return true;
+      return { newUser };
     },
 
-    login: async (_, { input: { username, password } }, { context }) => {
-      const dbUser = await User.findOne({
-        where: { username },
-      });
-      if (!dbUser) return false;
-      const match = await bcrypt.compare(password, dbUser.password);
+    async signIn(_parent, args, context, _info) {
+      const user = User.findOne(user => user.username === args.input.username);
 
-      if (!match) return false;
+      if (user && validPassword(user, args.input.password)) {
+        const token = jwt.sign(
+          { username: user.username, id: user.id, time: new Date() },
+          JWT_SECRET,
+          {
+            expiresIn: '6h',
+          },
+        );
 
-      context.session.userId = dbUser.id;
+        context.res.setHeader(
+          'Set-Cookie',
+          cookie.serialize('token', token, {
+            httpOnly: true,
+            maxAge: 6 * 60 * 60,
+            path: '/',
+            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production',
+          }),
+        );
 
-      return true;
+        return { user };
+      }
+
+      throw new UserInputError('Authentification invalide');
     },
+    async signOut(_parent, _args, context, _info) {
+      context.res.setHeader(
+        'Set-Cookie',
+        cookie.serialize('token', '', {
+          httpOnly: true,
+          maxAge: -1,
+          path: '/',
+          sameSite: 'lax',
+          secure: process.env.NODE_ENV === 'production',
+        }),
+      );
 
-    logout: (_, __, { req, res }) => {
-      req.session.destroy(() => {
-        return false;
-      });
-      res.clearCookie(config.auth.jwt.name);
       return true;
     },
   },

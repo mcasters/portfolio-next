@@ -3,12 +3,6 @@ import gql from 'graphql-tag';
 export default `
   scalar Upload
 
-  type User {
-    id: ID!
-    name: String!
-    status: String!
-  }
-
   type Content {
     id: ID!
     key: String!
@@ -32,15 +26,19 @@ export default `
     encoding: String!
   }
 
-  type DatabaseUser {
+  type User {
     id: String
     username: String
     email: String
     password: String
   }
 
-  type AdminStatus {
-    isConnected: Boolean!
+  type SignUpPayload {
+    user: User!
+  }
+  
+  type SignInPayload {
+    user: User!
   }
 
   input ContentInput {
@@ -60,14 +58,12 @@ export default `
     width: Int!
   }
 
-  input SignupInput {
-    username: String!
+  input SignUpInput {
     email: String!
     password: String!
   }
-
-  input LoginInput {
-    username: String!
+  input SignInInput {
+    email: String!
     password: String!
   }
 
@@ -76,9 +72,7 @@ export default `
     getContent(key: String!): Content
     getAllItems(type: String!): [Item]
     getItemsByPart(year: Int!, type: String!, half: Int!): [Item]
-    getAllUsers: [DatabaseUser]
-    getUser(username: String!): DatabaseUser
-    checkIsAdmin: Boolean!
+    getUser: User
   }
 
   type Mutation {
@@ -88,9 +82,9 @@ export default `
     updateItem(id: ID!, input: ItemInput!): Item!
     deleteItem(id: ID!, type: String!): ID!
     uploadFile(file: Upload!): Boolean
-    signup(input: SignupInput!): Boolean
-    login(input: LoginInput!): Boolean
-    logout: Boolean
+    signUp(input: SignUpInput!): SignUpPayload!
+    signIn(input: SignInInput!): SignInPayload!
+    signOut: Boolean!
   }
 
   schema {

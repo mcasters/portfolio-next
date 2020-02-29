@@ -2,7 +2,10 @@ import { ApolloServer } from 'apollo-server-micro';
 import { schema } from '../../data/schema';
 
 const apolloServer = new ApolloServer({
-  schema
+  schema,
+  context(ctx) {
+    return ctx;
+  },
 });
 
 export const config = {
