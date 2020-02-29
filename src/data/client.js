@@ -3,6 +3,8 @@ import Head from 'next/head';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { createUploadLink } from 'apollo-upload-client';
+import { makeExecutableSchema } from 'apollo-server-micro';
 
 let globalApolloClient = null;
 
@@ -128,7 +130,7 @@ function createApolloClient(initialState = {}) {
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({
     ssrMode,
-    link: createIsomorphLink(),
+    link : createIsomorphLink(),
     cache,
   });
 }
@@ -136,13 +138,18 @@ function createApolloClient(initialState = {}) {
 function createIsomorphLink() {
   if (typeof window === 'undefined') {
     const { SchemaLink } = require('apollo-link-schema');
-    const { schema } = require('./schema');
-    return new SchemaLink({ schema });
+    const schema = require('./schema');
+    const executableSchema = makeExecutableSchema(schema);
+    return new SchemaLink({ ...executableSchema });
   } else {
     const { HttpLink } = require('apollo-link-http');
-    return new HttpLink({
+    return createUploadLink({
       uri: '/api/graphql',
       credentials: 'same-origin',
     });
+    /*return new HttpLink({
+      uri: '/api/graphql',
+      credentials: 'same-origin',
+    });*/
   }
 }

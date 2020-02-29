@@ -1,0 +1,29 @@
+@import '../../variables.css';
+
+.loading {
+  height: 800px;
+}
+
+.titleTab {
+  display: none;
+}
+
+.buttonLink {
+  font-family: var(--font-family-base) !important;
+  font-size: var(--font-size-current-plus-plus);
+  color: var(--link-color);
+  padding: 2px 5px;
+  display: inline;
+  margin: 0;
+  background: none;
+  border: none;
+  width: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  transition: color 0.4s;
+}
+
+.buttonLink:hover,
+.buttonLink:focus {
+  color: var(--link-color-xdark);
+}
