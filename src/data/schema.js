@@ -1,46 +1,19 @@
-// import { makeExecutableSchema } from 'graphql-tools';
-import { makeExecutableSchema } from 'apollo-server-micro';
-import { types, resolvers, mutations, queries } from './graphql/schema';
+import { merge } from 'lodash';
+import { makeExecutableSchema } from 'graphql-tools';
+import typeDefs from './graphql/type-defs';
+import userResolvers from './graphql/resolvers/userResolvers';
+import contentResolvers from './graphql/resolvers/contentResolvers';
+import itemResolvers from './graphql/resolvers/itemResolvers';
+import uploadResolvers from './graphql/resolvers/uploadResolvers';
 
-const RootQuery = [
-  `
-  type RootQuery {
-    ${queries}
-  }
-`,
-];
+const resolvers = merge(
+  userResolvers,
+  contentResolvers,
+  itemResolvers,
+  uploadResolvers,
+);
 
-const Mutation = [
-  `
-  type Mutation {
-    ${mutations}
-  }
-`,
-];
-
-const SchemaDefinition = [
-  `
-  schema {
-    query: RootQuery
-    mutation: Mutation
-  }
-`,
-];
-
-const typeDefs = [
-  ...SchemaDefinition,
-  ...RootQuery,
-  ...Mutation,
-  ...types,
-];
-
-/*export const schema = makeExecutableSchema({
+export const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
-});*/
-
-export default {
-  typeDefs,
-  resolvers,
-};
-
+});

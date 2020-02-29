@@ -21,6 +21,9 @@ const Header = () => (
     <Link href="/dessins">
       <a style={linkStyle}>Peintures</a>
     </Link>
+    <Link href="/login">
+      <a style={linkStyle}>Login</a>
+    </Link>
   </div>
 );
 

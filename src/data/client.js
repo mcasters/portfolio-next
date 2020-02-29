@@ -4,7 +4,6 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { createUploadLink } from 'apollo-upload-client';
-import { makeExecutableSchema } from 'apollo-server-micro';
 
 let globalApolloClient = null;
 
@@ -127,20 +126,32 @@ function createApolloClient(initialState = {}) {
   const ssrMode = typeof window === 'undefined';
   const cache = new InMemoryCache().restore(initialState);
 
+  /*if (ssrMode) {
+    cache.writeData({
+      data: {
+        adminStatus: {
+          __typename: 'AdminStatus',
+          isConnected: false,
+        },
+      },
+    });
+  }*/
+
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({
     ssrMode,
     link : createIsomorphLink(),
     cache,
+    // typeDefs: gql(clientTypes),
+    // resolvers: clientResolvers,
   });
 }
 
 function createIsomorphLink() {
   if (typeof window === 'undefined') {
     const { SchemaLink } = require('apollo-link-schema');
-    const schema = require('./schema');
-    const executableSchema = makeExecutableSchema(schema);
-    return new SchemaLink({ ...executableSchema });
+    const { schema } = require('./schema');
+    return new SchemaLink({ ...schema });
   } else {
     const { HttpLink } = require('apollo-link-http');
     return createUploadLink({

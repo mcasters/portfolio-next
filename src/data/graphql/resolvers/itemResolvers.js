@@ -1,50 +1,17 @@
-import * as imageService from '../../image/imageServices';
-import getAuthenticatedUser from '../services/authService';
 import ItemModelService from '../services/ItemModelService';
+import getAuthenticatedUser from '../services/authService';
+import * as imageService from '../../image/imageServices';
 
-export const types = [
-  `
-  input ItemInput {
-    pictures: [Upload]!
-    type: String!
-    title: String!
-    date: String!
-    technique: String!
-    description: String
-    length: Int
-    height: Int!
-    width: Int!
-  }
-  `,
-];
+export default {
+  Query: {
+    getAllItems: async (parent, { type }) =>
+      new ItemModelService(type).getAllItems(),
+    getItemsByPart: (parent, { type, year, half }) =>
+      new ItemModelService(type).getItemsByPart(year, half),
+  },
 
-export const mutations = [
-  `
-  addItem (
-    input: ItemInput!
-  ): Item!
-  
-  updateItem (
-    id: ID!
-    input: ItemInput!
-  ): Item!
-  
-  deleteItem(
-     id: ID!
-     type: String!
-  ): ID!
-`,
-];
-
-export const resolvers = {
   Mutation: {
-    async addItem(
-      root,
-      {
-        input: { pictures, type, ...data },
-      },
-      { req },
-    ) {
+    addItem: async (root, { input: { pictures, type, ...data } }, { req }) => {
       const isAdmin = await getAuthenticatedUser(req);
       if (!isAdmin) throw new Error("Erreur d'authentification");
 
@@ -60,20 +27,17 @@ export const resolvers = {
       const newItem = await itemService.add(data, type);
 
       if (!newItem) {
-        imageService.deleteItemImages(title, type);
+        await imageService.deleteItemImages(title, type);
         throw new Error("Erreur à l'enregistrement en base de donnée");
       }
       return newItem;
     },
 
-    async updateItem(
+    updateItem: async (
       root,
-      {
-        id,
-        input: { pictures, type, ...data },
-      },
+      { id, input: { pictures, type, ...data } },
       { req },
-    ) {
+    ) => {
       const isAdmin = await getAuthenticatedUser(req);
       if (!isAdmin) throw new Error("Erreur d'authentification");
 
@@ -116,7 +80,7 @@ export const resolvers = {
       return updatedItem;
     },
 
-    async deleteItem(root, { id, type }, { req }) {
+    deleteItem: async (root, { id, type }, { req }) => {
       const isAdmin = await getAuthenticatedUser(req);
       if (!isAdmin) throw new Error("Erreur d'authentification");
 

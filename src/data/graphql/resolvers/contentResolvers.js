@@ -1,48 +1,36 @@
-import { Content } from '../../models';
 import getAuthenticatedUser from '../services/authService';
-import CONTENT from '../../../constants/content';
 import * as imageService from '../../image/imageServices';
+import { Content } from '../../models';
+import CONTENT from '../../../constants/content';
 
-export const types = [
-  `
-  input ContentInput {
-    key: String!
-    text: String!
-  }
-  `,
-];
+export default {
+  Query: {
+    getAllContent: () => Content.findAll(),
+    getContent: (parent, { key }) => Content.findOne({ where: { key } }),
+  },
 
-export const mutations = [
-  `
-  addContent(input: ContentInput!): Content!
-  
-  addPicture(picture: Upload!, title: String!): Boolean!
-`,
-];
-
-export const resolvers = {
   Mutation: {
     addContent: async (parent, { input }, { req }) => {
       await getAuthenticatedUser(req);
       const { key } = input;
 
-      let content = await Content.findOne({
+      let content = Content.findOne({
         where: { key },
       });
       if (content) {
-        await content.update({
+        content.update({
           text: input.text,
         });
-        content = await Content.findOne({
+        content = Content.findOne({
           where: { key },
         });
       } else {
-        content = await Content.create(input);
+        content = Content.create(input);
       }
       return content;
     },
 
-    async addPicture(root, { picture, title }, { req }) {
+    addPicture: async (root, { picture, title }, { req }) => {
       const isAdmin = await getAuthenticatedUser(req);
 
       if (!isAdmin) throw new Error("Erreur d'authentification");

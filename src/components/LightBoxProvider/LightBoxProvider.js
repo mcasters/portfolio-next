@@ -11,23 +11,17 @@ import {
 import LAYOUT_CONSTANTS from '../../constants/layoutConstants';
 
 function LightBoxProvider({ title, type, srcList, toggle }) {
-  const [photoIndex, setPhotoIndex] = useState(0);
 
   const close = () => {
     toggle(false);
   };
 
-  if (type === ITEM.SCULPTURE.TYPE) {
-    return (
-      <>
-        <FsLightbox toggler={toggle} sources={srcList} />
-      </>
-    );
-  }
-
   return (
     <>
-      <FsLightbox toggler={toggle} sources={srcList[0]} />
+      <FsLightbox
+        toggler={toggle}
+        sources={type === ITEM.SCULPTURE.TYPE ? srcList : srcList[0]}
+      />
     </>
   );
 }

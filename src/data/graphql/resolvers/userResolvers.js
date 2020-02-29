@@ -1,41 +1,16 @@
-/* eslint-disable no-param-reassign */
+import { User } from '../../models';
 import bcrypt from 'bcrypt';
-
-import { User } from '../../models/index';
 import config from '../../../../next.config';
 
-export const types = [
-  `
-  input SignupInput {
-    username: String!
-    email: String!
-    password: String!
-  }
-  
-  input LoginInput {
-    username: String!
-    password: String!
-  }
-`,
-];
+export default {
+  Query: {
+    getAllUsers: () => User.findAll(),
+    getUser: (parent, { username }) => User.findOne({ where: { username } }),
+    checkIsAdmin: (_, __, { context }) => context.session.isAdmin
+  },
 
-export const mutations = [
-  `
-  signup(
-    input: SignupInput!
-  ): Boolean
-  
-  login(
-    input: LoginInput!
-  ): Boolean
-  
-  logout: Boolean
-`,
-];
-
-export const resolvers = {
   Mutation: {
-    signup: async (parent, { input }, { req }) => {
+    signup: async (parent, { input }, { context }) => {
       const lookupUser = await User.findOne({
         where: { username: input.username },
       });
@@ -58,12 +33,12 @@ export const resolvers = {
 
       if (!newUser) throw new Error('Erreur à la création du user en BDD');
 
-      req.session.userId = newUser.id;
+      context.session.userId = newUser.id;
 
       return true;
     },
 
-    login: async (_, { input: { username, password } }, { req }) => {
+    login: async (_, { input: { username, password } }, { context }) => {
       const dbUser = await User.findOne({
         where: { username },
       });
@@ -72,12 +47,12 @@ export const resolvers = {
 
       if (!match) return false;
 
-      req.session.userId = dbUser.id;
+      context.session.userId = dbUser.id;
 
       return true;
     },
 
-    logout: async (_, __, { req, res }) => {
+    logout: (_, __, { req, res }) => {
       req.session.destroy(() => {
         return false;
       });
