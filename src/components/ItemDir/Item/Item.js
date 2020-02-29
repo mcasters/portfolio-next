@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ITEM from '../../../constants/item';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
-// import image from '../Image';
+import Image from '../Image';
 
 function Item({ item, type }) {
   const email = GLOBAL_CONSTANTS.EMAIL;
@@ -11,7 +11,7 @@ function Item({ item, type }) {
   return (
     <article>
       <h2>{item.title}</h2>
-      {/*<Image type={type} title={item.title} />*/}
+      <Image type={type} title={item.title} />
       <figcaption>
         <time dateTime={item.date}>
           {new Date(item.date).toLocaleDateString()}

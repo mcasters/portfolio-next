@@ -1,0 +1,6 @@
+{
+  "name": "LightBoxProvider",
+  "version": "1.0.0",
+  "private": true,
+  "main": "LightBoxProvider.js"
+}
