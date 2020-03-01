@@ -1,56 +1,22 @@
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 
-import Layout from "../components/LayoutComponents/Layout/Layout";
+import Layout from '../components/LayoutComponents/Layout/Layout';
+import Content from '../components/Content/Content';
+import TITLE from '../constants/pageTitle';
 
-const Index = props => (
-  <Layout>
-    <h1>Batman TV Shows</h1>
-    <ul>
-      {props.shows.map(show => (
-        <li key={show.id}>
-          <Link href="/p/[id]" as={`/p/${show.id}`}>
-            <a>{show.name}</a>
-          </Link>
-        </li>
-      ))}
-    </ul>
-    <style jsx>{`
-      h1,
-      a {
-        font-family: 'Arial';
-      }
+function Home() {
+  const title = TITLE.HOME;
+  return (
+    <Layout>
+      <div className={s.homeContainer}>
+        <h1 className={s.title}>{title}</h1>
+        <div className={s.homeContent}>
+          <Content keyContent={CONTENT_CONST.KEY.HOME3} />
+        </div>
+      </div>
+    </Layout>
+  );
+}
 
-      ul {
-        padding: 0;
-      }
-
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
-
-      a {
-        text-decoration: none;
-        color: red;
-      }
-
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
-  </Layout>
-);
-
-Index.getInitialProps = async function() {
-  const res = await fetch('https://api.tvmaze.com/search/shows?q=batman');
-  const data = await res.json();
-
-  console.log(`Show data fetched. Count: ${data.length}`);
-
-  return {
-    shows: data.map(entry => entry.show),
-  };
-};
-
-export default Index;
+export default Home;
