@@ -18,7 +18,7 @@ function Dessins() {
 
   return (
     <Layout>
-      <h1>{title}</h1>
+      <h1 className="hidden">{title}</h1>
       {data.getAllItems &&
         data.getAllItems.map(drawing => (
           <Item key={drawing.title} item={drawing} type={type} />

@@ -2,7 +2,8 @@ import { withApollo } from '../data/client';
 import gql from 'graphql-tag';
 import Link from 'next/link';
 import { useQuery } from '@apollo/react-hooks';
-import Layout from '../components/Layout';
+import Layout from '../components/LayoutComponents/Layout/Layout';
+import React from "react";
 
 const ViewerQuery = gql`
   query ViewerQuery {

@@ -7,7 +7,7 @@ import { withApollo } from '../data/client';
 import Field from '../components/field';
 import { getErrorMessage } from '../components/lib/form';
 import SignInMutation from '../data/graphql/queries/signin';
-import Layout from "../components/Layout";
+import Layout from '../components/LayoutComponents/Layout/Layout';
 
 function SignIn() {
   const client = useApolloClient();

@@ -28,7 +28,7 @@ function Peintures() {
 
   return (
     <Layout>
-      <h1>{title}</h1>
+      <h1 className="hidden">{title}</h1>
       <Tabs
         selectedIndex={selectedTab}
         onSelect={handleSelectTab}
