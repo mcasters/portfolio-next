@@ -27,7 +27,7 @@ export default `
   }
 
   type User {
-    id: String
+    id: ID!
     username: String
     email: String
     password: String
@@ -59,11 +59,12 @@ export default `
   }
 
   input SignUpInput {
+    username: String!
     email: String!
     password: String!
   }
   input SignInInput {
-    email: String!
+    username: String!
     password: String!
   }
 
@@ -72,7 +73,8 @@ export default `
     getContent(key: String!): Content
     getAllItems(type: String!): [Item]
     getItemsByPart(year: Int!, type: String!, half: Int!): [Item]
-    getUser: User
+    user(id: ID!): User!
+    viewer: User
   }
 
   type Mutation {

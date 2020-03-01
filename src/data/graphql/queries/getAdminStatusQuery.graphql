@@ -1,5 +1,0 @@
-query AdminStatus {
-  adminStatus @client {
-    isConnected
-  }
-}

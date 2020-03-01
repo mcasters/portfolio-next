@@ -1,12 +1,12 @@
 import { AuthenticationError, UserInputError } from 'apollo-server-micro';
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
-import getConfig from 'next/config';
 import bcrypt from 'bcrypt';
 
+import config from '../../../../next.config';
 import { User } from '../../models/index';
 
-const JWT_SECRET = getConfig().auth.jwt.secret;
+const JWT_SECRET = config.jwt.secret;
 
 function createUser(data) {
   const salt = bcrypt.genSaltSync();
@@ -24,13 +24,13 @@ function validPassword(user, password) {
 
 export default {
   Query: {
-    async getUser(_parent, _args, context, _info) {
+    async viewer(_parent, _args, context, _info) {
       const { token } = cookie.parse(context.req.headers.cookie ?? '');
       if (token) {
         try {
           const { username } = jwt.verify(token, JWT_SECRET);
-
-          return User.findOne(user => user.username === username);
+          const user = await User.findOne({ where: { username } });
+          return user;
         } catch {
           throw new AuthenticationError("Token d'authentication invalide");
         }
@@ -39,9 +39,9 @@ export default {
   },
   Mutation: {
     async signUp(_parent, args, _context, _info) {
-      const lookupUser = await User.findOne(
-        user => user.username === args.input.username,
-      );
+      const lookupUser = await User.findOne({
+        where: { username: args.input.username },
+      });
 
       if (lookupUser) {
         throw new AuthenticationError('Utilisateur déjà existant');
@@ -54,8 +54,9 @@ export default {
     },
 
     async signIn(_parent, args, context, _info) {
-      const user = User.findOne(user => user.username === args.input.username);
-
+      const user = await User.findOne({
+        where: { username: args.input.username },
+      });
       if (user && validPassword(user, args.input.password)) {
         const token = jwt.sign(
           { username: user.username, id: user.id, time: new Date() },

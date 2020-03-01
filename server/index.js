@@ -12,6 +12,7 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
+  // Middleware
   server.use('/images', express.static(path.resolve(config.libraryPath)));
 
   server.all('*', (req, res) => {
