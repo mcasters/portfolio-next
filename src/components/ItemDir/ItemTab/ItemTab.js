@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
 
 import Item from '../Item';
-import GET_ITEMS_BY_PART_QUERY from '../../../data/graphql/queries/getItemsByPart.graphql';
-import s from './ItemTab.css';
+import GET_ITEMS_BY_PART_QUERY from '../../../data/graphql/queries/itemByPart';
 
 function ItemTab({ year, half, type }) {
   const scrollTop = () => {
@@ -16,17 +15,17 @@ function ItemTab({ year, half, type }) {
     ssr: true,
   });
 
-  if (loading) return <div className={s.loading}>Chargement...</div>;
+  if (loading) return <div>Chargement...</div>;
   if (error) return <div>Erreur au chargement des items :(</div>;
 
   return (
     <>
-      <h2 className={s.titleTab}>{year}</h2>
+      <h2>{year}</h2>
       {data &&
         data.getItemsByPart.map((item, index) => (
           <Item key={item.title} item={item} type={type} index={index} />
         ))}
-      <button type="button" className={s.buttonLink} onClick={scrollTop}>
+      <button type="button" onClick={scrollTop}>
         Haut de page
       </button>
     </>
