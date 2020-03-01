@@ -1,5 +1,5 @@
 import { merge } from 'lodash';
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema } from 'apollo-server-micro';
 import typeDefs from './graphql/type-defs';
 import userResolvers from './graphql/resolvers/userResolvers';
 import contentResolvers from './graphql/resolvers/contentResolvers';

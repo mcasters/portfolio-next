@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { withApollo } from '../data/client';
-import LoginToggle from './loginToggle';
+import LoginToggle from './LayoutComponents/Footer/loginToggle';
 
 const linkStyle = {
   marginRight: 15,
@@ -8,7 +8,7 @@ const linkStyle = {
 
 const Header = () => {
   return (
-    <div>
+    <header>
       <Link href="/">
         <a style={linkStyle}>Home</a>
       </Link>
@@ -31,7 +31,7 @@ const Header = () => {
         <a style={linkStyle}>Dessins</a>
       </Link>
       <LoginToggle />
-    </div>
+    </header>
   );
 };
 

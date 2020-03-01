@@ -1,0 +1,34 @@
+.container {
+  z-index: 1;
+  background: var(--color-xxlight);
+  padding: 0.2em 0;
+  text-align: center;
+}
+
+@media (--md) {
+  .container {
+    padding-left: var(--aside-width-md);
+  }
+}
+
+@media (--xlg) {
+  .container {
+    padding-left: var(--aside-width);
+  }
+}
+
+.nodejsLogo {
+  max-height: 25px;
+  padding: 0 0.5em;
+}
+
+.reactLogo,
+.graphqlLogo,
+.appleLogo {
+  max-height: 18px;
+  padding: 0 0.5em;
+}
+
+.appleLogo {
+  padding-bottom: 4px;
+}

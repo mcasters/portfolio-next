@@ -5,6 +5,7 @@ import ITEM from '../constants/item';
 import ItemTab from '../components/ItemDir/ItemTab';
 import useOnSrr from '../components/Hooks/useOnSrr';
 import { withApollo } from '../data/client';
+import Layout from '../components/LayoutComponents/Layout/Layout';
 
 function Peintures() {
   const title = 'Peintures';
@@ -26,19 +27,18 @@ function Peintures() {
   };
 
   return (
-    <>
+    <Layout>
       <h1>{title}</h1>
       <Tabs
-          className="tabs"
         selectedIndex={selectedTab}
         onSelect={handleSelectTab}
         forceRenderTabPanel
       >
-        <TabList className="tab-list">
-          <Tab className="tab">{year1.toString()}</Tab>
-          <Tab className="tab">{year2.toString()} a</Tab>
-          <Tab className="tab">{year2.toString()} b</Tab>
-          <Tab className="tab">{year3.toString()}</Tab>
+        <TabList>
+          <Tab>{year1.toString()}</Tab>
+          <Tab>{year2.toString()} a</Tab>
+          <Tab>{year2.toString()} b</Tab>
+          <Tab>{year3.toString()}</Tab>
         </TabList>
         {onSsr ? (
           <>
@@ -80,12 +80,12 @@ function Peintures() {
           </>
         )}
       </Tabs>
-      <style jsx>{`
-        .tabs {
+      <style jsx global>{`
+        .react-tabs {
           -webkit-tap-highlight-color: transparent;
         }
-
-        .tab-list {
+        
+        .react-tabs__tab-list {
           position: -webkit-sticky;
           position: sticky;
           top: 0;
@@ -95,7 +95,7 @@ function Peintures() {
           padding: 0;
         }
 
-        .tab {
+        .react-tabs__tab {
           display: inline-block;
           font-size: 14px;
           border: 1px solid transparent;
@@ -107,25 +107,25 @@ function Peintures() {
           cursor: pointer;
         }
 
-        .tab--selected {
+        .react-tabs__tab--selected {
           background: #fff;
           border-color: #aaa;
           color: black;
           border-radius: 5px 5px 0 0;
         }
 
-        .tab--disabled {
+        .react-tabs__tab--disabled {
           color: GrayText;
           cursor: default;
         }
 
-        .tab:focus {
+        .react-tabs__tab:focus {
           box-shadow: 0 0 5px hsl(208, 99%, 50%);
           border-color: hsl(208, 99%, 50%);
           outline: none;
         }
 
-        .tab:focus::after {
+        .react-tabs__tab:focus::after {
           content: '';
           position: absolute;
           height: 5px;
@@ -135,15 +135,15 @@ function Peintures() {
           background: #fff;
         }
 
-        .tab-panel {
+        .react-tabs__tab-panel {
           display: none;
         }
 
-        .tab-panel--selected {
+        .react-tabs__tab-panel--selected {
           display: block;
         }
       `}</style>
-    </>
+    </Layout>
   );
 }
 
