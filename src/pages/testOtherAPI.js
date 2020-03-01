@@ -6,7 +6,7 @@ function fetcher(url) {
   return fetch(url).then(r => r.json());
 }
 
-export default function Sculpture() {
+export default function TestOtherAPI() {
   const { query } = useRouter();
   const { data, error } = useSWR(
     `/api/randomQuote${query.author ? '?author=' + query.author : ''}`,
