@@ -1,5 +1,0 @@
-query getContent($key: String!) {
-  getContent(key: $key) {
-    text
-  }
-}

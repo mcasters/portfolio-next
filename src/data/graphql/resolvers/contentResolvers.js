@@ -5,32 +5,32 @@ import CONTENT from '../../../constants/content';
 
 export default {
   Query: {
-    getAllContent: () => Content.findAll(),
-    getContent: (parent, { key }) => Content.findOne({ where: { key } }),
+    getAllContent: async () => await Content.findAll(),
+    getContent: async (parent, { key }, _context, _info) => await Content.findOne({ where: { key } }),
   },
 
   Mutation: {
-    addContent: async (parent, { input }, { req }) => {
+    addContent: async (parent, { input }, { req }, _info) => {
       await getAuthenticatedUser(req);
       const { key } = input;
 
-      let content = Content.findOne({
+      let content = await Content.findOne({
         where: { key },
       });
       if (content) {
         content.update({
           text: input.text,
         });
-        content = Content.findOne({
+        content = await Content.findOne({
           where: { key },
         });
       } else {
-        content = Content.create(input);
+        content = await Content.create(input);
       }
       return content;
     },
 
-    addPicture: async (root, { picture, title }, { req }) => {
+    addPicture: async (root, { picture, title }, { req }, _info) => {
       const isAdmin = await getAuthenticatedUser(req);
 
       if (!isAdmin) throw new Error("Erreur d'authentification");

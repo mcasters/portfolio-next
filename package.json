@@ -53,6 +53,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.5.0",
     "fslightbox-react": "^1.4.9",
+    "postcss-nested": "^4.2.1",
     "prettier": "^1.19.1"
   },
   "lint-staged": {

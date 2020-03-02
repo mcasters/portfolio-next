@@ -1,0 +1,27 @@
+.homeContainer {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.title {
+    display: none;
+}
+
+.homeContent {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--color-xlight);
+    font-variant: small-caps;
+    padding: 0 1em;
+}
+
+@media (--md) {
+    .homeContainer {
+        margin-left: var(--aside-width-md);
+    }
+
+    .homeContent {
+        color: var(--color-medium);
+    }
+}

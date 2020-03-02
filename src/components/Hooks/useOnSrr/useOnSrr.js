@@ -6,7 +6,7 @@ function useOnSrr() {
 
   useEffect(() => {
     if (canUseDom()) setOnSsr(false);
-  }, []);
+  }, [onSsr]);
 
   // Second tab arg make effect act only if this arg has changed
   // if empty tab, effect will happen only once

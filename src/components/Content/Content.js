@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import GET_CONTENT from '../../data/graphql/queries/getContent';
 import s from './Content.module.css';
+import { withApollo } from '../../data/client';
 
 function Content({ keyContent }) {
   const { data, loading } = useQuery(GET_CONTENT, {
@@ -23,4 +24,4 @@ Content.propTypes = {
   keyContent: PropTypes.string.isRequired,
 };
 
-export default Content;
+export default withApollo(Content);

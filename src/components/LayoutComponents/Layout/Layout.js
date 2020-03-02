@@ -11,11 +11,9 @@ import LAYOUT_CONSTANTS from '../../../constants/layoutConstants';
 import ErrorBoundary from '../../ErrorBoundary';
 import Main from '../Main/Main';
 import useViewport from '../../Hooks/useViewport';
-import useOnSrr from '../../Hooks/useOnSrr';
 
 function Layout({ children }) {
   const { windowWidth, windowHeight } = useViewport();
-  const onSsr = useOnSrr();
   const [headerHeight, setHeaderHeight] = useState(0);
   const router = useRouter();
 
@@ -25,9 +23,6 @@ function Layout({ children }) {
   const getHeight = h => setHeaderHeight(h);
 
   const getMainHeight = () => {
-    if (onSsr) {
-      return 640;
-    }
     return isLessThanMD ? windowHeight - headerHeight : windowHeight;
   };
 
@@ -40,15 +35,6 @@ function Layout({ children }) {
         <Main isHome={isHome} height={getMainHeight()}>
           {children}
         </Main>
-        {typeof window === 'undefined' && <div>window undefined</div>}
-        {typeof window !== 'undefined' && <div>window not undefined</div>}
-        {typeof window !== 'undefined' && window.document && (
-          <div>document</div>
-        )}
-        {typeof window !== 'undefined' &&
-          window.document &&
-          window.document.createElement && <div>document.createElement</div>}
-        {onSsr && <div>ON SSR</div>}
         <Footer />
       </ErrorBoundary>
     </>

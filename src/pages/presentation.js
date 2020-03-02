@@ -1,39 +1,24 @@
-import { withApollo } from '../data/client';
-import gql from 'graphql-tag';
-import Link from 'next/link';
-import { useQuery } from '@apollo/react-hooks';
-import Layout from '../components/LayoutComponents/Layout/Layout';
-import React from "react";
+import React from 'react';
 
-const ViewerQuery = gql`
-  query ViewerQuery {
-    viewer {
-      id
-      name
-      status
-    }
-  }
-`;
+import s from './Presentation.module.css';
+import Content from '../components/Content/Content';
+import CONT_CONST from '../constants/content';
+import TITLE from '../constants/pageTitle';
 
 const Presentation = () => {
-  const { data } = useQuery(ViewerQuery);
+  const title = TITLE.PRESENTATION;
 
-  if (data) {
-    return (
-      <Layout>
-        <div>
-          You're signed in as {data.viewer.name} and you're {data.viewer.status}{' '}
-          goto{' '}
-          <Link href="/about">
-            <a>static</a>
-          </Link>{' '}
-          page.
-        </div>
-      </Layout>
-    );
-  }
-
-  return null;
+  return (
+    <div className={s.presentationContainer}>
+      <h1 className={s.title}>{title}</h1>
+      <img
+        className={s.image}
+        src={`${CONT_CONST.CONTENT_IMAGE_PATH}/${CONT_CONST.PRESENTATION_IMAGE_TITLE}.jpg`}
+        alt={CONT_CONST.PRESENTATION_IMAGE_ALT}
+      />
+      <Content keyContent={CONT_CONST.KEY.PRESENTATION} />
+    </div>
+  );
 };
 
-export default withApollo(Presentation);
+export default Presentation;

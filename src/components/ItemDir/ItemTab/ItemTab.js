@@ -20,7 +20,7 @@ function ItemTab({ year, half, type }) {
 
   return (
     <>
-      <h2>{year}</h2>
+      <h2 className="hidden">{year}</h2>
       {data &&
         data.getItemsByPart.map((item, index) => (
           <Item key={item.title} item={item} type={type} index={index} />
