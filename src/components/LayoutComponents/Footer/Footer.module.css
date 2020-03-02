@@ -16,7 +16,6 @@
   letter-spacing: 0.3rem;
 }
 
-.homeLink,
 .link {
   display: block;
   color: var(--link-color);
@@ -37,14 +36,12 @@
     letter-spacing: 0.7rem;
   }
 
-  .homeLink,
   .link {
     letter-spacing: 0.4rem;
     display: inline;
     padding: 2px 5px;
   }
 
-  .homeLink,
   .dot {
     display: initial;
   }

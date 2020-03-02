@@ -5,7 +5,7 @@ import s from './Footer.module.css';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import Feedback from '../Feedback/Feedback';
 import ROUTER from '../../../constants/router';
-import LoginToggle from './loginToggle';
+import LoginToggle from './LoginToggle';
 
 export default function Footer() {
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
       <div className={s.container}>
         <span className={s.text}>{GLOBAL_CONSTANTS.COPYRIGHT}</span>
         <Link href={ROUTER.HOME}>
-          <a className={s.homeLink}>Home</a>
+          <a className={s.link}>Home</a>
         </Link>
         <span className={s.dot}>·</span>
         <LoginToggle />

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { useQuery } from '@apollo/react-hooks';
-import { useRouter } from 'next/router';
 
 import { withApollo } from '../../../data/client';
 import ViewerQuery from '../../../data/graphql/queries/viewer';
+import s from "./LoginToggle.module.css";
 
 const LoginToggle = () => {
   const { data, loading } = useQuery(ViewerQuery);
@@ -15,7 +15,7 @@ const LoginToggle = () => {
   ) {
     return (
       <Link href="/signin">
-        <a>signin</a>
+        <a className={s.link}>signin</a>
       </Link>
     );
   }
@@ -23,7 +23,7 @@ const LoginToggle = () => {
   if (data && data.viewer) {
     return (
       <Link href="/signout">
-        <a>signout</a>
+        <a className={s.link}>signout</a>
       </Link>
     );
   }

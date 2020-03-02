@@ -5,11 +5,11 @@ import s from './Main.module.css';
 
 function Main({ isHome, height, children }) {
   return isHome ? (
-    <main className="mainHome" style={{ height }}>
+    <main className={s.mainHome} style={{ height }}>
       {children}
     </main>
   ) : (
-    <main className="main">{children}</main>
+    <main className={s.main}>{children}</main>
   );
 }
 
