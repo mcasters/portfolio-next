@@ -1,3 +1,0 @@
-mutation AddPicture($picture: Upload!, $pictureTitle: String!) {
-  addPicture(picture: $picture, title: $pictureTitle)
-}

@@ -394,6 +394,12 @@ textarea {
   letter-spacing: 0.4em;
 }
 
+h1,
+h2 {
+  font-weight: lighter;
+  letter-spacing: 0.4em;
+}
+
 a {
   color: var(--link-color);
   text-decoration: none;

@@ -1,3 +1,0 @@
-mutation deleteItem($id: ID!, $type: String!) {
-  deleteItem(id: $id, type: $type)
-}

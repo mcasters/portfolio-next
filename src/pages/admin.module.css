@@ -1,0 +1,22 @@
+.container {
+  margin: 0 auto;
+  max-width: var(--max-content-width);
+}
+
+.title {
+  font-size: var(--font-size-tab);
+}
+
+.tabs {
+  padding-top: 1em;
+}
+
+.tabContainer {
+  padding: 0 4em;
+}
+
+@media (--lg) {
+  .tabContainer {
+    padding: 0 7em;
+  }
+}

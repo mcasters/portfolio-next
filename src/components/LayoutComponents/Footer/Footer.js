@@ -5,7 +5,7 @@ import s from './Footer.module.css';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import Feedback from '../Feedback/Feedback';
 import ROUTER from '../../../constants/router';
-import LoginToggle from './LoginToggle';
+import LoginControl from "../../LoginControl/LoginControl";
 
 export default function Footer() {
   return (
@@ -17,7 +17,7 @@ export default function Footer() {
           <a className={s.link}>Home</a>
         </Link>
         <span className={s.dot}>·</span>
-        <LoginToggle />
+        <LoginControl />
         <span className={s.dot}>·</span>
         <Link href ={ROUTER.PRIVACY} as={ROUTER.CONFIDENTIALITE}>
           <a className={s.link}>Privacy</a>

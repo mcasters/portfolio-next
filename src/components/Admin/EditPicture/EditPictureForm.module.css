@@ -1,0 +1,44 @@
+.addContainer {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.title {
+  font-size: var(--font-size-nav)
+}
+
+.image {
+  width: 100%;
+}
+
+.fileLabel {
+  display: block;
+  margin: 20px 0;
+  color: var(--link-color);
+  font-size: var(--font-size-current-plus-plus);
+  background: none;
+  cursor: pointer;
+  transition: color 0.4s;
+}
+
+.fileLabel:hover {
+  color: var(--link-color-xdark);
+}
+
+.fileButton {
+  display: none;
+}
+
+.imagePreview {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+@media (--lg) {
+  .addContainer {
+    box-sizing: border-box;
+    width: 50%;
+    padding: 0 2em;
+  }
+}

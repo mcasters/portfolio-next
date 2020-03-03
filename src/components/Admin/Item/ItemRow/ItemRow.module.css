@@ -1,0 +1,12 @@
+.thumbnail {
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.row {
+  height: 60px;
+}
+
+.row > th {
+  padding: 0;
+}

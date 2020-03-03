@@ -1,0 +1,10 @@
+.textarea {
+  width: 100%;
+  height: 200px;
+}
+
+@media (--sm) {
+  .textarea {
+    height: 300px;
+  }
+}
