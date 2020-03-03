@@ -7,7 +7,7 @@ import { withApollo } from '../data/client';
 import Field from '../components/field';
 import { getErrorMessage } from '../components/lib/form';
 import SignInMutation from '../data/graphql/queries/signin';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Root from "../components/LayoutComponents/Root/Root";
 
 function SignIn() {
   const client = useApolloClient();
@@ -38,7 +38,7 @@ function SignIn() {
   }
 
   return (
-    <Layout>
+    <Root>
       <h1>Sign In</h1>
       <form onSubmit={handleSubmit}>
         {errorMsg && <p>{errorMsg}</p>}
@@ -61,7 +61,7 @@ function SignIn() {
           <a>Sign up</a>
         </Link>
       </form>
-    </Layout>
+    </Root>
   );
 }
 

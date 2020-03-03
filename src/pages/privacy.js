@@ -1,9 +1,9 @@
 import Markdown from 'react-markdown';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Root from "../components/LayoutComponents/Root/Root";
 
 export default () => {
   return (
-    <Layout>
+    <Root>
       <div className="markdown">
         <Markdown
           source={`
@@ -26,6 +26,6 @@ Nous nous engageons à ne collecter aucun renseignement personnel, d'aucune sort
           text-transform: uppercase;
         }
       `}</style>
-    </Layout>
+    </Root>
   );
 };

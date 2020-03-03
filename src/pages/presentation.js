@@ -4,13 +4,13 @@ import s from './Presentation.module.css';
 import Content from '../components/Content/Content';
 import CONT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
-import Layout from "../components/LayoutComponents/Layout/Layout";
+import Root from '../components/LayoutComponents/Root/Root';
 
 const Presentation = () => {
   const title = TITLE.PRESENTATION;
 
   return (
-    <Layout>
+    <Root>
       <div className={s.presentationContainer}>
         <h1 className={s.title}>{title}</h1>
         <img
@@ -20,7 +20,7 @@ const Presentation = () => {
         />
         <Content keyContent={CONT_CONST.KEY.PRESENTATION} />
       </div>
-    </Layout>
+    </Root>
   );
 };
 

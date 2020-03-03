@@ -5,7 +5,7 @@ import ITEM from '../constants/item';
 import ItemTab from '../components/ItemDir/ItemTab';
 import useOnSrr from '../components/Hooks/useOnSrr';
 import { withApollo } from '../data/client';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Root from "../components/LayoutComponents/Root/Root";
 
 function Peintures() {
   const title = 'Peintures';
@@ -27,7 +27,7 @@ function Peintures() {
   };
 
   return (
-    <Layout>
+    <Root>
       <h1 className="hidden">{title}</h1>
       <Tabs
         selectedIndex={selectedTab}
@@ -84,7 +84,7 @@ function Peintures() {
         .react-tabs {
           -webkit-tap-highlight-color: transparent;
         }
-        
+
         .react-tabs__tab-list {
           position: -webkit-sticky;
           position: sticky;
@@ -143,7 +143,7 @@ function Peintures() {
           display: block;
         }
       `}</style>
-    </Layout>
+    </Root>
   );
 }
 
