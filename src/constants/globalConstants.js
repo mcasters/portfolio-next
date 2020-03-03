@@ -1,6 +1,6 @@
 const GLOBAL_CONSTANTS = {
   SITE_TITLE: 'Marion Casters',
-  COPYRIGHT: 'Copyright © Marion Casters 2019',
+  COPYRIGHT: 'Copyright © 2020 Marion Casters',
   NOT_FOUND: "Désolé, la page demandée n'existe pas.",
   EMAIL: 'contact@marioncasters.fr',
 };

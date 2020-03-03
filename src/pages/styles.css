@@ -391,7 +391,7 @@ textarea {
   color: var(--color-xdark);
   font-weight: lighter;
   font-variant: small-caps;
-  letter-spacing: 0.5em;
+  letter-spacing: 0.35em;
 }
 
 a {

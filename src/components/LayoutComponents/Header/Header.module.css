@@ -11,6 +11,7 @@
 .container h1,
 .homeContainer h1 {
   font-size: var(--font-size-header-sm-mobile);
+  font-weight: lighter;
   color: var(--color-light);
   margin: 0;
   letter-spacing: 0.9rem;
@@ -56,7 +57,7 @@
     padding-left: unset;
     color: var(--color-dark);
     margin: 1.2em 0;
-    letter-spacing: 2.1rem;
+    letter-spacing: 2.2rem;
   }
 
   .container h1 {
