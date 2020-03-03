@@ -19,7 +19,7 @@ export default function Footer() {
         <span className={s.dot}>·</span>
         <LoginToggle />
         <span className={s.dot}>·</span>
-        <Link href={ROUTER.CONFIDENTIALITE}>
+        <Link href ={ROUTER.PRIVACY} as={ROUTER.CONFIDENTIALITE}>
           <a className={s.link}>Privacy</a>
         </Link>
       </div>
