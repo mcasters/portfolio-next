@@ -354,6 +354,10 @@ template {
 [hidden] {
   display: none;
 }
+/*
+ * END OF NORMALIZE
+ *
+ * ========================================================================== */
 
 
 
@@ -385,9 +389,9 @@ textarea {
   font-family: var(--font-family-base);
   font-size: var(--font-size-current);
   color: var(--color-xdark);
-  font-weight: var(--font-weight);
+  font-weight: lighter;
   font-variant: small-caps;
-  letter-spacing: 3px;
+  letter-spacing: 0.5em;
 }
 
 a {

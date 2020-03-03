@@ -11,7 +11,7 @@ export default function DesktopNav({ isHome }) {
 
   return (
     <aside className={s.aside}>
-      <div className={isHome ? [s.bar, s.homeBar].join(' ') : s.bar} />
+      <div className={isHome ? [s.bar, s.homeBar].join(' ') : s.bar}> </div>
       <nav className={s.desktopNav}>
         <Link href={ROUTER.PRESENTATION}>
           <a
@@ -27,7 +27,7 @@ export default function DesktopNav({ isHome }) {
         <Link href={ROUTER.PEINTURES}>
           <a
             className={
-              location === ROUTER.PEINTURES
+              router.pathname === ROUTER.PEINTURES
                 ? `${s.link} ${s.active}`
                 : `${s.link}`
             }
@@ -38,7 +38,7 @@ export default function DesktopNav({ isHome }) {
         <Link href={ROUTER.SCULPTURES}>
           <a
             className={
-              location === ROUTER.SCULPTURES
+              router.pathname === ROUTER.SCULPTURES
                 ? `${s.link} ${s.active}`
                 : `${s.link}`
             }
@@ -49,7 +49,7 @@ export default function DesktopNav({ isHome }) {
         <Link href={ROUTER.DESSINS}>
           <a
             className={
-              location === ROUTER.DESSINS
+              router.pathname === ROUTER.DESSINS
                 ? `${s.link} ${s.active}`
                 : `${s.link}`
             }
@@ -60,7 +60,7 @@ export default function DesktopNav({ isHome }) {
         <Link href={ROUTER.CONTACT}>
           <a
             className={
-              location === ROUTER.CONTACT
+              router.pathname === ROUTER.CONTACT
                 ? `${s.link} ${s.active}`
                 : `${s.link}`
             }

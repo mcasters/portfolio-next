@@ -5,14 +5,15 @@ import ITEM from '../../../constants/item';
 import LAYOUT_CONSTANTS from '../../../constants/layoutConstants';
 import LightBoxProvider from '../../LightBoxProvider';
 import ItemService from '../../../app-services/ItemService';
-// import useViewport from '../../Hooks/useViewport';
+import useViewport from "../../Hooks/useViewport";
+import s from './Image.module.css';
+
 
 function Image({ title, type }) {
-  // const { width } = useViewport();
+  const { width } = useViewport();
   const [isOpen, setIsOpen] = useState(false);
 
-  const isLessThanSM = false;
-  // const isLessThanSM = width < LAYOUT_CONSTANTS.BREAKPOINT.SM;
+  const isLessThanSM = width < LAYOUT_CONSTANTS.BREAKPOINT.SM;
   const itemService = new ItemService(type);
   const itemPath = itemService.getPath();
   const alt = itemService.getAltImage();
@@ -56,8 +57,13 @@ function Image({ title, type }) {
     <>
       <figure>
         {currentSrcList.map(src => (
-          <button type="button" onClick={toggleLightBox} key={src}>
-            <img src={src} alt={alt} />
+          <button
+            type="button"
+            onClick={toggleLightBox}
+            className={isSculpture ? s.sculptureButton : s.imageButton}
+            key={src}
+          >
+            <img src={src} alt={alt} className={s.image} />
           </button>
         ))}
       </figure>
@@ -65,7 +71,7 @@ function Image({ title, type }) {
         title={title}
         type={type}
         srcList={largeSrcList}
-        toggle={isOpen}
+        toggler={isOpen}
       />
     </>
   );

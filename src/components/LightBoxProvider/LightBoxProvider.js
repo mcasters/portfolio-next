@@ -10,17 +10,15 @@ import {
 } from '../../constants/lightboxConstants';
 import LAYOUT_CONSTANTS from '../../constants/layoutConstants';
 
-function LightBoxProvider({ title, type, srcList, toggle }) {
-
-  const close = () => {
-    toggle(false);
-  };
+export default function LightBoxProvider({ title, type, srcList, toggler }) {
+  const isSculpture = type === ITEM.SCULPTURE.TYPE;
 
   return (
     <>
       <FsLightbox
-        toggler={toggle}
-        sources={type === ITEM.SCULPTURE.TYPE ? srcList : srcList[0]}
+        toggler={toggler}
+        sources={srcList}
+        captions={['coucou']}
       />
     </>
   );
@@ -30,7 +28,5 @@ LightBoxProvider.propTypes = {
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   srcList: PropTypes.array.isRequired,
-  toggle: PropTypes.func.isRequired,
+  toggler: PropTypes.bool.isRequired,
 };
-
-export default LightBoxProvider;

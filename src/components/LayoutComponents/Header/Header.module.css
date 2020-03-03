@@ -11,7 +11,6 @@
 .container h1,
 .homeContainer h1 {
   font-size: var(--font-size-header-sm-mobile);
-  font-weight: var(--font-weight);
   color: var(--color-light);
   margin: 0;
   letter-spacing: 0.9rem;

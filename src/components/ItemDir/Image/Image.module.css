@@ -1,0 +1,63 @@
+.imageButton,
+.sculptureButton {
+  padding: 0.2em;
+  background-color: unset;
+  border: none;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 45vh;
+}
+
+@media (--sm) {
+  .image {
+    max-width: 70%;
+    max-height: 60vh;
+  }
+
+  .sculptureButton {
+    display: inline-block;
+    max-width: 50%;
+  }
+
+  .sculptureButton .image {
+    max-width: 100%;
+    max-height: 35vh;
+  }
+}
+
+@media (--md) {
+  .image {
+    max-height: 45vh;
+  }
+
+  .sculptureButton .image {
+    max-height: 25vh;
+  }
+}
+
+@media (--lg) {
+  .image {
+    max-width: 33vw;
+    max-height: 50vh;
+  }
+
+  .sculptureButton .image {
+    max-height: 55vh;
+  }
+}
+
+@media (--xlg) {
+  .image {
+    max-width: 30vw;
+    max-height: 47vh;
+  }
+
+  .sculptureButton .image {
+    max-width: 25vw;
+    max-height: 45vh;
+  }
+}

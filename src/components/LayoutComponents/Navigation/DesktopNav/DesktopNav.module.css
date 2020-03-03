@@ -39,9 +39,9 @@
   float: left;
   width: 100%;
   padding: 1.5em;
-  font-weight: 400;
   font-size: var(--font-size-nav);
   transition: all 1.2s ease;
+  font-variant: small-caps;
 }
 
 .linkHome {
@@ -72,7 +72,7 @@
 .active {
   color: var(--link-color-xdark);
   border-left: 1px solid;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.6em;
   transform: scale(1.2, 0.9);
   transform-origin: left;
   transition: all 1.2s ease;

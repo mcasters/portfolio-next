@@ -1,0 +1,32 @@
+.itemContainer {
+  padding-bottom: 4em;
+}
+
+.itemTitle {
+  font-size: var(--font-size-current-title);
+  margin: 0 0 0.1em;
+}
+
+.noWrap {
+  display: block;
+}
+
+.spacer {
+  display: none;
+}
+
+.email {
+  display: none;
+}
+
+@media (--sm) {
+  .noWrap {
+    display: inline;
+    white-space: pre;
+  }
+
+  .spacer {
+    display: inline;
+    padding: 0 15px;
+  }
+}

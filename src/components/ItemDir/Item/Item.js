@@ -3,28 +3,29 @@ import PropTypes from 'prop-types';
 
 import ITEM from '../../../constants/item';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
+import s from './Item.module.css';
 import Image from '../Image';
 
 function Item({ item, type }) {
   const email = GLOBAL_CONSTANTS.EMAIL;
 
   return (
-    <article>
-      <h2>{item.title}</h2>
+    <article className={s.itemContainer}>
+      <h2 className={s.itemTitle}>{item.title}</h2>
       <Image type={type} title={item.title} />
       <figcaption>
-        <time dateTime={item.date}>
+        <time dateTime={item.date} className={s.noWrap}>
           {new Date(item.date).toLocaleDateString()}
         </time>
-        <span> | </span>
-        <p>{item.technique}</p>
-        <span> | </span>
-        <p>
+        <span className={s.spacer}> | </span>
+        <p className={s.noWrap}>{item.technique}</p>
+        <span className={s.spacer}> | </span>
+        <p className={s.noWrap}>
           {item.height} x {item.width}
           {type === ITEM.SCULPTURE.TYPE && ` x ${item.length}`} cm
         </p>
       </figcaption>
-      <address>{email}</address>
+      <address className={s.email}>{email}</address>
     </article>
   );
 }
