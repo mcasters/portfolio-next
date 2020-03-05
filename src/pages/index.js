@@ -4,7 +4,7 @@ import Content from '../components/Content/Content';
 import CONTENT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import s from './index.module.css';
-import Root from "../components/LayoutComponents/Root/Root";
+import Root from "../components/LayoutComponents/Root";
 
 function Home() {
   const title = TITLE.HOME;

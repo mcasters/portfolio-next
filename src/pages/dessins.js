@@ -5,7 +5,7 @@ import { withApollo } from '../data/client';
 import Item from '../components/ItemDir/Item';
 import ITEM from '../constants/item';
 import GET_ITEMS_QUERY from '../data/graphql/queries/getAllItems';
-import Root from "../components/LayoutComponents/Root/Root";
+import Root from "../components/LayoutComponents/Root";
 
 function Dessins() {
   const title = 'Dessins';

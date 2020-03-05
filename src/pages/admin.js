@@ -13,7 +13,8 @@ import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemP
 import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
 import ViewerQuery from '../data/graphql/queries/viewer';
 import { withApollo } from '../data/client';
-import Root from '../components/LayoutComponents/Root/Root';
+import Root from '../components/LayoutComponents/Root';
+import ROUTER from "../constants/router";
 
 const Admin = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -25,7 +26,7 @@ const Admin = () => {
     data.viewer === null &&
     typeof window !== 'undefined'
   )
-    router.push('/home');
+    router.push(ROUTER.HOME);
 
   const handleSelectTab = index => {
     setSelectedTab(index);

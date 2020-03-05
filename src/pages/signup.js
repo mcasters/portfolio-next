@@ -7,7 +7,7 @@ import { withApollo } from '../data/client';
 import Field from '../components/field';
 import { getErrorMessage } from '../components/lib/form';
 import SignUpMutation from '../data/graphql/queries/signup';
-import Root from "../components/LayoutComponents/Root/Root";
+import Root from "../components/LayoutComponents/Root";
 
 function SignUp() {
   const [signUp] = useMutation(SignUpMutation);

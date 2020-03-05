@@ -5,7 +5,7 @@ import ITEM from '../constants/item';
 import ItemTab from '../components/ItemDir/ItemTab';
 import useOnSrr from '../components/Hooks/useOnSrr';
 import { withApollo } from '../data/client';
-import Root from "../components/LayoutComponents/Root/Root";
+import Root from "../components/LayoutComponents/Root";
 
 function Peintures() {
   const title = 'Peintures';

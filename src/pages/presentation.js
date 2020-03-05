@@ -4,7 +4,7 @@ import s from './Presentation.module.css';
 import Content from '../components/Content/Content';
 import CONT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
-import Root from '../components/LayoutComponents/Root/Root';
+import Root from '../components/LayoutComponents/Root';
 
 const Presentation = () => {
   const title = TITLE.PRESENTATION;

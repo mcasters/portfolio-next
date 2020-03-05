@@ -10,6 +10,7 @@ import SignInMutation from '../../data/graphql/queries/signin';
 import Field from '../field';
 import { getErrorMessage } from '../lib/form';
 import { withApollo } from '../../data/client';
+import ROUTER from "../../constants/router";
 
 const customStyles = {
   overlay: {
@@ -54,7 +55,7 @@ function LoginDialog({ onClose, loginMutation }) {
         },
       });
       if (data.signIn.user) {
-        await router.push('/');
+        await router.push(ROUTER.ADMIN);
       }
     } catch (error) {
       setErrorMsg(getErrorMessage(error));

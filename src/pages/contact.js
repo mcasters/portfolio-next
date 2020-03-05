@@ -5,7 +5,7 @@ import CONT_CONST from '../constants/content';
 import GLOB_CONST from '../constants/globalConstants';
 import TITLE from '../constants/pageTitle';
 import s from './contact.module.css';
-import Root from "../components/LayoutComponents/Root/Root";
+import Root from "../components/LayoutComponents/Root";
 
 export default function contact() {
   const title = TITLE.CONTACT;

@@ -1,5 +1,5 @@
 import Markdown from 'react-markdown';
-import Root from "../components/LayoutComponents/Root/Root";
+import Root from "../components/LayoutComponents/Root";
 
 export default () => {
   return (
