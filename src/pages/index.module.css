@@ -13,6 +13,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   color: var(--color-xlight);
   padding: 0 1em;
+  font-size: var(--font-size-current-plus);
   letter-spacing: 0.25em;
 }
 

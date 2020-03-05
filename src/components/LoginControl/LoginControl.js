@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 import s from './LoginControl.module.css';
 import LoginDialog from '../LoginDialog/LoginDialog';
