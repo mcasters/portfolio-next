@@ -76,6 +76,7 @@ export default function MyApp({ Component, pageProps }) {
             <meta name="keywords" content={KEYWORDS} />
             <meta name="theme-color" content="#555555" />
             <link rel="manifest" href="/site.webmanifest" />
+            <link rel="author" href="/humans.txt" type="text/plain" />
             <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
             <link rel="icon" sizes="192x192" href="/icon-192.png" />
             <link rel="icon" sizes="512x512" href="/icon-512.png" />

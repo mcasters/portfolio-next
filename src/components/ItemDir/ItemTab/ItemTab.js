@@ -20,7 +20,7 @@ function ItemTab({ year, half, type }) {
   if (error) return <div>Erreur au chargement des items :(</div>;
 
   return (
-    <>
+    <section>
       <h2 className={s.titleTab}>{year}</h2>
       {data &&
         data.getItemsByPart.map((item, index) => (
@@ -29,7 +29,7 @@ function ItemTab({ year, half, type }) {
       <button type="button" onClick={scrollTop} className={s.buttonLink}>
         Haut de page
       </button>
-    </>
+    </section>
   );
 }
 

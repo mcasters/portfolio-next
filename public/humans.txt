@@ -1,15 +1,20 @@
 # humanstxt.org/
 # The humans responsible & technology colophon
 
-# TEAM
+/* TEAM */
 
-  <name> -- <role> -- <twitter>
+Developer: Marion Casters
+Site: contact@marioncasters.fr
+Twitter: @yonk222
+Location: Bordeaux, Nouvelle-Aquitaine, France
 
-# THANKS
+/* THANKS */
 
-  <name>
+<name>
 
-# TECHNOLOGY COLOPHON
+/* SITE */
 
-  CSS3, HTML5, JavaScript
-  React Starter Kit -- https://reactstarter.com/
+Last update: 2020/03/08
+Standards: HTML5, CSS3, JavaScript
+Components: Node.js, React, Graphql, Next.js
+Software: WebStorm, GitKraken

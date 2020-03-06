@@ -11,7 +11,9 @@ function Item({ item, type }) {
 
   return (
     <article className={s.itemContainer}>
-      <h2 className={s.itemTitle}>{item.title}</h2>
+      <h2 className={s.itemTitle}>
+        <cite>{item.title}</cite>
+      </h2>
       <Image type={type} title={item.title} />
       <figcaption>
         <time dateTime={item.date} className={s.noWrap}>

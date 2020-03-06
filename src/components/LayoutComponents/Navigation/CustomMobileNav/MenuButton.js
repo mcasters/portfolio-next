@@ -35,6 +35,7 @@ function MenuButton({ open, onClick }) {
     <button
       className={s.container}
       onClick={handleClick}
+      aria-label="Menu"
       tabIndex={0}
       type="button"
     >

@@ -22,6 +22,7 @@ function Menu({ open, onNavigate, routes, onLeave }) {
               <Link key={route[0]} href={route[1]}>
                 <a className={s.navHomeLink} onClick={onNavigate}>
                   <img
+                    className={s.logo}
                     src="/logo-45.png"
                     srcSet="/logo-100.png"
                     alt="Signature de Marion Casters"

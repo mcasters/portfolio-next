@@ -1,13 +1,13 @@
 .link {
-  color: var(--link-color);
+  color: var(--link-color-light);
   padding: 2px 5px;
   letter-spacing: 0.5rem;
 }
 
 .loginLink {
-  font-family: var(--font-family-base) !important;
+  font-family: var(--font-family-base);
   letter-spacing: 0.4rem;
-  color: var(--link-color);
+  color: var(--link-color-light);
   padding: 2px 5px;
   font-size: var(--font-size-current-plus);
   display: inline;

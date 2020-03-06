@@ -18,7 +18,7 @@
 
 .link {
   display: block;
-  color: var(--link-color);
+  color: var(--link-color-light);
   font-size: var(--font-size-current-plus);
   padding: 0.4em 0;
 }

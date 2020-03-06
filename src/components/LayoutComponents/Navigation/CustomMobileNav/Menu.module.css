@@ -21,14 +21,21 @@
   .navHomeLink {
     display: block;
     padding-top: 4rem;
+
+    .logo {
+      max-width: 50px;
+    }
   }
 
   .name {
-    padding-top: 20vh;
     text-align: center;
     font-size: var(--font-size-minus);
-    letter-spacing: 0.5em;
+    letter-spacing: 1em;
     white-space: pre;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
   }
 }
 
