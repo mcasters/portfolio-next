@@ -5,7 +5,7 @@ import { withApollo } from '../data/client';
 import Item from '../components/ItemDir/Item';
 import ITEM from '../constants/item';
 import GET_ITEMS_QUERY from '../data/graphql/queries/getAllItems';
-import Root from "../components/LayoutComponents/Root";
+import Layout from '../components/LayoutComponents/Layout/Layout';
 
 function Dessins() {
   const title = 'Dessins';
@@ -17,13 +17,15 @@ function Dessins() {
   if (error) return <div>Erreur au chargement des Dessins :(</div>;
 
   return (
-    <Root>
-      <h1 className="hidden">{title}</h1>
-      {data.getAllItems &&
-        data.getAllItems.map(drawing => (
-          <Item key={drawing.title} item={drawing} type={type} />
-        ))}
-    </Root>
+    <Layout>
+      <section>
+        <h1 className="hidden">{title}</h1>
+        {data.getAllItems &&
+          data.getAllItems.map(drawing => (
+            <Item key={drawing.title} item={drawing} type={type} />
+          ))}
+      </section>
+    </Layout>
   );
 }
 

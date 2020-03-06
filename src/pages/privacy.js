@@ -1,9 +1,9 @@
 import Markdown from 'react-markdown';
-import Root from "../components/LayoutComponents/Root";
+import Layout from "../components/LayoutComponents/Layout/Layout";
 
 const Privacy = () => {
   return (
-    <Root>
+    <Layout>
       <div className="markdown">
         <Markdown
           source={`
@@ -26,7 +26,7 @@ Nous nous engageons à ne collecter aucun renseignement personnel, d'aucune sort
           text-transform: uppercase;
         }
       `}</style>
-    </Root>
+    </Layout>
   );
 };
 

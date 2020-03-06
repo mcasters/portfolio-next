@@ -5,7 +5,7 @@ import ITEM from '../constants/item';
 import ItemTab from '../components/ItemDir/ItemTab';
 import useOnSrr from '../components/Hooks/useOnSrr';
 import { withApollo } from '../data/client';
-import Root from "../components/LayoutComponents/Root";
+import Layout from "../components/LayoutComponents/Layout/Layout";
 
 function Peintures() {
   const title = 'Peintures';
@@ -27,7 +27,7 @@ function Peintures() {
   };
 
   return (
-    <Root>
+    <Layout>
       <h1 className="hidden">{title}</h1>
       <Tabs
         selectedIndex={selectedTab}
@@ -80,7 +80,7 @@ function Peintures() {
           </>
         )}
       </Tabs>
-    </Root>
+    </Layout>
   );
 }
 

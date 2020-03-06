@@ -5,7 +5,7 @@ import Item from '../components/ItemDir/Item';
 import ITEM from '../constants/item';
 import GET_ITEMS_QUERY from '../data/graphql/queries/getAllItems';
 import { withApollo } from '../data/client';
-import Root from "../components/LayoutComponents/Root";
+import Layout from "../components/LayoutComponents/Layout/Layout";
 
 function Sculptures() {
   const title = 'Sculptures';
@@ -18,13 +18,13 @@ function Sculptures() {
   if (error) return <div>Erreur au chargement des sculptures :(</div>;
 
   return (
-    <Root>
+    <Layout>
       <h1 className="hidden">{title}</h1>
       {data.getAllItems &&
         data.getAllItems.map(sculpture => (
           <Item key={sculpture.title} item={sculpture} type={type} />
         ))}
-    </Root>
+    </Layout>
   );
 }
 

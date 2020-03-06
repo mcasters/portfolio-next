@@ -13,7 +13,7 @@ import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemP
 import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
 import ViewerQuery from '../data/graphql/queries/viewer';
 import { withApollo } from '../data/client';
-import Root from '../components/LayoutComponents/Root';
+import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER from "../constants/router";
 
 const Admin = () => {
@@ -34,7 +34,7 @@ const Admin = () => {
 
   if (data && data.viewer) {
     return (
-      <Root>
+      <Layout>
         <div className={s.container}>
           <h1 className={s.title}>{TITLE.ADMINISTRATION}</h1>
           <Logout />
@@ -96,7 +96,7 @@ const Admin = () => {
             </TabPanel>
           </Tabs>
         </div>
-      </Root>
+      </Layout>
     );
   }
 

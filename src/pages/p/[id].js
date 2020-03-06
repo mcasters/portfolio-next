@@ -1,5 +1,4 @@
-import { useRouter } from 'next/router';
-import Layout from '../../components/Layout';
+import Layout from '../../components/LayoutComponents/Layout/Layout';
 
 const Content = props => (
     <>
