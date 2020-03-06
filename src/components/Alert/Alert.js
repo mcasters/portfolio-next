@@ -46,19 +46,14 @@ export default function Alert({ message, isError, clearAlert }) {
   useEffect(() => {
     if (showModal) {
       timeout = setTimeout(() => {
-        clearAlert();
         handleCloseModal();
-      }, 4000);
+      }, 5000);
     }
     return function cleanup() {
       clearAlert();
       clearTimeout(timeout);
     };
   }, [showModal]);
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
 
   const handleCloseModal = () => {
     setShowModal(false);

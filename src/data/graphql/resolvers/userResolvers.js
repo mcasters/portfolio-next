@@ -32,7 +32,7 @@ export default {
           const user = await User.findOne({ where: { username } });
           return user;
         } catch {
-          throw new AuthenticationError("Token d'authentication invalide");
+          throw new AuthenticationError("Token d'authentification invalide");
         }
       }
     },

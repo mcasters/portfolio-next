@@ -9,15 +9,20 @@ import useHeight from '../../Hooks/useHeight';
 function Header({ isHome, onHeight }) {
   const [height, ref] = useHeight();
   const scrollY = useScroll();
+  const title = GLOB_CONST.SITE_TITLE;
 
   useEffect(() => {
     onHeight(height);
-  }, [height, onHeight]);
+
+    return function cleanup() {
+      onHeight(100);
+    };
+  }, [height]);
 
   return isHome ? (
     <header>
       <div ref={ref} className={s.homeContainer}>
-        <h1>{GLOB_CONST.SITE_TITLE}</h1>
+        <h1>{title}</h1>
       </div>
     </header>
   ) : (
@@ -27,7 +32,7 @@ function Header({ isHome, onHeight }) {
           scrollY > 0 ? `${s.container} ${s.sticky}` : `${s.container}`
         }
       >
-        <h1>{GLOB_CONST.SITE_TITLE}</h1>
+        <h1>{title}</h1>
       </div>
     </header>
   );
