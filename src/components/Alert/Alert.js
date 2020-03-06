@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import { MdClose } from 'react-icons/md';
 
-const errorCustomStyles = {
+const errorStyles = {
   overlay: {
     backgroundColor: 'none',
   },
@@ -13,10 +14,11 @@ const errorCustomStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     backgroundColor: '#ffa5ac',
+    padding: '10px',
   },
 };
 
-const validCustomStyles = {
+const validStyles = {
   overlay: {
     backgroundColor: 'none',
   },
@@ -27,64 +29,56 @@ const validCustomStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     backgroundColor: '#92ff8e',
+    padding: '10px',
   },
+};
+
+const iconStyles = {
+  float: 'right',
 };
 
 Modal.setAppElement('#__next');
 
-class Alert extends React.Component {
-  isMounted = false;
+export default function Alert({ message, isError, clearAlert }) {
+  const [showModal, setShowModal] = useState(true);
+  let timeout = null;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      showModal: false,
+  useEffect(() => {
+    if (showModal) {
+      timeout = setTimeout(() => {
+        clearAlert();
+        handleCloseModal();
+      }, 4000);
+    }
+    return function cleanup() {
+      clearAlert();
+      clearTimeout(timeout);
     };
+  }, [showModal]);
 
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
-  }
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
 
-  componentDidMount() {
-    this.isMounted = true;
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
-    this.handleOpenModal();
-    this.timeout = setTimeout(() => {
-      if (this.isMounted) {
-        this.handleCloseModal();
-        this.props.clearAlert();
-      }
-    }, 4000);
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timeout);
-    this.isMounted = false;
-  }
-
-  handleOpenModal() {
-    this.setState({ showModal: true });
-  }
-
-  handleCloseModal() {
-    this.setState({ showModal: false });
-  }
-
-  render() {
-    const { message, isError } = this.props;
-    return (
-      <Modal
-        id="alert"
-        contentLabel="alert"
-        closeTimeoutMS={150}
-        isOpen={this.state.showModal}
-        onRequestClose={this.handleCloseModal}
-        style={isError ? errorCustomStyles : validCustomStyles}
-      >
-        <div>{message}</div>
-      </Modal>
-    );
-  }
+  return (
+    <Modal
+      id="alert"
+      contentLabel="alert"
+      closeTimeoutMS={150}
+      isOpen={showModal}
+      onRequestClose={handleCloseModal}
+      style={isError ? errorStyles : validStyles}
+    >
+      <MdClose onClick={handleCloseModal} style={iconStyles} />
+      <div className={message} style={{ padding: '0px 10px' }}>
+        {message}
+      </div>
+    </Modal>
+  );
 }
 
 Alert.propTypes = {
@@ -92,5 +86,3 @@ Alert.propTypes = {
   isError: PropTypes.bool.isRequired,
   clearAlert: PropTypes.func.isRequired,
 };
-
-export default Alert;

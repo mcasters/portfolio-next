@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ITEM from '../../../constants/item';
-import LAYOUT_CONSTANTS from '../../../constants/layoutConstants';
+import CONSTANT from '../../../constants/layoutConstants';
 import LightBoxProvider from '../../LightBoxProvider';
 import ItemService from '../../../app-services/ItemService';
 import useViewport from "../../Hooks/useViewport";
@@ -13,7 +13,7 @@ function Image({ title, type }) {
   const { width } = useViewport();
   const [isOpen, setIsOpen] = useState(false);
 
-  const isLessThanSM = width < LAYOUT_CONSTANTS.BREAKPOINT.SM;
+  const isLessThanSM = width < CONSTANT.BREAKPOINT.SM;
   const itemService = new ItemService(type);
   const itemPath = itemService.getPath();
   const alt = itemService.getAltImage();

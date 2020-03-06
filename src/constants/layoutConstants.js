@@ -1,4 +1,4 @@
-const LAYOUT_CONSTANTS = {
+export default {
   BREAKPOINT: {
     XS: 480,
     SM: 765,
@@ -7,5 +7,3 @@ const LAYOUT_CONSTANTS = {
     XLG: 1600,
   },
 };
-
-export default LAYOUT_CONSTANTS;

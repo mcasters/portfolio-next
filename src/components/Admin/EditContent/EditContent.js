@@ -5,10 +5,10 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import GET_CONTENT from '../../../data/graphql/queries/getContent';
 import ContentForm from './ContentForm';
 import ADD_CONTENT_MUTATION from '../../../data/graphql/queries/addContent';
-import AlertContext from '../../AlertContext/AlertContext';
+import { useAlert } from '../../AlertContext/AlertContext';
 
 function EditContent({ keyContent, isTextArea }) {
-  const triggerAlert = useContext(AlertContext);
+  const triggerAlert = useAlert();
   const { data } = useQuery(GET_CONTENT, {
     variables: { key: keyContent },
     ssr: true,

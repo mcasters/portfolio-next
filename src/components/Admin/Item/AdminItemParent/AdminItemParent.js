@@ -8,10 +8,10 @@ import ADD_ITEM_MUTATION from '../../../../data/graphql/queries/addItem';
 import GET_ITEMS_QUERY from '../../../../data/graphql/queries/getAllItems';
 import DELETE_ITEM from '../../../../data/graphql/queries/deleteItem';
 import UPDATE_MUTATION from '../../../../data/graphql/queries/updateItem';
-import AlertContext from '../../../AlertContext/AlertContext';
+import { useAlert } from '../../../AlertContext/AlertContext';
 
 export default function AdminItemParent({ type }) {
-  const triggerAlert = useContext(AlertContext);
+  const triggerAlert = useAlert();
 
   const [addItem] = useMutation(ADD_ITEM_MUTATION, {
     update(cache, { data }) {

@@ -19,28 +19,22 @@ function Menu({ open, onNavigate, routes, onLeave }) {
         {routes.map(route => {
           if (route[0] === 'Home') {
             return (
-              <Link
-                key={route[0]}
-                className={s.navHomeLink}
-                href={route[1]}
-                onClick={onNavigate}
-              >
-                <img
-                  src="/logo-45.png"
-                  srcSet="/logo-100.png"
-                  alt="Signature de Marion Casters"
-                />
+              <Link key={route[0]} href={route[1]}>
+                <a className={s.navHomeLink} onClick={onNavigate}>
+                  <img
+                    src="/logo-45.png"
+                    srcSet="/logo-100.png"
+                    alt="Signature de Marion Casters"
+                  />
+                </a>
               </Link>
             );
           }
           return (
-            <Link
-              key={route[0]}
-              className={s.item}
-              href={route[1]}
-              onClick={onNavigate}
-            >
-              <a>{route[0]}</a>
+            <Link key={route[0]} href={route[1]}>
+              <a className={s.item} onClick={onNavigate}>
+                {route[0]}
+              </a>
             </Link>
           );
         })}

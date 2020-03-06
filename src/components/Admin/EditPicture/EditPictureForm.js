@@ -1,16 +1,14 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/label-has-for */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
 
 import s from './EditPictureForm.module.css';
 import ADD_PICTURE_MUTATION from '../../../data/graphql/queries/addPicture';
 import CONT_CONST from '../../../constants/content';
-import AlertContext from '../../AlertContext/AlertContext';
+import { useAlert } from '../../AlertContext/AlertContext';
 
 function EditPictureForm({ pictureTitle }) {
-  const triggerAlert = useContext(AlertContext);
+  const triggerAlert = useAlert();
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [file, setFile] = useState('');
 
