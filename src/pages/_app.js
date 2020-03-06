@@ -2,14 +2,17 @@ import './styles.css';
 import React from 'react';
 
 import { AlertProvider } from '../components/AlertContext/AlertContext';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
   return (
     <>
-      <AlertProvider>
-        <Component {...pageProps} />
-      </AlertProvider>
+      <ErrorBoundary>
+        <AlertProvider>
+          <Component {...pageProps} />
+        </AlertProvider>
+      </ErrorBoundary>
       <style jsx global>{`
         .react-tabs {
           -webkit-tap-highlight-color: transparent;

@@ -7,7 +7,6 @@ import Footer from '../Footer/Footer';
 import Navigation from '../Navigation/Navigation';
 import LAYOUT_CONSTANTS from '../../../constants/layoutConstants';
 import ROUTER_CONSTANTS from '../../../constants/router';
-import ErrorBoundary from '../../ErrorBoundary';
 import Main from '../Main/Main';
 import useViewport from '../../Hooks/useViewport';
 
@@ -31,14 +30,12 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <ErrorBoundary>
-        <Header isHome={isHome} onHeight={getHeight} />
-        <Navigation isLessThanMD={isLessThanMD} isHome={isHome} />
-        <Main isHome={isHome} height={mainHeight}>
-          {children}
-        </Main>
-        <Footer />
-      </ErrorBoundary>
+      <Header isHome={isHome} onHeight={getHeight} />
+      <Navigation isLessThanMD={isLessThanMD} isHome={isHome} />
+      <Main isHome={isHome} height={mainHeight}>
+        {children}
+      </Main>
+      <Footer />
     </>
   );
 }

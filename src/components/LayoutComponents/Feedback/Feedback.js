@@ -9,7 +9,7 @@ function Feedback() {
       <Link href="https://nodejs.org">
         <a target="_blank" rel="noreferrer">
           <img
-            src="/nodeJSTransparent.png"
+            src="/assets/nodeJSTransparent.png"
             className={s.nodejsLogo}
             alt="NodeJS"
           />
@@ -18,7 +18,7 @@ function Feedback() {
       <Link href="https://reactjs.org">
         <a target="_blank" rel="noreferrer">
           <img
-            src="/reactTransparent.png"
+            src="/assets/reactTransparent.png"
             className={s.reactLogo}
             alt="React"
           />
@@ -27,7 +27,7 @@ function Feedback() {
       <Link href="https://graphql.org">
         <a target="_blank" rel="noreferrer">
           <img
-            src="/graphqlTransparent.png"
+            src="/assets/graphqlTransparent.png"
             className={s.graphqlLogo}
             alt="GraphQL"
           />
@@ -36,7 +36,7 @@ function Feedback() {
       <Link href="https://www.apple.com">
         <a target="_blank" rel="noreferrer">
           <img
-            src="/appleTransparent.png"
+            src="/assets/appleTransparent.png"
             className={s.appleLogo}
             alt="Apple"
           />
