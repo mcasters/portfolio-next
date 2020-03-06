@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ITEM from '../../../constants/item';
-import CONSTANT from '../../../constants/layoutConstants';
+import CONSTANT from '../../../constants/layout';
 import LightBoxProvider from '../../LightBoxProvider';
 import ItemService from '../../../app-services/ItemService';
 import useViewport from "../../Hooks/useViewport";

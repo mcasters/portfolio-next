@@ -1,7 +1,7 @@
 import Markdown from 'react-markdown';
 import Root from "../components/LayoutComponents/Root";
 
-export default () => {
+const Privacy = () => {
   return (
     <Root>
       <div className="markdown">
@@ -29,3 +29,5 @@ Nous nous engageons à ne collecter aucun renseignement personnel, d'aucune sort
     </Root>
   );
 };
+
+export default Privacy;

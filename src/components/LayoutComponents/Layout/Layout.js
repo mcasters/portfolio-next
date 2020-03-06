@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Navigation from '../Navigation/Navigation';
-import LAYOUT_CONSTANTS from '../../../constants/layoutConstants';
+import LAYOUT_CONSTANTS from '../../../constants/layout';
 import ROUTER_CONSTANTS from '../../../constants/router';
 import Main from '../Main/Main';
 import useViewport from '../../Hooks/useViewport';

@@ -8,7 +8,7 @@ import {
   LIGHTBOX_MOBILE_PADDING,
   LIGHTBOX_PADDING,
 } from '../../constants/lightboxConstants';
-import LAYOUT_CONSTANTS from '../../constants/layoutConstants';
+import LAYOUT_CONSTANTS from '../../constants/layout';
 
 export default function LightBoxProvider({ title, type, srcList, toggler }) {
   const isSculpture = type === ITEM.SCULPTURE.TYPE;
