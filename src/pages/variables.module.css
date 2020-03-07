@@ -2,7 +2,7 @@
 @custom-media --sm (width >= 765px); /* ipad */
 @custom-media --md (width >= 992px); /* ipad plus */
 @custom-media --lg (width >= 1200px); /* 13' */
-@custom-media --xlg (width >= 1600px);
+@custom-media --xlg (width >= 1600px); /* > 15' */
 
 :root {
   /*
@@ -41,19 +41,20 @@
 
   --color-xxlight: #fafafa;
   --color-xlight: #eee;
-  --color-light: #ccc;
+  //--color-light: #ccc;
+  --color-light: #ccc8b6;
   --color-medium: #aaa;
-  --color-dark: #777;
+  //--color-dark: #777;
+  --color-dark: #776e65;
   --color-xdark: #555;
   --color-xxdark: #333;
-  --link-color-light: #d1b1b1;
-  --link-color: #ab8b8b;
-  --link-color-dark: #a86363;
-  --link-color-xdark: #754b49;
   --color-light-brown: #7b6a58;
   --color-dark-brown: #574530;
   --color-xdark-brown: #453322;
-
+  --link-color-light: #d1bb9f;
+  --link-color: #a8856e;
+  --link-color-dark: #8d6246;
+  --link-color-xdark: #765e3f;
   /*
    * Font size
    * ======================================================================== */

@@ -5,15 +5,16 @@ module.exports = {
     // PostCSS Preset Env, which allows you easily to use all the features in cssdb.
     // See what features in which stage in https://preset-env.cssdb.org/features
     // https://github.com/csstools/postcss-preset-env
-    // 'postcss-preset-env': {
-    //   autoprefixer: {
-    //     flexbox: 'no-2009',
-    //   },
-    //   stage: 3,
-    //   features: {
-    //     'custom-properties': true,
-    //   },
-    // },
+    'postcss-preset-env': {
+      autoprefixer: {
+        flexbox: 'no-2009',
+      },
+      stage: 2,
+      features: {
+        'custom-properties': true,
+        'custom-media': true,
+      },
+    },
     'postcss-custom-properties': {},
     // W3C CSS Custom Media Queries, e.g. @custom-media --small-viewport (max-width: 30em);
     // https://github.com/postcss/postcss-custom-media

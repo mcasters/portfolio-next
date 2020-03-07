@@ -1,7 +1,6 @@
 .main,
 .mainHome {
-  padding:
-    var(--main-top-padding-mobile) var(--main-side-padding-mobile)
+  padding: var(--main-top-padding-mobile) var(--main-side-padding-mobile)
     var(--mainHome-bottom-padding);
   box-sizing: border-box;
   text-align: center;
@@ -16,14 +15,12 @@
 
 @media (--sm) {
   .main {
-    padding:
-      var(--main-top-padding-mobile) var(--main-side-padding)
+    padding: var(--main-top-padding-mobile) var(--main-side-padding)
       var(--main-bottom-padding);
   }
 
   .mainHome {
-    padding:
-      var(--main-top-padding-mobile) var(--mainHome-side-padding)
+    padding: var(--main-top-padding-mobile) var(--mainHome-side-padding)
       var(--mainHome-bottom-padding);
   }
 }
@@ -35,8 +32,7 @@
   }
 
   .mainHome {
-    padding:
-      var(--main-top-padding) var(--mainHome-side-padding)
+    padding-top: var(--main-top-padding) var(--mainHome-side-padding)
       var(--mainHome-bottom-padding);
   }
 }
@@ -49,16 +45,13 @@
 
 @media (--xlg) {
   .mainHome {
-    padding:
-      var(--main-top-padding) var(--main-side-padding-large)
+    padding: var(--main-top-padding) var(--main-side-padding-large)
       var(--mainHome-bottom-padding);
   }
 
   .main {
-    padding:
-      var(--main-top-padding) var(--main-side-padding-large)
+    padding: var(--main-top-padding) var(--main-side-padding-large)
       var(--main-bottom-padding);
     margin-left: var(--aside-width);
   }
 }
-
