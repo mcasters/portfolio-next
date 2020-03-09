@@ -8,6 +8,7 @@ import Image from '../Image';
 
 function Item({ item, type }) {
   const email = GLOBAL_CONSTANTS.EMAIL;
+  const date = typeof window !== 'undefined' ? new Date(item.date).toLocaleDateString() : item.date;
 
   return (
     <article className={s.itemContainer}>
@@ -17,7 +18,7 @@ function Item({ item, type }) {
       <Image type={type} title={item.title} />
       <figcaption>
         <time dateTime={item.date} className={s.noWrap}>
-          {new Date(item.date).toLocaleDateString()}
+          {date}
         </time>
         <span className={s.spacer}> | </span>
         <p className={s.noWrap}>{item.technique}</p>

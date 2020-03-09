@@ -71,7 +71,7 @@ function Image({ title, type }) {
         title={title}
         type={type}
         srcList={largeSrcList}
-        toggler={isOpen}
+        toggle={isOpen}
       />
     </>
   );

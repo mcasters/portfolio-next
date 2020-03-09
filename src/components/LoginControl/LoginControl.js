@@ -21,6 +21,7 @@ const LoginControl = () => {
 
   if (
     loading === false &&
+    data &&
     data.viewer === null &&
     typeof window !== 'undefined'
   ) {

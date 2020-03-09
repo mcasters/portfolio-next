@@ -6,15 +6,16 @@ import { getScrollY } from '../../../tools/windowUtils';
 function useScroll() {
   const [scrollY, setScrollY] = useState(getScrollY());
 
-  function handleChangeScroll() {
-    setScrollY(getScrollY());
-  }
-
   useEffect(() => {
+    function handleChangeScroll() {
+      setScrollY(getScrollY());
+    }
+
     window.addEventListener('scroll', throttle(handleChangeScroll, 200), {
       passive: true,
     });
-    return function cleanup() {
+
+    return () => {
       window.removeEventListener('scroll', handleChangeScroll);
     };
   }, []);
