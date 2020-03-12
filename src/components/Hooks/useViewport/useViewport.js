@@ -11,8 +11,8 @@ function useViewport() {
 
   useEffect(() => {
     function handleResize() {
-      setWindowWidth(getWindowWidth());
-      setWindowHeight(getWindowHeight());
+      setWindowWidth(() => getWindowWidth());
+      setWindowHeight(() => getWindowHeight());
     }
 
     window.addEventListener('resize', handleResize);

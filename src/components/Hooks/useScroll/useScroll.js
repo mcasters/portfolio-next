@@ -1,24 +1,28 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import throttle from 'lodash/throttle';
 
 import { getScrollY } from '../../../tools/windowUtils';
 
 function useScroll() {
-  const [scrollY, setScrollY] = useState(getScrollY());
+  const [scrollY, setScrollY] = useState(0);
+
+  const handleScroll = useCallback(
+    throttle(() => {
+      setScrollY(getScrollY());
+    }, 500),
+    [setScrollY],
+  );
 
   useEffect(() => {
-    function handleChangeScroll() {
-      setScrollY(getScrollY());
-    }
-
-    window.addEventListener('scroll', throttle(handleChangeScroll, 200), {
+    window.addEventListener('scroll', handleScroll, {
       passive: true,
     });
 
     return () => {
-      window.removeEventListener('scroll', handleChangeScroll);
+      handleScroll.cancel();
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [scrollY]);
 
   return scrollY;
 }

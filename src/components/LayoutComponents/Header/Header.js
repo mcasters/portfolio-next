@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import s from './Header.module.css';
 import GLOB_CONST from '../../../constants/globalConstants';
+import useHeight from '../../Hooks/useHeight';
 import useScroll from '../../Hooks/useScroll';
-import useHeight from "../../Hooks/useHeight";
 
 function Header({ isHome, onHeight }) {
   const [height, ref] = useHeight();
@@ -12,7 +12,7 @@ function Header({ isHome, onHeight }) {
   const title = GLOB_CONST.SITE_TITLE;
 
   useEffect(() => {
-      onHeight(height);
+    onHeight(height);
   }, []);
 
   return isHome ? (
