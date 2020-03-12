@@ -1,7 +1,7 @@
 const canUseDOM = !!(
-    typeof window !== 'undefined' &&
-    window.document &&
-    window.document.createElement
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
 );
 
 export function translate(str, replaceStrings = null) {
@@ -36,7 +36,9 @@ export function getScrollY() {
 }
 
 export function getClientHeight(node) {
-  return node !== null && canUseDOM ? node.getBoundingClientRect().height : 100;
+  if (node !== null) {
+    return canUseDOM ? node.getBoundingClientRect().height : 100;
+  }
 }
 
 // Get the highest window context that isn't cross-origin
