@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import ITEM from '../../../constants/item';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
@@ -8,7 +8,11 @@ import Image from '../Image';
 
 function Item({ item, type }) {
   const email = GLOBAL_CONSTANTS.EMAIL;
-  const date = typeof window !== 'undefined' ? new Date(item.date).toLocaleDateString() : item.date;
+
+  function createDateFormat(date) {
+    const newDate = new Date(date);
+    return `${newDate.getDay()}/${newDate.getMonth()}/${newDate.getFullYear()}`;
+  }
 
   return (
     <article className={s.itemContainer}>
@@ -18,7 +22,7 @@ function Item({ item, type }) {
       <Image type={type} title={item.title} />
       <figcaption>
         <time dateTime={item.date} className={s.noWrap}>
-          {date}
+          {createDateFormat(item.date)}
         </time>
         <span className={s.spacer}> | </span>
         <p className={s.noWrap}>{item.technique}</p>
