@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ITEM from '../../../constants/item';
 import CONSTANT from '../../../constants/layout';
 import LightBoxProvider from '../../LightBoxProvider';
 import ItemService from '../../../app-services/ItemService';
-import useViewport from "../../Hooks/useViewport";
+import useViewport from '../../Hooks/useViewport';
 import s from './Image.module.css';
-
 
 function Image({ title, type }) {
   const { width } = useViewport();
@@ -45,10 +44,6 @@ function Image({ title, type }) {
     return list;
   };
 
-  const toggleLightBox = () => {
-    setIsOpen(!isOpen);
-  };
-
   setPath();
 
   const currentSrcList = getSrcList(true);
@@ -59,7 +54,7 @@ function Image({ title, type }) {
         {currentSrcList.map(src => (
           <button
             type="button"
-            onClick={toggleLightBox}
+            onClick={() => setIsOpen(!isOpen)}
             className={isSculpture ? s.sculptureButton : s.imageButton}
             key={src}
           >
@@ -67,12 +62,7 @@ function Image({ title, type }) {
           </button>
         ))}
       </figure>
-      <LightBoxProvider
-        title={title}
-        type={type}
-        srcList={largeSrcList}
-        toggle={isOpen}
-      />
+      <LightBoxProvider title={title} srcList={largeSrcList} isOpen={isOpen} />
     </>
   );
 }

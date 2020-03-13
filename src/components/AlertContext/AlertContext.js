@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Alert from '../Alert/Alert';
 
 const AlertContext = React.createContext();
