@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import s from './CustomMobileNav.module.css';
-import ROUTER from '../../../../constants/router';
+import ROUTER_CONSTANT from '../../../../constants/router';
 import Menu from './Menu';
 import MenuButton from './MenuButton';
 
@@ -23,12 +23,12 @@ function CustomMobileNav() {
   };
 
   const routes = [
-    ['Présentation', `${ROUTER.PRESENTATION}`],
-    ['Peintures', `${ROUTER.PEINTURES}`],
-    ['Sculptures', `${ROUTER.SCULPTURES}`],
-    ['Dessins', `${ROUTER.DESSINS}`],
-    ['Contact', `${ROUTER.CONTACT}`],
-    ['Home', `${ROUTER.HOME}`],
+    ['Présentation', `${ROUTER_CONSTANT.PRESENTATION}`],
+    ['Peintures', `${ROUTER_CONSTANT.PEINTURES}`],
+    ['Sculptures', `${ROUTER_CONSTANT.SCULPTURES}`],
+    ['Dessins', `${ROUTER_CONSTANT.DESSINS}`],
+    ['Contact', `${ROUTER_CONSTANT.CONTACT}`],
+    ['Home', `${ROUTER_CONSTANT.HOME}`],
   ];
 
   return (

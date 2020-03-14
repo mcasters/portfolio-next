@@ -1,4 +1,4 @@
-const ROUTER = {
+const ROUTER_CONSTANT = {
   HOME: '/',
   PEINTURES: '/peintures',
   SCULPTURES: '/sculptures',
@@ -9,6 +9,8 @@ const ROUTER = {
   CONFIDENTIALITE: '/politique-de-confidentialite',
   REGISTER: '/register',
   ADMIN: '/admin',
+  SIGNOUT: '/signout',
+  SIGNIN: '/signin',
 };
 
-export default ROUTER;
+export default ROUTER_CONSTANT;

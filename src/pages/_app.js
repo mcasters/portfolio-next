@@ -5,7 +5,7 @@ import { AlertProvider } from '../components/AlertContext/AlertContext';
 import ErrorBoundary from '../components/ErrorBoundary';
 import Head from 'next/head';
 import {useRouter} from "next/router";
-import ROUTER from "../constants/router";
+import ROUTER_CONSTANT from "../constants/router";
 import { DESCRIPTION, KEYWORDS } from "../constants/metaHtml";
 import TITLE from "../constants/pageTitle";
 import ITEM from "../constants/item";
@@ -16,28 +16,28 @@ export default function MyApp({ Component, pageProps }) {
   const getTitle = () => {
     let title = '';
     switch (router.pathname) {
-      case ROUTER.HOME:
+      case ROUTER_CONSTANT.HOME:
         title = TITLE.HOME;
         break;
-      case ROUTER.ADMIN:
+      case ROUTER_CONSTANT.ADMIN:
         title = TITLE.ADMIN;
         break;
-      case ROUTER.CONFIDENTIALITE:
+      case ROUTER_CONSTANT.CONFIDENTIALITE:
         title = TITLE.PRIVACY;
         break;
-      case ROUTER.CONTACT:
+      case ROUTER_CONSTANT.CONTACT:
         title = TITLE.CONTACT;
         break;
-      case ROUTER.DESSINS:
+      case ROUTER_CONSTANT.DESSINS:
         title = ITEM.DRAWING.TITLE;
         break;
-      case ROUTER.PEINTURES:
+      case ROUTER_CONSTANT.PEINTURES:
         title = ITEM.PAINTING.TITLE;
         break;
-      case ROUTER.PRESENTATION:
+      case ROUTER_CONSTANT.PRESENTATION:
         title = TITLE.PRESENTATION;
         break;
-      case ROUTER.SCULPTURES:
+      case ROUTER_CONSTANT.SCULPTURES:
         title = ITEM.SCULPTURE.TITLE;
         break;
     }
@@ -46,21 +46,21 @@ export default function MyApp({ Component, pageProps }) {
 
   const getDescription = () => {
     switch (router.pathname) {
-      case ROUTER.HOME:
+      case ROUTER_CONSTANT.HOME:
         return DESCRIPTION.HOME;
-      case ROUTER.ADMIN:
+      case ROUTER_CONSTANT.ADMIN:
         return DESCRIPTION.ADMIN;
-      case ROUTER.CONFIDENTIALITE:
+      case ROUTER_CONSTANT.CONFIDENTIALITE:
         return DESCRIPTION.PRIVACY;
-      case ROUTER.CONTACT:
+      case ROUTER_CONSTANT.CONTACT:
         return DESCRIPTION.CONTACT;
-      case ROUTER.DESSINS:
+      case ROUTER_CONSTANT.DESSINS:
         return DESCRIPTION.DRAWING;
-      case ROUTER.PEINTURES:
+      case ROUTER_CONSTANT.PEINTURES:
         return DESCRIPTION.PAINTING;
-      case ROUTER.PRESENTATION:
+      case ROUTER_CONSTANT.PRESENTATION:
         return DESCRIPTION.PRESENTATION;
-      case ROUTER.SCULPTURES:
+      case ROUTER_CONSTANT.SCULPTURES:
         return DESCRIPTION.SCULPTURE;
     }
   };

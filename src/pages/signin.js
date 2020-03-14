@@ -8,18 +8,19 @@ import Field from '../components/field';
 import { getErrorMessage } from '../components/lib/form';
 import SignInMutation from '../data/graphql/queries/signin';
 import Layout from "../components/LayoutComponents/Layout/Layout";
+import ROUTER_CONSTANT from '../constants/router';
 
-function SignIn() {
+const SignIn = () => {
   const client = useApolloClient();
   const [signIn] = useMutation(SignInMutation);
   const [errorMsg, setErrorMsg] = React.useState();
   const router = useRouter();
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  const handleSubmit = async e => {
+    e.preventDefault();
 
-    const usernameElement = event.currentTarget.elements.username;
-    const passwordElement = event.currentTarget.elements.password;
+    const usernameElement = e.currentTarget.elements.username;
+    const passwordElement = e.currentTarget.elements.password;
 
     try {
       await client.resetStore();
@@ -30,12 +31,12 @@ function SignIn() {
         },
       });
       if (data.signIn.user) {
-        await router.push('/');
+        await router.push(ROUTER_CONSTANT.ADMIN);
       }
     } catch (error) {
       setErrorMsg(getErrorMessage(error));
     }
-  }
+  };
 
   return (
     <Layout>

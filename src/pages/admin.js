@@ -1,20 +1,21 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/react-hooks';
+import Link from 'next/link';
 
 import s from './admin.module.css';
 import ITEM from '../constants/item';
 import TITLE from '../constants/pageTitle';
 import CONTENT from '../constants/content';
 import EditContent from '../components/Admin/EditContent/EditContent';
-import Logout from '../components/Logout/Logout';
 import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemParent';
 import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
 import ViewerQuery from '../data/graphql/queries/viewer';
 import { withApollo } from '../data/client';
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import ROUTER from "../constants/router";
+import ROUTER_CONSTANT from '../constants/router';
 
 const Admin = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -25,8 +26,9 @@ const Admin = () => {
     loading === false &&
     data.viewer === null &&
     typeof window !== 'undefined'
-  )
-    router.push(ROUTER.HOME);
+  ) {
+    router.push(ROUTER_CONSTANT.HOME);
+  }
 
   const handleSelectTab = index => {
     setSelectedTab(index);
@@ -37,7 +39,9 @@ const Admin = () => {
       <Layout>
         <div className={s.container}>
           <h1 className={s.title}>{TITLE.ADMINISTRATION}</h1>
-          <Logout />
+          <Link href={ROUTER_CONSTANT.SIGNOUT}>
+            <a>Déconnexion</a>
+          </Link>
           <Tabs
             selectedIndex={selectedTab}
             onSelect={handleSelectTab}
