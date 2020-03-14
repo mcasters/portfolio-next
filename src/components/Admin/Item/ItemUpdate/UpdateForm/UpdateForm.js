@@ -39,7 +39,6 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
 
   const handleChange = e => {
     e.preventDefault();
-    // eslint-disable-next-line no-shadow
     const { name, value, type } = e.target;
     setInput(prevState => ({
       ...prevState,
@@ -47,8 +46,8 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
     }));
   };
 
-  const handleChangeDate = pDate => {
-    setInput(prevState => ({ ...prevState, date: pDate }));
+  const handleChangeDate = d => {
+    setInput(prevState => ({ ...prevState, date: d }));
   };
 
   const handleImageChange = (e, index) => {

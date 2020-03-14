@@ -37,6 +37,7 @@ module.exports = {
       },
     ],
 
+    // Prefer string template
     'prefer-template': 2,
 
     // Prefer destructuring from arrays and objects

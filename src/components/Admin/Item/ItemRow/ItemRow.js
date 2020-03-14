@@ -5,6 +5,7 @@ import s from './ItemRow.module.css';
 import ItemDeleteButton from '../ItemDelete/ItemDeleteButton';
 import ItemUpdateButton from '../ItemUpdate/ItemUpdateButton';
 import ItemService from '../../../../app-services/ItemService';
+import { createDateFormat } from '../../../../tools/utils';
 
 function ItemRow({ item, srcList, type, deleteMutation, updateMutation }) {
   const itemService = new ItemService(type);
@@ -16,7 +17,7 @@ function ItemRow({ item, srcList, type, deleteMutation, updateMutation }) {
   return (
     <tr className={s.row}>
       <th>{item.title}</th>
-      <th>{new Date(item.date).toLocaleDateString()}</th>
+      <th>{createDateFormat(item.date)}</th>
       <th>{item.technique}</th>
       <th>{item.description}</th>
       <th>{item.height}</th>

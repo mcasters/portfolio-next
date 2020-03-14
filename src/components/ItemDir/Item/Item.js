@@ -5,14 +5,10 @@ import ITEM from '../../../constants/item';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import s from './Item.module.css';
 import Image from '../Image';
+import { createDateFormat } from '../../../tools/utils';
 
 function Item({ item, type }) {
   const email = GLOBAL_CONSTANTS.EMAIL;
-
-  function createDateFormat(date) {
-    const newDate = new Date(date);
-    return `${newDate.getDay()}/${newDate.getMonth()}/${newDate.getFullYear()}`;
-  }
 
   return (
     <article className={s.itemContainer}>
