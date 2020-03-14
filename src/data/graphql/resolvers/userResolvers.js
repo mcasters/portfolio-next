@@ -31,7 +31,8 @@ export default {
         try {
           const { username } = jwt.verify(token, JWT_SECRET);
           const user = await User.findOne({ where: { username } });
-          return user;
+          console.log('coucou /////// ' + user);
+          return { user };
         } catch {
           throw new AuthenticationError("Token d'authentification invalide");
         }

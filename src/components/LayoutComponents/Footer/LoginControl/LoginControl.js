@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import Link from 'next/link';
 
@@ -10,11 +9,6 @@ import ROUTER_CONSTANT from '../../../../constants/router';
 
 const LoginControl = () => {
   const { data, loading } = useQuery(ViewerQuery);
-  const [, setOpenDialog] = useState(false);
-
-  React.componentWillUnmount = () => {
-    setOpenDialog(false);
-  };
 
   if (
     loading === false &&

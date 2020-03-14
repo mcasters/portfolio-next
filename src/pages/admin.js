@@ -107,4 +107,14 @@ const Admin = () => {
   return <p>Loading...</p>;
 };
 
+Admin.getInitialProps = async function(context) {
+  const { id } = context.query;
+  const res = await fetch(`/api/graphql`);
+  const show = await res.json();
+
+  console.log(`Fetched show: ${show.name}`);
+
+  return { show };
+};
+
 export default withApollo(Admin);

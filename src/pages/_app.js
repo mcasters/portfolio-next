@@ -4,12 +4,13 @@ import React from 'react';
 import { AlertProvider } from '../components/AlertContext/AlertContext';
 import ErrorBoundary from '../components/ErrorBoundary';
 import Head from 'next/head';
-import {useRouter} from "next/router";
-import ROUTER_CONSTANT from "../constants/router";
-import { DESCRIPTION, KEYWORDS } from "../constants/metaHtml";
-import TITLE from "../constants/pageTitle";
-import ITEM from "../constants/item";
+import { useRouter } from 'next/router';
+import ROUTER_CONSTANT from '../constants/router';
+import { DESCRIPTION, KEYWORDS } from '../constants/metaHtml';
+import TITLE from '../constants/pageTitle';
+import ITEM from '../constants/item';
 
+// eslint-disable-next-line react/prop-types
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
@@ -41,7 +42,7 @@ export default function MyApp({ Component, pageProps }) {
         title = ITEM.SCULPTURE.TITLE;
         break;
     }
-    return title + " - Marion Casters";
+    return `${title} - Marion Casters`;
   };
 
   const getDescription = () => {

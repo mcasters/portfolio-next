@@ -4,7 +4,7 @@ export default gql`
   query ViewerQuery {
     viewer {
       id
-      email
+      username
     }
   }
 `;
