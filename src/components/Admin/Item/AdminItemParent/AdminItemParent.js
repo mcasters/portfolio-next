@@ -66,28 +66,6 @@ export default function AdminItemParent({ type }) {
   });
 
   const [updateItem] = useMutation(UPDATE_MUTATION, {
-    update(cache, { data }) {
-      const { getAllItems } = cache.readQuery({
-        query: GET_ITEMS_QUERY,
-        variables: {
-          type,
-        },
-      });
-
-      const indexToChange = getAllItems.findIndex(item => {
-        return item.id === data.updateItem;
-      });
-
-      getAllItems.splice(indexToChange, 1, data.updateItem);
-      cache.writeQuery({
-        query: GET_ITEMS_QUERY,
-        variables: {
-          type,
-        },
-        data: { getAllItems },
-      });
-    },
-
     onError(err) {
       triggerAlert(err.message, true);
     },

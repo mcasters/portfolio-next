@@ -11,6 +11,11 @@ function ItemList({ type, deleteMutation, updateMutation }) {
   const itemService = new ItemService(type);
   const isSculpture = itemService.getIsSculpture();
   const path = itemService.getPath();
+  const title = 'Modification - Suppression';
+  const { loading, error, data, refetch } = useQuery(GET_ITEMS_QUERY, {
+    variables: { type },
+    ssr: true,
+  });
 
   const getUrlImages = itemTitle => {
     const imageUrls = [];
@@ -26,12 +31,6 @@ function ItemList({ type, deleteMutation, updateMutation }) {
 
     return imageUrls;
   };
-
-  const title = 'Modification - Suppression';
-  const { data, loading, error } = useQuery(GET_ITEMS_QUERY, {
-    variables: { type },
-    ssr: true,
-  });
 
   if (loading) return <div>Chargement...</div>;
   if (error) return <div>Erreur au chargement :(</div>;
@@ -65,6 +64,7 @@ function ItemList({ type, deleteMutation, updateMutation }) {
                 type={type}
                 deleteMutation={deleteMutation}
                 updateMutation={updateMutation}
+                refetch={refetch}
               />
             ))}
         </tbody>

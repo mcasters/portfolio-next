@@ -7,7 +7,7 @@ import ItemUpdateButton from '../ItemUpdate/ItemUpdateButton';
 import ItemService from '../../../../app-services/ItemService';
 import { createDateFormat } from '../../../../tools/utils';
 
-function ItemRow({ item, srcList, type, deleteMutation, updateMutation }) {
+function ItemRow({ item, srcList, type, deleteMutation, updateMutation, refetch }) {
   const itemService = new ItemService(type);
 
   const isSculpture = itemService.getIsSculpture();
@@ -39,6 +39,7 @@ function ItemRow({ item, srcList, type, deleteMutation, updateMutation }) {
           type={type}
           srcList={srcList}
           updateMutation={updateMutation}
+          refetch={refetch}
         />
       </th>
     </tr>
@@ -60,6 +61,7 @@ ItemRow.propTypes = {
   type: PropTypes.string.isRequired,
   deleteMutation: PropTypes.func.isRequired,
   updateMutation: PropTypes.func.isRequired,
+  refetch: PropTypes.func.isRequired,
 };
 
 export default ItemRow;
