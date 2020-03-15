@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useMutation, useApolloClient, useQuery } from '@apollo/react-hooks';
 
 import { withApollo } from '../data/client';
-import Field from '../components/FormElements/field';
+import Field from '../components/FormElements/Field';
 import { getErrorMessage } from '../components/lib/form';
 import SignInMutation from '../data/graphql/queries/signin';
 import Layout from '../components/LayoutComponents/Layout/Layout';
@@ -51,14 +51,14 @@ const SignIn = () => {
           type="username"
           autoComplete="username"
           required
-          label="Username"
+          placeHolder="Username"
         />
         <Field
           name="password"
           type="password"
           autoComplete="password"
           required
-          label="Password"
+          placeHolder="Password"
         />
         <button type="submit">Sign in</button> or{' '}
         <Link href="signup">
