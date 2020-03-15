@@ -1,18 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useMutation, useApolloClient } from '@apollo/react-hooks';
+import { useMutation, useApolloClient, useQuery } from '@apollo/react-hooks';
 
 import { withApollo } from '../data/client';
-import Field from '../components/field';
+import Field from '../components/FormElements/field';
 import { getErrorMessage } from '../components/lib/form';
 import SignInMutation from '../data/graphql/queries/signin';
-import Layout from "../components/LayoutComponents/Layout/Layout";
+import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
+import ViewerQuery from '../data/graphql/queries/viewer';
 
 const SignIn = () => {
   const client = useApolloClient();
   const [signIn] = useMutation(SignInMutation);
+  const { refetch } = useQuery(ViewerQuery);
   const [errorMsg, setErrorMsg] = React.useState();
   const router = useRouter();
 
@@ -31,6 +33,7 @@ const SignIn = () => {
         },
       });
       if (data.signIn.user) {
+        await refetch();
         await router.push(ROUTER_CONSTANT.ADMIN);
       }
     } catch (error) {
@@ -64,6 +67,6 @@ const SignIn = () => {
       </form>
     </Layout>
   );
-}
+};
 
 export default withApollo(SignIn);

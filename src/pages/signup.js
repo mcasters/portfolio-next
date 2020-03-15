@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 
 import { withApollo } from '../data/client';
-import Field from '../components/field';
+import Field from '../components/FormElements/field';
 import { getErrorMessage } from '../components/lib/form';
 import SignUpMutation from '../data/graphql/queries/signup';
 import Layout from "../components/LayoutComponents/Layout/Layout";

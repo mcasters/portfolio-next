@@ -7,7 +7,6 @@ import config from '../../../../next.config';
 import { User } from '../../models/index';
 
 const JWT_SECRET = config.jwt.secret;
-const JWT_NAME = config.jwt.name;
 
 function createUser(data) {
   const salt = bcrypt.genSaltSync();
@@ -30,9 +29,7 @@ export default {
       if (token) {
         try {
           const { username } = jwt.verify(token, JWT_SECRET);
-          const user = await User.findOne({ where: { username } });
-          console.log('coucou /////// ' + user);
-          return { user };
+          return User.findOne({ where: { username } });
         } catch {
           throw new AuthenticationError("Token d'authentification invalide");
         }
@@ -71,7 +68,7 @@ export default {
 
         context.res.setHeader(
           'Set-Cookie',
-          cookie.serialize(JWT_NAME, token, {
+          cookie.serialize('token', token, {
             httpOnly: true,
             maxAge: 6 * 60 * 60,
             path: '/',
@@ -89,7 +86,7 @@ export default {
     async signOut(_parent, _args, context, _info) {
       context.res.setHeader(
         'Set-Cookie',
-        cookie.serialize(JWT_NAME, '', {
+        cookie.serialize('token', '', {
           httpOnly: true,
           maxAge: -1,
           path: '/',

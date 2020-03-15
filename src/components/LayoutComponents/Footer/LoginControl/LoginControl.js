@@ -10,26 +10,21 @@ import ROUTER_CONSTANT from '../../../../constants/router';
 const LoginControl = () => {
   const { data, loading } = useQuery(ViewerQuery);
 
-  if (
-    loading === false &&
-    data &&
-    data.viewer === null &&
-    typeof window !== 'undefined'
-  ) {
+  if (data && data.viewer) {
+    return (
+      <Link href={ROUTER_CONSTANT.ADMIN}>
+        <a className={s.link}>Admin</a>
+      </Link>
+    );
+  }
+
+  if (loading === false) {
     return (
       <>
         <Link href={ROUTER_CONSTANT.SIGNIN}>
           <a className={s.link}>Admin in</a>
         </Link>
       </>
-    );
-  }
-
-  if (data && data.viewer) {
-    return (
-      <Link href={ROUTER_CONSTANT.ADMIN}>
-        <a className={s.link}>Admin</a>
-      </Link>
     );
   }
 
