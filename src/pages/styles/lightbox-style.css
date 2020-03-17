@@ -8,7 +8,7 @@
 }
 
 .ril__outer {
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.88);
   outline: none;
   top: 0;
   left: 0;
@@ -44,6 +44,7 @@
   bottom: 0;
   left: 0;
   margin: auto;
+  border: #222 solid;
   max-width: none;
   -ms-content-zooming: none;
   -ms-user-select: none;
@@ -62,8 +63,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 20px;
-  height: 34px;
+  width: 18%;
   padding: 40px 30px;
   margin: auto;
   cursor: pointer;
@@ -78,14 +78,14 @@
 
 .ril__navButtonPrev {
   left: 0;
-  background: rgba(0, 0, 0, 0.2)
+  background: transparent
     url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjM0Ij48cGF0aCBkPSJtIDE5LDMgLTIsLTIgLTE2LDE2IDE2LDE2IDEsLTEgLTE1LC0xNSAxNSwtMTUgeiIgZmlsbD0iI0ZGRiIvPjwvc3ZnPg==')
     no-repeat center;
 }
 
 .ril__navButtonNext {
   right: 0;
-  background: rgba(0, 0, 0, 0.2)
+  background: transparent
     url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjM0Ij48cGF0aCBkPSJtIDEsMyAyLC0yIDE2LDE2IC0xNiwxNiAtMSwtMSAxNSwtMTUgLTE1LC0xNSB6IiBmaWxsPSIjRkZGIi8+PC9zdmc+')
     no-repeat center;
 }
@@ -118,7 +118,7 @@
 
 .ril__captionContent {
   padding: 10px 20px;
-  color: #fff;
+  color: #777;
 }
 
 .ril__toolbar {
@@ -149,8 +149,8 @@
   display: inline-block;
   line-height: 50px;
   padding: 0;
-  color: #fff;
-  font-size: 120%;
+  color: #777;
+  font-size: 13px;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -232,7 +232,7 @@
   margin: 0 auto;
   width: 11%;
   height: 30%;
-  background-color: #fff;
+  background-color: #777;
   border-radius: 30%;
   animation: pointFade 800ms infinite ease-in-out both;
 }
@@ -328,7 +328,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #777;
 }
 .ril__imagePrev .ril__errorContainer,
 .ril__imageNext .ril__errorContainer {
@@ -336,9 +336,16 @@
 }
 
 .ril__loadingContainer__icon {
-  color: #fff;
+  color: #777;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
+}
+
+@media (--md) {
+  .ril__toolbarItem {
+    font-size: 15px;
+    letter-spacing: 0.8em;
+  }
 }

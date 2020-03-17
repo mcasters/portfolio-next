@@ -31,6 +31,7 @@ export default function LightBoxProvider({ title, images, onClose }) {
       mobileSizeBreakpoint={LAYOUT_CONSTANTS.BREAKPOINT.MD}
       imagePadding={LIGHTBOX_PADDING}
       imageMobilePadding={LIGHTBOX_MOBILE_PADDING}
+      imageLoadErrorMessage="Erreur au chargement de l'image"
     />
   );
 }

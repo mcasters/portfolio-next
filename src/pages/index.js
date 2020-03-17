@@ -3,7 +3,7 @@ import React from "react";
 import Content from '../components/Content/Content';
 import CONTENT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
-import s from './index.module.css';
+import s from './styles/index.module.css';
 import Layout from "../components/LayoutComponents/Layout/Layout";
 
 function Home() {

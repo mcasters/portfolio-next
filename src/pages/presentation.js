@@ -1,6 +1,6 @@
 import React from 'react';
 
-import s from './Presentation.module.css';
+import s from './styles/presentation.module.css';
 import Content from '../components/Content/Content';
 import CONT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';

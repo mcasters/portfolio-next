@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/react-hooks';
 import Link from 'next/link';
 
-import s from './admin.module.css';
+import s from './styles/admin.module.css';
 import ITEM from '../constants/item';
 import TITLE from '../constants/pageTitle';
 import CONTENT from '../constants/content';
