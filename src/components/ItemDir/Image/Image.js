@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ITEM from '../../../constants/item';
@@ -18,43 +18,47 @@ function Image({ title, type }) {
   const alt = itemService.getAltImage();
   const isSculpture = itemService.getIsSculpture();
 
-  let currentImagePath;
-  let largeImagePath;
-
-  const setPath = () => {
-    currentImagePath = isLessThanSM
+  const getCurrentPath = () => {
+    return isLessThanSM
       ? `${itemPath}/${ITEM.SM_SIZE}`
       : `${itemPath}/${ITEM.MD_SIZE}`;
-    largeImagePath = isLessThanSM
-      ? `${itemPath}/${ITEM.MD_SIZE}`
-      : `${itemPath}`;
   };
 
-  const getSrcList = isCurrent => {
-    const list = [];
-    const path = isCurrent ? `${currentImagePath}` : `${largeImagePath}`;
+  const getLightboxPath = () => {
+    return isLessThanSM ? `${itemPath}/${ITEM.MD_SIZE}` : `${itemPath}`;
+  };
+
+  const closeLightbox = () => {
+    setIsOpen(false);
+  };
+
+  const openLightbox = () => {
+    setIsOpen(true);
+  };
+
+  const getImageList = isForLightbox => {
+    const path = isForLightbox ? getLightboxPath() : getCurrentPath();
 
     if (!isSculpture) {
-      list.push(`${path}/${title}.jpg`);
+      return [`${path}/${title}.jpg`];
     } else {
-      for (let i = 1; i < 5; i++) {
+      let i;
+      let list = [];
+
+      for (i = 1; i < 5; i++) {
         list.push(`${path}/${title}_${i}.jpg`);
       }
+      return list;
     }
-    return list;
   };
 
-  setPath();
-
-  const currentSrcList = getSrcList(true);
-  const largeSrcList = getSrcList(false);
   return (
     <>
       <figure>
-        {currentSrcList.map(src => (
+        {getImageList(false).map(src => (
           <button
             type="button"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={openLightbox}
             className={isSculpture ? s.sculptureButton : s.imageButton}
             key={src}
           >
@@ -62,7 +66,13 @@ function Image({ title, type }) {
           </button>
         ))}
       </figure>
-      <LightBoxProvider title={title} srcList={largeSrcList} isOpen={isOpen} />
+      {isOpen && typeof window !== 'undefined' && (
+        <LightBoxProvider
+          title={title}
+          images={getImageList(true)}
+          onClose={closeLightbox}
+        />
+      )}
     </>
   );
 }

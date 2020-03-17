@@ -1,4 +1,5 @@
 import './styles.css';
+import './lightbox-style.css';
 import React from 'react';
 
 import { AlertProvider } from '../components/AlertContext/AlertContext';
@@ -20,9 +21,6 @@ export default function MyApp({ Component, pageProps }) {
       case ROUTER_CONSTANT.HOME:
         title = TITLE.HOME;
         break;
-      case ROUTER_CONSTANT.ADMIN:
-        title = TITLE.ADMIN;
-        break;
       case ROUTER_CONSTANT.CONFIDENTIALITE:
         title = TITLE.PRIVACY;
         break;
@@ -40,6 +38,9 @@ export default function MyApp({ Component, pageProps }) {
         break;
       case ROUTER_CONSTANT.SCULPTURES:
         title = ITEM.SCULPTURE.TITLE;
+        break;
+      case ROUTER_CONSTANT.ADMIN:
+        title = TITLE.ADMINISTRATION;
         break;
     }
     return `${title} - Marion Casters`;

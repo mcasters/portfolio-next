@@ -25,7 +25,7 @@ import {
   SOURCE_TOUCH,
   SOURCE_POINTER,
   MIN_SWIPE_DISTANCE,
-} from '../../constants/lightboxConstants';
+} from '../../constants/lightbox';
 import s from './Lightbox.css';
 
 class Lightbox extends Component {
