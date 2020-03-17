@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 import ITEM from '../constants/item';
 import ItemTab from '../components/ItemDir/ItemTab';
 import useOnSrr from '../components/Hooks/useOnSrr';
 import { withApollo } from '../data/client';
-import Layout from "../components/LayoutComponents/Layout/Layout";
+import Layout from '../components/LayoutComponents/Layout/Layout';
 
 function Peintures() {
   const title = 'Peintures';

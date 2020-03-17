@@ -1,11 +1,10 @@
-import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import Item from '../components/ItemDir/Item';
 import ITEM from '../constants/item';
 import GET_ITEMS_QUERY from '../data/graphql/queries/getAllItems';
 import { withApollo } from '../data/client';
-import Layout from "../components/LayoutComponents/Layout/Layout";
+import Layout from '../components/LayoutComponents/Layout/Layout';
 
 function Sculptures() {
   const title = 'Sculptures';

@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { useMutation } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
@@ -7,18 +6,18 @@ import { withApollo } from '../data/client';
 import Field from '../components/FormElements/Field';
 import { getErrorMessage } from '../components/lib/form';
 import SignUpMutation from '../data/graphql/queries/signup';
-import Layout from "../components/LayoutComponents/Layout/Layout";
+import Layout from '../components/LayoutComponents/Layout/Layout';
 
 function SignUp() {
   const [signUp] = useMutation(SignUpMutation);
   const [errorMsg, setErrorMsg] = React.useState();
   const router = useRouter();
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const usernameElement = event.currentTarget.elements.username;
-    const emailElement = event.currentTarget.elements.email;
-    const passwordElement = event.currentTarget.elements.password;
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const usernameElement = e.currentTarget.elements.username;
+    const emailElement = e.currentTarget.elements.email;
+    const passwordElement = e.currentTarget.elements.password;
 
     try {
       await signUp({
@@ -33,7 +32,7 @@ function SignUp() {
     } catch (error) {
       setErrorMsg(getErrorMessage(error));
     }
-  }
+  };
 
   return (
     <Layout>
