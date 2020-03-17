@@ -4,7 +4,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import ITEM from '../constants/item';
 import ItemTab from '../components/ItemDir/ItemTab';
 import useOnSrr from '../components/Hooks/useOnSrr';
-import { withApollo } from '../data/client';
+import { withApollo } from '../data/apollo/client';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 
 function Peintures() {

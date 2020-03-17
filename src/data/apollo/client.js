@@ -24,6 +24,7 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
     );
   };
 
+
   // Set the correct displayName in development
   if (process.env.NODE_ENV !== 'production') {
     const displayName =
@@ -36,8 +37,8 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
     WithApollo.displayName = `withApollo(${displayName})`;
   }
 
-  if (ssr || PageComponent.getInitialProps) {
-    WithApollo.getInitialProps = async ctx => {
+  if (ssr || PageComponent.getServerSideProps) {
+    WithApollo.getServerSideProps = async ctx => {
       const { AppTree } = ctx;
 
       // Initialize ApolloClient, add it to the ctx object so
@@ -49,8 +50,8 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
 
       // Run wrapped getInitialProps methods
       let pageProps = {};
-      if (PageComponent.getInitialProps) {
-        pageProps = await PageComponent.getInitialProps(ctx);
+      if (PageComponent.getServerSideProps) {
+        pageProps = await PageComponent.getServerSideProps(ctx);
       }
 
       // Only on the server:
@@ -139,16 +140,18 @@ function createApolloClient(ctx = {}, initialState = {}) {
 function createIsomorphLink(ctx) {
   if (typeof window === 'undefined') {
     const { SchemaLink } = require('apollo-link-schema');
-    const { schema } = require('./schema');
+    const { schema } = require('../graphql/schema');
     return new SchemaLink({ schema, context: ctx });
   } else {
-    // const { HttpLink } = require('apollo-link-http');
-    const { createUploadLink } = require('apollo-upload-client');
+    // const { HttpLink } = require('apollo-link-http')
 
-    // const link = new HttpLink({
+    // return new HttpLink({
     //   uri: '/api/graphql',
     //   credentials: 'same-origin',
-    // });
+    // })
+
+    const { createUploadLink } = require('apollo-upload-client');
+
     return createUploadLink({
       uri: '/api/graphql',
       credentials: 'same-origin',

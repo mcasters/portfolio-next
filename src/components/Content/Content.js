@@ -1,27 +1,13 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 
 import GET_CONTENT from '../../data/graphql/queries/getContent';
 import s from './Content.module.css';
-import { withApollo } from '../../data/client';
+import { getContent } from '../../data/api';
 
-function Content({ keyContent }) {
-  const { data, loading } = useQuery(GET_CONTENT, {
-    variables: { key: keyContent },
-    ssr: true,
-  });
-  if (loading) return <p>Chargement...</p>;
-
-  return (
-    <>
-      {data.getContent && <p className={s.content}>{data.getContent.text}</p>}
-    </>
-  );
+export default function Content({ content }) {
+  return <>{content && <p className={s.content}>{content.text}</p>}</>;
 }
 
 Content.propTypes = {
-  keyContent: PropTypes.string.isRequired,
+  content: PropTypes.object.isRequired,
 };
-
-export default withApollo(Content);

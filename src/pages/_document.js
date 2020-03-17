@@ -1,13 +1,12 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import React from 'react';
 import { resetIdCounter } from 'react-tabs';
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    resetIdCounter();
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
-  }
+  // static async getServerSideProps(ctx) {
+  //   resetIdCounter();
+  //     const initialProps = await Document.getServerSideProps(ctx);
+  //     return {...initialProps};
+  // }
 
   render() {
     return (

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMutation, useApolloClient, useQuery } from '@apollo/react-hooks';
 
-import { withApollo } from '../data/client';
+import { withApollo } from '../data/apollo/client';
 import Field from '../components/FormElements/Field';
 import { getErrorMessage } from '../components/lib/form';
 import SignInMutation from '../data/graphql/queries/signin';

@@ -1,10 +1,9 @@
 import gql from 'graphql-tag';
 
-export default gql`
+export default `
   query getContent($key: String!) {
-    getContent(key: $key) {
+    content(key: $key) {
       text
     }
   }
-
 `;

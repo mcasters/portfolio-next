@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 
-import { withApollo } from '../data/client';
+import { withApollo } from '../data/apollo/client';
 import SignOutMutation from '../data/graphql/queries/signout';
 import ROUTER_CONSTANT from '../constants/router';
 

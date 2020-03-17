@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import Item from '../components/ItemDir/Item';
 import ITEM from '../constants/item';
 import GET_ITEMS_QUERY from '../data/graphql/queries/getAllItems';
-import { withApollo } from '../data/client';
+import { withApollo } from '../data/apollo/client';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 
 function Sculptures() {

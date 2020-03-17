@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import s from './LoginControl.module.css';
 import ViewerQuery from '../../../../data/graphql/queries/viewer';
-import { withApollo } from '../../../../data/client';
+import { withApollo } from '../../../../data/apollo/client';
 import ROUTER_CONSTANT from '../../../../constants/router';
 
 const LoginControl = () => {

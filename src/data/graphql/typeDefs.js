@@ -1,8 +1,6 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-server-micro';
 
-export default `
-  scalar Upload
-
+export const typeDefs = gql`
   type Content {
     id: ID!
     key: String!
@@ -36,7 +34,7 @@ export default `
   type SignUpPayload {
     user: User!
   }
-  
+
   type SignInPayload {
     user: User!
   }
@@ -70,7 +68,7 @@ export default `
 
   type Query {
     getAllContent: [Content]
-    getContent(key: String!): Content
+    content(key: String!): Content
     getAllItems(type: String!): [Item]
     getItemsByPart(year: Int!, type: String!, half: Int!): [Item]
     user(id: ID!): User!

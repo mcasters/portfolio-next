@@ -13,7 +13,7 @@ import EditContent from '../components/Admin/EditContent/EditContent';
 import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemParent';
 import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
 import ViewerQuery from '../data/graphql/queries/viewer';
-import { withApollo } from '../data/client';
+import { withApollo } from '../data/apollo/client';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
 
