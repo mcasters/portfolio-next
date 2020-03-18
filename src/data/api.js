@@ -1,8 +1,8 @@
 import 'isomorphic-unfetch';
 
-import GET_CONTENT from './graphql/queries/getContent';
+import getConfig from 'next/config'
 
-const API_URL = 'https://api/graphql';
+const { serverUrl } = getConfig();
 
 const fetchAPI = async (query, { variables } = {}) => {
   const res = await fetch('http://localhost:3000/api/graphql', {
@@ -25,10 +25,19 @@ const fetchAPI = async (query, { variables } = {}) => {
 };
 
 export async function getContent(key) {
-  const data = await fetchAPI(GET_CONTENT, {
-    variables: {
-      key,
+  const data = await fetchAPI(
+    `
+  query getContent($key: String!) {
+    content(key: $key) {
+      text
+    }
+  }
+`,
+    {
+      variables: {
+        key,
+      },
     },
-  });
+  );
   return data?.content;
 }

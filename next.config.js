@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
+
 module.exports = {
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
@@ -8,13 +9,18 @@ module.exports = {
         fs: 'empty',
       };
     }
-
     return config;
   },
+
   env: {
     // Reference a variable that was defined in the .env file and make it available at Build Time
     TEST_VAR: process.env.TEST_VAR,
   },
+
+  // API Gateway
+  apiUrl:
+    process.env.API_SERVER_URL ||
+    `http://localhost:${process.env.PORT || 3000}/api/graphql`,
 
   // Database
   databaseUrl: process.env.DATABASE_URL || 'mysql:database.mysql',

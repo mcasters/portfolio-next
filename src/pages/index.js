@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-unfetch';
+
 import Content from '../components/Content/Content';
 import CONTENT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
@@ -20,6 +22,9 @@ function Home({ content }) {
 
 export async function getServerSideProps() {
   const content = await getContent(CONTENT_CONST.KEY.HOME3);
+  // const response = await fetch('http://localhost:3000/api/images');
+  // const resu = await response.json();
+  // console.log('//// ' + resu.name);
   return {
     props: { content },
   };
