@@ -68,3 +68,29 @@ export async function getItemsByPart(year, type, half) {
   return data?.getItemsByPart;
 }
 
+export async function getAllItems(type) {
+  const data = await fetchAPI(
+    `
+  query getAllItems($type: String!) {
+  getAllItems(type: $type) {
+    id
+    title
+    date
+    technique
+    description
+    height
+    width
+    length
+  }
+}
+`,
+    {
+      variables: {
+        type,
+      },
+    },
+  );
+  return data?.getAllItems;
+}
+
+

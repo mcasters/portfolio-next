@@ -7,7 +7,7 @@ import useOnSrr from '../components/Hooks/useOnSrr';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import { getItemsByPart } from '../data/api';
 
-function Peintures({ items2017, items2018_1, items2018_2, items2019 }) {
+const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
   const title = 'Peintures';
   const [selectedTab, setSelectedTab] = useState(0);
   const onSsr = useOnSrr();

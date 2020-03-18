@@ -1,7 +1,0 @@
-query getAllContent {
-  getAllContent {
-    id
-    key
-    text
-  }
-}
