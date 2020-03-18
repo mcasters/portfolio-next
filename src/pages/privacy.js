@@ -13,17 +13,8 @@ Nous nous engageons à ne collecter aucun renseignement personnel, d'aucune sort
       </div>
       <style jsx global>{`
         .markdown {
+          font-size: 13px;
           padding: 13em 0em;
-        }
-
-        .markdown a:hover {
-          opacity: 0.6;
-        }
-
-        .markdown h3 {
-          margin: 0;
-          padding: 0;
-          text-transform: uppercase;
         }
       `}</style>
     </Layout>
