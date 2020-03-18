@@ -41,3 +41,30 @@ export async function getContent(key) {
   );
   return data?.content;
 }
+
+export async function getItemsByPart(year, type, half) {
+  const data = await fetchAPI(
+    `
+  query getItemsByPart($year: Int!, $type: String!, $half: Int!) {
+    getItemsByPart(year: $year, type: $type, half: $half) {
+      title
+      date
+      technique
+      description
+      height
+      width
+      length
+    }
+  }
+`,
+    {
+      variables: {
+        year,
+        type,
+        half,
+      },
+    },
+  );
+  return data?.getItemsByPart;
+}
+
