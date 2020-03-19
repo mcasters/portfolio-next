@@ -1,42 +1,38 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useMutation, useApolloClient, useQuery } from '@apollo/react-hooks';
+import { useState } from 'react';
 
-import { withApollo } from '../data/apollo/client';
-import Field from '../components/FormElements/Field';
 import { getErrorMessage } from '../components/lib/form';
-import SignInMutation from '../data/graphql/queries/signin';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
-import ViewerQuery from '../data/graphql/queries/viewer';
+import { signIn } from '../data/api';
 
 const SignIn = () => {
-  const client = useApolloClient();
-  const [signIn] = useMutation(SignInMutation);
-  const { refetch } = useQuery(ViewerQuery);
-  const [errorMsg, setErrorMsg] = React.useState();
+  const [userData, setUserData] = useState({
+    username: '',
+    password: '',
+    error: '',
+  });
   const router = useRouter();
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setUserData(Object.assign({}, userData, { error: '' }));
 
-    const usernameElement = e.currentTarget.elements.username;
-    const passwordElement = e.currentTarget.elements.password;
+    const username = userData.username;
+    const password = userData.password;
 
     try {
-      await client.resetStore();
-      const { data } = await signIn({
-        variables: {
-          username: usernameElement.value,
-          password: passwordElement.value,
-        },
-      });
-      if (data.signIn.user) {
-        await refetch();
-        await router.push(ROUTER_CONSTANT.ADMIN);
-      }
+      const user = await signIn(username, password);
+
+      if (user) router.push(ROUTER_CONSTANT.ADMIN);
     } catch (error) {
-      setErrorMsg(getErrorMessage(error));
+      console.error(error);
+      setUserData(
+        Object.assign({}, userData, {
+          error: error.message,
+        }),
+      );
     }
   };
 
@@ -44,28 +40,37 @@ const SignIn = () => {
     <Layout>
       <h1>Sign In</h1>
       <form onSubmit={handleSubmit}>
-        {errorMsg && <p>{errorMsg}</p>}
-        <Field
+        {userData.error && <p>{userData.error}</p>}
+        <input
+          type="text"
+          id="username"
           name="username"
-          type="username"
-          autoComplete="username"
-          required
-          placeHolder="Username"
+          value={userData.username}
+          onChange={event =>
+            setUserData(
+              Object.assign({}, userData, { username: event.target.value }),
+            )
+          }
         />
-        <Field
-          name="password"
+        <input
           type="password"
-          autoComplete="password"
-          required
-          placeHolder="Password"
+          id="password"
+          name="password"
+          value={userData.password}
+          onChange={event =>
+            setUserData(
+              Object.assign({}, userData, { password: event.target.value }),
+            )
+          }
         />
         <button type="submit">Sign in</button> or{' '}
         <Link href="signup">
           <a>Sign up</a>
         </Link>
+        {userData.error && <p className="error">Error: {userData.error}</p>}
       </form>
     </Layout>
   );
 };
 
-export default withApollo(SignIn);
+export default SignIn;

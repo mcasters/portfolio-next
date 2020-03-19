@@ -93,4 +93,24 @@ export async function getAllItems(type) {
   return data?.getAllItems;
 }
 
-
+export async function signIn(username, password) {
+  const data = await fetchAPI(
+    `
+  mutation SignInMutation($username: String!, $password: String!) {
+    signIn(input: { username: $username, password: $password }) {
+      user {
+        id
+        username
+      }
+    }
+  }
+`,
+    {
+      variables: {
+        username,
+        password,
+      },
+    },
+  );
+  return data.signIn;
+}
