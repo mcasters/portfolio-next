@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import DayPicker from '../../DayPicker';
 import ITEM from '../../../../../constants/item';
 import s from './UpdateForm.module.css';
+import { useAlert } from '../../../../AlertContext/AlertContext';
 
 const customStyles = {
   overlay: {
@@ -22,12 +23,25 @@ const customStyles = {
 
 Modal.setAppElement('#__next');
 
-function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
-  // eslint-disable-next-line react/prop-types
+function UpdateForm({ item, type, srcList, onResult }) {
   const { id, __typename, ...rest } = item;
-  const [input, setInput] = useState({ ...rest, pictures: [] });
+  const [itemData, setItemData] = useState({ ...rest, pictures: [] });
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
+  const triggerAlert = useAlert();
+
   const showModal = true;
+
+  const isSculpture = type === ITEM.SCULPTURE.TYPE;
+  const haveMain = !!(
+    itemData.title &&
+    itemData.date &&
+    itemData.technique &&
+    itemData.height &&
+    itemData.width
+  );
+  const canSubmit =
+    (!isSculpture && haveMain) ||
+    !!(isSculpture && haveMain && itemData.length);
 
   const handleCloseModal = () => {
     onResult(false);
@@ -40,14 +54,14 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
   const handleChange = e => {
     e.preventDefault();
     const { name, value, type } = e.target;
-    setInput(prevState => ({
+    setItemData(prevState => ({
       ...prevState,
       [name]: type === 'number' ? parseInt(value, 10) : value,
     }));
   };
 
   const handleChangeDate = d => {
-    setInput(prevState => ({ ...prevState, date: d }));
+    setItemData(prevState => ({ ...prevState, date: d }));
   };
 
   const handleImageChange = (e, index) => {
@@ -56,28 +70,27 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
     const reader = new FileReader();
     const file = e.target.files[0];
 
-    const pImagePreviewUrls = imagePreviewUrls;
-    const pPictures = input.pictures;
+    const copyImagePreviewUrls = imagePreviewUrls;
+    const copyPictures = itemData.pictures;
     reader.onload = () => {
-      pImagePreviewUrls.splice(index, 1, reader.result);
-      pPictures.splice(index, 1, file);
+      copyImagePreviewUrls.splice(index, 1, reader.result);
+      copyPictures.splice(index, 1, file);
 
-      setImagePreviewUrls(pImagePreviewUrls);
-      setInput(prevState => ({ ...prevState, pictures: pPictures }));
+      setImagePreviewUrls(copyImagePreviewUrls);
+      setItemData(prevState => ({ ...prevState, pictures: copyPictures }));
     };
     reader.readAsDataURL(file);
   };
 
-  const isSculpture = type === ITEM.SCULPTURE.TYPE;
-  const haveMain = !!(
-    input.title &&
-    input.date &&
-    input.technique &&
-    input.height &&
-    input.width
-  );
-  const canSubmit =
-    (!isSculpture && haveMain) || !!(isSculpture && haveMain && input.length);
+  const handleSubmit = e => {
+    e.preventDefault();
+    updateMutation({
+      variables: { id, item: { ...itemData, type } },
+    }).then(res => {
+      const isError = res === undefined;
+      handleResult(isError);
+    });
+  };
 
   return (
     <Modal
@@ -90,33 +103,25 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
       <h1 className={s.updateTitle}>Modification</h1>
       <form
         className="formGroup"
-        onSubmit={e => {
-          e.preventDefault();
-          updateMutation({ variables: { id, item: { ...input, type } } }).then(
-            res => {
-              const isError = res === undefined;
-              handleResult(isError);
-            },
-          );
-        }}
-      >
+        onSubmit={handleSubmit}
+        >
         <input
           className={s.inputL}
           placeholder="Titre"
           name="title"
           type="text"
-          value={input.title}
+          value={itemData.title}
           onChange={handleChange}
         />
         <div className={s.DayInputContainer}>
-          <DayPicker date={input.date} onDayChange={handleChangeDate} />
+          <DayPicker date={itemData.date} onDayChange={handleChangeDate} />
         </div>
         <input
           className={s.inputL}
           placeholder="Technique"
           name="technique"
           type="text"
-          value={input.technique}
+          value={itemData.technique}
           onChange={handleChange}
         />
         <input
@@ -124,7 +129,7 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
           placeholder="Description"
           name="description"
           type="text"
-          value={input.description}
+          value={itemData.description}
           onChange={handleChange}
         />
         <input
@@ -132,7 +137,7 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
           placeholder="Hauteur (cm)"
           name="height"
           type="number"
-          value={input.height}
+          value={itemData.height}
           onChange={handleChange}
         />
         <input
@@ -140,7 +145,7 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
           placeholder="Largeur (cm)"
           name="width"
           type="number"
-          value={input.width}
+          value={itemData.width}
           onChange={handleChange}
         />
         {isSculpture && (
@@ -149,7 +154,7 @@ function UpdateForm({ item, type, srcList, updateMutation, onResult }) {
             placeholder="Longueur (cm)"
             name="length"
             type="number"
-            value={input.length}
+            value={itemData.length}
             onChange={handleChange}
           />
         )}

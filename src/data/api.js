@@ -1,6 +1,6 @@
 import 'isomorphic-unfetch';
 
-import getConfig from 'next/config'
+import getConfig from 'next/config';
 
 const { serverUrl } = getConfig();
 
@@ -113,4 +113,60 @@ export async function signIn(username, password) {
     },
   );
   return data.signIn;
+}
+
+export async function viewer() {
+  const data = await fetchAPI(
+    `
+  query ViewerQuery {
+    viewer {
+      id
+      username
+    }
+  }
+`,
+  );
+  return data?.viewer;
+}
+
+export async function addItem(input) {
+  const data = await fetchAPI(
+    `
+  mutation AddItem($input: ItemInput!) {
+    addItem(input: $input) {
+      id
+      title
+      date
+      technique
+      description
+      height
+      width
+      length
+    }
+  }
+`,
+    {
+      variables: {
+        input,
+      },
+    },
+  );
+  return data.addItem;
+}
+
+export async function deleteItem(id, type) {
+  const data = await fetchAPI(
+    `
+  mutation deleteItem($id: ID!, $type: String!) {
+    deleteItem(id: $id, type: $type)
+  }
+`,
+    {
+      variables: {
+        id,
+        type,
+      },
+    },
+  );
+  return data.deleteItem;
 }

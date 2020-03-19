@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
 import Link from 'next/link';
 
 import s from './styles/admin.module.css';
@@ -12,23 +11,16 @@ import CONTENT from '../constants/content';
 import EditContent from '../components/Admin/EditContent/EditContent';
 import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemParent';
 import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
-import ViewerQuery from '../data/graphql/queries/viewer';
 import { withApollo } from '../data/apollo/client';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
+import { getAllItems, getContent, viewer } from '../data/api';
 
-const Admin = () => {
+const Admin = ({ user, allContent }) => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const { loading, data } = useQuery(ViewerQuery);
   const router = useRouter();
 
-  if (loading) return <p>Loading...</p>;
-
-  if (
-    loading === false &&
-    data.viewer === null &&
-    typeof window !== 'undefined'
-  ) {
+  if (user === null && typeof window !== 'undefined') {
     router.push(ROUTER_CONSTANT.HOME);
   }
 
@@ -36,7 +28,7 @@ const Admin = () => {
     setSelectedTab(index);
   };
 
-  if (data && data.viewer) {
+  if (user) {
     return (
       <Layout>
         <div className={s.container}>
@@ -62,9 +54,9 @@ const Admin = () => {
               <div className={s.tabContainer}>
                 <EditPictureForm pictureTitle={CONTENT.HOME_IMAGE_PORTRAIT} />
                 <EditPictureForm pictureTitle={CONTENT.HOME_IMAGE_LANDSCAPE} />
-                <EditContent keyContent={CONTENT.KEY.HOME1} isTextArea />
-                <EditContent keyContent={CONTENT.KEY.HOME2} isTextArea />
-                <EditContent keyContent={CONTENT.KEY.HOME3} isTextArea />
+                <EditContent keyContent={CONTENT.KEY.HOME1} content={allContent.homeContent1} isTextArea />
+                <EditContent keyContent={CONTENT.KEY.HOME2} content={allContent.homeContent2} isTextArea />
+                <EditContent keyContent={CONTENT.KEY.HOME3} content={allContent.homeContent3} isTextArea />
               </div>
             </TabPanel>
             <TabPanel>
@@ -72,30 +64,33 @@ const Admin = () => {
                 <EditPictureForm
                   pictureTitle={CONTENT.PRESENTATION_IMAGE_TITLE}
                 />
-                <EditContent keyContent={CONTENT.KEY.PRESENTATION} isTextArea />
+                <EditContent keyContent={CONTENT.KEY.PRESENTATION} content={allContent.presentation} isTextArea />
               </div>
             </TabPanel>
             <TabPanel>
-              <AdminItemParent type={ITEM.PAINTING.TYPE} />
+              <AdminItemParent type={ITEM.PAINTING.TYPE} items={allContent.paintings} />
             </TabPanel>
             <TabPanel>
-              <AdminItemParent type={ITEM.SCULPTURE.TYPE} />
+              <AdminItemParent type={ITEM.SCULPTURE.TYPE} items={allContent.sculptures} />
             </TabPanel>
             <TabPanel>
-              <AdminItemParent type={ITEM.DRAWING.TYPE} />
+              <AdminItemParent type={ITEM.DRAWING.TYPE} items={allContent.drawings} />
             </TabPanel>
             <TabPanel>
               <div className={s.tabContainer}>
                 <EditContent
                   keyContent={CONTENT.KEY.CONTACT_ADDRESS}
+                  content={allContent.address}
                   isTextArea
                 />
                 <EditContent
                   keyContent={CONTENT.KEY.CONTACT_PHONE}
+                  content={allContent.phone}
                   isTextArea={false}
                 />
                 <EditContent
                   keyContent={CONTENT.KEY.CONTACT_EMAIL}
+                  content={allContent.email}
                   isTextArea={false}
                 />
               </div>
@@ -107,5 +102,38 @@ const Admin = () => {
   }
   return <p>Loading...</p>;
 };
+
+export async function getServerSideProps() {
+  const user = await viewer();
+
+  const drawings = await getAllItems(ITEM.DRAWING.TYPE);
+  const paintings = await getAllItems(ITEM.PAINTING.TYPE);
+  const sculptures = await getAllItems(ITEM.SCULPTURE.TYPE);
+  const homeContent1 = await getContent(CONTENT.KEY.HOME1);
+  const homeContent2 = await getContent(CONTENT.KEY.HOME2);
+  const homeContent3 = await getContent(CONTENT.KEY.HOME3);
+  const presentation = await getContent(CONTENT.KEY.PRESENTATION);
+  const address = await getContent(CONTENT.KEY.CONTACT_ADDRESS);
+  const phone = await getContent(CONTENT.KEY.CONTACT_PHONE);
+  const email = await getContent(CONTENT.KEY.CONTACT_EMAIL);
+
+  return {
+    props: {
+      user,
+      allContent: {
+        drawings,
+        paintings,
+        sculptures,
+        homeContent1,
+        homeContent2,
+        homeContent3,
+        presentation,
+        address,
+        phone,
+        email,
+      },
+    },
+  };
+}
 
 export default withApollo(Admin);

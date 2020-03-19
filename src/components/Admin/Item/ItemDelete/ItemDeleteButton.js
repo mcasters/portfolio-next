@@ -1,20 +1,25 @@
-/* eslint-disable react/forbid-prop-types */
-import React from 'react';
 import PropTypes from 'prop-types';
 import { FaTrash } from 'react-icons/fa';
 
 import s from './ItemDeleteButton.module.css';
+import { useAlert } from '../../../AlertContext/AlertContext';
+import { deleteItem } from '../../../../data/api';
 
-function ItemDeleteButton({ id, type, deleteMutation }) {
+function ItemDeleteButton({ id, type }) {
+  const triggerAlert = useAlert();
+
+  const handleDelete = async e => {
+    e.preventDefault();
+    try {
+      const res = await deleteItem({ variables: { id, type } });
+      if (res) triggerAlert('Item supprimé', false);
+    } catch (e) {
+      triggerAlert(e.message, true);
+    }
+  };
+
   return (
-    <button
-      onClick={e => {
-        e.preventDefault();
-        deleteMutation({ variables: { id, type } });
-      }}
-      className={s.command}
-      type="button"
-    >
+    <button onClick={handleDelete} className={s.command} type="button">
       <FaTrash />
     </button>
   );
@@ -23,7 +28,6 @@ function ItemDeleteButton({ id, type, deleteMutation }) {
 ItemDeleteButton.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  deleteMutation: PropTypes.func.isRequired,
 };
 
 export default ItemDeleteButton;

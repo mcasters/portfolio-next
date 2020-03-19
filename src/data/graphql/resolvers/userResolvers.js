@@ -24,7 +24,7 @@ function validPassword(user, password) {
 
 export default {
   Query: {
-    async viewer(_parent, _args, _context, _info) {
+    async viewer(_parent, _args, context, _info) {
       const { token } = cookie.parse(context.req.headers.cookie ?? '');
       if (token) {
         try {

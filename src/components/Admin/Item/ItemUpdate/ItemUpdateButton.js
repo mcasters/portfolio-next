@@ -5,12 +5,11 @@ import { FaPen } from 'react-icons/fa';
 import UpdateForm from './UpdateForm/UpdateForm';
 import s from './ItemUpdateButton.module.css';
 
-function ItemUpdateButton({ item, type, srcList, updateMutation, refetch }) {
+function ItemUpdateButton({ item, type, srcList }) {
   const [openUpdate, setOpenUpdate] = useState(false);
 
   const getResult = isError => {
     if (!isError) setOpenUpdate(false);
-    refetch();
   };
 
   const toggle = () => {
@@ -27,7 +26,6 @@ function ItemUpdateButton({ item, type, srcList, updateMutation, refetch }) {
           item={item}
           type={type}
           srcList={srcList}
-          updateMutation={updateMutation}
           onResult={getResult}
         />
       )}

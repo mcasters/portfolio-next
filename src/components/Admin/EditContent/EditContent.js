@@ -1,18 +1,12 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
-import GET_CONTENT from '../../../data/graphql/queries/getContent';
 import ContentForm from './ContentForm';
 import ADD_CONTENT_MUTATION from '../../../data/graphql/queries/addContent';
 import { useAlert } from '../../AlertContext/AlertContext';
 
-function EditContent({ keyContent, isTextArea }) {
+function EditContent({ keyContent, content, isTextArea }) {
   const triggerAlert = useAlert();
-  const { data } = useQuery(GET_CONTENT, {
-    variables: { key: keyContent },
-    ssr: true,
-  });
 
   const [addContent] = useMutation(ADD_CONTENT_MUTATION, {
     onError(err) {
@@ -25,11 +19,11 @@ function EditContent({ keyContent, isTextArea }) {
 
   return (
     <>
-      {data && data.getContent && (
+      {content && (
         <ContentForm
           keyContent={keyContent}
           isTextArea={isTextArea}
-          initialContent={data.getContent.text}
+          initialContent={content.text}
           mutation={addContent}
         />
       )}
@@ -39,6 +33,7 @@ function EditContent({ keyContent, isTextArea }) {
 
 EditContent.propTypes = {
   keyContent: PropTypes.string.isRequired,
+  content: PropTypes.object.isRequired,
   isTextArea: PropTypes.bool.isRequired,
 };
 

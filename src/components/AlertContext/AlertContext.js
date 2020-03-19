@@ -3,6 +3,7 @@ import Alert from '../Alert/Alert';
 
 const AlertContext = React.createContext();
 
+// eslint-disable-next-line react/prop-types
 export const AlertProvider = ({ children }) => {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);

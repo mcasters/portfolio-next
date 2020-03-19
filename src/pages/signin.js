@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { getErrorMessage } from '../components/lib/form';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
 import { signIn } from '../data/api';
@@ -24,7 +23,6 @@ const SignIn = () => {
 
     try {
       const user = await signIn(username, password);
-
       if (user) router.push(ROUTER_CONSTANT.ADMIN);
     } catch (error) {
       console.error(error);

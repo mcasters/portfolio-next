@@ -7,9 +7,8 @@ import ItemUpdateButton from '../ItemUpdate/ItemUpdateButton';
 import ItemService from '../../../../app-services/ItemService';
 import { createDateFormat } from '../../../../tools/utils';
 
-function ItemRow({ item, srcList, type, deleteMutation, updateMutation, refetch }) {
+function ItemRow({ item, srcList, type }) {
   const itemService = new ItemService(type);
-
   const isSculpture = itemService.getIsSculpture();
   const alt = itemService.getAltImage();
   const src = srcList[0];
@@ -27,20 +26,10 @@ function ItemRow({ item, srcList, type, deleteMutation, updateMutation, refetch 
         <img src={src} alt={alt} className={s.thumbnail} />
       </th>
       <th>
-        <ItemDeleteButton
-          id={item.id}
-          type={type}
-          deleteMutation={deleteMutation}
-        />
+        <ItemDeleteButton id={item.id} type={type} />
       </th>
       <th>
-        <ItemUpdateButton
-          item={item}
-          type={type}
-          srcList={srcList}
-          updateMutation={updateMutation}
-          refetch={refetch}
-        />
+        <ItemUpdateButton item={item} type={type} srcList={srcList} />
       </th>
     </tr>
   );
@@ -59,9 +48,6 @@ ItemRow.propTypes = {
   }).isRequired,
   srcList: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
-  deleteMutation: PropTypes.func.isRequired,
-  updateMutation: PropTypes.func.isRequired,
-  refetch: PropTypes.func.isRequired,
 };
 
 export default ItemRow;

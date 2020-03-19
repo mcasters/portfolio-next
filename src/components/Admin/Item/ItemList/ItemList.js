@@ -1,21 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/react-hooks';
 
 import ItemRow from '../ItemRow/ItemRow';
 import s from './ItemList.module.css';
-import GET_ITEMS_QUERY from '../../../../data/graphql/queries/getAllItems';
 import ItemService from '../../../../app-services/ItemService';
 
-function ItemList({ type, deleteMutation, updateMutation }) {
+function ItemList({ type, items }) {
   const itemService = new ItemService(type);
   const isSculpture = itemService.getIsSculpture();
   const path = itemService.getPath();
   const title = 'Modification - Suppression';
-  const { loading, error, data, refetch } = useQuery(GET_ITEMS_QUERY, {
-    variables: { type },
-    ssr: true,
-  });
 
   const getUrlImages = itemTitle => {
     const imageUrls = [];
@@ -31,9 +25,6 @@ function ItemList({ type, deleteMutation, updateMutation }) {
 
     return imageUrls;
   };
-
-  if (loading) return <div>Chargement...</div>;
-  if (error) return <div>Erreur au chargement :(</div>;
 
   return (
     <div className={s.listContainer}>
@@ -54,17 +45,13 @@ function ItemList({ type, deleteMutation, updateMutation }) {
           </tr>
         </thead>
         <tbody>
-          {data &&
-            data.getAllItems !== undefined &&
-            data.getAllItems.map(item => (
+          {items &&
+            items.map(item => (
               <ItemRow
                 key={item.id}
                 item={item}
                 srcList={getUrlImages(item.title)}
                 type={type}
-                deleteMutation={deleteMutation}
-                updateMutation={updateMutation}
-                refetch={refetch}
               />
             ))}
         </tbody>
@@ -75,8 +62,7 @@ function ItemList({ type, deleteMutation, updateMutation }) {
 
 ItemList.propTypes = {
   type: PropTypes.string.isRequired,
-  deleteMutation: PropTypes.func.isRequired,
-  updateMutation: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 export default ItemList;

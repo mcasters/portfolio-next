@@ -4,44 +4,55 @@ import PropTypes from 'prop-types';
 import s from './ItemAddForm.module.css';
 import ITEM from '../../../../constants/item';
 import DayPicker from '../DayPicker';
+import { addItem } from '../../../../data/api';
+import { useAlert } from '../../../AlertContext/AlertContext';
 
-const initialState = {
-  title: '',
-  date: '',
-  technique: '',
-  description: '',
-  length: '',
-  height: '',
-  width: '',
-  pictures: [],
-};
-
-function ItemAddForm({ type, addMutation }) {
-  const [
-    { title, date, technique, description, length, height, width, pictures },
-    setState,
-  ] = useState(initialState);
+function ItemAddForm({ type }) {
+  const triggerAlert = useAlert();
+  const [itemData, setItemData] = useState({
+    title: '',
+    date: '',
+    technique: '',
+    description: '',
+    length: '',
+    height: '',
+    width: '',
+    pictures: [],
+    error,
+  });
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
 
   const isSculpture = type === ITEM.SCULPTURE.TYPE;
+  const titleForm = 'Ajout';
+  const haveMain = !!(
+    itemData.title &&
+    itemData.date &&
+    itemData.technique &&
+    itemData.height &&
+    itemData.width
+  );
+  const canSubmit =
+    (!isSculpture && haveMain && itemData.pictures.length === 1) ||
+    (isSculpture && haveMain && length && itemData.pictures.length === 4);
 
   const clearState = () => {
-    setState({ ...initialState });
+    setItemData(Object.assign({}, itemData));
     setImagePreviewUrls([]);
   };
 
   const handleChange = e => {
     e.preventDefault();
-    // eslint-disable-next-line no-shadow
     const { name, value, type } = e.target;
-    setState(prevState => ({
-      ...prevState,
-      [name]: type === 'number' ? parseInt(value, 10) : value,
-    }));
+
+    setItemData(
+      Object.assign({}, itemData, {
+        [name]: type === 'number' ? parseInt(value, 10) : value,
+      }),
+    );
   };
 
-  const handleChangeDate = pDate => {
-    setState(prevState => ({ ...prevState, date: pDate }));
+  const handleChangeDate = date => {
+    setItemData(Object.assign({}, itemData, { date: date }));
   };
 
   const handleImageChange = (e, index) => {
@@ -50,62 +61,56 @@ function ItemAddForm({ type, addMutation }) {
     const reader = new FileReader();
     const file = e.target.files[0];
 
-    const pImagePreviewUrls = imagePreviewUrls;
-    const pPictures = pictures;
-    reader.onload = () => {
-      pImagePreviewUrls.splice(index, 1, reader.result);
-      pPictures.splice(index, 1, file);
+    const copyImagePreviewUrls = imagePreviewUrls;
+    const copyPictures = itemData.pictures;
 
-      setImagePreviewUrls(pImagePreviewUrls);
-      setState(prevState => ({ ...prevState, pictures: pPictures }));
+    reader.onload = () => {
+      copyImagePreviewUrls.splice(index, 1, reader.result);
+      copyPictures.splice(index, 1, file);
+
+      setImagePreviewUrls(copyImagePreviewUrls);
+      setItemData(Object.assign({}, itemData, { pictures: copyPictures }));
     };
+
     reader.readAsDataURL(file);
   };
 
-  const titleForm = 'Ajout';
-  const haveMain = !!(title && date && technique && height && width);
-  const canSubmit =
-    (!isSculpture && haveMain && pictures.length === 1) ||
-    (isSculpture && haveMain && length && pictures.length === 4);
-
-  function buildInput() {
-    const input = {
-      title,
-      date,
-      technique,
-      description,
-      height,
-      width,
-      pictures,
-      type,
-    };
+  const buildInput = () => {
+    const { length, pictures, error, ...input } = itemData;
     return isSculpture
       ? {
           ...input,
           length,
         }
       : input;
-  }
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    set;
+    const input = buildInput();
+
+    try {
+      const res = addItem({ input });
+      if (res) {
+        triggerAlert('Item ajouté', false);
+        clearState();
+      }
+    } catch (e) {
+      triggerAlert(e.message, true);
+    }
+  };
 
   return (
     <div className={s.addContainer}>
       <h2>{titleForm}</h2>
-      <form
-        className="formGroup"
-        onSubmit={e => {
-          e.preventDefault();
-          const input = buildInput();
-          addMutation({ variables: { input } }).then(res => {
-            if (res) clearState();
-          });
-        }}
-      >
+      <form className="formGroup" onSubmit={handleSubmit}>
         <input
           className={s.inputL}
           placeholder="Titre"
           name="title"
           type="text"
-          value={title}
+          value={itemData.title}
           onChange={handleChange}
         />
         <div className={s.DayInputContainer}>
@@ -116,7 +121,7 @@ function ItemAddForm({ type, addMutation }) {
           placeholder="Technique"
           name="technique"
           type="text"
-          value={technique}
+          value={itemData.technique}
           onChange={handleChange}
         />
         <input
@@ -124,7 +129,7 @@ function ItemAddForm({ type, addMutation }) {
           placeholder="Description"
           name="description"
           type="text"
-          value={description}
+          value={itemData.description}
           onChange={handleChange}
         />
         <input
@@ -132,7 +137,7 @@ function ItemAddForm({ type, addMutation }) {
           placeholder="Hauteur (cm)"
           name="height"
           type="number"
-          value={height}
+          value={itemData.height}
           onChange={handleChange}
         />
         <input
@@ -140,7 +145,7 @@ function ItemAddForm({ type, addMutation }) {
           placeholder="Largeur (cm)"
           name="width"
           type="number"
-          value={width}
+          value={itemData.width}
           onChange={handleChange}
         />
         {isSculpture && (
@@ -149,7 +154,7 @@ function ItemAddForm({ type, addMutation }) {
             placeholder="Longueur (cm)"
             name="length"
             type="number"
-            value={length}
+            value={itemData.length}
             onChange={handleChange}
           />
         )}
@@ -196,7 +201,6 @@ function ItemAddForm({ type, addMutation }) {
 
 ItemAddForm.propTypes = {
   type: PropTypes.string.isRequired,
-  addMutation: PropTypes.func.isRequired,
 };
 
 export default ItemAddForm;

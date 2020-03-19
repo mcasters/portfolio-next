@@ -6,9 +6,8 @@ import s from './styles/contact.module.css';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import {getContent} from "../data/api";
 
-export default function contact({ address, phone }) {
+export default function contact({ address, phone, email }) {
   const title = TITLE.CONTACT;
-  const email = GLOB_CONST.EMAIL;
   return (
     <Layout>
       <address>
@@ -30,8 +29,9 @@ export default function contact({ address, phone }) {
 export async function getServerSideProps() {
   const address = await getContent(CONT_CONST.KEY.CONTACT_ADDRESS);
   const phone = await getContent(CONT_CONST.KEY.CONTACT_PHONE);
+  const email = await getContent(CONT_CONST.KEY.CONTACT_EMAIL);
   return {
-    props: { address, phone },
+    props: { address, phone, email },
   };
 }
 
