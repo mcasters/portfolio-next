@@ -3,10 +3,10 @@ import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-import config from '../../../../next.config';
 import { User } from '../../models/index';
+import isAuthenticated from '../services/authService';
 
-const JWT_SECRET = config.jwt.secret;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 function createUser(data) {
   const salt = bcrypt.genSaltSync();
@@ -25,15 +25,7 @@ function validPassword(user, password) {
 export default {
   Query: {
     async viewer(_parent, _args, context, _info) {
-      const { token } = cookie.parse(context.req.headers.cookie ?? '');
-      if (token) {
-        try {
-          const { username } = jwt.verify(token, JWT_SECRET);
-          return User.findOne({ where: { username } });
-        } catch {
-          throw new AuthenticationError("Token d'authentification invalide");
-        }
-      }
+      return await isAuthenticated(context.req);
     },
   },
 
@@ -44,7 +36,7 @@ export default {
       });
 
       if (lookupUser) {
-        throw new AuthenticationError('Utilisateur déjà existant');
+        throw new Error('Utilisateur déjà existant');
       }
       const user = createUser(args.input);
 
@@ -80,7 +72,7 @@ export default {
         return { user };
       }
 
-      throw new UserInputError('Authentification invalide');
+      throw new Error('Authentification invalide');
     },
 
     async signOut(_parent, _args, context, _info) {

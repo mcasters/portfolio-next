@@ -1,5 +1,5 @@
 import ItemModelService from '../services/ItemModelService';
-import getAuthenticatedUser from '../services/authService';
+import isAuthenticated from '../services/authService';
 import * as imageService from '../../image/imageServices';
 
 export default {
@@ -12,8 +12,7 @@ export default {
 
   Mutation: {
     addItem: async (root, { input: { pictures, type, ...data } }, { req }) => {
-      const isAdmin = await getAuthenticatedUser(req);
-      if (!isAdmin) throw new Error("Erreur d'authentification");
+      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
       const { title } = data;
       const itemService = new ItemModelService(type);
@@ -38,8 +37,7 @@ export default {
       { id, input: { pictures, type, ...data } },
       { req },
     ) => {
-      const isAdmin = await getAuthenticatedUser(req);
-      if (!isAdmin) throw new Error("Erreur d'authentification");
+      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
       const itemService = new ItemModelService(type);
 
@@ -81,8 +79,7 @@ export default {
     },
 
     deleteItem: async (root, { id, type }, { req }) => {
-      const isAdmin = await getAuthenticatedUser(req);
-      if (!isAdmin) throw new Error("Erreur d'authentification");
+      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
       const itemService = new ItemModelService(type);
       const item = await itemService.getById(id);

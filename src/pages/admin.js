@@ -16,12 +16,12 @@ import ROUTER_CONSTANT from '../constants/router';
 import { getAllItems, getContent, viewer } from '../data/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
 
-const Admin = ({ user, allContent }) => {
+const Admin = ({ isAuthenticated, allContent }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const router = useRouter();
   const triggerAlert = useAlert();
 
-  if (user === null && typeof window !== 'undefined') {
+  if (!isAuthenticated && typeof window !== 'undefined') {
     triggerAlert('Authentification recquise', true);
     router.push(ROUTER_CONSTANT.HOME);
   }
@@ -30,7 +30,7 @@ const Admin = ({ user, allContent }) => {
     setSelectedTab(index);
   };
 
-  if (user) {
+  if (isAuthenticated) {
     return (
       <Layout>
         <div className={s.container}>
@@ -130,9 +130,9 @@ const Admin = ({ user, allContent }) => {
   return <p>Loading...</p>;
 };
 
-export async function getServerSideProps() {
-  const user = await viewer();
-
+export async function getServerSideProps(context) {
+  const isAuthenticated = await viewer(context);
+  console.log('isAuthenticated in getServerSideProps ///// ' + isAuthenticated);
   const drawings = await getAllItems(ITEM.DRAWING.TYPE);
   const paintings = await getAllItems(ITEM.PAINTING.TYPE);
   const sculptures = await getAllItems(ITEM.SCULPTURE.TYPE);
@@ -146,7 +146,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      user,
+      isAuthenticated,
       allContent: {
         drawings,
         paintings,

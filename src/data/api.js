@@ -4,11 +4,12 @@ import getConfig from 'next/config';
 
 const { serverUrl } = getConfig();
 
-const fetchAPI = async (query, { variables } = {}) => {
+const fetchAPI = async (query, { variables } = {}, context) => {
   const res = await fetch('http://localhost:3000/api/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      cookie: context && context.req ? context.req.headers.cookie : undefined,
     },
     body: JSON.stringify({
       query,
@@ -115,16 +116,15 @@ export async function signIn(username, password) {
   return data.signIn;
 }
 
-export async function viewer() {
+export async function viewer(context) {
   const data = await fetchAPI(
     `
   query ViewerQuery {
-    viewer {
-      id
-      username
-    }
+    viewer
   }
 `,
+    {},
+    context,
   );
   return data?.viewer;
 }
@@ -180,7 +180,6 @@ export async function updateItem(id, input) {
   return data.updateItem;
 }
 
-
 export async function deleteItem(id, type) {
   const data = await fetchAPI(
     `
@@ -197,3 +196,21 @@ export async function deleteItem(id, type) {
   );
   return data.deleteItem;
 }
+
+export async function addPicture(picture, title) {
+  const data = await fetchAPI(
+    `
+  mutation AddPicture($picture: Upload!, $pictureTitle: String!) {
+  addPicture(picture: $picture, title: $pictureTitle)
+}
+`,
+    {
+      variables: {
+        picture,
+        title,
+      },
+    },
+  );
+  return data.addPicture;
+}
+

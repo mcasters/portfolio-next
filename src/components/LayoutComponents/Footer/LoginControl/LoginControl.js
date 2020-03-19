@@ -1,16 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useQuery } from '@apollo/react-hooks';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import s from './LoginControl.module.css';
-import ViewerQuery from '../../../../data/graphql/queries/viewer';
 import { withApollo } from '../../../../data/apollo/client';
 import ROUTER_CONSTANT from '../../../../constants/router';
+import config from '../../../../../next.config';
 
 const LoginControl = () => {
-  const { data, loading } = useQuery(ViewerQuery);
+  const localStorageKey = config.env.localStorageSecret;
+  const [adminIsConnected, setAdminIsConnected] = useState(false);
 
-  if (data && data.viewer) {
+  useEffect(() => {
+    if (localStorage.getItem(localStorageKey)) setAdminIsConnected(true);
+  });
+
+  if (adminIsConnected) {
     return (
       <Link href={ROUTER_CONSTANT.ADMIN}>
         <a className={s.link}>Admin</a>
@@ -18,17 +23,13 @@ const LoginControl = () => {
     );
   }
 
-  if (loading === false) {
-    return (
-      <>
-        <Link href={ROUTER_CONSTANT.SIGNIN}>
-          <a className={s.link}>Admin in</a>
-        </Link>
-      </>
-    );
-  }
-
-  return <p>Loading...</p>;
+  return (
+    <>
+      <Link href={ROUTER_CONSTANT.SIGNIN}>
+        <a className={s.link}>Admin in</a>
+      </Link>
+    </>
+  );
 };
 
 export default withApollo(LoginControl);

@@ -1,18 +1,17 @@
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 
-import {User} from '../../models';
-import config from '../../../../next.config';
+import { User } from '../../models';
 
-const JWT_SECRET = config.jwt.secret;
+const JWT_SECRET = process.env.JWT_SECRET;
 
-const getAuthenticatedUser = async req => {
+const isAuthenticated = async req => {
   const { token } = cookie.parse(req.headers.cookie ?? '');
   if (token) {
     const { username } = jwt.verify(token, JWT_SECRET);
-    return User.findOne({where: {username}});
+    return !!User.findOne({ where: { username } });
   }
   return false;
 };
 
-export default getAuthenticatedUser;
+export default isAuthenticated;

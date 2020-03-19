@@ -1,12 +1,11 @@
 import Sequelize, { Op } from 'sequelize';
-import config from '../../next.config';
 
 const sequelize = new Sequelize(
-  config.databaseName,
-  config.databaseUsername,
-  config.databasePassword,
+  process.env.DATABASE_NAME,
+  process.env.DATABASE_USERNAME,
+  process.env.DATABASE_PASSWORD,
   {
-    host: config.databaseHost,
+    host: process.env.DATABASE_HOST,
     dialect: 'mysql',
     operatorsAliases: Op,
     define: {

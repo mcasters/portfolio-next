@@ -12,39 +12,42 @@ module.exports = {
     return config;
   },
 
-  env: {
-    // Reference a variable that was defined in the .env file and make it available at Build Time
-    TEST_VAR: process.env.TEST_VAR,
+  // Only be available on the server side
+  serverRuntimeConfig: {
+    // API Gateway
+    // API URL to be used in the server-side code
+    serverUrl:
+      process.env.API_SERVER_URL ||
+      `http://localhost:${process.env.PORT || 3000}`,
   },
 
-  // API Gateway
-  apiUrl:
-    process.env.API_SERVER_URL ||
-    `http://localhost:${process.env.PORT || 3000}/api/graphql`,
+  // Available on both server and client
+  publicRuntimeConfig: {
+    // API Gateway
+    // API URL to be used in the client-side code
+    clientUrl: process.env.API_CLIENT_URL || '',
+    apiUrl:
+      process.env.API_SERVER_URL ||
+      `http://localhost:${process.env.PORT || 3000}/api/graphql`,
 
-  // Database
-  databaseUrl: process.env.DATABASE_URL || 'mysql:database.mysql',
-  databaseName: process.env.DATABASE_NAME || 'develop',
-  databaseUsername: process.env.DATABASE_USERNAME || 'root',
-  databasePassword: process.env.DATABASE_PASSWORD || 'root',
-  databaseHost: process.env.DATABASE_HOST || 'localhost',
+    staticFolder: '/static',
+  },
 
-  // Photos files
-  libraryPath: `${process.env.PHOTOS_PATH}`,
-  paintingsPath: `${process.env.PHOTOS_PATH}/paintings`,
-  paintingsMDPath: `${process.env.PHOTOS_PATH}/paintings/md`,
-  paintingsSMPath: `${process.env.PHOTOS_PATH}/paintings/sm`,
-  sculpturesPath: `${process.env.PHOTOS_PATH}/sculptures`,
-  sculpturesMDPath: `${process.env.PHOTOS_PATH}/sculptures/md`,
-  sculpturesSMPath: `${process.env.PHOTOS_PATH}/sculptures/sm`,
-  drawingsPath: `${process.env.PHOTOS_PATH}/drawings`,
-  drawingsMDPath: `${process.env.PHOTOS_PATH}/drawings/md`,
-  drawingsSMPath: `${process.env.PHOTOS_PATH}/drawings/sm`,
-  miscellaneousPath: `${process.env.PHOTOS_PATH}/miscellaneous`,
+  env: {
+    // Reference a variable that was defined in the .env file and make it available at Build Time
 
-  // Authentication
-  jwt: {
-    name: process.env.JWT_NAME || 'token',
-    secret: process.env.JWT_SECRET || '15htDn-7uU-620Ghhwz',
+    // Database
+    DATABASE_NAME: 'develop',
+    DATABASE_USERNAME: 'root',
+    DATABASE_PASSWORD: 'root',
+    DATABASE_HOST: 'localhost',
+    DATABASE_URL: 'mysql:database.mysql',
+
+    // Library
+    PHOTOS_PATH: './../../photo-files',
+
+    // Authentication
+    JWT_SECRET: 'secret' || '15htDn-7uU-620Ghhwz',
+    LOCAL_STORAGE_SECRET: 'secretKey',
   },
 };

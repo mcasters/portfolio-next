@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
 import { signIn } from '../data/api';
+import { useAlert } from '../components/AlertContext/AlertContext';
 
 const SignIn = () => {
   const [userData, setUserData] = useState({
@@ -13,6 +14,7 @@ const SignIn = () => {
     error: '',
   });
   const router = useRouter();
+  const triggerAlert = useAlert();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -23,9 +25,13 @@ const SignIn = () => {
 
     try {
       const user = await signIn(username, password);
-      if (user) router.push(ROUTER_CONSTANT.ADMIN);
+      if (user) {
+        console.log('user.username ///// ' + user.username);
+        localStorage.setItem('admin', user.username);
+        router.push(ROUTER_CONSTANT.ADMIN);
+      }
     } catch (error) {
-      console.error(error);
+      triggerAlert(error.message, true);
       setUserData(
         Object.assign({}, userData, {
           error: error.message,

@@ -72,7 +72,7 @@ export const typeDefs = gql`
     getAllItems(type: String!): [Item]
     getItemsByPart(year: Int!, type: String!, half: Int!): [Item]
     user(id: ID!): User!
-    viewer: User
+    viewer: Boolean!
   }
 
   type Mutation {

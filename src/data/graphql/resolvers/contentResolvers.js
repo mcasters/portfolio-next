@@ -1,4 +1,4 @@
-import getAuthenticatedUser from '../services/authService';
+import isAuthenticated from '../services/authService';
 import * as imageService from '../../image/imageServices';
 import { Content } from '../../models';
 import CONTENT from '../../../constants/content';
@@ -11,7 +11,7 @@ export default {
 
   Mutation: {
     addContent: async (parent, { input }, { req }, _info) => {
-      await getAuthenticatedUser(req);
+      await isAuthenticated(req);
       const { key } = input;
 
       let content = await Content.findOne({
@@ -31,7 +31,7 @@ export default {
     },
 
     addPicture: async (root, { picture, title }, { req }, _info) => {
-      const isAdmin = await getAuthenticatedUser(req);
+      const isAdmin = await isAuthenticated(req);
 
       if (!isAdmin) throw new Error("Erreur d'authentification");
 
