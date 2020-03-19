@@ -132,8 +132,8 @@ export async function viewer() {
 export async function addItem(input) {
   const data = await fetchAPI(
     `
-  mutation AddItem($input: ItemInput!) {
-    addItem(input: $input) {
+  mutation AddItem($item: ItemInput!) {
+    addItem(input: $item) {
       id
       title
       date
@@ -153,6 +153,33 @@ export async function addItem(input) {
   );
   return data.addItem;
 }
+
+export async function updateItem(id, input) {
+  const data = await fetchAPI(
+    `
+  mutation UpdateItem($id: ID!, $item: ItemInput!) {
+    updateItem(id: $id, input: $item) {
+      id
+      title
+      date
+      technique
+      description
+      height
+      width
+      length
+    }
+  }
+`,
+    {
+      variables: {
+        id,
+        input,
+      },
+    },
+  );
+  return data.updateItem;
+}
+
 
 export async function deleteItem(id, type) {
   const data = await fetchAPI(

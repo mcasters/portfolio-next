@@ -16,4 +16,3 @@ AdminItemParent.propTypes = {
   type: PropTypes.string.isRequired,
   items: PropTypes.object.isRequired,
 };
-Œ

@@ -87,11 +87,10 @@ function ItemAddForm({ type }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    set;
     const input = buildInput();
 
     try {
-      const res = addItem({ input });
+      const res = addItem({ item: { input } });
       if (res) {
         triggerAlert('Item ajouté', false);
         clearState();

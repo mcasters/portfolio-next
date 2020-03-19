@@ -8,8 +8,8 @@ import s from './ItemUpdateButton.module.css';
 function ItemUpdateButton({ item, type, srcList }) {
   const [openUpdate, setOpenUpdate] = useState(false);
 
-  const getResult = isError => {
-    if (!isError) setOpenUpdate(false);
+  const close = () => {
+    setOpenUpdate(false);
   };
 
   const toggle = () => {
@@ -22,12 +22,7 @@ function ItemUpdateButton({ item, type, srcList }) {
         <FaPen />
       </button>
       {openUpdate && (
-        <UpdateForm
-          item={item}
-          type={type}
-          srcList={srcList}
-          onResult={getResult}
-        />
+        <UpdateForm item={item} type={type} srcList={srcList} onClose={close} />
       )}
     </>
   );
@@ -37,8 +32,6 @@ ItemUpdateButton.propTypes = {
   item: PropTypes.shape().isRequired,
   type: PropTypes.string.isRequired,
   srcList: PropTypes.array.isRequired,
-  updateMutation: PropTypes.func.isRequired,
-  refetch: PropTypes.func.isRequired,
 };
 
 export default ItemUpdateButton;

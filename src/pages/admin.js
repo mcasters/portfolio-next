@@ -11,16 +11,18 @@ import CONTENT from '../constants/content';
 import EditContent from '../components/Admin/EditContent/EditContent';
 import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemParent';
 import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
-import { withApollo } from '../data/apollo/client';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
 import { getAllItems, getContent, viewer } from '../data/api';
+import { useAlert } from '../components/AlertContext/AlertContext';
 
 const Admin = ({ user, allContent }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const router = useRouter();
+  const triggerAlert = useAlert();
 
   if (user === null && typeof window !== 'undefined') {
+    triggerAlert('Authentification recquise', true);
     router.push(ROUTER_CONSTANT.HOME);
   }
 
@@ -54,9 +56,21 @@ const Admin = ({ user, allContent }) => {
               <div className={s.tabContainer}>
                 <EditPictureForm pictureTitle={CONTENT.HOME_IMAGE_PORTRAIT} />
                 <EditPictureForm pictureTitle={CONTENT.HOME_IMAGE_LANDSCAPE} />
-                <EditContent keyContent={CONTENT.KEY.HOME1} content={allContent.homeContent1} isTextArea />
-                <EditContent keyContent={CONTENT.KEY.HOME2} content={allContent.homeContent2} isTextArea />
-                <EditContent keyContent={CONTENT.KEY.HOME3} content={allContent.homeContent3} isTextArea />
+                <EditContent
+                  keyContent={CONTENT.KEY.HOME1}
+                  content={allContent.homeContent1}
+                  isTextArea
+                />
+                <EditContent
+                  keyContent={CONTENT.KEY.HOME2}
+                  content={allContent.homeContent2}
+                  isTextArea
+                />
+                <EditContent
+                  keyContent={CONTENT.KEY.HOME3}
+                  content={allContent.homeContent3}
+                  isTextArea
+                />
               </div>
             </TabPanel>
             <TabPanel>
@@ -64,17 +78,30 @@ const Admin = ({ user, allContent }) => {
                 <EditPictureForm
                   pictureTitle={CONTENT.PRESENTATION_IMAGE_TITLE}
                 />
-                <EditContent keyContent={CONTENT.KEY.PRESENTATION} content={allContent.presentation} isTextArea />
+                <EditContent
+                  keyContent={CONTENT.KEY.PRESENTATION}
+                  content={allContent.presentation}
+                  isTextArea
+                />
               </div>
             </TabPanel>
             <TabPanel>
-              <AdminItemParent type={ITEM.PAINTING.TYPE} items={allContent.paintings} />
+              <AdminItemParent
+                type={ITEM.PAINTING.TYPE}
+                items={allContent.paintings}
+              />
             </TabPanel>
             <TabPanel>
-              <AdminItemParent type={ITEM.SCULPTURE.TYPE} items={allContent.sculptures} />
+              <AdminItemParent
+                type={ITEM.SCULPTURE.TYPE}
+                items={allContent.sculptures}
+              />
             </TabPanel>
             <TabPanel>
-              <AdminItemParent type={ITEM.DRAWING.TYPE} items={allContent.drawings} />
+              <AdminItemParent
+                type={ITEM.DRAWING.TYPE}
+                items={allContent.drawings}
+              />
             </TabPanel>
             <TabPanel>
               <div className={s.tabContainer}>
@@ -136,4 +163,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default withApollo(Admin);
+export default Admin;

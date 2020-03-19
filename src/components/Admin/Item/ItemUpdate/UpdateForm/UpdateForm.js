@@ -6,6 +6,7 @@ import DayPicker from '../../DayPicker';
 import ITEM from '../../../../../constants/item';
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../AlertContext/AlertContext';
+import { updateItem } from '../../../../../data/api';
 
 const customStyles = {
   overlay: {
@@ -23,7 +24,7 @@ const customStyles = {
 
 Modal.setAppElement('#__next');
 
-function UpdateForm({ item, type, srcList, onResult }) {
+function UpdateForm({ item, type, srcList, onClose }) {
   const { id, __typename, ...rest } = item;
   const [itemData, setItemData] = useState({ ...rest, pictures: [] });
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
@@ -84,12 +85,16 @@ function UpdateForm({ item, type, srcList, onResult }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    updateMutation({
-      variables: { id, item: { ...itemData, type } },
-    }).then(res => {
-      const isError = res === undefined;
-      handleResult(isError);
-    });
+
+    try {
+      const res = updateItem(id, { item: { ...itemData, type } });
+      if (res) {
+        triggerAlert('Item modifié', false);
+        onClose();
+      }
+    } catch (e) {
+      triggerAlert(e.message, true);
+    }
   };
 
   return (
@@ -101,10 +106,7 @@ function UpdateForm({ item, type, srcList, onResult }) {
       style={customStyles}
     >
       <h1 className={s.updateTitle}>Modification</h1>
-      <form
-        className="formGroup"
-        onSubmit={handleSubmit}
-        >
+      <form className="formGroup" onSubmit={handleSubmit}>
         <input
           className={s.inputL}
           placeholder="Titre"
@@ -236,8 +238,7 @@ UpdateForm.propTypes = {
   }).isRequired,
   type: PropTypes.string.isRequired,
   srcList: PropTypes.array.isRequired,
-  updateMutation: PropTypes.func.isRequired,
-  onResult: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default UpdateForm;
