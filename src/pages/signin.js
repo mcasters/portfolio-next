@@ -51,6 +51,7 @@ const SignIn = () => {
           type="text"
           id="username"
           name="username"
+          placeholder="Utilisateur"
           value={userData.username}
           onChange={event =>
             setUserData(
@@ -62,6 +63,7 @@ const SignIn = () => {
           type="password"
           id="password"
           name="password"
+          placeholder="Mot de passe"
           value={userData.password}
           onChange={event =>
             setUserData(

@@ -1,4 +1,3 @@
-import { AuthenticationError, UserInputError } from 'apollo-server-micro';
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -8,7 +7,7 @@ import isAuthenticated from '../services/authService';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-function createUser(data) {
+function createUserData(data) {
   const salt = bcrypt.genSaltSync();
 
   return {
@@ -38,11 +37,8 @@ export default {
       if (lookupUser) {
         throw new Error('Utilisateur déjà existant');
       }
-      const user = createUser(args.input);
-
-      const newUser = await User.create(user);
-
-      return { newUser };
+      const user = await User.create(createUserData(args.input));
+      return { user };
     },
 
     async signIn(_parent, args, context, _info) {

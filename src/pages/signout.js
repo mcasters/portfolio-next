@@ -1,25 +1,26 @@
 import { useEffect } from 'react';
-import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
+import getConfig from 'next/config';
 
-import { withApollo } from '../data/apollo/client';
-import SignOutMutation from '../data/graphql/queries/signout';
 import ROUTER_CONSTANT from '../constants/router';
+import { signOut } from '../data/api';
+import { useAlert } from '../components/AlertContext/AlertContext';
 
 function SignOut() {
-  const client = useApolloClient();
+  const { publicRuntimeConfig } = getConfig();
+  const { ls_key } = publicRuntimeConfig;
   const router = useRouter();
-  const [signOut] = useMutation(SignOutMutation);
+  const triggerAlert = useAlert();
 
   useEffect(() => {
+    localStorage.removeItem(ls_key);
     signOut().then(() => {
-      client.resetStore().then(() => {
-        router.push(ROUTER_CONSTANT.HOME);
-      });
+      triggerAlert('Déconnecté', false);
+      router.push(ROUTER_CONSTANT.HOME);
     });
-  }, [signOut, router, client]);
+  }, [router]);
 
   return <p>Déconnexion...</p>;
 }
 
-export default withApollo(SignOut);
+export default SignOut;

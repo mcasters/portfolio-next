@@ -14,5 +14,5 @@ export default function AdminItemParent({ type, items }) {
 
 AdminItemParent.propTypes = {
   type: PropTypes.string.isRequired,
-  items: PropTypes.object.isRequired,
+  items: PropTypes.array.isRequired,
 };

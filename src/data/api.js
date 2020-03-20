@@ -2,10 +2,11 @@ import 'isomorphic-unfetch';
 
 import getConfig from 'next/config';
 
-const { serverUrl } = getConfig();
+const { serverRuntimeConfig } = getConfig();
+const apiUrl = serverRuntimeConfig.serverUrl + '/api/graphql';
 
 const fetchAPI = async (query, { variables } = {}, context) => {
-  const res = await fetch('http://localhost:3000/api/graphql', {
+  const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,6 +25,75 @@ const fetchAPI = async (query, { variables } = {}, context) => {
   }
   return json.data;
 };
+
+export async function signIn(username, password) {
+  const data = await fetchAPI(
+    `
+  mutation SignInMutation($username: String!, $password: String!) {
+    signIn(input: { username: $username, password: $password }) {
+      user {
+        id
+        username
+      }
+    }
+  }
+`,
+    {
+      variables: {
+        username,
+        password,
+      },
+    },
+  );
+  return data.signIn;
+}
+
+export async function signUp(username, email, password) {
+  const data = await fetchAPI(
+    `
+  mutation SignUpMutation($username: String!, $email: String!, $password: String!) {
+    signUp(input: { username:$username, email: $email, password: $password }) {
+      user {
+        id
+        username
+      }
+    }
+  }
+`,
+    {
+      variables: {
+        username,
+        email,
+        password,
+      },
+    },
+  );
+  return data.signUp;
+}
+
+export async function viewer(context) {
+  const data = await fetchAPI(
+    `
+  query ViewerQuery {
+    viewer
+  }
+`,
+    {},
+    context,
+  );
+  return data?.viewer;
+}
+
+export async function signOut() {
+  const data = await fetchAPI(
+    `
+  mutation SignOutMutation {
+    signOut
+  }
+`,
+  );
+  return data.signOut;
+}
 
 export async function getContent(key) {
   const data = await fetchAPI(
@@ -94,41 +164,6 @@ export async function getAllItems(type) {
     },
   );
   return data?.getAllItems;
-}
-
-export async function signIn(username, password) {
-  const data = await fetchAPI(
-    `
-  mutation SignInMutation($username: String!, $password: String!) {
-    signIn(input: { username: $username, password: $password }) {
-      user {
-        id
-        username
-      }
-    }
-  }
-`,
-    {
-      variables: {
-        username,
-        password,
-      },
-    },
-  );
-  return data.signIn;
-}
-
-export async function viewer(context) {
-  const data = await fetchAPI(
-    `
-  query ViewerQuery {
-    viewer
-  }
-`,
-    {},
-    context,
-  );
-  return data?.viewer;
 }
 
 export async function addItem(input) {

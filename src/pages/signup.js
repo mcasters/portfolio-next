@@ -1,36 +1,43 @@
 import Link from 'next/link';
-import { useMutation } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 
-import { withApollo } from '../data/apollo/client';
-import Field from '../components/FormElements/Field';
-import { getErrorMessage } from '../components/lib/form';
-import SignUpMutation from '../data/graphql/queries/signup';
 import Layout from '../components/LayoutComponents/Layout/Layout';
+import { useState } from 'react';
+import { useAlert } from '../components/AlertContext/AlertContext';
+import { signUp } from '../data/api';
+import ROUTER_CONSTANT from '../constants/router';
 
 function SignUp() {
-  const [signUp] = useMutation(SignUpMutation);
-  const [errorMsg, setErrorMsg] = React.useState();
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    error: '',
+  });
   const router = useRouter();
+  const triggerAlert = useAlert();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const usernameElement = e.currentTarget.elements.username;
-    const emailElement = e.currentTarget.elements.email;
-    const passwordElement = e.currentTarget.elements.password;
+    setUserData(Object.assign({}, userData, { error: '' }));
+
+    const username = userData.username;
+    const email = userData.email;
+    const password = userData.password;
 
     try {
-      await signUp({
-        variables: {
-          username: usernameElement.value,
-          email: emailElement.value,
-          password: passwordElement.value,
-        },
-      });
-
-      router.push('/signin');
+      const user = await signUp(username, email, password);
+      if (user) {
+        triggerAlert('Utilisateur enregistré', false);
+        router.push(ROUTER_CONSTANT.SIGNIN);
+      }
     } catch (error) {
-      setErrorMsg(getErrorMessage(error));
+      triggerAlert(error.message, true);
+      setUserData(
+        Object.assign({}, userData, {
+          error: error.message,
+        }),
+      );
     }
   };
 
@@ -38,30 +45,45 @@ function SignUp() {
     <Layout>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        {errorMsg && <p>{errorMsg}</p>}
-        <Field
+        {userData.error && <p>{userData.error}</p>}
+        <input
+          type="text"
+          id="username"
           name="username"
-          type="username"
-          autoComplete="username"
-          required
-          label="Username"
+          placeholder="Utilisateur"
+          value={userData.username}
+          onChange={event =>
+            setUserData(
+              Object.assign({}, userData, { username: event.target.value }),
+            )
+          }
         />
-        <Field
+        <input
+          type="text"
+          id="email"
           name="email"
-          type="email"
-          autoComplete="email"
-          required
-          label="Email"
+          placeholder="Email"
+          value={userData.email}
+          onChange={event =>
+            setUserData(
+              Object.assign({}, userData, { email: event.target.value }),
+            )
+          }
         />
-        <Field
-          name="password"
+        <input
           type="password"
-          autoComplete="password"
-          required
-          label="Password"
+          id="password"
+          name="password"
+          placeholder="Mot de passe"
+          value={userData.password}
+          onChange={event =>
+            setUserData(
+              Object.assign({}, userData, { password: event.target.value }),
+            )
+          }
         />
         <button type="submit">Sign up</button> or{' '}
-        <Link href="signin">
+        <Link href={ROUTER_CONSTANT.SIGNIN}>
           <a>Sign in</a>
         </Link>
       </form>
@@ -69,4 +91,4 @@ function SignUp() {
   );
 }
 
-export default withApollo(SignUp);
+export default SignUp;

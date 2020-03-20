@@ -14,8 +14,6 @@ module.exports = {
 
   // Only be available on the server side
   serverRuntimeConfig: {
-    // API Gateway
-    // API URL to be used in the server-side code
     serverUrl:
       process.env.API_SERVER_URL ||
       `http://localhost:${process.env.PORT || 3000}`,
@@ -23,21 +21,14 @@ module.exports = {
 
   // Available on both server and client
   publicRuntimeConfig: {
-    // API Gateway
-    // API URL to be used in the client-side code
     clientUrl: process.env.API_CLIENT_URL || '',
-    apiUrl:
-      process.env.API_SERVER_URL ||
-      `http://localhost:${process.env.PORT || 3000}/api/graphql`,
-
     ls_key: 'admin',
     ls_value: 'key',
     staticFolder: '/static',
   },
 
+  // Reference a variable that was defined in the .env file and make it available at Build Time
   env: {
-    // Reference a variable that was defined in the .env file and make it available at Build Time
-
     // Database
     DATABASE_NAME: 'develop',
     DATABASE_USERNAME: 'root',
@@ -50,6 +41,5 @@ module.exports = {
 
     // Authentication
     JWT_SECRET: 'secret' || '15htDn-7uU-620Ghhwz',
-
   },
 };
