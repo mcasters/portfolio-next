@@ -164,11 +164,11 @@ export async function getAllItems(type) {
   return data?.getAllItems;
 }
 
-export async function addItem(input) {
+export async function addItem(item) {
   const data = await fetchAPI(
     `
   mutation AddItem($item: ItemInput!) {
-    addItem(input: $item) {
+    addItem(item: $item) {
       id
       title
       date
@@ -182,18 +182,18 @@ export async function addItem(input) {
 `,
     {
       variables: {
-        input,
+        item,
       },
     },
   );
   return data.addItem;
 }
 
-export async function updateItem(id, input) {
+export async function updateItem(id, item) {
   const data = await fetchAPI(
     `
   mutation UpdateItem($id: ID!, $item: ItemInput!) {
-    updateItem(id: $id, input: $item) {
+    updateItem(id: $id, item: $item) {
       id
       title
       date
@@ -208,7 +208,7 @@ export async function updateItem(id, input) {
     {
       variables: {
         id,
-        input,
+        item,
       },
     },
   );

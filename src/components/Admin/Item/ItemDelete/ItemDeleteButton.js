@@ -11,7 +11,7 @@ function ItemDeleteButton({ id, type }) {
   const handleDelete = async e => {
     e.preventDefault();
     try {
-      const res = await deleteItem({ variables: { id, type } });
+      const res = await deleteItem(id, type);
       if (res) triggerAlert('Item supprimé', false);
     } catch (e) {
       triggerAlert(e.message, true);

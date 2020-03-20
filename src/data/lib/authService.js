@@ -1,7 +1,7 @@
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 
-import { User } from '../../models';
+import { User } from '../models';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 

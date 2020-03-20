@@ -78,8 +78,8 @@ export const typeDefs = gql`
   type Mutation {
     addContent(input: ContentInput!): Content!
     addPicture(picture: Upload!, title: String!): Boolean!
-    addItem(input: ItemInput!): Item!
-    updateItem(id: ID!, input: ItemInput!): Item!
+    addItem(item: ItemInput!): Item!
+    updateItem(id: ID!, item: ItemInput!): Item!
     deleteItem(id: ID!, type: String!): ID!
     uploadFile(file: Upload!): Boolean
     signUp(input: SignUpInput!): SignUpPayload!

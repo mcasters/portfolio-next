@@ -45,11 +45,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
     !!(isSculpture && haveMain && itemData.length);
 
   const handleCloseModal = () => {
-    onResult(false);
-  };
-
-  const handleResult = isError => {
-    onResult(isError);
+    onClose();
   };
 
   const handleChange = e => {
@@ -87,7 +83,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
     e.preventDefault();
 
     try {
-      const res = updateItem(id, { item: { ...itemData, type } });
+      const res = updateItem(id,{ ...itemData, type });
       if (res) {
         triggerAlert('Item modifié', false);
         onClose();

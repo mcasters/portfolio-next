@@ -11,7 +11,7 @@ export default {
   },
 
   Mutation: {
-    addItem: async (root, { input: { pictures, type, ...data } }, { req }) => {
+    addItem: async (root, { item: { pictures, type, ...data } }, { req }) => {
       if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
       const { title } = data;
@@ -34,7 +34,7 @@ export default {
 
     updateItem: async (
       root,
-      { id, input: { pictures, type, ...data } },
+      { id, item: { pictures, type, ...data } },
       { req },
     ) => {
       if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
