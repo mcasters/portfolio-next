@@ -11,7 +11,8 @@ export default {
 
   Mutation: {
     addContent: async (parent, { input }, { req }, _info) => {
-      await isAuthenticated(req);
+      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
+
       const { key } = input;
 
       let content = await Content.findOne({
@@ -31,9 +32,7 @@ export default {
     },
 
     addPicture: async (root, { picture, title }, { req }, _info) => {
-      const isAdmin = await isAuthenticated(req);
-
-      if (!isAdmin) throw new Error("Erreur d'authentification");
+      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
       const pictures = [picture];
       const res = await imageService.processImageUpload(

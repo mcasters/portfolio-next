@@ -5,17 +5,23 @@ import Link from 'next/link';
 import s from './LoginControl.module.css';
 import { withApollo } from '../../../../data/apollo/client';
 import ROUTER_CONSTANT from '../../../../constants/router';
-import config from '../../../../../next.config';
+import getConfig from 'next/config';
 
 const LoginControl = () => {
-  const localStorageKey = config.env.localStorageSecret;
-  const [adminIsConnected, setAdminIsConnected] = useState(false);
+  const { local_storage_admin, local_storage_secret } = getConfig();
+  const onLocalStorage =
+    typeof window !== 'undefined' &&
+    window.localStorage[local_storage_admin] === local_storage_secret;
+  const [isConnected, setIsConnected] = useState(onLocalStorage);
 
   useEffect(() => {
-    if (localStorage.getItem(localStorageKey)) setAdminIsConnected(true);
-  });
+    if (typeof window !== 'undefined')
+      setIsConnected(
+        window.localStorage[local_storage_admin] === local_storage_secret,
+      );
+  }, [isConnected]);
 
-  if (adminIsConnected) {
+  if (isConnected) {
     return (
       <Link href={ROUTER_CONSTANT.ADMIN}>
         <a className={s.link}>Admin</a>

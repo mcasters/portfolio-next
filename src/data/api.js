@@ -197,7 +197,7 @@ export async function deleteItem(id, type) {
   return data.deleteItem;
 }
 
-export async function addPicture(picture, title) {
+export async function addPicture(picture, pictureTitle) {
   const data = await fetchAPI(
     `
   mutation AddPicture($picture: Upload!, $pictureTitle: String!) {
@@ -207,10 +207,29 @@ export async function addPicture(picture, title) {
     {
       variables: {
         picture,
-        title,
+        pictureTitle,
       },
     },
   );
   return data.addPicture;
 }
 
+export async function addContent(input) {
+  const data = await fetchAPI(
+    `
+  mutation AddContent($input: ContentInput!) {
+    addContent(input: $input) {
+      id
+      key
+      text
+    }
+  }
+`,
+    {
+      variables: {
+        input,
+      },
+    },
+  );
+  return data.addContent;
+}

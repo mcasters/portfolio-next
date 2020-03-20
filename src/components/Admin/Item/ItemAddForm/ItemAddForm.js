@@ -18,7 +18,7 @@ function ItemAddForm({ type }) {
     height: '',
     width: '',
     pictures: [],
-    error,
+    error: '',
   });
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
 
@@ -113,7 +113,7 @@ function ItemAddForm({ type }) {
           onChange={handleChange}
         />
         <div className={s.DayInputContainer}>
-          <DayPicker date={date} onDayChange={handleChangeDate} />
+          <DayPicker date={itemData.date} onDayChange={handleChangeDate} />
         </div>
         <input
           className={s.inputL}

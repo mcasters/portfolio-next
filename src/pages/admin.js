@@ -132,7 +132,6 @@ const Admin = ({ isAuthenticated, allContent }) => {
 
 export async function getServerSideProps(context) {
   const isAuthenticated = await viewer(context);
-  console.log('isAuthenticated in getServerSideProps ///// ' + isAuthenticated);
   const drawings = await getAllItems(ITEM.DRAWING.TYPE);
   const paintings = await getAllItems(ITEM.PAINTING.TYPE);
   const sculptures = await getAllItems(ITEM.SCULPTURE.TYPE);

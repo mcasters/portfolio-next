@@ -1,27 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useMutation } from '@apollo/react-hooks';
 
 import s from './EditPictureForm.module.css';
-import ADD_PICTURE_MUTATION from '../../../data/graphql/queries/addPicture';
 import CONT_CONST from '../../../constants/content';
 import { useAlert } from '../../AlertContext/AlertContext';
+import { addPicture } from '../../../data/api';
 
 function EditPictureForm({ pictureTitle }) {
   const triggerAlert = useAlert();
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [file, setFile] = useState('');
-
-  const [addPicture] = useMutation(ADD_PICTURE_MUTATION, {
-    onError(err) {
-      triggerAlert(err.message, true);
-    },
-    onCompleted() {
-      triggerAlert('Enregistré', false);
-      setImagePreviewUrl('');
-      setFile('');
-    },
-  });
 
   const setProps = title => {
     let adminTitle;
@@ -60,6 +48,25 @@ function EditPictureForm({ pictureTitle }) {
 
   const { adminTitle, filename } = setProps(pictureTitle);
 
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    try {
+      const res = await addPicture({
+        picture: file,
+        pictureTitle,
+      });
+
+      if (res) {
+        triggerAlert('Image ajouté', false);
+        setImagePreviewUrl('');
+        setFile('');
+      }
+    } catch (e) {
+      triggerAlert(e.message, true);
+    }
+  };
+
   return (
     <div className={s.addContainer}>
       <h2 className={s.title}>{adminTitle}</h2>
@@ -72,18 +79,7 @@ function EditPictureForm({ pictureTitle }) {
             : CONT_CONST.HOME_IMAGE_ALT
         }
       />
-      <form
-        className="formGroup"
-        onSubmit={e => {
-          e.preventDefault();
-          addPicture({
-            variables: {
-              picture: file,
-              pictureTitle,
-            },
-          });
-        }}
-      >
+      <form className="formGroup" onSubmit={handleSubmit}>
         <label className={s.fileLabel}>
           Choisir un fichier
           <input

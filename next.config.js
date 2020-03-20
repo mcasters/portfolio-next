@@ -31,6 +31,8 @@ module.exports = {
       `http://localhost:${process.env.PORT || 3000}/api/graphql`,
 
     staticFolder: '/static',
+    local_storage_admin: 'admin',
+    local_storage_secret: 'secretKey',
   },
 
   env: {
@@ -48,6 +50,6 @@ module.exports = {
 
     // Authentication
     JWT_SECRET: 'secret' || '15htDn-7uU-620Ghhwz',
-    LOCAL_STORAGE_SECRET: 'secretKey',
+
   },
 };
