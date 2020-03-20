@@ -3,7 +3,7 @@ import Content from '../components/Content/Content';
 import CONT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import { getContent } from '../data/api';
+import { getContent } from '../data/lib/api';
 
 const Presentation = ({ content }) => {
   const title = TITLE.PRESENTATION;

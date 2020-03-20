@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import s from './LoginControl.module.css';
-import { withApollo } from '../../../../data/apollo/client';
 import ROUTER_CONSTANT from '../../../../constants/router';
 import getConfig from 'next/config';
 
@@ -39,4 +38,4 @@ const LoginControl = () => {
   );
 };
 
-export default withApollo(LoginControl);
+export default LoginControl;

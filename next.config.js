@@ -1,5 +1,11 @@
 /* eslint-disable no-undef */
-require('dotenv').config();
+const dotEnvResult = require('dotenv').config();
+
+const prod = process.env.NODE_ENV === 'production';
+
+if (dotEnvResult.error) {
+  throw dotEnvResult.error;
+}
 
 module.exports = {
   webpack: (config, { isServer }) => {
@@ -13,22 +19,18 @@ module.exports = {
   },
 
   // Only be available on the server side
-  serverRuntimeConfig: {
-    serverUrl:
-      process.env.API_SERVER_URL ||
-      `http://localhost:${process.env.PORT || 3000}`,
-  },
+  serverRuntimeConfig: {},
 
   // Available on both server and client
   publicRuntimeConfig: {
-    clientUrl: process.env.API_CLIENT_URL || '',
     ls_key: 'admin',
     ls_value: 'key',
-    staticFolder: '/static',
   },
 
   // Reference a variable that was defined in the .env file and make it available at Build Time
   env: {
+    BACKEND_URL: prod ? 'https://marioncasters.fr' : 'http://localhost:3000',
+
     // Database
     DATABASE_NAME: 'develop',
     DATABASE_USERNAME: 'root',

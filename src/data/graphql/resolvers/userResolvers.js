@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import { User } from '../../models/index';
-import isAuthenticated from '../services/authService';
+import isAuthenticated from '../../lib/authService';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 

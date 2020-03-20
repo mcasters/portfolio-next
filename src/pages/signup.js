@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import { useState } from 'react';
 import { useAlert } from '../components/AlertContext/AlertContext';
-import { signUp } from '../data/api';
+import { signUp } from '../data/lib/api';
 import ROUTER_CONSTANT from '../constants/router';
 
 function SignUp() {

@@ -1,13 +1,13 @@
-import ItemModelService from '../services/ItemModelService';
-import isAuthenticated from '../services/authService';
+import ItemService from '../../lib/ItemService';
+import isAuthenticated from '../../lib/authService';
 import * as imageService from '../../image/imageServices';
 
 export default {
   Query: {
     getAllItems: async (parent, { type }) =>
-      new ItemModelService(type).getAllItems(),
+      new ItemService(type).getAllItems(),
     getItemsByPart: (parent, { type, year, half }) =>
-      new ItemModelService(type).getItemsByPart(year, half),
+      new ItemService(type).getItemsByPart(year, half),
   },
 
   Mutation: {
@@ -15,7 +15,7 @@ export default {
       if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
       const { title } = data;
-      const itemService = new ItemModelService(type);
+      const itemService = new ItemService(type);
 
       const item = await itemService.getByName(title);
       if (item) throw new Error("Nom de l'item déjà existant en Bdd");
@@ -39,7 +39,7 @@ export default {
     ) => {
       if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
-      const itemService = new ItemModelService(type);
+      const itemService = new ItemService(type);
 
       const oldItem = await itemService.getById(id);
       if (!oldItem) throw new Error('Item à modifier introuvable en BDD');
@@ -81,7 +81,7 @@ export default {
     deleteItem: async (root, { id, type }, { req }) => {
       if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
-      const itemService = new ItemModelService(type);
+      const itemService = new ItemService(type);
       const item = await itemService.getById(id);
       if (!item) throw new Error('Item absent en BDD');
 

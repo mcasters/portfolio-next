@@ -5,7 +5,7 @@ import ITEM from '../constants/item';
 import ItemTab from '../components/ItemDir/ItemTab';
 import useOnSrr from '../components/Hooks/useOnSrr';
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import { getItemsByPart } from '../data/api';
+import { getItemsByPart } from '../data/lib/api';
 
 const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
   const title = 'Peintures';

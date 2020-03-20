@@ -1,11 +1,9 @@
 import 'isomorphic-unfetch';
 
-import getConfig from 'next/config';
-
-const { serverRuntimeConfig } = getConfig();
-const apiUrl = serverRuntimeConfig.serverUrl + '/api/graphql';
+const apiUrl = `${process.env.BACKEND_URL}/api/graphql`;
 
 const fetchAPI = async (query, { variables } = {}, context) => {
+  console.log('apiUrl /// ' + apiUrl);
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {

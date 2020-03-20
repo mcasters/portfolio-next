@@ -1,8 +1,7 @@
 import Item from '../components/ItemDir/Item';
 import ITEM from '../constants/item';
-import { withApollo } from '../data/apollo/client';
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import {getAllItems} from "../data/api";
+import {getAllItems} from "../data/lib/api";
 
 const Sculptures = ({ items }) => {
   const title = 'Sculptures';

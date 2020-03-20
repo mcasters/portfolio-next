@@ -1,7 +1,7 @@
 import Item from '../components/ItemDir/Item';
 import ITEM from '../constants/item';
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import { getAllItems } from '../data/api';
+import { getAllItems } from '../data/lib/api';
 
 const Dessins = ({ items }) => {
   const title = 'Dessins';

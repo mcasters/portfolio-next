@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import s from './ItemAddForm.module.css';
 import ITEM from '../../../../constants/item';
 import DayPicker from '../DayPicker';
-import { addItem } from '../../../../data/api';
+import { addItem } from '../../../../data/lib/api';
 import { useAlert } from '../../../AlertContext/AlertContext';
 
 function ItemAddForm({ type }) {

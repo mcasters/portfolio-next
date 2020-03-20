@@ -3,7 +3,7 @@ import CONT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import s from './styles/contact.module.css';
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import {getContent} from "../data/api";
+import {getContent} from "../data/lib/api";
 
 export default function contact({ address, phone, email }) {
   const title = TITLE.CONTACT;
@@ -18,7 +18,7 @@ export default function contact({ address, phone, email }) {
           <Content content={phone} />
         </div>
         <div className={s.contactContent}>
-          <a href={`mailto:${email}`}>{email}</a>
+          <a href={`mailto:${email.text}`}>{email.text}</a>
         </div>
       </address>
     </Layout>

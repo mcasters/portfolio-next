@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 
 import ROUTER_CONSTANT from '../constants/router';
-import { signOut } from '../data/api';
+import { signOut } from '../data/lib/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
 
 function SignOut() {

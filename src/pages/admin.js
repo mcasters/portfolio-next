@@ -13,7 +13,7 @@ import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemP
 import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
-import { getAllItems, getContent, viewer } from '../data/api';
+import { getAllItems, getContent, viewer } from '../data/lib/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
 
 const Admin = ({ isAuthenticated, allContent }) => {

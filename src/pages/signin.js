@@ -5,7 +5,7 @@ import getConfig from "next/config";
 
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
-import { signIn } from '../data/api';
+import { signIn } from '../data/lib/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
 
 const SignIn = () => {
@@ -29,6 +29,8 @@ const SignIn = () => {
     try {
       const user = await signIn(username, password);
       if (user) {
+        console.log('ls_key //' + ls_key);
+        console.log('ls_value //' + ls_value);
         localStorage.setItem(ls_key, ls_value);
         router.push(ROUTER_CONSTANT.ADMIN);
       }
@@ -46,7 +48,6 @@ const SignIn = () => {
     <Layout>
       <h1>Sign In</h1>
       <form onSubmit={handleSubmit}>
-        {userData.error && <p>{userData.error}</p>}
         <input
           type="text"
           id="username"

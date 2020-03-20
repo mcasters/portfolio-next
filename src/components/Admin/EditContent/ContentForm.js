@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import s from './ContentForm.module.css';
 import { useAlert } from '../../AlertContext/AlertContext';
-import { addContent } from '../../../data/api';
+import { addContent } from '../../../data/lib/api';
 
 function ContentForm({ keyContent, isTextArea, initialContent }) {
   const [isChanged, setIsChanged] = useState(false);
