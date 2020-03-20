@@ -1,5 +1,5 @@
 import isAuthenticated from '../../lib/authService';
-import * as imageService from '../../image/imageServices';
+import * as imageService from '../../lib/imageServices';
 import { Content } from '../../models';
 import CONTENT from '../../../constants/content';
 

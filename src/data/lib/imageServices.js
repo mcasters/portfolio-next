@@ -1,9 +1,9 @@
 import fs from 'fs';
 import Jimp from 'jimp';
 
-import config from '../../../next.config';
 import ITEM from '../../constants/item';
 import CONTENT from '../../constants/content';
+import IMAGE from "../../constants/image";
 
 export const getAllImages = async dirPath => {
   const images = [];
@@ -16,26 +16,27 @@ export const getAllImages = async dirPath => {
 };
 
 const getItemPaths = (title, type) => {
+  const libraryPath = process.env.PHOTOS_PATH;
   const file = `${title}.jpg`;
   if (type === ITEM.SCULPTURE.TYPE)
     return [
-      `${config.sculpturesPath}/${file}`,
-      `${config.sculpturesMDPath}/${file}`,
-      `${config.sculpturesSMPath}/${file}`,
+      `${libraryPath}${IMAGE.SCULPTURE.PATH}/${file}`,
+      `${libraryPath}${IMAGE.SCULPTURE.PATH_MD}/${file}`,
+      `${libraryPath}${IMAGE.SCULPTURE.PATH_SM}/${file}`,
     ];
 
   if (type === ITEM.DRAWING.TYPE)
     return [
-      `${config.drawingsPath}/${file}`,
-      `${config.drawingsMDPath}/${file}`,
-      `${config.drawingsSMPath}/${file}`,
+      `${libraryPath}${IMAGE.DRAWING.PATH}/${file}`,
+      `${libraryPath}${IMAGE.DRAWING.PATH_MD}/${file}`,
+      `${libraryPath}${IMAGE.DRAWING.PATH_SM}/${file}`,
     ];
 
   if (type === ITEM.PAINTING.TYPE)
     return [
-      `${config.paintingsPath}/${file}`,
-      `${config.paintingsMDPath}/${file}`,
-      `${config.paintingsSMPath}/${file}`,
+      `${libraryPath}${IMAGE.PAINTING.PATH}/${file}`,
+      `${libraryPath}${IMAGE.PAINTING.PATH_MD}/${file}`,
+      `${libraryPath}${IMAGE.PAINTING.PATH_SM}/${file}`,
     ];
   return null;
 };
@@ -164,7 +165,5 @@ export const deleteItemImages = async (title, type) => {
   } else {
     paths = getItemPaths(title, type);
   }
-
-  const isDeleted = await paths.every(deleteImage);
-  return isDeleted;
+  return paths.every(deleteImage);
 };

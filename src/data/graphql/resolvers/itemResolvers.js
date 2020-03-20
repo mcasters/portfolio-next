@@ -1,6 +1,6 @@
 import ItemService from '../../lib/ItemService';
 import isAuthenticated from '../../lib/authService';
-import * as imageService from '../../image/imageServices';
+import * as imageService from '../../lib/imageServices';
 
 export default {
   Query: {
