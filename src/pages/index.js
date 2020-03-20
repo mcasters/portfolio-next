@@ -22,9 +22,6 @@ function Home({ content }) {
 
 export async function getServerSideProps() {
   const content = await getContent(CONTENT_CONST.KEY.HOME3);
-  // const response = await fetch('http://localhost:3000/api/images');
-  // const resu = await response.json();
-  // console.log('//// ' + resu.name);
   return {
     props: { content },
   };

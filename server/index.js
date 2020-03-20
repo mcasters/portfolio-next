@@ -3,8 +3,6 @@ const path = require('path');
 const express = require('express');
 const next = require('next');
 
-const config = require('../next.config');
-
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -15,7 +13,7 @@ app.prepare().then(() => {
   const server = express();
 
   // Middleware
-  server.use('/images', express.static(path.resolve(config.libraryPath)));
+  server.use('/images', express.static(path.resolve(process.env.PHOTOS_PATH)));
 
   server.all('*', (req, res) => {
     return handle(req, res);

@@ -30,6 +30,8 @@ export async function getContent(key) {
     `
   query getContent($key: String!) {
     content(key: $key) {
+      id
+      key
       text
     }
   }

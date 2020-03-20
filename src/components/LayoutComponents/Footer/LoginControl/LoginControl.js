@@ -8,18 +8,19 @@ import ROUTER_CONSTANT from '../../../../constants/router';
 import getConfig from 'next/config';
 
 const LoginControl = () => {
-  const { local_storage_admin, local_storage_secret } = getConfig();
+  const { publicRuntimeConfig } = getConfig();
+  const { ls_key, ls_value } = publicRuntimeConfig;
   const onLocalStorage =
-    typeof window !== 'undefined' &&
-    window.localStorage[local_storage_admin] === local_storage_secret;
+    typeof window !== 'undefined' ?
+    window.localStorage[ls_key] === ls_value : false;
   const [isConnected, setIsConnected] = useState(onLocalStorage);
 
   useEffect(() => {
     if (typeof window !== 'undefined')
       setIsConnected(
-        window.localStorage[local_storage_admin] === local_storage_secret,
+        window.localStorage[ls_key] === ls_value,
       );
-  }, [isConnected]);
+  }, [onLocalStorage]);
 
   if (isConnected) {
     return (

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import getConfig from "next/config";
 
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
@@ -8,6 +9,8 @@ import { signIn } from '../data/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
 
 const SignIn = () => {
+  const { publicRuntimeConfig } = getConfig();
+  const { ls_key, ls_value } = publicRuntimeConfig;
   const [userData, setUserData] = useState({
     username: '',
     password: '',
@@ -26,8 +29,7 @@ const SignIn = () => {
     try {
       const user = await signIn(username, password);
       if (user) {
-        console.log('user.username ///// ' + user.username);
-        localStorage.setItem('admin', user.username);
+        localStorage.setItem(ls_key, ls_value);
         router.push(ROUTER_CONSTANT.ADMIN);
       }
     } catch (error) {

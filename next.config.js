@@ -30,9 +30,9 @@ module.exports = {
       process.env.API_SERVER_URL ||
       `http://localhost:${process.env.PORT || 3000}/api/graphql`,
 
+    ls_key: 'admin',
+    ls_value: 'key',
     staticFolder: '/static',
-    local_storage_admin: 'admin',
-    local_storage_secret: 'secretKey',
   },
 
   env: {

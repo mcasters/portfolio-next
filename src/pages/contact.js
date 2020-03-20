@@ -1,6 +1,5 @@
 import Content from '../components/Content/Content';
 import CONT_CONST from '../constants/content';
-import GLOB_CONST from '../constants/globalConstants';
 import TITLE from '../constants/pageTitle';
 import s from './styles/contact.module.css';
 import Layout from '../components/LayoutComponents/Layout/Layout';
