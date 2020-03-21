@@ -30,6 +30,7 @@ module.exports = {
   // Reference a variable that was defined in the .env file and make it available at Build Time
   env: {
     BACKEND_URL: prod ? 'https://marioncasters.fr' : 'http://localhost:3000',
+    API_URI: process.env.API_URI,
 
     // Database
     DATABASE_NAME: 'develop',

@@ -35,7 +35,7 @@ export default {
       if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
       const pictures = [picture];
-      const res = await imageService.processImageUpload(
+      const res = await imageService.addItemImages(
         pictures,
         title,
         CONTENT.TYPE,

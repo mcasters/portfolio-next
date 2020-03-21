@@ -1,8 +1,11 @@
+import { graphqlUploadExpress } from 'graphql-upload';
 import ItemService from '../../lib/ItemService';
 import isAuthenticated from '../../lib/authService';
 import * as imageService from '../../lib/imageServices';
 
 export default {
+  Upload: graphqlUploadExpress,
+
   Query: {
     getAllItems: async (parent, { type }) =>
       new ItemService(type).getAllItems(),
@@ -12,7 +15,8 @@ export default {
 
   Mutation: {
     addItem: async (root, { item: { pictures, type, ...data } }, { req }) => {
-      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
+      if (!(await isAuthenticated(req)))
+        throw new Error("Erreur d'authentification");
 
       const { title } = data;
       const itemService = new ItemService(type);
@@ -20,7 +24,7 @@ export default {
       const item = await itemService.getByName(title);
       if (item) throw new Error("Nom de l'item déjà existant en Bdd");
 
-      const res = await imageService.processImageUpload(pictures, title, type);
+      const res = await imageService.addItemImages(pictures, title, type);
       if (!res) throw new Error("Erreur à l'écriture des fichiers");
 
       const newItem = await itemService.add(data, type);
@@ -37,7 +41,8 @@ export default {
       { id, item: { pictures, type, ...data } },
       { req },
     ) => {
-      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
+      if (!(await isAuthenticated(req)))
+        throw new Error("Erreur d'authentification");
 
       const itemService = new ItemService(type);
 
@@ -59,11 +64,7 @@ export default {
         if (!imageDeleted)
           throw new Error(`Echec de la suppression des anciennes images`);
 
-        const res = await imageService.processImageUpload(
-          pictures,
-          title,
-          type,
-        );
+        const res = await imageService.addItemImages(pictures, title, type);
         if (!res) throw new Error("Erreur à l'écriture des nouveaux fichiers");
       } else if (oldTitle !== title) {
         const res = await imageService.renameItemImages(oldTitle, title, type);
@@ -79,7 +80,8 @@ export default {
     },
 
     deleteItem: async (root, { id, type }, { req }) => {
-      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
+      if (!(await isAuthenticated(req)))
+        throw new Error("Erreur d'authentification");
 
       const itemService = new ItemService(type);
       const item = await itemService.getById(id);

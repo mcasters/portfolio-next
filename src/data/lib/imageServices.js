@@ -3,62 +3,83 @@ import Jimp from 'jimp';
 
 import ITEM from '../../constants/item';
 import CONTENT from '../../constants/content';
-import IMAGE from "../../constants/image";
+import IMAGE from '../../constants/image';
 
-export const getAllImages = async dirPath => {
-  const images = [];
-  const files = fs.readdir(dirPath);
-
-  files.forEach(file => {
-    images.push(file);
-  });
-  return images;
-};
-
-const getItemPaths = (title, type) => {
+const getSculpturePaths = title => {
   const libraryPath = process.env.PHOTOS_PATH;
   const file = `${title}.jpg`;
-  if (type === ITEM.SCULPTURE.TYPE)
-    return [
-      `${libraryPath}${IMAGE.SCULPTURE.PATH}/${file}`,
-      `${libraryPath}${IMAGE.SCULPTURE.PATH_MD}/${file}`,
-      `${libraryPath}${IMAGE.SCULPTURE.PATH_SM}/${file}`,
-    ];
-
-  if (type === ITEM.DRAWING.TYPE)
-    return [
-      `${libraryPath}${IMAGE.DRAWING.PATH}/${file}`,
-      `${libraryPath}${IMAGE.DRAWING.PATH_MD}/${file}`,
-      `${libraryPath}${IMAGE.DRAWING.PATH_SM}/${file}`,
-    ];
-
-  if (type === ITEM.PAINTING.TYPE)
-    return [
-      `${libraryPath}${IMAGE.PAINTING.PATH}/${file}`,
-      `${libraryPath}${IMAGE.PAINTING.PATH_MD}/${file}`,
-      `${libraryPath}${IMAGE.PAINTING.PATH_SM}/${file}`,
-    ];
-  return null;
+  return [
+    `${libraryPath}${IMAGE.SCULPTURE.PATH}/${file}`,
+    `${libraryPath}${IMAGE.SCULPTURE.PATH_MD}/${file}`,
+    `${libraryPath}${IMAGE.SCULPTURE.PATH_SM}/${file}`,
+  ];
+};
+const getPaintingPaths = title => {
+  const libraryPath = process.env.PHOTOS_PATH;
+  const file = `${title}.jpg`;
+  return [
+    `${libraryPath}${IMAGE.PAINTING.PATH}/${file}`,
+    `${libraryPath}${IMAGE.PAINTING.PATH_MD}/${file}`,
+    `${libraryPath}${IMAGE.PAINTING.PATH_SM}/${file}`,
+  ];
 };
 
-export const storeImage = async (file, path) => {
-  const { stream } = await file;
-  return new Promise((resolve, reject) =>
-    stream
-      .pipe(fs.createWriteStream(path))
-      .on('error', error => {
-        if (stream.truncated) fs.unlinkSync(path);
+const getDrawingPaths = title => {
+  const libraryPath = process.env.PHOTOS_PATH;
+  const file = `${title}.jpg`;
+  return [
+    `${libraryPath}${IMAGE.DRAWING.PATH}/${file}`,
+    `${libraryPath}${IMAGE.DRAWING.PATH_MD}/${file}`,
+    `${libraryPath}${IMAGE.DRAWING.PATH_SM}/${file}`,
+  ];
+};
+
+const getMiscellaneousPath = title => {
+  const libraryPath = process.env.PHOTOS_PATH;
+  return `${libraryPath}${IMAGE.MISCELLANEOUS.PATH}/${title}.jpg`;
+}
+
+const getItemPaths = (title, type) => {
+  switch (type) {
+    case ITEM.SCULPTURE.TYPE: {
+      return getSculpturePaths(title);
+    }
+    case ITEM.PAINTING.TYPE: {
+      return getPaintingPaths(title);
+    }
+    case ITEM.DRAWING.TYPE: {
+      return getDrawingPaths(title);
+    }
+    default: {
+      return;
+    }
+  }
+};
+
+export const storeImage = async (upload, targetPath) => {
+  const { createReadStream, filename, mimetype } = await upload;
+  const stream = createReadStream();
+  const file = { filename, mimetype, targetPath };
+
+  await new Promise((resolve, reject) => {
+    const writeStream = fs.createWriteStream(path);
+
+    writeStream.on('finish', resolve);
+    writeStream.on('error', error => {
+      fs.unlink(path, () => {
         reject(error);
-      })
-      .on('finish', () => {
-        resolve(true);
-      }),
-  );
+      });
+    });
+    stream.on('error', error => writeStream.destroy(error));
+    stream.pipe(writeStream);
+  });
+
+  return file;
 };
 
-const storeImageWithResize = (path, targetPath, px) => {
+const storeImageWithResize = (originalPath, targetPath, px) => {
   return new Promise((resolve, reject) =>
-    Jimp.read(path, (err, img) => {
+    Jimp.read(originalPath, (err, img) => {
       if (err) reject(err);
 
       const isLandscape = img.getHeight() < img.getWidth();
@@ -74,20 +95,23 @@ const storeImageWithResize = (path, targetPath, px) => {
   );
 };
 
-const storeItemImage = async (file, type, title) => {
+const storeItemImages = async (file, type, title) => {
   const paths = getItemPaths(title, type);
+  const originalImage = paths[0];
+  const mdImage = paths[1];
+  const smImage = paths[2];
 
   return Promise.all([
-    await storeImage(file, paths[0]),
-    storeImageWithResize(paths[0], paths[1], ITEM.MD_PX),
-    storeImageWithResize(paths[0], paths[2], ITEM.SM_PX),
+    await storeImage(file, originalImage),
+    storeImageWithResize(originalImage, mdImage, ITEM.MD_PX),
+    storeImageWithResize(originalImage, smImage, ITEM.SM_PX),
   ]);
 };
 
-const processSculptureImagesUpload = async (pictures, title) => {
+const storeSculptureImages = async (pictures, title) => {
   const process = (file, index) => {
     const titleWithIndex = `${title}_${index + 1}`;
-    return storeItemImage(file, ITEM.SCULPTURE.TYPE, titleWithIndex);
+    return storeItemImages(file, ITEM.SCULPTURE.TYPE, titleWithIndex);
   };
 
   return Promise.all(pictures.map(process));
@@ -118,17 +142,25 @@ const deleteImage = async file => {
 /*
  * Entry point
  */
-export const processImageUpload = async (pictures, title, type) => {
-  if (type === ITEM.SCULPTURE.TYPE) {
-    return processSculptureImagesUpload(pictures, title);
-  }
+export const addItemImages = async (pictures, title, type) => {
+  let file;
+  if (type !== ITEM.SCULPTURE.TYPE) file = await pictures[0];
 
-  const file = await pictures[0];
-  if (type === CONTENT.TYPE) {
-    const path = `${config.miscellaneousPath}/${title}.jpg`;
-    return storeImage(file, path);
+  switch (type) {
+    case ITEM.SCULPTURE.TYPE: {
+      return storeSculptureImages(pictures, title);
+    }
+    case ITEM.PAINTING.TYPE || ITEM.DRAWING.TYPE: {
+      return storeItemImages(file, type, title);
+    }
+    case CONTENT.TYPE: {
+      const targetPath = getMiscellaneousPath(title);
+      return storeImage(file, targetPath);
+    }
+    default: {
+      return;
+    }
   }
-  return storeItemImage(file, type, title);
 };
 
 /*

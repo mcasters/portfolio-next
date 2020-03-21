@@ -16,6 +16,10 @@ const IMAGE = {
     PATH_MD: '/sculptures/md',
     PATH: '/sculptures',
   },
+
+  MISCELLANEOUS: {
+    PATH: '/miscellaneous',
+  },
 };
 
 export default IMAGE;
