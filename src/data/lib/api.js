@@ -3,7 +3,7 @@ import 'isomorphic-unfetch';
 const apiUrl = `${process.env.BACKEND_URL}/api/graphql`;
 
 const fetchAPI = async (query, { variables } = {}, context) => {
-  console.log('apiUrl /// ' + apiUrl);
+  console.log('API_URI /// ' + process.env.API_URI);
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {
@@ -189,11 +189,11 @@ export async function addItem(item) {
   return data.addItem;
 }
 
-export async function updateItem(id, item) {
+export async function updateItem(item) {
   const data = await fetchAPI(
     `
-  mutation UpdateItem($id: ID!, $item: ItemInput!) {
-    updateItem(id: $id, item: $item) {
+  mutation UpdateItem($item: ItemInput!) {
+    updateItem(item: $item) {
       id
       title
       date
@@ -207,7 +207,6 @@ export async function updateItem(id, item) {
 `,
     {
       variables: {
-        id,
         item,
       },
     },

@@ -20,6 +20,10 @@ const IMAGE = {
   MISCELLANEOUS: {
     PATH: '/miscellaneous',
   },
+
+  TEMP: {
+    PATH: '/temp',
+  },
 };
 
 export default IMAGE;

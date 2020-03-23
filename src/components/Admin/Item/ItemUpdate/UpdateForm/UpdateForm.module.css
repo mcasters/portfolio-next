@@ -32,6 +32,12 @@
   margin-bottom: 1em;
 }
 
+.uploadDialogButton {
+  margin: 40px 5% 10px;
+  width: 40%;
+  display: inline-block;
+}
+
 .updateDialogButton {
   margin: 40px 5% 10px;
   width: 40%;

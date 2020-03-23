@@ -5,6 +5,12 @@ import ITEM from '../../constants/item';
 import CONTENT from '../../constants/content';
 import IMAGE from '../../constants/image';
 
+const getTempPath = title => {
+  const libraryPath = process.env.PHOTOS_PATH;
+  const file = `${title}.jpg`;
+  return `${libraryPath}${IMAGE.TEMP.PATH}/${file}`;
+};
+
 const getSculpturePaths = title => {
   const libraryPath = process.env.PHOTOS_PATH;
   const file = `${title}.jpg`;
@@ -37,7 +43,7 @@ const getDrawingPaths = title => {
 const getMiscellaneousPath = title => {
   const libraryPath = process.env.PHOTOS_PATH;
   return `${libraryPath}${IMAGE.MISCELLANEOUS.PATH}/${title}.jpg`;
-}
+};
 
 const getItemPaths = (title, type) => {
   switch (type) {
@@ -56,25 +62,18 @@ const getItemPaths = (title, type) => {
   }
 };
 
-export const storeImage = async (upload, targetPath) => {
-  const { createReadStream, filename, mimetype } = await upload;
-  const stream = createReadStream();
-  const file = { filename, mimetype, targetPath };
-
-  await new Promise((resolve, reject) => {
-    const writeStream = fs.createWriteStream(path);
-
-    writeStream.on('finish', resolve);
-    writeStream.on('error', error => {
-      fs.unlink(path, () => {
-        reject(error);
-      });
+export const storeImage = async (path, targetPath) => {
+  const exist = fs.existsSync(path);
+  console.log('existe ///// ' + exist);
+  if (fs.existsSync(path)) {
+    console.log('path ///// ' + path);
+    console.log('targetPsath ///// ' + targetPath);
+    fs.rename(path, targetPath, err => {
+      return !err;
     });
-    stream.on('error', error => writeStream.destroy(error));
-    stream.pipe(writeStream);
-  });
-
-  return file;
+    return true;
+  }
+  return false;
 };
 
 const storeImageWithResize = (originalPath, targetPath, px) => {
@@ -95,16 +94,17 @@ const storeImageWithResize = (originalPath, targetPath, px) => {
   );
 };
 
-const storeItemImages = async (file, type, title) => {
+const storeItemImages = async (type, title) => {
   const paths = getItemPaths(title, type);
-  const originalImage = paths[0];
-  const mdImage = paths[1];
-  const smImage = paths[2];
+  const imageTarget = paths[0];
+  const mdImageTarget = paths[1];
+  const smImageTarget = paths[2];
 
+  const tempPath = getTempPath(title);
   return Promise.all([
-    await storeImage(file, originalImage),
-    storeImageWithResize(originalImage, mdImage, ITEM.MD_PX),
-    storeImageWithResize(originalImage, smImage, ITEM.SM_PX),
+    await storeImage(tempPath, imageTarget),
+    storeImageWithResize(imageTarget, mdImageTarget, ITEM.MD_PX),
+    storeImageWithResize(imageTarget, smImageTarget, ITEM.SM_PX),
   ]);
 };
 
@@ -142,20 +142,17 @@ const deleteImage = async file => {
 /*
  * Entry point
  */
-export const addItemImages = async (pictures, title, type) => {
-  let file;
-  if (type !== ITEM.SCULPTURE.TYPE) file = await pictures[0];
-
+export const addItemImages = async (title, type) => {
   switch (type) {
     case ITEM.SCULPTURE.TYPE: {
-      return storeSculptureImages(pictures, title);
+      return storeSculptureImages(title);
     }
     case ITEM.PAINTING.TYPE || ITEM.DRAWING.TYPE: {
-      return storeItemImages(file, type, title);
+      return storeItemImages(type, title);
     }
     case CONTENT.TYPE: {
       const targetPath = getMiscellaneousPath(title);
-      return storeImage(file, targetPath);
+      return storeImage(targetPath);
     }
     default: {
       return;

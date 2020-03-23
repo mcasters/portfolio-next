@@ -45,7 +45,7 @@ export const typeDefs = gql`
   }
 
   input ItemInput {
-    pictures: [Upload]!
+    id: ID
     type: String!
     title: String!
     date: String!
@@ -54,6 +54,7 @@ export const typeDefs = gql`
     length: Int
     height: Int!
     width: Int!
+    hasImages: Boolean!
   }
 
   input SignUpInput {
@@ -79,7 +80,7 @@ export const typeDefs = gql`
     addContent(input: ContentInput!): Content!
     addPicture(picture: Upload!, title: String!): Boolean!
     addItem(item: ItemInput!): Item!
-    updateItem(id: ID!, item: ItemInput!): Item!
+    updateItem(item: ItemInput!): Item!
     deleteItem(id: ID!, type: String!): ID!
     uploadFile(file: Upload!): Boolean
     signUp(input: SignUpInput!): SignUpPayload!

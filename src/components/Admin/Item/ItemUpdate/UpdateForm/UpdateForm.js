@@ -25,9 +25,9 @@ const customStyles = {
 Modal.setAppElement('#__next');
 
 function UpdateForm({ item, type, srcList, onClose }) {
-  const { id, __typename, ...rest } = item;
-  const [itemData, setItemData] = useState({ ...rest, pictures: [] });
+  const [itemData, setItemData] = useState({ ...item, pictures: [] });
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
+  const [isTitleBlocked, setIsTitleBlocked] = useState(false);
   const triggerAlert = useAlert();
 
   const showModal = true;
@@ -43,6 +43,10 @@ function UpdateForm({ item, type, srcList, onClose }) {
   const canSubmit =
     (!isSculpture && haveMain) ||
     !!(isSculpture && haveMain && itemData.length);
+
+  const canUpload =
+    (!isSculpture && itemData.pictures.length === 1) ||
+    (isSculpture && itemData.pictures.length === 4);
 
   const handleCloseModal = () => {
     onClose();
@@ -79,11 +83,37 @@ function UpdateForm({ item, type, srcList, onClose }) {
     reader.readAsDataURL(file);
   };
 
+  const ImageSubmit = async e => {
+    e.preventDefault();
+    let i = 1;
+
+    for (const file of itemData.pictures) {
+      const filename = isSculpture
+        ? `${itemData.title}_${i}.jpg`
+        : `${itemData.title}.jpg`;
+      await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': file.type,
+          'Content-Filename': filename,
+        },
+        body: file,
+      }).catch(e => {
+        triggerAlert(e.message, true);
+      });
+      i++;
+    }
+    setIsTitleBlocked(true);
+    triggerAlert('image(s) ajoutée(s)', false);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
 
     try {
-      const res = updateItem(id,{ ...itemData, type });
+      const hasImages = itemData.pictures.length > 0;
+      const { pictures, ...rest } = itemData;
+      const res = updateItem( { ...rest, hasImages, type });
       if (res) {
         triggerAlert('Item modifié', false);
         onClose();
@@ -110,6 +140,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
           type="text"
           value={itemData.title}
           onChange={handleChange}
+          readOnly={isTitleBlocked}
         />
         <div className={s.DayInputContainer}>
           <DayPicker date={itemData.date} onDayChange={handleChangeDate} />
@@ -204,18 +235,25 @@ function UpdateForm({ item, type, srcList, onClose }) {
               />
             ),
         )}
-        {canSubmit && (
-          <button className={s.updateDialogButton} type="submit">
-            OK
+        <div>
+          {canUpload && (
+            <button className={s.uploadDialogButton} onClick={ImageSubmit}>
+              Enregister les images
+            </button>
+          )}
+          {canSubmit && (
+            <button className={s.updateDialogButton} type="submit">
+              OK
+            </button>
+          )}
+          <button
+            type="button"
+            className={s.updateDialogButton}
+            onClick={handleCloseModal}
+          >
+            Annuler
           </button>
-        )}
-        <button
-          type="button"
-          className={s.updateDialogButton}
-          onClick={handleCloseModal}
-        >
-          Annuler
-        </button>
+        </div>
       </form>
     </Modal>
   );
