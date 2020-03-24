@@ -47,12 +47,12 @@ const getMiscellaneousPath = title => {
 };
 
 const getSculptureTitlesWithIndex = title => {
-  const setTitle = index => {
-    return `${title}_${index + 1}`;
-  };
-
-  const titles = new Array(4);
-  return titles.map(setTitle);
+  const tab = [];
+  let i;
+  for (i = 1; i < 5; i++) {
+    tab.push(`${title}_${i}`);
+  }
+  return tab;
 };
 
 const getItemPaths = (title, type) => {
@@ -123,9 +123,9 @@ const storeAllSizeImages = (title, type) => {
   return res;
 };
 
-const storeItemImages = async (title, type) => {
+const storeItemImages = async (pTitle, type) => {
   const tabTitles =
-    type === ITEM.SCULPTURE.TYPE ? getSculptureTitlesWithIndex(title) : [title];
+    type === ITEM.SCULPTURE.TYPE ? getSculptureTitlesWithIndex(pTitle) : [pTitle];
   let res = true;
 
   tabTitles.forEach(title => {
@@ -138,7 +138,12 @@ const storeItemImages = async (title, type) => {
 
   if (!res) {
     tabTitles.forEach(title => {
-      deleteAllImages(title, type);
+      deleteAllSizeImages(title, type);
+    });
+  } else {
+    tabTitles.forEach(title => {
+      const tempFile = getTempPath(title);
+      deleteImage(tempFile);
     });
   }
   return res;
@@ -160,7 +165,7 @@ const renameItemImage = async (oldTitle, newTitle, type) => {
   );
 };
 
-const deleteAllImages = (title, type) => {
+const deleteAllSizeImages = (title, type) => {
   const paths = getItemPaths(title, type);
   return paths.every(deleteImage);
 };
@@ -172,10 +177,10 @@ const deleteImage = path => {
   return true;
 };
 
-/*
- * Entry point
- */
-export const addItemImages = async (title, type) => {
+/****************
+ * Entry point *
+ ****************/
+export const addItemImages = (title, type) => {
   if (type === CONTENT.TYPE) {
     const targetPath = getMiscellaneousPath(title);
     return storeImage(targetPath);
@@ -184,9 +189,9 @@ export const addItemImages = async (title, type) => {
   }
 };
 
-/*
- * Entry point
- */
+/****************
+ * Entry point *
+ ****************/
 export const renameItemImages = async (oldTitle, newTitle, type) => {
   if (type === ITEM.SCULPTURE.TYPE) {
     let i = 1;
@@ -203,9 +208,9 @@ export const renameItemImages = async (oldTitle, newTitle, type) => {
   return renameItemImage(oldTitle, newTitle, type);
 };
 
-/*
- * Entry point
- */
+/****************
+ * Entry point *
+ ****************/
 export const deleteItemImages = async (title, type) => {
-  return deleteAllImages(title, type);
+  return deleteAllSizeImages(title, type);
 };
