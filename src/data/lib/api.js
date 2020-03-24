@@ -3,7 +3,6 @@ import 'isomorphic-unfetch';
 const apiUrl = `${process.env.BACKEND_URL}/api/graphql`;
 
 const fetchAPI = async (query, { variables } = {}, context) => {
-  console.log('API_URI /// ' + process.env.API_URI);
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {

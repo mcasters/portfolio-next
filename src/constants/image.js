@@ -22,7 +22,7 @@ const IMAGE = {
   },
 
   TEMP: {
-    PATH: '/temp',
+    PATH: '/tmp',
   },
 };
 

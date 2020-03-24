@@ -1,5 +1,6 @@
 import fs from 'fs';
 import Jimp from 'jimp';
+import Path from 'path';
 
 import ITEM from '../../constants/item';
 import CONTENT from '../../constants/content';
@@ -45,6 +46,15 @@ const getMiscellaneousPath = title => {
   return `${libraryPath}${IMAGE.MISCELLANEOUS.PATH}/${title}.jpg`;
 };
 
+const getSculptureTitlesWithIndex = title => {
+  const setTitle = index => {
+    return `${title}_${index + 1}`;
+  };
+
+  const titles = new Array(4);
+  return titles.map(setTitle);
+};
+
 const getItemPaths = (title, type) => {
   switch (type) {
     case ITEM.SCULPTURE.TYPE: {
@@ -62,59 +72,76 @@ const getItemPaths = (title, type) => {
   }
 };
 
-export const storeImage = async (path, targetPath) => {
-  const exist = fs.existsSync(path);
-  console.log('existe ///// ' + exist);
-  if (fs.existsSync(path)) {
-    console.log('path ///// ' + path);
-    console.log('targetPsath ///// ' + targetPath);
-    fs.rename(path, targetPath, err => {
-      return !err;
-    });
-    return true;
+export const storeImage = (tempPath, targetPath) => {
+  if (fs.existsSync(tempPath)) {
+    try {
+      fs.copyFileSync(tempPath, targetPath);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
   return false;
 };
 
 const storeImageWithResize = (originalPath, targetPath, px) => {
-  return new Promise((resolve, reject) =>
-    Jimp.read(originalPath, (err, img) => {
-      if (err) reject(err);
+  Jimp.read(`${originalPath}`, (err, img) => {
+    if (err) return false;
 
-      const isLandscape = img.getHeight() < img.getWidth();
-      const width = isLandscape ? px : Jimp.AUTO;
-      const height = isLandscape ? Jimp.AUTO : px;
+    const isLandscape = img.getHeight() < img.getWidth();
+    const width = isLandscape ? px : Jimp.AUTO;
+    const height = isLandscape ? Jimp.AUTO : px;
 
-      img
-        .resize(width, height)
-        .quality(75)
-        .write(targetPath);
-      resolve(true);
-    }),
-  );
+    img
+      .resize(width, height)
+      .quality(75)
+      .write(`${targetPath}`);
+  });
+  return true;
 };
 
-const storeItemImages = async (type, title) => {
+const storeAllSizeImages = (title, type) => {
   const paths = getItemPaths(title, type);
   const imageTarget = paths[0];
   const mdImageTarget = paths[1];
   const smImageTarget = paths[2];
 
   const tempPath = getTempPath(title);
-  return Promise.all([
-    await storeImage(tempPath, imageTarget),
-    storeImageWithResize(imageTarget, mdImageTarget, ITEM.MD_PX),
-    storeImageWithResize(imageTarget, smImageTarget, ITEM.SM_PX),
-  ]);
+
+  let originalSaved = storeImage(tempPath, imageTarget);
+  let res = false;
+
+  if (originalSaved) {
+    try {
+      res =
+        storeImageWithResize(imageTarget, mdImageTarget, ITEM.MD_PX) &&
+        storeImageWithResize(imageTarget, smImageTarget, ITEM.SM_PX);
+    } catch (e) {
+      return false;
+    }
+  }
+  return res;
 };
 
-const storeSculptureImages = async (pictures, title) => {
-  const process = (file, index) => {
-    const titleWithIndex = `${title}_${index + 1}`;
-    return storeItemImages(file, ITEM.SCULPTURE.TYPE, titleWithIndex);
-  };
+const storeItemImages = async (title, type) => {
+  const tabTitles =
+    type === ITEM.SCULPTURE.TYPE ? getSculptureTitlesWithIndex(title) : [title];
+  let res = true;
 
-  return Promise.all(pictures.map(process));
+  tabTitles.forEach(title => {
+    if (res) {
+      res = storeAllSizeImages(title, type);
+    } else {
+      res = false;
+    }
+  });
+
+  if (!res) {
+    tabTitles.forEach(title => {
+      deleteAllImages(title, type);
+    });
+  }
+  return res;
 };
 
 const renameItemImage = async (oldTitle, newTitle, type) => {
@@ -133,30 +160,27 @@ const renameItemImage = async (oldTitle, newTitle, type) => {
   );
 };
 
-const deleteImage = async file => {
-  fs.unlink(`${file}`, err => {
-    return !err;
-  });
+const deleteAllImages = (title, type) => {
+  const paths = getItemPaths(title, type);
+  return paths.every(deleteImage);
+};
+
+const deleteImage = path => {
+  if (fs.existsSync(path)) {
+    fs.unlinkSync(`${path}`);
+  }
+  return true;
 };
 
 /*
  * Entry point
  */
 export const addItemImages = async (title, type) => {
-  switch (type) {
-    case ITEM.SCULPTURE.TYPE: {
-      return storeSculptureImages(title);
-    }
-    case ITEM.PAINTING.TYPE || ITEM.DRAWING.TYPE: {
-      return storeItemImages(type, title);
-    }
-    case CONTENT.TYPE: {
-      const targetPath = getMiscellaneousPath(title);
-      return storeImage(targetPath);
-    }
-    default: {
-      return;
-    }
+  if (type === CONTENT.TYPE) {
+    const targetPath = getMiscellaneousPath(title);
+    return storeImage(targetPath);
+  } else {
+    return storeItemImages(title, type);
   }
 };
 
@@ -183,16 +207,5 @@ export const renameItemImages = async (oldTitle, newTitle, type) => {
  * Entry point
  */
 export const deleteItemImages = async (title, type) => {
-  let paths;
-
-  if (type === ITEM.SCULPTURE.TYPE) {
-    let i;
-    paths = [];
-    for (i = 1; i < 5; i++) {
-      Array.prototype.push.apply(paths, getItemPaths(`${title}_${i}`, type));
-    }
-  } else {
-    paths = getItemPaths(title, type);
-  }
-  return paths.every(deleteImage);
+  return deleteAllImages(title, type);
 };

@@ -110,17 +110,16 @@ function UpdateForm({ item, type, srcList, onClose }) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    try {
-      const hasImages = itemData.pictures.length > 0;
-      const { pictures, ...rest } = itemData;
-      const res = updateItem( { ...rest, hasImages, type });
+    const hasImages = itemData.pictures.length > 0;
+    const { pictures, ...rest } = itemData;
+    updateItem({ ...rest, hasImages, type }).then(res => {
       if (res) {
         triggerAlert('Item modifié', false);
         onClose();
-      }
-    } catch (e) {
-      triggerAlert(e.message, true);
-    }
+      } else triggerAlert("Modification de l'item impossible", true);
+    }).catch(err => {
+      triggerAlert(`Erreur de modification de l'item : ${err.message}`, true);
+    });
   };
 
   return (
@@ -235,20 +234,20 @@ function UpdateForm({ item, type, srcList, onClose }) {
               />
             ),
         )}
+        {canUpload && (
+          <button className={s.uploadImageButton} onClick={ImageSubmit}>
+            Enregister les images
+          </button>
+        )}
         <div>
-          {canUpload && (
-            <button className={s.uploadDialogButton} onClick={ImageSubmit}>
-              Enregister les images
-            </button>
-          )}
           {canSubmit && (
-            <button className={s.updateDialogButton} type="submit">
+            <button className={s.updateButton} type="submit">
               OK
             </button>
           )}
           <button
             type="button"
-            className={s.updateDialogButton}
+            className={s.updateButton}
             onClick={handleCloseModal}
           >
             Annuler

@@ -32,13 +32,13 @@
   margin-bottom: 1em;
 }
 
-.uploadDialogButton {
+.uploadImageButton {
   margin: 40px 5% 10px;
   width: 40%;
   display: inline-block;
 }
 
-.updateDialogButton {
+.updateButton {
   margin: 40px 5% 10px;
   width: 40%;
   display: inline-block;

@@ -40,7 +40,7 @@ module.exports = {
     DATABASE_URL: 'mysql:database.mysql',
 
     // Library
-    PHOTOS_PATH: './../../photo-files',
+    PHOTOS_PATH: process.env.PHOTOS_PATH,
 
     // Authentication
     JWT_SECRET: 'secret' || '15htDn-7uU-620Ghhwz',
