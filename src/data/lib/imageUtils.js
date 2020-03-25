@@ -41,20 +41,6 @@ const getDrawingPaths = title => {
   ];
 };
 
-const getMiscellaneousPath = title => {
-  const libraryPath = process.env.PHOTOS_PATH;
-  return `${libraryPath}${IMAGE.MISCELLANEOUS.PATH}/${title}.jpg`;
-};
-
-const getSculptureTitlesWithIndex = title => {
-  const tab = [];
-  let i;
-  for (i = 1; i < 5; i++) {
-    tab.push(`${title}_${i}`);
-  }
-  return tab;
-};
-
 const getItemPaths = (title, type) => {
   switch (type) {
     case ITEM.SCULPTURE.TYPE: {
@@ -70,6 +56,20 @@ const getItemPaths = (title, type) => {
       return;
     }
   }
+};
+
+const getMiscellaneousPath = title => {
+  const libraryPath = process.env.PHOTOS_PATH;
+  return `${libraryPath}${IMAGE.MISCELLANEOUS.PATH}/${title}.jpg`;
+};
+
+const getSculptureTitlesWithIndex = title => {
+  const tab = [];
+  let i;
+  for (i = 1; i < 5; i++) {
+    tab.push(`${title}_${i}`);
+  }
+  return tab;
 };
 
 export const storeImage = (tempPath, targetPath) => {
@@ -168,10 +168,13 @@ const renameItemImage = async (oldTitle, newTitle, type) => {
 const deleteAllSizeImages = (title, type) => {
   let paths = [];
   if (type === ITEM.SCULPTURE.TYPE) {
-    const titlesWithIndex = getSculptureTitlesWithIndex(title);
-    titlesWithIndex.forEach(t => {
-      paths.concat(getItemPaths(t, type));
-    })
+    const titlesIndex = getSculptureTitlesWithIndex(title);
+    titlesIndex.forEach(titleIndex => {
+      const pathsIndex = getItemPaths(titleIndex, type);
+      pathsIndex.forEach(pathIndex => {
+        paths.push(pathIndex);
+      });
+    });
   } else {
     paths = getItemPaths(title, type);
   }
