@@ -62,7 +62,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
   };
 
   const handleChangeDate = date => {
-    setItemData(prevState => ({ ...prevState, date: date.toString() }));
+    setItemData(prevState => ({ ...prevState, date }));
   };
 
   const handleImageChange = (e, index) => {
@@ -142,7 +142,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
           readOnly={isTitleBlocked}
         />
         <div className={s.DayInputContainer}>
-          <DayPicker date={itemData.date} onDayChange={handleChangeDate} />
+          <DayPicker onDayChange={handleChangeDate} />
         </div>
         <input
           className={s.inputL}

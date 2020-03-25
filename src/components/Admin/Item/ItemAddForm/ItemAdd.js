@@ -9,7 +9,7 @@ import { useAlert } from '../../../AlertContext/AlertContext';
 
 function ItemAdd({ type }) {
   const triggerAlert = useAlert();
-  const [itemData, setItemData] = useState({
+  const item = {
     title: '',
     date: '',
     technique: '',
@@ -19,7 +19,8 @@ function ItemAdd({ type }) {
     width: '',
     pictures: [],
     error: '',
-  });
+  };
+  const [itemData, setItemData] = useState(item);
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const [isTitleBlocked, setIsTitleBlocked] = useState(false);
 
@@ -43,7 +44,7 @@ function ItemAdd({ type }) {
       itemData.pictures.length === 4);
 
   const clearState = () => {
-    setItemData(Object.assign({}, itemData));
+    setItemData(item);
     setImagePreviewUrls([]);
   };
 
@@ -59,7 +60,7 @@ function ItemAdd({ type }) {
   };
 
   const handleChangeDate = date => {
-    setItemData(Object.assign({}, itemData, { date: date.toString() }));
+    setItemData(Object.assign({}, itemData, { date }));
   };
 
   const handleImageChange = (e, index) => {
@@ -136,7 +137,7 @@ function ItemAdd({ type }) {
           readOnly={isTitleBlocked}
         />
         <div className={s.DayInputContainer}>
-          <DayPicker date={itemData.date} onDayChange={handleChangeDate} />
+          <DayPicker onDayChange={handleChangeDate} />
         </div>
         <input
           className={s.inputL}
@@ -220,7 +221,11 @@ function ItemAdd({ type }) {
             Enregister les images
           </button>
         )}
-        {canSubmit && <button className={s.adminButton} type="submit">OK</button>}
+        {canSubmit && (
+          <button className={s.adminButton} type="submit">
+            OK
+          </button>
+        )}
       </form>
     </div>
   );
