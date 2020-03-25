@@ -1,6 +1,7 @@
 import './styles/styles.css';
-import './styles/lightbox-style.css';
-import './styles/reactTab-style.css';
+import './styles/style-lightbox.css';
+import './styles/style-reactTab.css';
+import './styles/style-daypicker.css';
 import React from 'react';
 
 import { AlertProvider } from '../components/AlertContext/AlertContext';
