@@ -45,8 +45,8 @@ function UpdateForm({ item, type, srcList, onClose }) {
     !!(isSculpture && haveMain && itemData.length);
 
   const canUpload =
-    (!isSculpture && itemData.pictures.length === 1) ||
-    (isSculpture && itemData.pictures.length === 4);
+    (!isSculpture && itemData.pictures.length === 1 && itemData.title !== '') ||
+    (isSculpture && itemData.pictures.length === 4 && itemData.title !== '');
 
   const handleCloseModal = () => {
     onClose();
@@ -61,8 +61,8 @@ function UpdateForm({ item, type, srcList, onClose }) {
     }));
   };
 
-  const handleChangeDate = d => {
-    setItemData(prevState => ({ ...prevState, date: d }));
+  const handleChangeDate = date => {
+    setItemData(prevState => ({ ...prevState, date: date.toString() }));
   };
 
   const handleImageChange = (e, index) => {
@@ -85,8 +85,8 @@ function UpdateForm({ item, type, srcList, onClose }) {
 
   const ImageSubmit = async e => {
     e.preventDefault();
-    let i = 1;
 
+    let i = 1;
     for (const file of itemData.pictures) {
       const filename = isSculpture
         ? `${itemData.title}_${i}.jpg`
@@ -235,7 +235,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
             ),
         )}
         {canUpload && (
-          <button className={s.uploadImageButton} onClick={ImageSubmit}>
+          <button className={s.updateButton} onClick={ImageSubmit}>
             Enregister les images
           </button>
         )}

@@ -3,7 +3,7 @@
 }
 
 .imagePreview {
-  width: 30%;
+  width: 25%;
   margin-bottom: 1em;
 }
 
@@ -21,4 +21,8 @@
   display: inline-block;
   width: 49%;
   margin-left: 1%;
+}
+
+.adminButton {
+  width: var(--admin-button-width);
 }

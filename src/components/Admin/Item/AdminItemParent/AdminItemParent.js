@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 
 import ItemList from '../ItemList/ItemList';
-import ItemAddForm from '../ItemAddForm/ItemAddForm';
+import ItemAdd from '../ItemAddForm/ItemAdd';
 
 export default function AdminItemParent({ type, items }) {
   return (
     <>
-      <ItemAddForm type={type} />
+      <ItemAdd type={type} />
       <ItemList type={type} items={items} />
     </>
   );

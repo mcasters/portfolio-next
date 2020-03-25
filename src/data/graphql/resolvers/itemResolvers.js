@@ -14,7 +14,7 @@ export default {
   },
 
   Mutation: {
-    addItem: async (root, { item: { pictures, type, ...data } }, { req }) => {
+    addItem: async (root, { item: { type, ...data } }, { req }) => {
       if (!(await isAuthenticated(req)))
         throw new Error("Erreur d'authentification");
 
@@ -24,7 +24,7 @@ export default {
       const item = await service.getByName(title);
       if (item) throw new Error("Nom de l'item déjà existant en Bdd");
 
-      const res = await imageUtils.addItemImages(pictures, title, type);
+      const res = await imageUtils.addItemImages(title, type);
       if (!res) throw new Error("Erreur à l'écriture des fichiers");
 
       const newItem = await service.add(data, type);
@@ -60,7 +60,6 @@ export default {
           oldTitle,
           type,
         );
-
         if (!imageDeleted)
           throw new Error(`Echec de la suppression des anciennes images`);
 

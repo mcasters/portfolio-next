@@ -98,7 +98,7 @@ function EditPictureForm({ pictureTitle }) {
             className={s.imagePreview}
           />
         )}
-        {file && <button type="submit">OK</button>}
+        {file && <button className={s.adminButton} type="submit">OK</button>}
       </form>
     </div>
   );

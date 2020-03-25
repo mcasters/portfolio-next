@@ -166,7 +166,15 @@ const renameItemImage = async (oldTitle, newTitle, type) => {
 };
 
 const deleteAllSizeImages = (title, type) => {
-  const paths = getItemPaths(title, type);
+  let paths = [];
+  if (type === ITEM.SCULPTURE.TYPE) {
+    const titlesWithIndex = getSculptureTitlesWithIndex(title);
+    titlesWithIndex.forEach(t => {
+      paths.concat(getItemPaths(t, type));
+    })
+  } else {
+    paths = getItemPaths(title, type);
+  }
   return paths.every(deleteImage);
 };
 

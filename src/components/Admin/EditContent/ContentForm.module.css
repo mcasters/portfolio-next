@@ -3,6 +3,10 @@
   height: 200px;
 }
 
+.adminButton {
+  width: var(--admin-button-width);
+}
+
 @media (--sm) {
   .textarea {
     height: 300px;

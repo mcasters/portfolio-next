@@ -66,4 +66,10 @@
   --font-size-current-plus: 13px;
   --font-size-current: 12px;
   --font-size-minus: 11px;
+
+  /*
+   * Form
+   * ======================================================================== */
+  --admin-button-width: 25%;
+
 }

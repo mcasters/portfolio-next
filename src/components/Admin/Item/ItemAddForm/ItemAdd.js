@@ -7,7 +7,7 @@ import DayPicker from '../DayPicker';
 import { addItem } from '../../../../data/lib/api';
 import { useAlert } from '../../../AlertContext/AlertContext';
 
-function ItemAddForm({ type }) {
+function ItemAdd({ type }) {
   const triggerAlert = useAlert();
   const [itemData, setItemData] = useState({
     title: '',
@@ -21,6 +21,7 @@ function ItemAddForm({ type }) {
     error: '',
   });
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
+  const [isTitleBlocked, setIsTitleBlocked] = useState(false);
 
   const isSculpture = type === ITEM.SCULPTURE.TYPE;
   const titleForm = 'Ajout';
@@ -31,9 +32,15 @@ function ItemAddForm({ type }) {
     itemData.height &&
     itemData.width
   );
+  const canUpload =
+    (!isSculpture && itemData.pictures.length === 1 && itemData.title !== '') ||
+    (isSculpture && itemData.pictures.length === 4 && itemData.title !== '');
   const canSubmit =
     (!isSculpture && haveMain && itemData.pictures.length === 1) ||
-    (isSculpture && haveMain && length && itemData.pictures.length === 4);
+    (isSculpture &&
+      haveMain &&
+      itemData.length &&
+      itemData.pictures.length === 4);
 
   const clearState = () => {
     setItemData(Object.assign({}, itemData));
@@ -52,7 +59,7 @@ function ItemAddForm({ type }) {
   };
 
   const handleChangeDate = date => {
-    setItemData(Object.assign({}, itemData, { date: date }));
+    setItemData(Object.assign({}, itemData, { date: date.toString() }));
   };
 
   const handleImageChange = (e, index) => {
@@ -75,22 +82,37 @@ function ItemAddForm({ type }) {
     reader.readAsDataURL(file);
   };
 
-  const buildInput = () => {
-    const { length, pictures, error, ...input } = itemData;
-    return isSculpture
-      ? {
-          ...input,
-          length,
-        }
-      : input;
+  const ImageSubmit = async e => {
+    e.preventDefault();
+
+    let i = 1;
+    for (const file of itemData.pictures) {
+      const filename = isSculpture
+        ? `${itemData.title}_${i}.jpg`
+        : `${itemData.title}.jpg`;
+      await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': file.type,
+          'Content-Filename': filename,
+        },
+        body: file,
+      }).catch(e => {
+        triggerAlert(e.message, true);
+      });
+      i++;
+    }
+    setIsTitleBlocked(true);
+    triggerAlert('image(s) ajoutée(s)', false);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    const input = buildInput();
+    const { pictures, error, length, ...withoutLength } = itemData;
+    const item = isSculpture ? { length, ...withoutLength } : withoutLength;
 
     try {
-      const res = addItem({ item: { input } });
+      const res = addItem({ ...item, hasImages: true, type });
       if (res) {
         triggerAlert('Item ajouté', false);
         clearState();
@@ -111,6 +133,7 @@ function ItemAddForm({ type }) {
           type="text"
           value={itemData.title}
           onChange={handleChange}
+          readOnly={isTitleBlocked}
         />
         <div className={s.DayInputContainer}>
           <DayPicker date={itemData.date} onDayChange={handleChangeDate} />
@@ -192,14 +215,19 @@ function ItemAddForm({ type }) {
               />
             ),
         )}
-        {canSubmit && <button type="submit">OK</button>}
+        {canUpload && (
+          <button className={s.adminButton} onClick={ImageSubmit}>
+            Enregister les images
+          </button>
+        )}
+        {canSubmit && <button className={s.adminButton} type="submit">OK</button>}
       </form>
     </div>
   );
 }
 
-ItemAddForm.propTypes = {
+ItemAdd.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-export default ItemAddForm;
+export default ItemAdd;

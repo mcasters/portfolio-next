@@ -54,7 +54,7 @@ export const typeDefs = gql`
     length: Int
     height: Int!
     width: Int!
-    hasImages: Boolean!
+    hasImages: Boolean
   }
 
   input SignUpInput {

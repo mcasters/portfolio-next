@@ -497,6 +497,10 @@ button {
   margin: 2em auto;
 }
 
+[type="submit"] {
+  width: 25%;
+}
+
 /*
  * Browser upgrade prompt
  * ========================================================================== */
