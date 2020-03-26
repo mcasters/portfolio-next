@@ -84,6 +84,7 @@ export default function MyApp({ Component, pageProps }) {
             <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
             <link rel="icon" sizes="192x192" href="/icon-192.png" />
             <link rel="icon" sizes="512x512" href="/icon-512.png" />
+            <link rel="shortcut icon" href="/favicon.ico" />
           </Head>
           <Component {...pageProps} />
         </AlertProvider>
