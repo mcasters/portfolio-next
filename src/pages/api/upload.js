@@ -1,6 +1,11 @@
 import { createWriteStream } from 'fs';
+import isAuthenticated from "../../data/lib/authUtils";
+// import handler from "./middlewares";
 
-export default async (req, res) => {
+const upload = async (req, res) => {
+  if (!(await isAuthenticated(req)))
+    throw new Error("Erreur d'authentification");
+
   const tempPath = `${process.env.PHOTOS_PATH}/tmp`;
   const filename = req.headers['content-filename'];
 
@@ -25,3 +30,5 @@ export const config = {
     bodyParser: false,
   },
 };
+
+export default upload;

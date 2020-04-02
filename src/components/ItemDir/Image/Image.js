@@ -62,7 +62,11 @@ function Image({ title, type }) {
             className={isSculpture ? s.sculptureButton : s.imageButton}
             key={src}
           >
-            <img src={src} alt={alt} className={s.image} />
+            <img
+              src={src}
+              alt={alt}
+              className={s.image}
+            />
           </button>
         ))}
       </figure>

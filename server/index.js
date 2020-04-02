@@ -13,7 +13,7 @@ app.prepare().then(() => {
   const server = express();
 
   // Middleware
-  server.use('/images', express.static(path.resolve(process.env.PHOTOS_PATH)));
+  // server.use('/images', express.static(path.resolve(process.env.PHOTOS_PATH)));
 
   server.all('*', (req, res) => {
     return handle(req, res);

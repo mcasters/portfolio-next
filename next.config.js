@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const dotEnvResult = require('dotenv').config();
+const path = require('path');
 
 const prod = process.env.NODE_ENV === 'production';
 
@@ -15,6 +16,10 @@ module.exports = {
         fs: 'empty',
       };
     }
+
+    // config.resolve.alias['/images/paintings/md/'] =
+    //   './../../photo-files/paintings/md/';
+
     return config;
   },
 
@@ -29,8 +34,7 @@ module.exports = {
 
   // Reference a variable that was defined in the .env file and make it available at Build Time
   env: {
-    BACKEND_URL: prod ? 'https://marioncasters.fr' : 'http://localhost:3000',
-    API_URI: process.env.API_URI,
+    BACKEND_URL: process.env.BACKEND_URL,
 
     // Database
     DATABASE_NAME: 'develop',

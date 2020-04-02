@@ -87,22 +87,27 @@ function UpdateForm({ item, type, srcList, onClose }) {
     e.preventDefault();
 
     let i = 1;
-    for (const file of itemData.pictures) {
-      const filename = isSculpture
-        ? `${itemData.title}_${i}.jpg`
-        : `${itemData.title}.jpg`;
-      await fetch('/api/upload', {
-        method: 'POST',
-        headers: {
-          'Content-Type': file.type,
-          'Content-Filename': filename,
-        },
-        body: file,
-      }).catch(e => {
-        triggerAlert(e.message, true);
-      });
-      i++;
+    try {
+      for (const file of itemData.pictures) {
+        const filename = isSculpture
+          ? `${itemData.title}_${i}.jpg`
+          : `${itemData.title}.jpg`;
+        await fetch('/api/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': file.type,
+            'Content-Filename': filename,
+          },
+          body: file,
+        }).catch(e => {
+          triggerAlert(e.message, true);
+        });
+        i++;
+      }
+    } catch (e) {
+      triggerAlert(e.message, true);
     }
+
     setIsTitleBlocked(true);
     triggerAlert('image(s) ajoutée(s)', false);
   };
