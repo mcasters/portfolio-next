@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {useAlert} from "./AlertContext/AlertContext";
+import { useAlert } from './AlertContext/AlertContext';
 
 function ErrorBoundary({ children }) {
   const triggerAlert = useAlert();
   const [error, setError] = useState(null);
-  const [errorInfo, setErrorInfo] = useState(null);
+  const [info, setInfo] = useState(null);
 
-  React.componentDidCatch = (err, errInfo) => {
+  React.getDerivedStateFromError = error => {
+    return { error: error };
+  };
+
+  React.componentDidCatch = (err, info) => {
     setError(err);
-    setErrorInfo(errInfo);
+    setInfo(info);
   };
 
   if (error) {
-    const m = `${error.toString()} : ${errorInfo}`;
-    return triggerAlert(m, true);
+    const message = `${error.toString()} : ${info}`;
+    return triggerAlert(message, true);
   }
   return children;
 }
