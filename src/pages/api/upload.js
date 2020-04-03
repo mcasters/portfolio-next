@@ -1,6 +1,5 @@
 import { createWriteStream } from 'fs';
 import isAuthenticated from "../../data/lib/authUtils";
-// import handler from "./middlewares";
 
 const upload = async (req, res) => {
   if (!(await isAuthenticated(req)))
@@ -20,7 +19,8 @@ const upload = async (req, res) => {
   writeStream.on('error', function (err) {
     console.log(err);
     writeStream.end();
-    throw new Error("Erreur à l'écriture du fichier temporaire");
+    res.statusCode = 400;
+    res.message("Erreur à l'écriture du fichier temporaire");
   });
 };
 

@@ -31,12 +31,10 @@ export default {
       return content;
     },
 
-    addPicture: async (root, { picture, title }, { req }, _info) => {
+    addPicture: async (root, { title }, { req }, _info) => {
       if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
 
-      const pictures = [picture];
       const res = await imageService.addItemImages(
-        pictures,
         title,
         CONTENT.TYPE,
       );

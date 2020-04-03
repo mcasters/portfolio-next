@@ -230,17 +230,16 @@ export async function deleteItem(id, type) {
   return data.deleteItem;
 }
 
-export async function addPicture(picture, pictureTitle) {
+export async function addPicture(title) {
   const data = await fetchAPI(
     `
-  mutation AddPicture($picture: Upload!, $pictureTitle: String!) {
-  addPicture(picture: $picture, title: $pictureTitle)
+  mutation AddPicture($title: String!) {
+  addPicture(title: $title)
 }
 `,
     {
       variables: {
-        picture,
-        pictureTitle,
+        title,
       },
     },
   );

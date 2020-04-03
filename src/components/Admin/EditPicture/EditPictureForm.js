@@ -4,34 +4,36 @@ import PropTypes from 'prop-types';
 import s from './EditPictureForm.module.css';
 import CONT_CONST from '../../../constants/content';
 import { useAlert } from '../../AlertContext/AlertContext';
-import { addPicture } from '../../../data/lib/api';
+import {addPicture} from "../../../data/lib/api";
 
 function EditPictureForm({ pictureTitle }) {
   const triggerAlert = useAlert();
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
   const [file, setFile] = useState('');
 
-  const setProps = title => {
-    let adminTitle;
+  const getInfos = () => {
+    let pageTitle;
     let filename;
-    switch (title) {
+    switch (pictureTitle) {
       case CONT_CONST.HOME_IMAGE_PORTRAIT:
-        adminTitle = 'Format portrait';
-        filename = CONT_CONST.HOME_IMAGE_PORTRAIT_FILE;
+        pageTitle = 'Format portrait';
+        filename = CONT_CONST.HOME_IMAGE_PORTRAIT_FILENAME;
         break;
       case CONT_CONST.HOME_IMAGE_LANDSCAPE:
-        adminTitle = 'Format paysage';
-        filename = CONT_CONST.HOME_IMAGE_LANDSCAPE_FILE;
+        pageTitle = 'Format paysage';
+        filename = CONT_CONST.HOME_IMAGE_LANDSCAPE_FILENAME;
         break;
       default:
-        adminTitle = '';
-        filename = CONT_CONST.PRESENTATION_IMAGE_FILE;
+        pageTitle = '';
+        filename = CONT_CONST.PRESENTATION_IMAGE_FILENAME;
     }
     return {
-      adminTitle,
+      pageTitle,
       filename,
     };
   };
+
+  const { pageTitle, filename } = getInfos();
 
   const handleImageChange = e => {
     e.preventDefault();
@@ -46,30 +48,35 @@ function EditPictureForm({ pictureTitle }) {
     reader.readAsDataURL(f);
   };
 
-  const { adminTitle, filename } = setProps(pictureTitle);
-
   const handleSubmit = async e => {
     e.preventDefault();
 
-    try {
-      const res = await addPicture({
-        picture: file,
-        pictureTitle,
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': file.type,
+        'Content-Filename': filename,
+      },
+      body: file,
+    })
+      .catch(e => {
+        triggerAlert(e.message, true);
+      })
+      .then(() => {
+        const res = addPicture(pictureTitle);
+        if (res) {
+          triggerAlert('image ajoutée', false);
+          setImagePreviewUrl('');
+          setFile('');
+        } else {
+          triggerAlert("Erreur à l'ajout de l'image", true);
+        }
       });
-
-      if (res) {
-        triggerAlert('Image ajouté', false);
-        setImagePreviewUrl('');
-        setFile('');
-      }
-    } catch (e) {
-      triggerAlert(e.message, true);
-    }
   };
 
   return (
     <div className={s.addContainer}>
-      <h2 className={s.title}>{adminTitle}</h2>
+      <h2 className={s.title}>{pageTitle}</h2>
       <img
         className={s.image}
         src={`${CONT_CONST.CONTENT_IMAGE_PATH}/${filename}`}
@@ -98,7 +105,11 @@ function EditPictureForm({ pictureTitle }) {
             className={s.imagePreview}
           />
         )}
-        {file && <button className={s.adminButton} type="submit">OK</button>}
+        {file && (
+          <button className={s.adminButton} type="submit">
+            OK
+          </button>
+        )}
       </form>
     </div>
   );

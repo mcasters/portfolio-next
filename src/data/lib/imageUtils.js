@@ -125,7 +125,9 @@ const storeAllSizeImages = (title, type) => {
 
 const storeItemImages = async (pTitle, type) => {
   const tabTitles =
-    type === ITEM.SCULPTURE.TYPE ? getSculptureTitlesWithIndex(pTitle) : [pTitle];
+    type === ITEM.SCULPTURE.TYPE
+      ? getSculptureTitlesWithIndex(pTitle)
+      : [pTitle];
   let res = true;
 
   tabTitles.forEach(title => {
@@ -140,12 +142,28 @@ const storeItemImages = async (pTitle, type) => {
     tabTitles.forEach(title => {
       deleteAllSizeImages(title, type);
     });
-  } else {
-    tabTitles.forEach(title => {
-      const tempFile = getTempPath(title);
-      deleteImage(tempFile);
-    });
   }
+
+  tabTitles.forEach(title => {
+    const tempFile = getTempPath(title);
+    deleteImage(tempFile);
+  });
+
+  return res;
+};
+
+const storeContentImage = async title => {
+  const targetPath = getMiscellaneousPath(title);
+  const tempPath = getTempPath(title);
+
+  const res = storeImage(tempPath, targetPath);
+
+  if (!res) {
+    deleteImage(targetPath);
+  }
+
+  deleteImage(tempPath);
+
   return res;
 };
 
@@ -193,8 +211,7 @@ const deleteImage = path => {
  ****************/
 export const addItemImages = (title, type) => {
   if (type === CONTENT.TYPE) {
-    const targetPath = getMiscellaneousPath(title);
-    return storeImage(targetPath);
+    return storeContentImage(title);
   } else {
     return storeItemImages(title, type);
   }
