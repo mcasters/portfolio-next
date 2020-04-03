@@ -6,6 +6,8 @@ const LAYOUT_CONSTANTS = {
     LG: 1200,
     XLG: 1600,
   },
+
+  MOBILE_HEADER_HEIGHT: 50,
 };
 
 export default LAYOUT_CONSTANTS;

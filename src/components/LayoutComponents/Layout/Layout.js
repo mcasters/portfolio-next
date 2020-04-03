@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Navigation from '../Navigation/Navigation';
-import LAYOUT_CONSTANTS from '../../../constants/layout';
-import ROUTER_CONSTANTS from '../../../constants/router';
+import LAYOUT from '../../../constants/layout';
+import ROUTER from '../../../constants/router';
 import Main from '../Main/Main';
 import useViewport from '../../Hooks/useViewport';
 
@@ -16,17 +16,21 @@ export default function Layout({ children }) {
   const [mainHeight, setMainHeight] = useState(500);
   const router = useRouter();
 
-  const isHome = router.pathname === ROUTER_CONSTANTS.HOME;
+  const isHome = router.pathname === ROUTER.HOME;
 
   useEffect(() => {
     if (typeof window != 'undefined') {
-      setIsLessThanMD(windowWidth < LAYOUT_CONSTANTS.BREAKPOINT.MD );
+      setIsLessThanMD(windowWidth < LAYOUT.BREAKPOINT.MD);
     }
   }, [windowWidth]);
 
   useEffect(() => {
     if (typeof window != 'undefined') {
-          setMainHeight(isLessThanMD ? windowHeight - 50 : windowHeight);
+      setMainHeight(
+        isLessThanMD
+          ? windowHeight - LAYOUT.MOBILE_HEADER_HEIGHT
+          : windowHeight,
+      );
     }
   }, [isLessThanMD]);
 

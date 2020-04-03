@@ -9,8 +9,16 @@
   background-color: #eee;
   border-bottom: 1px solid #aaa;
   margin: 0 0 30px;
-  padding: 0;
+  padding: 10px 0 0;
 }
+
+@media (--sm) {
+  .react-tabs__tab-list {
+    padding: 0;
+  }
+}
+
+
 
 .react-tabs__tab {
   display: inline-block;
