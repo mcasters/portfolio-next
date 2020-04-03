@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
-import Lightbox from 'react-image-lightbox';
 import { useState } from 'react';
 
+import Lightbox from './ReactImageLightbox';
 import LAYOUT_CONSTANTS from '../../constants/layout';
 import {
   LIGHTBOX_PADDING,
   LIGHTBOX_MOBILE_PADDING,
 } from '../../constants/lightbox';
-
-// import s from './LightBoxProvider.module.css';
 
 export default function LightBoxProvider({ title, images, onClose }) {
   const [index, setIndex] = useState(0);

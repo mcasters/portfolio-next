@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ITEM from '../../../constants/item';
 import CONSTANT from '../../../constants/layout';
-import LightBoxProvider from '../../LightBoxProvider';
+import LightBox from '../../LightBox/LightBoxProvider';
 import ItemService from '../../../app-services/ItemService';
 import useViewport from '../../Hooks/useViewport';
 import s from './Image.module.css';
@@ -67,7 +67,7 @@ function Image({ title, type }) {
         ))}
       </figure>
       {isOpen && typeof window !== 'undefined' && (
-        <LightBoxProvider
+        <LightBox
           title={title}
           images={getImageList(true)}
           onClose={closeLightbox}
