@@ -82,10 +82,9 @@ const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
       </Tabs>
     </Layout>
   );
-}
+};
 
-export async function getServerSideProps({req, res}) {
-  // await imagePath(req, res);
+export async function getServerSideProps() {
   const items2017 = await getItemsByPart(2017, ITEM.PAINTING.TYPE, 0);
   const items2018_1 = await getItemsByPart(2018, ITEM.PAINTING.TYPE, 1);
   const items2018_2 = await getItemsByPart(2018, ITEM.PAINTING.TYPE, 2);
