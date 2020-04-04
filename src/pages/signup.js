@@ -82,7 +82,7 @@ function SignUp() {
             )
           }
         />
-        <button type="submit">Sign up</button> or{' '}
+        <button className="button" type="submit">Sign up</button> or{' '}
         <Link href={ROUTER_CONSTANT.SIGNIN}>
           <a>Sign in</a>
         </Link>

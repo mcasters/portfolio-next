@@ -18,7 +18,7 @@ function ItemUpdateButton({ item, type, srcList }) {
 
   return (
     <>
-      <button type="button" onClick={toggle} className={s.command}>
+      <button type="button" onClick={toggle} className={`${s.command} button`}>
         <FaPen />
       </button>
       {openUpdate && (

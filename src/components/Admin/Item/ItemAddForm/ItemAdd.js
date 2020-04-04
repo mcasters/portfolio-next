@@ -217,12 +217,12 @@ function ItemAdd({ type }) {
             ),
         )}
         {canUpload && (
-          <button className={s.adminButton} onClick={ImageSubmit}>
-            Enregister les images
+          <button className={`${s.adminButton} button`} onClick={ImageSubmit}>
+            Upload
           </button>
         )}
         {canSubmit && (
-          <button className={s.adminButton} type="submit">
+          <button className={`${s.adminButton} button`} type="submit">
             OK
           </button>
         )}

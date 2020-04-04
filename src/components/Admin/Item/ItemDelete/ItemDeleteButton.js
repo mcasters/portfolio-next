@@ -19,7 +19,7 @@ function ItemDeleteButton({ id, type }) {
   };
 
   return (
-    <button onClick={handleDelete} className={s.command} type="button">
+    <button onClick={handleDelete} className={`${s.command} button`} type="button">
       <FaTrash />
     </button>
   );

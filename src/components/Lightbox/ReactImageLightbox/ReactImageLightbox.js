@@ -318,8 +318,15 @@ class ReactImageLightbox extends Component {
   // Get sizing for when an image is larger than the window
   getFitSizes(width, height, stretch) {
     const boxSize = this.getLightboxRect();
-    let maxHeight = boxSize.height - this.props.imagePadding * 2;
-    let maxWidth = boxSize.width - this.props.imagePadding * 2;
+    let maxHeight;
+    let maxWidth;
+    if (boxSize.width < this.props.mobileSizeBreakpoint) {
+      maxHeight = boxSize.height - this.props.imageMobilePadding * 2;
+      maxWidth = boxSize.width - this.props.imageMobilePadding * 2;
+    } else {
+      maxHeight = boxSize.height - this.props.imagePadding * 2;
+      maxWidth = boxSize.width - this.props.imagePadding * 2;
+    }
 
     if (!stretch) {
       maxHeight = Math.min(maxHeight, height);
@@ -1732,6 +1739,12 @@ ReactImageLightbox.propTypes = {
   // Padding (px) between the edge of the window and the lightbox
   imagePadding: PropTypes.number,
 
+  // Padding (px) between the edge of the window and the lightbox for small screen
+  imageMobilePadding: PropTypes.number,
+
+  // screen size (px) for mobile padding
+  mobileSizeBreakpoint: PropTypes.number,
+
   wrapperClassName: PropTypes.string,
 
   //-----------------------------
@@ -1773,6 +1786,8 @@ ReactImageLightbox.defaultProps = {
   discourageDownloads: false,
   enableZoom: true,
   imagePadding: 10,
+  imageMobilePadding: 5,
+  mobileSizeBreakpoint: 768,
   imageCrossOrigin: null,
   keyRepeatKeyupBonus: 40,
   keyRepeatLimit: 180,

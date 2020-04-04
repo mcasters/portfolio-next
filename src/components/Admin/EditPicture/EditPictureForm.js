@@ -106,7 +106,7 @@ function EditPictureForm({ pictureTitle }) {
           />
         )}
         {file && (
-          <button className={s.adminButton} type="submit">
+          <button className={`${s.adminButton} button`} type="submit">
             OK
           </button>
         )}

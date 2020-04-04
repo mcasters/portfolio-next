@@ -1,5 +1,5 @@
 export const LIGHTBOX_PADDING = 50;
-export const LIGHTBOX_MOBILE_PADDING = 10;
+export const LIGHTBOX_MOBILE_PADDING = 8;
 
 // Min image zoom level
 export const MIN_ZOOM_LEVEL = 0;

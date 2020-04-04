@@ -51,7 +51,7 @@ function ContentForm({ keyContent, isTextArea, initialContent }) {
             onChange={handleChange}
           />
         )}
-        {isChanged && <button className={s.adminButton} type="submit">OK</button>}
+        {isChanged && <button className={`${s.adminButton} button`} type="submit">OK</button>}
       </form>
     </>
   );

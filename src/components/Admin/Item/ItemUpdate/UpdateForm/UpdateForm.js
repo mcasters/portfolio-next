@@ -240,19 +240,19 @@ function UpdateForm({ item, type, srcList, onClose }) {
             ),
         )}
         {canUpload && (
-          <button className={s.updateButton} onClick={ImageSubmit}>
+          <button className={`${s.updateButton} button`} onClick={ImageSubmit}>
             Enregister les images
           </button>
         )}
         <div>
           {canSubmit && (
-            <button className={s.updateButton} type="submit">
+            <button className={`${s.updateButton} button`} type="submit">
               OK
             </button>
           )}
           <button
             type="button"
-            className={s.updateButton}
+            className={`${s.updateButton} button`}
             onClick={handleCloseModal}
           >
             Annuler

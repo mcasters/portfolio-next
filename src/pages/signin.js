@@ -7,6 +7,7 @@ import Layout from '../components/LayoutComponents/Layout/Layout';
 import ROUTER_CONSTANT from '../constants/router';
 import { signIn } from '../data/lib/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
+import s from "../components/Admin/Item/ItemUpdate/UpdateForm/UpdateForm.module.css";
 
 const SignIn = () => {
   const { publicRuntimeConfig } = getConfig();
@@ -72,7 +73,7 @@ const SignIn = () => {
             )
           }
         />
-        <button type="submit">Sign in</button> or{' '}
+        <button className="button" type="submit">Sign in</button> or{' '}
         <Link href="signup">
           <a>Sign up</a>
         </Link>
