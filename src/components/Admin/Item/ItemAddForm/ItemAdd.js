@@ -23,6 +23,7 @@ function ItemAdd({ type }) {
   const [itemData, setItemData] = useState(item);
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const [isTitleBlocked, setIsTitleBlocked] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false);
 
   const isSculpture = type === ITEM.SCULPTURE.TYPE;
   const titleForm = 'Ajout';
@@ -59,7 +60,7 @@ function ItemAdd({ type }) {
     );
   };
 
-  const handleChangeDate = date => {
+  const handleDayChange = date => {
     setItemData(Object.assign({}, itemData, { date }));
   };
 
@@ -91,7 +92,7 @@ function ItemAdd({ type }) {
       const filename = isSculpture
         ? `${itemData.title}_${i}.jpg`
         : `${itemData.title}.jpg`;
-      await fetch('/api/upload', {
+      await fetch('/api/tempImage', {
         method: 'POST',
         headers: {
           'Content-Type': file.type,
@@ -104,6 +105,7 @@ function ItemAdd({ type }) {
       i++;
     }
     setIsTitleBlocked(true);
+    setIsUploaded(true);
     triggerAlert('image(s) ajoutée(s)', false);
   };
 
@@ -123,6 +125,28 @@ function ItemAdd({ type }) {
     }
   };
 
+  const cancel = async e => {
+    e.preventDefault();
+
+    let i = 1;
+    for (const file of itemData.pictures) {
+      const filename = isSculpture
+        ? `${itemData.title}_${i}.jpg`
+        : `${itemData.title}.jpg`;
+      await fetch('/api/tempImage', {
+        method: 'DELETE',
+        headers: {
+          'Content-Filename': filename,
+        },
+      }).catch(e => {
+        triggerAlert(e.message, true);
+      });
+      i++;
+    }
+    clearState();
+    triggerAlert('image(s) temporaire(s) supprimée(s)', false);
+  };
+
   return (
     <div className={s.addContainer}>
       <h2>{titleForm}</h2>
@@ -137,7 +161,7 @@ function ItemAdd({ type }) {
           readOnly={isTitleBlocked}
         />
         <div className={s.DayInputContainer}>
-          <DayPicker onDayChange={handleChangeDate} />
+          <DayPicker onDayChange={handleDayChange} />
         </div>
         <input
           className={s.inputL}
@@ -216,16 +240,23 @@ function ItemAdd({ type }) {
               />
             ),
         )}
-        {canUpload && (
-          <button className={`${s.adminButton} button`} onClick={ImageSubmit}>
-            Upload
-          </button>
-        )}
-        {canSubmit && (
-          <button className={`${s.adminButton} button`} type="submit">
-            OK
-          </button>
-        )}
+        <div>
+          {canUpload && !isUploaded && (
+            <button className={`${s.adminButton} button`} onClick={ImageSubmit}>
+              Upload
+            </button>
+          )}
+          {canSubmit && isUploaded && (
+            <button className={`${s.adminButton} button`} type="submit">
+              OK
+            </button>
+          )}
+          {isUploaded && (
+            <button className={`${s.adminButton} button`} onClick={cancel}>
+              Annuler
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );

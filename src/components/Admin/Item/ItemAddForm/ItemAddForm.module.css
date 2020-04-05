@@ -25,4 +25,6 @@
 
 .adminButton {
   width: var(--admin-button-width);
+  display: inline-block;
+  margin: 2em 1em;
 }
