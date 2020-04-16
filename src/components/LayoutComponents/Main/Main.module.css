@@ -32,8 +32,9 @@
   }
 
   .mainHome {
-    padding-top: var(--main-top-padding) var(--mainHome-side-padding)
+    padding: var(--main-top-padding) var(--mainHome-side-padding)
       var(--mainHome-bottom-padding);
+    padding-left: var(--aside-width);
   }
 }
 

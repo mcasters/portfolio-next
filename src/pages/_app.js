@@ -1,13 +1,14 @@
+import React from 'react';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
+import { AlertProvider } from '../components/AlertContext/AlertContext';
+import ErrorBoundary from '../components/ErrorBoundary';
 import './styles/styles.css';
 import './styles/style-lightbox.css';
 import './styles/style-reactTab.css';
 import './styles/style-daypicker.css';
-import React from 'react';
 
-import { AlertProvider } from '../components/AlertContext/AlertContext';
-import ErrorBoundary from '../components/ErrorBoundary';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
 import ROUTER_CONSTANT from '../constants/router';
 import { DESCRIPTION, KEYWORDS } from '../constants/metaHtml';
 import TITLE from '../constants/pageTitle';
