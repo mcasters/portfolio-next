@@ -1,23 +1,35 @@
 const ITEM = {
   PAINTING: {
     TYPE: 'painting',
-    PATH: '/images/paintings',
+    IMAGE: {
+      PATH_SM: '/paintings/sm',
+      PATH_MD: '/paintings/md',
+      PATH: '/paintings',
+      ALT_IMAGE: 'Peinture de Marion Casters',
+    },
     TITLE: 'Peintures',
-    ALT_IMAGE: 'Peinture de Marion Casters',
   },
 
   DRAWING: {
     TYPE: 'drawing',
-    PATH: '/images/drawings',
+    IMAGE: {
+      PATH_SM: '/drawings/sm',
+      PATH_MD: '/drawings/md',
+      PATH: '/drawings',
+      ALT_IMAGE: 'Dessin de Marion Casters',
+    },
     TITLE: 'Dessins',
-    ALT_IMAGE: 'Dessin de Marion Casters',
   },
 
   SCULPTURE: {
     TYPE: 'sculpture',
-    PATH: '/images/sculptures',
+    IMAGE: {
+      PATH_SM: '/sculptures/sm',
+      PATH_MD: '/sculptures/md',
+      PATH: '/sculptures',
+      ALT_IMAGE: 'Sculpture de Marion Casters',
+    },
     TITLE: 'Sculptures',
-    ALT_IMAGE: 'Sculpture de Marion Casters',
   },
 
   LG_SIZE: 'lg',

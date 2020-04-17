@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import ITEM from '../../../constants/item';
 import CONSTANT from '../../../constants/layout';
 import LightBox from '../../LightBox/LightBoxProvider';
-import ItemService from '../../../app-services/ItemService';
+import Item from '../../../data/lib/Item';
 import useViewport from '../../Hooks/useViewport';
 import s from './Image.module.css';
 
@@ -13,20 +12,13 @@ function Image({ title, type }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const isLessThanSM = width < CONSTANT.BREAKPOINT.SM;
-  const itemService = new ItemService(type);
-  const itemPath = itemService.getPath();
-  const alt = itemService.getAltImage();
-  const isSculpture = itemService.getIsSculpture();
+  const item = new Item(title, type);
 
-  const getCurrentPath = () => {
-    return isLessThanSM
-      ? `${itemPath}/${ITEM.SM_SIZE}`
-      : `${itemPath}/${ITEM.MD_SIZE}`;
-  };
+  const getCurrentPaths = () =>
+    isLessThanSM ? item.getSMPaths() : item.getMDPaths();
 
-  const getLightboxPath = () => {
-    return isLessThanSM ? `${itemPath}/${ITEM.MD_SIZE}` : `${itemPath}`;
-  };
+  const getLightboxPaths = () =>
+    isLessThanSM ? item.getMDPaths() : item.getMainPaths();
 
   const closeLightbox = () => {
     setIsOpen(false);
@@ -36,40 +28,31 @@ function Image({ title, type }) {
     setIsOpen(true);
   };
 
-  const getImageList = isForLightbox => {
-    const path = isForLightbox ? getLightboxPath() : getCurrentPath();
-
-    if (!isSculpture) {
-      return [`${path}/${title}.jpg`];
-    } else {
-      let i;
-      let list = [];
-
-      for (i = 1; i < 5; i++) {
-        list.push(`${path}/${title}_${i}.jpg`);
-      }
-      return list;
-    }
-  };
-
   return (
     <>
       <figure>
-        {getImageList(false).map(src => (
-          <button
-            type="button"
-            onClick={openLightbox}
-            className={isSculpture ? s.sculptureButton : s.imageButton}
-            key={src}
-          >
-            <img src={src} alt={alt} className={s.image} />
-          </button>
-        ))}
+        {getCurrentPaths().map(src => {
+          const sr = `${src}`;
+          return (
+            <button
+              type="button"
+              onClick={openLightbox}
+              className={item.isSculpture ? s.sculptureButton : s.imageButton}
+              key={src}
+            >
+              <img
+                src={require(sr)}
+                alt={item.getAltImage()}
+                className={s.image}
+              />
+            </button>
+          );
+        })}
       </figure>
       {isOpen && typeof window !== 'undefined' && (
         <LightBox
           title={title}
-          images={getImageList(true)}
+          images={getLightboxPaths()}
           onClose={closeLightbox}
         />
       )}

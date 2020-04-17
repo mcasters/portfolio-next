@@ -3,7 +3,7 @@ import { Sequelize, Op } from 'sequelize';
 import ITEM from '../../constants/item';
 import { Drawing, Painting, Sculpture } from '../models';
 
-class ItemService {
+class ModelService {
   constructor(type) {
     this.model = {};
     this.init(type);
@@ -103,4 +103,4 @@ class ItemService {
   };
 }
 
-export default ItemService;
+export default ModelService;

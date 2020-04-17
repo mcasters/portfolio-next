@@ -4,14 +4,12 @@ import PropTypes from 'prop-types';
 import s from './ItemRow.module.css';
 import ItemDeleteButton from '../ItemDelete/ItemDeleteButton';
 import ItemUpdateButton from '../ItemUpdate/ItemUpdateButton';
-import ItemService from '../../../../app-services/ItemService';
+import Item from '../../../../data/lib/Item';
 import { createDateFormat } from '../../../../tools/utils';
 
-function ItemRow({ item, srcList, type }) {
-  const itemService = new ItemService(type);
-  const isSculpture = itemService.getIsSculpture();
-  const alt = itemService.getAltImage();
-  const src = srcList[0];
+function ItemRow({ item, type }) {
+  const itemModel = new Item(item.title, type);
+  const srcList = itemModel.getSMPaths(itemModel.getFilenames());
 
   return (
     <tr className={s.row}>
@@ -21,9 +19,13 @@ function ItemRow({ item, srcList, type }) {
       <th>{item.description}</th>
       <th>{item.height}</th>
       <th>{item.width}</th>
-      {isSculpture && <th>{item.length}</th>}
+      {itemModel.isSculpture && <th>{item.length}</th>}
       <th>
-        <img src={src} alt={alt} className={s.thumbnail} />
+        <img
+          src={require(`${srcList[0]}`)}
+          alt="image admin"
+          className={s.thumbnail}
+        />
       </th>
       <th>
         <ItemDeleteButton id={item.id} type={type} />
@@ -46,7 +48,6 @@ ItemRow.propTypes = {
     width: PropTypes.number,
     length: PropTypes.number,
   }).isRequired,
-  srcList: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
 };
 

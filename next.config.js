@@ -1,28 +1,12 @@
 /* eslint-disable no-undef */
 const dotEnvResult = require('dotenv').config();
-const path = require('path');
-
-const prod = process.env.NODE_ENV === 'production';
+const withImage = require('next-images');
 
 if (dotEnvResult.error) {
   throw dotEnvResult.error;
 }
 
-module.exports = {
-  webpack: (config, { isServer }) => {
-    // Fixes npm packages that depend on `fs` module
-    if (!isServer) {
-      config.node = {
-        fs: 'empty',
-      };
-    }
-
-    // config.resolve.alias['/images/paintings/md/'] =
-    //   './../../photo-files/paintings/md/';
-
-    return config;
-  },
-
+module.exports = withImage({
   // Only be available on the server side
   serverRuntimeConfig: {},
 
@@ -49,4 +33,14 @@ module.exports = {
     // Authentication
     JWT_SECRET: 'secret' || '15htDn-7uU-620Ghhwz',
   },
-};
+
+  webpack: (config, { isServer }) => {
+    // Fixes npm packages that depend on `fs` module
+    if (!isServer) {
+      config.node = {
+        fs: 'empty',
+      };
+    }
+    return config;
+  },
+});

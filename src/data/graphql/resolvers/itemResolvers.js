@@ -1,5 +1,5 @@
 import { graphqlUploadExpress } from 'graphql-upload';
-import ItemService from '../../lib/ItemService';
+import ModelService from '../../lib/modelService';
 import isAuthenticated from '../../lib/authUtils';
 import * as imageUtils from '../../lib/imageUtils';
 
@@ -8,9 +8,9 @@ export default {
 
   Query: {
     getAllItems: async (parent, { type }) =>
-      new ItemService(type).getAllItems(),
+      new ModelService(type).getAllItems(),
     getItemsByPart: (parent, { type, year, half }) =>
-      new ItemService(type).getItemsByPart(year, half),
+      new ModelService(type).getItemsByPart(year, half),
   },
 
   Mutation: {
@@ -19,7 +19,7 @@ export default {
         throw new Error("Erreur d'authentification");
 
       const { title } = data;
-      const service = new ItemService(type);
+      const service = new ModelService(type);
 
       const item = await service.getByName(title);
       if (item) throw new Error("Nom de l'item déjà existant en Bdd");
@@ -44,13 +44,13 @@ export default {
       if (!(await isAuthenticated(req)))
         throw new Error("Erreur d'authentification");
 
-      const itemService = new ItemService(type);
+      const modelService = new ModelService(type);
 
-      const oldItem = await itemService.getById(id);
+      const oldItem = await modelService.getById(id);
       if (!oldItem) throw new Error('Item à modifier introuvable en BDD');
 
       const { title } = data;
-      const itemByName = await itemService.getByName(title, type);
+      const itemByName = await modelService.getByName(title, type);
       if (itemByName && itemByName.id !== id)
         throw new Error("Nom d'item déjà existant en Bdd");
 
@@ -71,7 +71,7 @@ export default {
         if (!res) throw new Error('Erreur au renommage des fichiers');
       }
 
-      const updatedItem = await itemService.update(id, data);
+      const updatedItem = await modelService.update(id, data);
 
       if (!updatedItem)
         throw new Error("Erreur à l'enregistrement en base de donnée");
@@ -83,7 +83,7 @@ export default {
       if (!(await isAuthenticated(req)))
         throw new Error("Erreur d'authentification");
 
-      const itemService = new ItemService(type);
+      const itemService = new ModelService(type);
       const item = await itemService.getById(id);
       if (!item) throw new Error('Item absent en BDD');
 

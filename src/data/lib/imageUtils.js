@@ -1,6 +1,5 @@
 import fs from 'fs';
 import Jimp from 'jimp';
-import Path from 'path';
 
 import ITEM from '../../constants/item';
 import CONTENT from '../../constants/content';

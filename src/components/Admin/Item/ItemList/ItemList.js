@@ -3,28 +3,10 @@ import PropTypes from 'prop-types';
 
 import ItemRow from '../ItemRow/ItemRow';
 import s from './ItemList.module.css';
-import ItemService from '../../../../app-services/ItemService';
+import ITEM from '../../../../constants/item';
 
 function ItemList({ type, items }) {
-  const itemService = new ItemService(type);
-  const isSculpture = itemService.getIsSculpture();
-  const path = itemService.getPath();
   const title = 'Modification - Suppression';
-
-  const getUrlImages = itemTitle => {
-    const imageUrls = [];
-
-    if (isSculpture) {
-      let i = 1;
-
-      while (i < 5) {
-        imageUrls.push(`${path}/sm/${itemTitle}_${i}.jpg`);
-        i++;
-      }
-    } else imageUrls.push(`${path}/sm/${itemTitle}.jpg`);
-
-    return imageUrls;
-  };
 
   return (
     <div className={s.listContainer}>
@@ -38,7 +20,7 @@ function ItemList({ type, items }) {
             <th>Description</th>
             <th>Hauteur</th>
             <th>Largeur</th>
-            {isSculpture && <th>Longueur</th>}
+            {type === ITEM.SCULPTURE.TYPE && <th>Longueur</th>}
             <th>Image</th>
             <th> </th>
             <th> </th>
@@ -47,12 +29,7 @@ function ItemList({ type, items }) {
         <tbody>
           {items &&
             items.map(item => (
-              <ItemRow
-                key={item.id}
-                item={item}
-                srcList={getUrlImages(item.title)}
-                type={type}
-              />
+              <ItemRow key={item.id} item={item} type={type} />
             ))}
         </tbody>
       </table>
