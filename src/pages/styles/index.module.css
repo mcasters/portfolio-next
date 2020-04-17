@@ -14,17 +14,7 @@
 }
 
 @media (--md) {
-  .container {
-    margin-left: var(--aside-width-md);
-  }
-
   .content {
     color: var(--color-medium);
-  }
-}
-
-@media (--lg) {
-  .container {
-    margin-left: 20%;
   }
 }
