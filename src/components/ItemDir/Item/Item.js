@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import ITEM from '../../../constants/item';
+import ITEM from '../../../constants/itemConstant';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import s from './Item.module.css';
 import Image from '../Image';

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import s from './styles/admin.module.css';
-import ITEM from '../constants/item';
+import ItemConstant from '../constants/itemConstant';
 import TITLE from '../constants/pageTitle';
 import CONTENT from '../constants/content';
 import EditContent from '../components/Admin/EditContent/EditContent';
@@ -47,9 +47,9 @@ const Admin = ({ isAuthenticated, allContent }) => {
             <TabList>
               <Tab>{TITLE.HOME}</Tab>
               <Tab>{TITLE.PRESENTATION}</Tab>
-              <Tab>{ITEM.PAINTING.TITLE}</Tab>
-              <Tab>{ITEM.SCULPTURE.TITLE}</Tab>
-              <Tab>{ITEM.DRAWING.TITLE}</Tab>
+              <Tab>{ItemConstant.PAINTING.TITLE}</Tab>
+              <Tab>{ItemConstant.SCULPTURE.TITLE}</Tab>
+              <Tab>{ItemConstant.DRAWING.TITLE}</Tab>
               <Tab>{TITLE.CONTACT}</Tab>
             </TabList>
             <TabPanel>
@@ -87,19 +87,19 @@ const Admin = ({ isAuthenticated, allContent }) => {
             </TabPanel>
             <TabPanel>
               <AdminItemParent
-                type={ITEM.PAINTING.TYPE}
+                type={ItemConstant.PAINTING.TYPE}
                 items={allContent.paintings}
               />
             </TabPanel>
             <TabPanel>
               <AdminItemParent
-                type={ITEM.SCULPTURE.TYPE}
+                type={ItemConstant.SCULPTURE.TYPE}
                 items={allContent.sculptures}
               />
             </TabPanel>
             <TabPanel>
               <AdminItemParent
-                type={ITEM.DRAWING.TYPE}
+                type={ItemConstant.DRAWING.TYPE}
                 items={allContent.drawings}
               />
             </TabPanel>
@@ -132,9 +132,9 @@ const Admin = ({ isAuthenticated, allContent }) => {
 
 export async function getServerSideProps(context) {
   const isAuthenticated = await viewer(context);
-  const drawings = await getAllItems(ITEM.DRAWING.TYPE);
-  const paintings = await getAllItems(ITEM.PAINTING.TYPE);
-  const sculptures = await getAllItems(ITEM.SCULPTURE.TYPE);
+  const drawings = await getAllItems(ItemConstant.DRAWING.TYPE);
+  const paintings = await getAllItems(ItemConstant.PAINTING.TYPE);
+  const sculptures = await getAllItems(ItemConstant.SCULPTURE.TYPE);
   const homeContent1 = await getContent(CONTENT.KEY.HOME1);
   const homeContent2 = await getContent(CONTENT.KEY.HOME2);
   const homeContent3 = await getContent(CONTENT.KEY.HOME3);

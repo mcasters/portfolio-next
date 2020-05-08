@@ -1,7 +1,7 @@
 import fs from 'fs';
 import Jimp from 'jimp';
 
-import ITEM from '../../constants/item';
+import ITEM from '../../constants/itemConstant';
 import CONTENT from '../../constants/content';
 import IMAGE from '../../constants/image';
 

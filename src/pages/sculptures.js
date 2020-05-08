@@ -1,11 +1,11 @@
 import Item from '../components/ItemDir/Item';
-import ITEM from '../constants/item';
+import ItemConstant from '../constants/itemConstant';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import {getAllItems} from "../data/lib/api";
 
 const Sculptures = ({ items }) => {
   const title = 'Sculptures';
-  const type = ITEM.SCULPTURE.TYPE;
+  const type = ItemConstant.SCULPTURE.TYPE;
 
   return (
     <Layout>
@@ -18,7 +18,7 @@ const Sculptures = ({ items }) => {
 }
 
 export async function getServerSideProps() {
-  const items = await getAllItems(ITEM.SCULPTURE.TYPE);
+  const items = await getAllItems(ItemConstant.SCULPTURE.TYPE);
 
   return {
     props: { items },

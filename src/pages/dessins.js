@@ -1,11 +1,11 @@
 import Item from '../components/ItemDir/Item';
-import ITEM from '../constants/item';
+import ItemConstant from '../constants/itemConstant';
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import { getAllItems } from '../data/lib/api';
 
 const Dessins = ({ items }) => {
   const title = 'Dessins';
-  const type = ITEM.DRAWING.TYPE;
+  const type = ItemConstant.DRAWING.TYPE;
 
   return (
     <Layout>
@@ -20,7 +20,7 @@ const Dessins = ({ items }) => {
 };
 
 export async function getServerSideProps() {
-  const items = await getAllItems(ITEM.DRAWING.TYPE);
+  const items = await getAllItems(ItemConstant.DRAWING.TYPE);
 
   return {
     props: { items },

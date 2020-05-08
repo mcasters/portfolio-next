@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import ITEM from '../constants/item';
+import ItemConstant from '../constants/itemConstant';
 import ItemTab from '../components/ItemDir/ItemTab';
 import useOnSrr from '../components/Hooks/useOnSrr';
 import Layout from '../components/LayoutComponents/Layout/Layout';
@@ -15,7 +15,7 @@ const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
   const year1 = 2017;
   const year2 = 2018;
   const year3 = 2019;
-  const type = ITEM.PAINTING.TYPE;
+  const type = ItemConstant.PAINTING.TYPE;
 
   const scrollTop = () => {
     window.scrollTo(0, 0);
@@ -85,10 +85,10 @@ const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
 };
 
 export async function getServerSideProps() {
-  const items2017 = await getItemsByPart(2017, ITEM.PAINTING.TYPE, 0);
-  const items2018_1 = await getItemsByPart(2018, ITEM.PAINTING.TYPE, 1);
-  const items2018_2 = await getItemsByPart(2018, ITEM.PAINTING.TYPE, 2);
-  const items2019 = await getItemsByPart(2019, ITEM.PAINTING.TYPE, 0);
+  const items2017 = await getItemsByPart(2017, ItemConstant.PAINTING.TYPE, 0);
+  const items2018_1 = await getItemsByPart(2018, ItemConstant.PAINTING.TYPE, 1);
+  const items2018_2 = await getItemsByPart(2018, ItemConstant.PAINTING.TYPE, 2);
+  const items2019 = await getItemsByPart(2019, ItemConstant.PAINTING.TYPE, 0);
   return {
     props: { items2017, items2018_1, items2018_2, items2019 },
   };

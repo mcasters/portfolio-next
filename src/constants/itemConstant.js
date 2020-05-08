@@ -1,4 +1,4 @@
-const ITEM = {
+const ITEM_CONSTANT = {
   PAINTING: {
     TYPE: 'painting',
     IMAGE: {
@@ -41,4 +41,4 @@ const ITEM = {
   FORMAT_DATE: 'dd/MM/yyyy',
 };
 
-export default ITEM;
+export default ITEM_CONSTANT;

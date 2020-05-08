@@ -12,7 +12,7 @@ import './styles/style-daypicker.css';
 import ROUTER_CONSTANT from '../constants/router';
 import { DESCRIPTION, KEYWORDS } from '../constants/metaHtml';
 import TITLE from '../constants/pageTitle';
-import ITEM from '../constants/item';
+import ItemConstant from '../constants/itemConstant';
 
 // eslint-disable-next-line react/prop-types
 export default function MyApp({ Component, pageProps }) {
@@ -31,16 +31,16 @@ export default function MyApp({ Component, pageProps }) {
         title = TITLE.CONTACT;
         break;
       case ROUTER_CONSTANT.DESSINS:
-        title = ITEM.DRAWING.TITLE;
+        title = ItemConstant.DRAWING.TITLE;
         break;
       case ROUTER_CONSTANT.PEINTURES:
-        title = ITEM.PAINTING.TITLE;
+        title = ItemConstant.PAINTING.TITLE;
         break;
       case ROUTER_CONSTANT.PRESENTATION:
         title = TITLE.PRESENTATION;
         break;
       case ROUTER_CONSTANT.SCULPTURES:
-        title = ITEM.SCULPTURE.TITLE;
+        title = ItemConstant.SCULPTURE.TITLE;
         break;
       case ROUTER_CONSTANT.ADMIN:
         title = TITLE.ADMINISTRATION;

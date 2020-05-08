@@ -1,6 +1,6 @@
 import { Sequelize, Op } from 'sequelize';
 
-import ITEM from '../../constants/item';
+import ITEM from '../../constants/itemConstant';
 import { Drawing, Painting, Sculpture } from '../models';
 
 class ModelService {
