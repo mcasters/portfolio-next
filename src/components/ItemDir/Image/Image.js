@@ -6,6 +6,7 @@ import LightBox from '../../LightBox/LightBoxProvider';
 import Item from '../../../data/lib/Item';
 import useViewport from '../../Hooks/useViewport';
 import s from './Image.module.css';
+import path from 'path';
 
 function Image({ title, type }) {
   const { width } = useViewport();
@@ -32,7 +33,6 @@ function Image({ title, type }) {
     <>
       <figure>
         {getCurrentPaths().map(src => {
-          const sr = `${src}`;
           return (
             <button
               type="button"
@@ -41,7 +41,7 @@ function Image({ title, type }) {
               key={src}
             >
               <img
-                src={require(sr)}
+                src={`/library${src}`}
                 alt={item.getAltImage()}
                 className={s.image}
               />

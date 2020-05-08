@@ -1,5 +1,4 @@
-/* eslint-disable css-modules/no-undef-class */
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 

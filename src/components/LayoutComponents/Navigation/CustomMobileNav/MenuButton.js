@@ -5,7 +5,8 @@ import s from './MenuButton.module.css';
 
 function MenuButton({ open, onClick }) {
   const handleClick = e => {
-    onClick(e);
+    e.stopPropagation();
+    onClick();
   };
 
   const styles = {

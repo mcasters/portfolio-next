@@ -1,6 +1,6 @@
 import ITEM from '../../constants/item';
 import path from 'path';
-const libraryPath = process.env.PHOTOS_PATH;
+const libraryPath = path.resolve(`${process.env.PHOTOS_PATH}`);
 
 class Item {
   constructor(title, type) {
@@ -36,19 +36,22 @@ class Item {
 
   getMainPaths = () => {
     return this.filenames.map(
-      filename => `${libraryPath}${this.constDatas.IMAGE.PATH}/${filename}`,
+      // filename => `${libraryPath}${this.constDatas.IMAGE.PATH}/${filename}`,
+      filename => `${this.constDatas.IMAGE.PATH}/${filename}`,
     );
   };
 
   getMDPaths = () => {
     return this.filenames.map(
-      filename => `${libraryPath}${this.constDatas.IMAGE.PATH_MD}/${filename}`,
+      filename => `${this.constDatas.IMAGE.PATH_MD}/${filename}`,
+       //filename => `${libraryPath}${this.constDatas.IMAGE.PATH_MD}/${filename}`,
     );
   };
 
   getSMPaths = () => {
     return this.filenames.map(
-      filename => `${libraryPath}${this.constDatas.IMAGE.PATH_SM}/${filename}`,
+      // filename => `${libraryPath}${this.constDatas.IMAGE.PATH_SM}/${filename}`,
+      filename => `${this.constDatas.IMAGE.PATH_SM}/${filename}`,
     );
   };
 

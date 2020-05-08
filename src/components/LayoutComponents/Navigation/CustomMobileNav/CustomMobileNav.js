@@ -8,17 +8,11 @@ import MenuButton from './MenuButton';
 function CustomMobileNav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const leave = e => {
-    e.preventDefault();
+  const leave = async () => {
     setMenuOpen(false);
   };
 
-  const navigate = () => {
-    setMenuOpen(false);
-  };
-
-  const toggleMenu = e => {
-    e.stopPropagation();
+  const toggleMenu = async () => {
     setMenuOpen(!menuOpen);
   };
 
@@ -36,7 +30,7 @@ function CustomMobileNav() {
       <MenuButton open={menuOpen} onClick={toggleMenu} />
       <Menu
         open={menuOpen}
-        onNavigate={navigate}
+        onNavigate={leave}
         routes={routes}
         onLeave={leave}
       />

@@ -22,7 +22,7 @@ function ItemRow({ item, type }) {
       {itemModel.isSculpture && <th>{item.length}</th>}
       <th>
         <img
-          src={require(`${srcList[0]}`)}
+          src={`${srcList[0]}`}
           alt="image admin"
           className={s.thumbnail}
         />

@@ -1,12 +1,11 @@
 /* eslint-disable no-undef */
 const dotEnvResult = require('dotenv').config();
-const withImage = require('next-images');
 
 if (dotEnvResult.error) {
   throw dotEnvResult.error;
 }
 
-module.exports = withImage({
+module.exports = {
   // Only be available on the server side
   serverRuntimeConfig: {},
 
@@ -43,4 +42,4 @@ module.exports = withImage({
     }
     return config;
   },
-});
+};

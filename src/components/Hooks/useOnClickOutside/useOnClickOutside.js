@@ -4,12 +4,13 @@ function useOnClickOutside(ref, handler, isActive) {
   useEffect(() => {
     const listener = e => {
       if (ref.current && !ref.current.contains(e.target)) {
-        handler(e);
+        e.preventDefault();
+        handler();
       }
       return undefined;
     };
 
-    if (!isActive || typeof document === 'undefined') return undefined;
+    if (!isActive || typeof document === 'undefined') return;
     document.addEventListener('click', listener, false);
 
     return function cleanup() {
