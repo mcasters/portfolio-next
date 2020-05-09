@@ -1,11 +1,34 @@
 /* eslint-disable no-undef */
 const dotEnvResult = require('dotenv').config();
-
 if (dotEnvResult.error) {
   throw dotEnvResult.error;
 }
 
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+
 module.exports = {
+  webpack: (config, { isServer }) => {
+    config.plugins.push(
+      new SWPrecacheWebpackPlugin({
+        verbose: true,
+        staticFileGlobsIgnorePatterns: [/\.next\//],
+        runtimeCaching: [
+          {
+            handler: 'networkFirst',
+            urlPattern: /^https?.*/,
+          },
+        ],
+      }),
+    );
+
+    // Fixes npm packages that depend on `fs` module
+    if (!isServer) {
+      config.node = {
+        fs: 'empty',
+      };
+    }
+    return config;
+  },
   // Only be available on the server side
   serverRuntimeConfig: {},
 
@@ -31,15 +54,5 @@ module.exports = {
 
     // Authentication
     JWT_SECRET: 'secret' || '15htDn-7uU-620Ghhwz',
-  },
-
-  webpack: (config, { isServer }) => {
-    // Fixes npm packages that depend on `fs` module
-    if (!isServer) {
-      config.node = {
-        fs: 'empty',
-      };
-    }
-    return config;
   },
 };
