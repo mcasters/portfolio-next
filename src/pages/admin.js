@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -12,7 +12,7 @@ import EditContent from '../components/Admin/EditContent/EditContent';
 import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemParent';
 import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import ROUTER_CONSTANT from '../constants/router';
+import { ROUTES } from '../constants/router';
 import { getAllItems, getContent, viewer } from '../data/lib/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
 
@@ -21,10 +21,12 @@ const Admin = ({ isAuthenticated, allContent }) => {
   const router = useRouter();
   const triggerAlert = useAlert();
 
-  if (!isAuthenticated && typeof window !== 'undefined') {
-    triggerAlert('Authentification recquise', true);
-    router.push(ROUTER_CONSTANT.HOME);
-  }
+  useEffect(() => {
+    if (!isAuthenticated && typeof window !== 'undefined') {
+      triggerAlert('Authentification recquise', true);
+      router.push(ROUTES.HOME);
+    }
+  });
 
   const handleSelectTab = index => {
     setSelectedTab(index);
@@ -35,7 +37,7 @@ const Admin = ({ isAuthenticated, allContent }) => {
       <Layout>
         <div className={s.container}>
           <h1 className={s.title}>{TITLE.ADMINISTRATION}</h1>
-          <Link href={ROUTER_CONSTANT.SIGNOUT}>
+          <Link href={ROUTES.SIGNOUT}>
             <a>Déconnexion</a>
           </Link>
           <Tabs

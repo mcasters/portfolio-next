@@ -61,6 +61,10 @@ class Item {
     return tab;
   };
 
+  getFilenames = () => {
+    return this.filenames;
+  };
+
   getAltImage = () => {
     return this.constDatas.IMAGE.ALT_IMAGE;
   };
