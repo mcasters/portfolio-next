@@ -30,11 +30,10 @@ module.exports = withOffline({
     BACKEND_URL: process.env.BACKEND_URL,
 
     // Database
-    DATABASE_NAME: 'develop',
-    DATABASE_USERNAME: 'root',
-    DATABASE_PASSWORD: 'root',
-    DATABASE_HOST: 'localhost',
-    DATABASE_URL: 'mysql:database.mysql',
+    DATABASE_NAME: process.env.DATABASE_NAME,
+    DATABASE_USERNAME: process.env.DATABASE_USERNAME,
+    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
+    DATABASE_HOST: process.env.DATABASE_HOST,
 
     // Library
     PHOTOS_PATH: process.env.PHOTOS_PATH,

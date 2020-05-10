@@ -14,16 +14,16 @@ const tempImage = async (req, res) => {
       const writeStream = createWriteStream(`${path}`);
       req.pipe(writeStream);
 
-      req.on('end', function() {
+      req.on('end', function () {
         res.statusCode = 200;
         res.end();
       });
 
-      writeStream.on('error', function(err) {
-        console.log(err);
+      writeStream.on('error', function () {
         writeStream.end();
-        res.statusCode = 400;
-        res.message("Erreur à l'écriture du fichier temporaire");
+        res.writeHead(500, 'Error on server');
+        res.write('500: Error to write file ');
+        res.end();
       });
       break;
 
@@ -33,7 +33,8 @@ const tempImage = async (req, res) => {
         res.statusCode = 200;
         res.end();
       } else {
-        res.statusCode = 400;
+        res.writeHead(404, 'Not Found');
+        res.write('404: File Not Found!');
         res.end();
       }
       break;
