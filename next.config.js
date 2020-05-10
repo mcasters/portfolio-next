@@ -4,23 +4,10 @@ if (dotEnvResult.error) {
   throw dotEnvResult.error;
 }
 
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const withOffline = require('next-offline');
 
-module.exports = {
+module.exports = withOffline({
   webpack: (config, { isServer }) => {
-    config.plugins.push(
-      new SWPrecacheWebpackPlugin({
-        verbose: true,
-        staticFileGlobsIgnorePatterns: [/\.next\//],
-        runtimeCaching: [
-          {
-            handler: 'networkFirst',
-            urlPattern: /^https?.*/,
-          },
-        ],
-      }),
-    );
-
     // Fixes npm packages that depend on `fs` module
     if (!isServer) {
       config.node = {
@@ -55,4 +42,4 @@ module.exports = {
     // Authentication
     JWT_SECRET: 'secret' || '15htDn-7uU-620Ghhwz',
   },
-};
+});
