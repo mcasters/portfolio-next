@@ -4,7 +4,7 @@ import { DateUtils } from 'react-day-picker';
 import dateFnsFormat from 'date-fns/format';
 import dateFnsParse from 'date-fns/parse';
 
-import ItemConstant from '../../../../constants/item';
+import ITEM_CONSTANT from '../../../../constants/itemConstant';
 
 function parseDate(str, format, locale) {
   const parsed = dateFnsParse(str, format, { locale });
@@ -19,7 +19,7 @@ function formatDate(date, format, locale) {
 }
 
 function DayPicker({ onDayChange }) {
-  const FORMAT = ItemConstant.FORMAT_DATE;
+  const FORMAT = ITEM_CONSTANT.FORMAT_DATE;
   return (
     <DayPickerInput
       onDayChange={onDayChange}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import s from './LoginControl.module.css';
-import ROUTER_CONSTANT from '../../../../constants/router';
+import { NAMES, ROUTES } from '../../../../constants/router';
 import getConfig from 'next/config';
 
 const LoginControl = () => {
@@ -18,16 +18,16 @@ const LoginControl = () => {
 
   if (isConnected) {
     return (
-      <Link href={ROUTER_CONSTANT.ADMIN}>
-        <a className={s.link}>Admin</a>
+      <Link href={ROUTES.ADMIN}>
+        <a className={s.link}>{NAMES.ADMIN}</a>
       </Link>
     );
   }
 
   return (
     <>
-      <Link href={ROUTER_CONSTANT.SIGNIN}>
-        <a className={s.link}>Admin in</a>
+      <Link href={ROUTES.SIGNIN}>
+        <a className={s.link}>{NAMES.SIGNIN}</a>
       </Link>
     </>
   );

@@ -9,7 +9,7 @@ import './styles/style-lightbox.css';
 import './styles/style-reactTab.css';
 import './styles/style-daypicker.css';
 
-import ROUTER_CONSTANT from '../constants/router';
+import { ROUTES } from '../constants/router';
 import { DESCRIPTION, KEYWORDS } from '../constants/metaHtml';
 import TITLE from '../constants/pageTitle';
 import ItemConstant from '../constants/itemConstant';
@@ -21,28 +21,28 @@ export default function MyApp({ Component, pageProps }) {
   const getTitle = () => {
     let title = '';
     switch (router.pathname) {
-      case ROUTER_CONSTANT.HOME:
+      case ROUTES.HOME:
         title = TITLE.HOME;
         break;
-      case ROUTER_CONSTANT.CONFIDENTIALITE:
-        title = TITLE.PRIVACY;
-        break;
-      case ROUTER_CONSTANT.CONTACT:
+      case ROUTES.CONTACT:
         title = TITLE.CONTACT;
         break;
-      case ROUTER_CONSTANT.DESSINS:
+      case ROUTES.DRAWING:
         title = ItemConstant.DRAWING.TITLE;
         break;
-      case ROUTER_CONSTANT.PEINTURES:
+      case ROUTES.PAINTING:
         title = ItemConstant.PAINTING.TITLE;
         break;
-      case ROUTER_CONSTANT.PRESENTATION:
-        title = TITLE.PRESENTATION;
-        break;
-      case ROUTER_CONSTANT.SCULPTURES:
+      case ROUTES.SCULPTURE:
         title = ItemConstant.SCULPTURE.TITLE;
         break;
-      case ROUTER_CONSTANT.ADMIN:
+      case ROUTES.PRESENTATION:
+        title = TITLE.PRESENTATION;
+        break;
+      case ROUTES.PRIVACY:
+        title = TITLE.PRIVACY;
+        break;
+      case ROUTES.ADMIN:
         title = TITLE.ADMINISTRATION;
         break;
     }
@@ -51,21 +51,21 @@ export default function MyApp({ Component, pageProps }) {
 
   const getDescription = () => {
     switch (router.pathname) {
-      case ROUTER_CONSTANT.HOME:
+      case ROUTES.HOME:
         return DESCRIPTION.HOME;
-      case ROUTER_CONSTANT.ADMIN:
+      case ROUTES.ADMIN:
         return DESCRIPTION.ADMIN;
-      case ROUTER_CONSTANT.CONFIDENTIALITE:
+      case ROUTES.PRIVACY:
         return DESCRIPTION.PRIVACY;
-      case ROUTER_CONSTANT.CONTACT:
+      case ROUTES.CONTACT:
         return DESCRIPTION.CONTACT;
-      case ROUTER_CONSTANT.DESSINS:
+      case ROUTES.DRAWING:
         return DESCRIPTION.DRAWING;
-      case ROUTER_CONSTANT.PEINTURES:
+      case ROUTES.PAINTING:
         return DESCRIPTION.PAINTING;
-      case ROUTER_CONSTANT.PRESENTATION:
+      case ROUTES.PRESENTATION:
         return DESCRIPTION.PRESENTATION;
-      case ROUTER_CONSTANT.SCULPTURES:
+      case ROUTES.SCULPTURE:
         return DESCRIPTION.SCULPTURE;
     }
   };

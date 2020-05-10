@@ -6,7 +6,6 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Navigation from '../Navigation/Navigation';
 import LAYOUT from '../../../constants/layout';
-import ROUTER from '../../../constants/router';
 import Main from '../Main/Main';
 import useViewport from '../../Hooks/useViewport';
 
@@ -16,7 +15,7 @@ export default function Layout({ children }) {
   const [mainHeight, setMainHeight] = useState(500);
   const router = useRouter();
 
-  const isHome = router.pathname === ROUTER.HOME;
+  const isHome = router.pathname === '/';
 
   useEffect(() => {
     if (typeof window != 'undefined') {

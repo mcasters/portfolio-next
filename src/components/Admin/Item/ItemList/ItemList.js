@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ItemRow from '../ItemRow/ItemRow';
 import s from './ItemList.module.css';
-import ItemConstant from '../../../../constants/item';
+import ITEM_CONSTANT from '../../../../constants/itemConstant';
 
 function ItemList({ type, items }) {
   const title = 'Modification - Suppression';
@@ -20,7 +20,7 @@ function ItemList({ type, items }) {
             <th>Description</th>
             <th>Hauteur</th>
             <th>Largeur</th>
-            {type === ItemConstant.SCULPTURE.TYPE && <th>Longueur</th>}
+            {type === ITEM_CONSTANT.SCULPTURE.TYPE && <th>Longueur</th>}
             <th>Image</th>
             <th> </th>
             <th> </th>

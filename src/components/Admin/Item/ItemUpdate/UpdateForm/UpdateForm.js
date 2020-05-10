@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 import DayPicker from '../../DayPicker';
-import ItemConstant from '../../../../../constants/item';
+import ITEM_CONSTANT from '../../../../../constants/itemConstant';
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../AlertContext/AlertContext';
 import { updateItem } from '../../../../../data/lib/api';
@@ -32,7 +32,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
 
   const showModal = true;
 
-  const isSculpture = type === ItemConstant.SCULPTURE.TYPE;
+  const isSculpture = type === ITEM_CONSTANT.SCULPTURE.TYPE;
   const haveMain = !!(
     itemData.title &&
     itemData.date &&

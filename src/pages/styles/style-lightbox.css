@@ -1,3 +1,5 @@
+@import './variables.module.css';
+
 @keyframes closeWindow {
   0% {
     opacity: 1;

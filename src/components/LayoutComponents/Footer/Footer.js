@@ -5,7 +5,7 @@ import Link from 'next/link';
 import s from './Footer.module.css';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import Feedback from '../Feedback/Feedback';
-import ROUTER_CONSTANT from '../../../constants/router';
+import { NAMES, ROUTES } from '../../../constants/router';
 import LoginControl from './LoginControl/LoginControl';
 
 export default function Footer() {
@@ -14,17 +14,14 @@ export default function Footer() {
       <Feedback />
       <div className={s.container}>
         <span className={s.text}>{GLOBAL_CONSTANTS.COPYRIGHT}</span>
-        <Link href={ROUTER_CONSTANT.HOME}>
-          <a className={s.link}>Home</a>
+        <Link href={ROUTES.HOME}>
+          <a className={s.link}>{NAMES.HOME}</a>
         </Link>
         <span className={s.dot}>·</span>
         <LoginControl />
         <span className={s.dot}>·</span>
-        <Link
-          href={ROUTER_CONSTANT.PRIVACY}
-          as={ROUTER_CONSTANT.CONFIDENTIALITE}
-        >
-          <a className={s.link}>Privacy</a>
+        <Link href={ROUTES.PRIVACY} as={NAMES.PRIVACY}>
+          <a className={s.link}>{NAMES.PRIVACY}</a>
         </Link>
       </div>
     </footer>

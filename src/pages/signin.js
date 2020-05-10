@@ -4,10 +4,9 @@ import { useState } from 'react';
 import getConfig from "next/config";
 
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import ROUTER_CONSTANT from '../constants/router';
+import { ROUTES } from '../constants/router';
 import { signIn } from '../data/lib/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
-import s from "../components/Admin/Item/ItemUpdate/UpdateForm/UpdateForm.module.css";
 
 const SignIn = () => {
   const { publicRuntimeConfig } = getConfig();
@@ -33,7 +32,7 @@ const SignIn = () => {
         console.log('ls_key //' + ls_key);
         console.log('ls_value //' + ls_value);
         localStorage.setItem(ls_key, ls_value);
-        router.push(ROUTER_CONSTANT.ADMIN);
+        router.push(ROUTES.ADMIN);
       }
     } catch (error) {
       triggerAlert(error.message, true);

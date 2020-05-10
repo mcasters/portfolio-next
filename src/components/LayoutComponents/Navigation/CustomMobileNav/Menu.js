@@ -1,11 +1,12 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 import s from './Menu.module.css';
+import { MENU as menuItems } from '../../../../constants/router';
 import useOnClickOutside from '../../../Hooks/useOnClickOutside/useOnClickOutside';
 
-function Menu({ open, onNavigate, routes, onLeave }) {
+function Menu({ open, onNavigate, onLeave }) {
   const menuRef = useRef(null);
   useOnClickOutside(menuRef, onLeave, open);
 
@@ -15,10 +16,10 @@ function Menu({ open, onNavigate, routes, onLeave }) {
       className={open ? `${s.container} ${s.open}` : `${s.container}`}
     >
       <nav className={s.menuList}>
-        {routes.map(route => {
-          if (route[0] === 'Home') {
+        {menuItems.map((item) => {
+          if (item.NAME === 'Home')
             return (
-              <Link key={route[0]} href={route[1]}>
+              <Link key={item.NAME} href={item.PATH}>
                 <a className={s.navHomeLink} onClick={onNavigate}>
                   <img
                     className={s.logo}
@@ -29,11 +30,10 @@ function Menu({ open, onNavigate, routes, onLeave }) {
                 </a>
               </Link>
             );
-          }
           return (
-            <Link key={route[0]} href={route[1]}>
+            <Link key={item.NAME} href={item.PATH}>
               <a className={s.item} onClick={onNavigate}>
-                {route[0]}
+                {item.NAME}
               </a>
             </Link>
           );
@@ -47,7 +47,6 @@ function Menu({ open, onNavigate, routes, onLeave }) {
 Menu.propTypes = {
   open: PropTypes.bool.isRequired,
   onNavigate: PropTypes.func.isRequired,
-  routes: PropTypes.array.isRequired,
   onLeave: PropTypes.func.isRequired,
 };
 
