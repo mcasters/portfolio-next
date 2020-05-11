@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import s from './CustomMobileNav.module.css';
 import Menu from './Menu';
@@ -12,7 +12,9 @@ function CustomMobileNav() {
   };
 
   const toggleMenu = async () => {
-    setMenuOpen(!menuOpen);
+    console.log('///// open menu 1 : ' + menuOpen);
+    setMenuOpen(() => !menuOpen);
+    console.log('///// open menu 2 : ' + menuOpen);
   };
 
   return (

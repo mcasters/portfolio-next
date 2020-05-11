@@ -8,6 +8,9 @@ const ITEM_CONSTANT = {
       ALT_IMAGE: 'Peinture de Marion Casters',
     },
     TITLE: 'Peintures',
+    YEAR1: 2017,
+    YEAR2: 2018,
+    YEAR3: 2019,
   },
 
   DRAWING: {

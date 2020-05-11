@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useEffect, useState} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -28,7 +28,16 @@ const Admin = ({ isAuthenticated, allContent }) => {
     }
   });
 
-  const handleSelectTab = index => {
+  useEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      localStorage.getItem('indexAdminTab') !== null
+    )
+      setSelectedTab(parseInt(localStorage.getItem('indexAdminTab')));
+  }, []);
+
+  const handleSelectTab = (index) => {
+    localStorage.setItem('indexAdminTab', index);
     setSelectedTab(index);
   };
 
