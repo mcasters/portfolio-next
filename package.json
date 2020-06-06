@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@types/react": "^16.9.34",
-    "apollo-server-micro": "^2.13.0",
+    "apollo-server-micro": "^2.14.2",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "cookie": "^0.4.1",
