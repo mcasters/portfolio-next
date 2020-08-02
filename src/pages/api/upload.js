@@ -1,7 +1,7 @@
 import fs, { createWriteStream } from 'fs';
 import isAuthenticated from '../../data/lib/authUtils';
 
-const tempImage = async (req, res) => {
+const upload = async (req, res) => {
   if (!(await isAuthenticated(req)))
     throw new Error("Erreur d'authentification");
 
@@ -52,4 +52,4 @@ export const config = {
   },
 };
 
-export default tempImage;
+export default upload;

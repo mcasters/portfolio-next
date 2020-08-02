@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import s from './EditPictureForm.module.css';
 import CONT_CONST from '../../../constants/content';
 import { useAlert } from '../../AlertContext/AlertContext';
-import {addPicture} from "../../../data/lib/api";
+import {addPicture} from "../../../data/api/api";
 
 function EditPictureForm({ pictureTitle }) {
   const triggerAlert = useAlert();

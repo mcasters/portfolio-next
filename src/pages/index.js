@@ -5,7 +5,7 @@ import CONTENT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import s from './styles/index.module.css';
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import { getContent } from '../data/lib/api';
+import { getContent } from '../data/api/api';
 
 function Home({ content }) {
   return (

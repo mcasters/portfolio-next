@@ -3,7 +3,7 @@ import { FaTrash } from 'react-icons/fa';
 
 import s from './ItemDeleteButton.module.css';
 import { useAlert } from '../../../AlertContext/AlertContext';
-import { deleteItem } from '../../../../data/lib/api';
+import { deleteItem } from '../../../../data/api/api';
 
 function ItemDeleteButton({ id, type }) {
   const triggerAlert = useAlert();

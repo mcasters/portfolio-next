@@ -6,14 +6,14 @@ import s from './Menu.module.css';
 import { MENU as menuItems } from '../../../../constants/router';
 import useOnClickOutside from '../../../Hooks/useOnClickOutside/useOnClickOutside';
 
-function Menu({ open, onNavigate, onLeave }) {
+function Menu({ isOpen, onNavigate, onLeave }) {
   const menuRef = useRef(null);
-  useOnClickOutside(menuRef, onLeave, open);
+  useOnClickOutside(menuRef, onLeave, isOpen);
 
   return (
     <div
       ref={menuRef}
-      className={open ? `${s.container} ${s.open}` : `${s.container}`}
+      className={isOpen ? `${s.container} ${s.open}` : `${s.container}`}
     >
       <nav className={s.menuList}>
         {menuItems.map((item) => {
@@ -45,7 +45,7 @@ function Menu({ open, onNavigate, onLeave }) {
 }
 
 Menu.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onNavigate: PropTypes.func.isRequired,
   onLeave: PropTypes.func.isRequired,
 };

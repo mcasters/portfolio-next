@@ -5,23 +5,24 @@ import Menu from './Menu';
 import MenuButton from './MenuButton';
 
 function CustomMobileNav() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isOpen, setMenuOpen] = useState(false);
 
-  const leave = async () => {
+  const leave = () => {
     setMenuOpen(false);
   };
 
-  const toggleMenu = async () => {
-    console.log('///// open menu 1 : ' + menuOpen);
-    setMenuOpen(() => !menuOpen);
-    console.log('///// open menu 2 : ' + menuOpen);
+  const toggleMenu = e => {
+    e.preventDefault();
+    console.log('///// open menu 1 : ' + isOpen);
+    setMenuOpen(!isOpen);
+    console.log('///// open menu 2 : ' + isOpen);
   };
 
   return (
     <div className={s.container}>
-      <MenuButton open={menuOpen} onClick={toggleMenu} />
+      <button onClick={toggleMenu} type="button">MM</button>
       <Menu
-        open={menuOpen}
+        isOpen={isOpen}
         onNavigate={leave}
         onLeave={leave}
       />

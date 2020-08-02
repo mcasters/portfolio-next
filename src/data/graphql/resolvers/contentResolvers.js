@@ -6,12 +6,16 @@ import CONTENT from '../../../constants/content';
 export default {
   Query: {
     getAllContent: async () => await Content.findAll(),
-    content: async (parent, { key }, _context, _info) => await Content.findOne({ where: { key } }),
+    getContent: async (parent, { key }, _context, _info) =>
+      await Content.findOne({
+        where: { key },
+      }),
   },
 
   Mutation: {
     addContent: async (parent, { input }, { req }, _info) => {
-      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
+      if (!(await isAuthenticated(req)))
+        throw new Error("Erreur d'authentification");
 
       const { key } = input;
 
@@ -32,12 +36,10 @@ export default {
     },
 
     addPicture: async (root, { title }, { req }, _info) => {
-      if (!await isAuthenticated(req)) throw new Error("Erreur d'authentification");
+      if (!(await isAuthenticated(req)))
+        throw new Error("Erreur d'authentification");
 
-      const res = await imageService.addItemImages(
-        title,
-        CONTENT.TYPE,
-      );
+      const res = await imageService.addItemImages(title, CONTENT.TYPE);
 
       if (!res) throw new Error("Erreur à l'écriture des fichiers");
 

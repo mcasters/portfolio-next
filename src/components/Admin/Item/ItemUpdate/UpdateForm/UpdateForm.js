@@ -6,7 +6,7 @@ import DayPicker from '../../DayPicker';
 import ITEM_CONSTANT from '../../../../../constants/itemConstant';
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../AlertContext/AlertContext';
-import { updateItem } from '../../../../../data/lib/api';
+import { updateItem } from '../../../../../data/api/api';
 
 const customStyles = {
   overlay: {

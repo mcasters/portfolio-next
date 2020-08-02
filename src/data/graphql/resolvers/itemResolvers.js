@@ -1,11 +1,8 @@
-import { graphqlUploadExpress } from 'graphql-upload';
 import ModelService from '../../lib/modelService';
 import isAuthenticated from '../../lib/authUtils';
 import * as imageUtils from '../../lib/imageUtils';
 
 export default {
-  Upload: graphqlUploadExpress,
-
   Query: {
     getAllItems: async (parent, { type }) =>
       new ModelService(type).getAllItems(),

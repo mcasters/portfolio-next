@@ -5,7 +5,7 @@ import getConfig from "next/config";
 
 import Layout from '../components/LayoutComponents/Layout/Layout';
 import { ROUTES } from '../constants/router';
-import { signIn } from '../data/lib/api';
+import { signIn } from '../data/api/api';
 import { useAlert } from '../components/AlertContext/AlertContext';
 
 const SignIn = () => {

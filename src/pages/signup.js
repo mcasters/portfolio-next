@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import Layout from '../components/LayoutComponents/Layout/Layout';
-import { useState } from 'react';
 import { useAlert } from '../components/AlertContext/AlertContext';
-import { signUp } from '../data/lib/api';
-import ROUTER_CONSTANT from '../constants/router';
+import { signUp } from '../data/api/api';
+import { ROUTES } from '../constants/router';
 
 function SignUp() {
   const [userData, setUserData] = useState({
@@ -29,7 +29,7 @@ function SignUp() {
       const user = await signUp(username, email, password);
       if (user) {
         triggerAlert('Utilisateur enregistré', false);
-        router.push(ROUTER_CONSTANT.SIGNIN);
+        router.push(ROUTES.SIGNIN);
       }
     } catch (error) {
       triggerAlert(error.message, true);
@@ -83,7 +83,7 @@ function SignUp() {
           }
         />
         <button className="button" type="submit">Sign up</button> or{' '}
-        <Link href={ROUTER_CONSTANT.SIGNIN}>
+        <Link href={ROUTES.SIGNIN}>
           <a>Sign in</a>
         </Link>
       </form>

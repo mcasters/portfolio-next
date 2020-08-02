@@ -69,7 +69,7 @@ export const typeDefs = gql`
 
   type Query {
     getAllContent: [Content]
-    content(key: String!): Content
+    getContent(key: String!): Content
     getAllItems(type: String!): [Item]
     getItemsByPart(year: Int!, type: String!, half: Int!): [Item]
     user(id: ID!): User!
@@ -82,7 +82,6 @@ export const typeDefs = gql`
     addItem(item: ItemInput!): Item!
     updateItem(item: ItemInput!): Item!
     deleteItem(id: ID!, type: String!): ID!
-    uploadFile(file: Upload!): Boolean
     signUp(input: SignUpInput!): SignUpPayload!
     signIn(input: SignInInput!): SignInPayload!
     signOut: Boolean!

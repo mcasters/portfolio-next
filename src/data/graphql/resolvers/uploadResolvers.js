@@ -1,3 +1,4 @@
+/*
 import { createWriteStream } from 'fs';
 
 const storeUpload = ({ stream, filename }) =>
@@ -17,3 +18,4 @@ export default {
     },
   },
 };
+*/

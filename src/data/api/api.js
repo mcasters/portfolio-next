@@ -96,9 +96,7 @@ export async function getContent(key) {
   const data = await fetchAPI(
     `
   query getContent($key: String!) {
-    content(key: $key) {
-      id
-      key
+    getContent(key: $key) {
       text
     }
   }
@@ -109,7 +107,7 @@ export async function getContent(key) {
       },
     },
   );
-  return data?.content;
+  return data?.getContent;
 }
 
 export async function getItemsByPart(year, type, half) {
