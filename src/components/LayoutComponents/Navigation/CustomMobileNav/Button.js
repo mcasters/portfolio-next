@@ -1,9 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
-import s from './MenuButton.module.css';
+import s from './Button.module.css';
 
-function MenuButton({ isOpen, onClick }) {
+function Button({ isOpen, onClick }) {
 
   const styles = {
     line: {
@@ -43,9 +42,9 @@ function MenuButton({ isOpen, onClick }) {
   );
 }
 
-MenuButton.propTypes = {
+Button.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default MenuButton;
+export default Button;
