@@ -1,4 +1,46 @@
+/*
+Navigation
+ */
 .container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: var(--font-size-current-plus);
+  color: var(--color-light);
+  user-select: none;
+}
+
+/*
+Button
+ */
+.buttonContainer {
+  position: fixed;
+  top: 8px;
+  height: 32px;
+  width: 32px;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 8px;
+  z-index: 3;
+  cursor: pointer;
+}
+
+@media (--sm) {
+  .buttonContainer {
+    top: 16px;
+    left: 12px;
+  }
+}
+
+/*
+Menu
+ */
+.menuContainer {
   position: fixed;
   top: 0;
   height: 100vh;
