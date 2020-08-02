@@ -29,8 +29,6 @@ const SignIn = () => {
     try {
       const user = await signIn(username, password);
       if (user) {
-        console.log('ls_key //' + ls_key);
-        console.log('ls_value //' + ls_value);
         localStorage.setItem(ls_key, ls_value);
         router.push(ROUTES.ADMIN);
       }

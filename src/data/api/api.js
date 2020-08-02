@@ -17,8 +17,7 @@ const fetchAPI = async (query, { variables } = {}, context) => {
 
   const json = await res.json();
   if (json.errors) {
-    console.error(json.errors);
-    throw new Error('Failed to fetch API');
+    throw new Error(json.errors[0].message || 'Failed to fetch API');
   }
   return json.data;
 };
@@ -42,7 +41,7 @@ export async function signIn(username, password) {
       },
     },
   );
-  return data.signIn;
+  return data?.signIn;
 }
 
 export async function signUp(username, email, password) {

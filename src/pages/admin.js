@@ -24,7 +24,7 @@ const Admin = ({ isAuthenticated, allContent }) => {
   useEffect(() => {
     if (!isAuthenticated && typeof window !== 'undefined') {
       triggerAlert('Authentification recquise', true);
-      router.push(ROUTES.HOME);
+      router.push(ROUTES.SIGNIN);
     }
   });
 
