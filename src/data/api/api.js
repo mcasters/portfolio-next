@@ -1,6 +1,8 @@
 import 'isomorphic-unfetch';
 
-const apiUrl = `${process.env.BACKEND_URL}/api/graphql`;
+const port = parseInt(process.env.PORT, 10) || 3000;
+const url = process.env.BACKEND_URL;
+const apiUrl = `${url}:${port}/api/graphql`;
 
 const fetchAPI = async (query, { variables } = {}, context) => {
   const res = await fetch(apiUrl, {
@@ -41,7 +43,7 @@ export async function signIn(username, password) {
       },
     },
   );
-  return data?.signIn;
+  return data.signIn;
 }
 
 export async function signUp(username, email, password) {

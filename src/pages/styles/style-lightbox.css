@@ -155,7 +155,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  letter-spacing: 0.5em;
+  letter-spacing: 0.7em;
 }
 
 @media (--md) {

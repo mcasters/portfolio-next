@@ -53,7 +53,6 @@ export default {
             expiresIn: '6h',
           },
         );
-
         context.res.setHeader(
           'Set-Cookie',
           cookie.serialize('token', token, {
@@ -64,7 +63,6 @@ export default {
             secure: process.env.NODE_ENV === 'production',
           }),
         );
-
         return { user };
       }
 
@@ -82,7 +80,6 @@ export default {
           secure: process.env.NODE_ENV === 'production',
         }),
       );
-
       return true;
     },
   },

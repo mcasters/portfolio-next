@@ -39,6 +39,6 @@ module.exports = withOffline({
     PHOTOS_PATH: process.env.PHOTOS_PATH,
 
     // Authentication
-    JWT_SECRET: 'secret' || '15htDn-7uU-620Ghhwz',
+    JWT_SECRET: process.env.JWT_SECRET,
   },
 });
