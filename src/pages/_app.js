@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { AlertProvider } from '../components/AlertContext/AlertContext';
+import { AlertProvider } from '../components/alert-context/AlertContext';
 import ErrorBoundary from '../components/ErrorBoundary';
 import './styles/styles.css';
 import './styles/style-lightbox.css';

@@ -4,7 +4,7 @@ import getConfig from 'next/config';
 
 import { ROUTES } from '../constants/router';
 import { signOut } from '../data/api/api';
-import { useAlert } from '../components/AlertContext/AlertContext';
+import { useAlert } from '../components/alert-context/AlertContext';
 
 function SignOut() {
   const { publicRuntimeConfig } = getConfig();

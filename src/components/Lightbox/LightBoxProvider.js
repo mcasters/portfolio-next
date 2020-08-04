@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-import Lightbox from './ReactImageLightbox';
+import Lightbox from './react-image-lightbox';
 import LAYOUT_CONSTANTS from '../../constants/layout';
 import {
   LIGHTBOX_PADDING,

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import Layout from '../components/LayoutComponents/Layout/Layout';
-import { useAlert } from '../components/AlertContext/AlertContext';
+import Layout from '../components/layout-components/layout/Layout';
+import { useAlert } from '../components/alert-context/AlertContext';
 import { signUp } from '../data/api/api';
 import { ROUTES } from '../constants/router';
 

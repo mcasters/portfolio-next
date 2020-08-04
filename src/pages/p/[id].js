@@ -1,4 +1,4 @@
-import Layout from '../../components/LayoutComponents/Layout/Layout';
+import Layout from '../../components/layout-components/layout/Layout';
 
 const Content = props => (
     <>

@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import getConfig from "next/config";
 
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/router';
 import { signIn } from '../data/api/api';
-import { useAlert } from '../components/AlertContext/AlertContext';
+import { useAlert } from '../components/alert-context/AlertContext';
 
 const SignIn = () => {
   const { publicRuntimeConfig } = getConfig();

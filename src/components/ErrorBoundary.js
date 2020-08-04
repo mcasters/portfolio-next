@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useAlert } from './AlertContext/AlertContext';
+import { useAlert } from './alert-context/AlertContext';
 
 function ErrorBoundary({ children }) {
   const triggerAlert = useAlert();

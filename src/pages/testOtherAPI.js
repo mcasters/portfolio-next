@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Layout from '../components/layout-components/layout/Layout';
 
 function fetcher(url) {
   return fetch(url).then(r => r.json());

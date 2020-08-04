@@ -8,13 +8,13 @@ import s from './styles/admin.module.css';
 import ItemConstant from '../constants/itemConstant';
 import TITLE from '../constants/pageTitle';
 import CONTENT from '../constants/content';
-import EditContent from '../components/Admin/EditContent/EditContent';
-import AdminItemParent from '../components/Admin/Item/AdminItemParent/AdminItemParent';
-import EditPictureForm from '../components/Admin/EditPicture/EditPictureForm';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import EditContent from '../components/admin/edit-content/EditContent';
+import AdminItemParent from '../components/admin/item/admin-item-parent/AdminItemParent';
+import EditPictureForm from '../components/admin/edit-picture/EditPictureForm';
+import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/router';
 import { getAllItems, getContent, viewer } from '../data/api/api';
-import { useAlert } from '../components/AlertContext/AlertContext';
+import { useAlert } from '../components/alert-context/AlertContext';
 
 const Admin = ({ isAuthenticated, allContent }) => {
   const [selectedTab, setSelectedTab] = useState(0);

@@ -1,10 +1,8 @@
-import fetch from 'isomorphic-unfetch';
-
-import Content from '../components/Content/Content';
+import Content from '../components/content/Content';
 import CONTENT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import s from './styles/index.module.css';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Layout from '../components/layout-components/layout/Layout';
 import { getContent } from '../data/api/api';
 
 function Home({ content }) {

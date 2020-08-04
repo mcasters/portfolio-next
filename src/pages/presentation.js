@@ -1,8 +1,8 @@
 import s from './styles/presentation.module.css';
-import Content from '../components/Content/Content';
+import Content from '../components/content/Content';
 import CONT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Layout from '../components/layout-components/layout/Layout';
 import { getContent } from '../data/api/api';
 
 const Presentation = ({ content }) => {

@@ -1,6 +1,6 @@
-import Item from '../components/ItemDir/Item';
+import Item from '../components/item-dir/item/Item';
 import ItemConstant from '../constants/itemConstant';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Layout from '../components/layout-components/layout/Layout';
 import {getAllItems} from "../data/api/api";
 
 const Sculptures = ({ items }) => {

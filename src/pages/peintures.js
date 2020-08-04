@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 import ITEM from '../constants/itemConstant';
-import ItemTab from '../components/ItemDir/ItemTab';
-import useOnSrr from '../components/Hooks/useOnSrr';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import ItemTab from '../components/item-dir/item-tab/ItemTab';
+import useOnSrr from '../components/hooks/useOnSrr';
+import Layout from '../components/layout-components/layout/Layout';
 import { getItemsByPart } from '../data/api/api';
 
 const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {

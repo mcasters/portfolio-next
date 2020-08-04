@@ -1,5 +1,5 @@
 import Markdown from 'react-markdown';
-import Layout from '../components/LayoutComponents/Layout/Layout';
+import Layout from '../components/layout-components/layout/Layout';
 
 const Privacy = () => {
   return (
