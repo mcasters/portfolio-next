@@ -5,7 +5,7 @@ const upload = async (req, res) => {
   if (!(await isAuthenticated(req)))
     throw new Error("Erreur d'authentification");
 
-  const tempPath = `${process.env.PHOTOS_PATH}/tmp`;
+  const tempPath = `${process.env.NEXT_PUBLIC_PHOTOS_PATH}/tmp`;
   const filename = req.headers['content-filename'];
   const path = `${tempPath}/${filename}`;
 

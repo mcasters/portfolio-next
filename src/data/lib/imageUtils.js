@@ -6,13 +6,13 @@ import CONTENT from '../../constants/content';
 import IMAGE from '../../constants/image';
 
 const getTempPath = title => {
-  const libraryPath = process.env.PHOTOS_PATH;
+  const libraryPath = process.env.NEXT_PUBLIC_PHOTOS_PATH;
   const file = `${title}.jpg`;
   return `${libraryPath}${IMAGE.TEMP.PATH}/${file}`;
 };
 
 const getSculpturePaths = title => {
-  const libraryPath = process.env.PHOTOS_PATH;
+  const libraryPath = process.env.NEXT_PUBLIC_PHOTOS_PATH;
   const file = `${title}.jpg`;
   return [
     `${libraryPath}${IMAGE.SCULPTURE.PATH}/${file}`,
@@ -21,7 +21,7 @@ const getSculpturePaths = title => {
   ];
 };
 const getPaintingPaths = title => {
-  const libraryPath = process.env.PHOTOS_PATH;
+  const libraryPath = process.env.NEXT_PUBLIC_PHOTOS_PATH;
   const file = `${title}.jpg`;
   return [
     `${libraryPath}${IMAGE.PAINTING.PATH}/${file}`,
@@ -31,7 +31,7 @@ const getPaintingPaths = title => {
 };
 
 const getDrawingPaths = title => {
-  const libraryPath = process.env.PHOTOS_PATH;
+  const libraryPath = process.env.NEXT_PUBLIC_PHOTOS_PATH;
   const file = `${title}.jpg`;
   return [
     `${libraryPath}${IMAGE.DRAWING.PATH}/${file}`,
@@ -58,7 +58,7 @@ const getItemPaths = (title, type) => {
 };
 
 const getMiscellaneousPath = title => {
-  const libraryPath = process.env.PHOTOS_PATH;
+  const libraryPath = process.env.NEXT_PUBLIC_PHOTOS_PATH;
   return `${libraryPath}${IMAGE.MISCELLANEOUS.PATH}/${title}.jpg`;
 };
 

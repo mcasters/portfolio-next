@@ -11,7 +11,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const library = resolve(process.env.PHOTOS_PATH);
+const library = resolve(process.env.NEXT_PUBLIC_PHOTOS_PATH);
 const staticServer = serveStatic(library, { index: false });
 
 app.prepare().then(() => {
