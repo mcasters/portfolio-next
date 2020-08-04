@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import s from './ContentForm.module.css';
-import { useAlert } from '../../AlertContext/AlertContext';
+import { useAlert } from '../../alert-context/AlertContext';
 import { addContent } from '../../../data/api/api';
 
 function ContentForm({ keyContent, isTextArea, initialContent }) {

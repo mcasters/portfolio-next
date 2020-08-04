@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { FaTrash } from 'react-icons/fa';
 
 import s from './ItemDeleteButton.module.css';
-import { useAlert } from '../../../AlertContext/AlertContext';
+import { useAlert } from '../../../alert-context/AlertContext';
 import { deleteItem } from '../../../../data/api/api';
 
 function ItemDeleteButton({ id, type }) {

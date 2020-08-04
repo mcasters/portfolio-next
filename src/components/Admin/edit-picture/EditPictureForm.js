@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import s from './EditPictureForm.module.css';
 import CONT_CONST from '../../../constants/content';
-import { useAlert } from '../../AlertContext/AlertContext';
+import { useAlert } from '../../alert-context/AlertContext';
 import {addPicture} from "../../../data/api/api";
 
 function EditPictureForm({ pictureTitle }) {

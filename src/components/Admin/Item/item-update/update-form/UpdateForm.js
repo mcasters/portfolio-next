@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
-import DayPicker from '../../DayPicker';
+import DayPicker from '../../daypicker/DayPicker';
 import ITEM_CONSTANT from '../../../../../constants/itemConstant';
 import s from './UpdateForm.module.css';
-import { useAlert } from '../../../../AlertContext/AlertContext';
+import { useAlert } from '../../../../alert-context/AlertContext';
 import { updateItem } from '../../../../../data/api/api';
 
 const customStyles = {

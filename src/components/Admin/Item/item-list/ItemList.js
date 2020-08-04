@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ItemRow from '../ItemRow/ItemRow';
+import ItemRow from '../item-row/ItemRow';
 import s from './ItemList.module.css';
 import ITEM_CONSTANT from '../../../../constants/itemConstant';
 

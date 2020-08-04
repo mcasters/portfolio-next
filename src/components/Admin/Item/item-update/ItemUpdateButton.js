@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaPen } from 'react-icons/fa';
 
-import UpdateForm from './UpdateForm/UpdateForm';
+import UpdateForm from './update-form/UpdateForm';
 import s from './ItemUpdateButton.module.css';
 
 function ItemUpdateButton({ item, type, srcList }) {

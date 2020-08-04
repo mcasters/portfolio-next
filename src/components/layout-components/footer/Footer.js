@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 import s from './Footer.module.css';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
-import Feedback from '../Feedback/Feedback';
+import Feedback from '../feedback/Feedback';
 import { NAMES, ROUTES } from '../../../constants/router';
-import LoginControl from './LoginControl/LoginControl';
+import LoginControl from './login-control/LoginControl';
 
 export default function Footer() {
   return (

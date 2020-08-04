@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import s from './ItemRow.module.css';
-import ItemDeleteButton from '../ItemDelete/ItemDeleteButton';
-import ItemUpdateButton from '../ItemUpdate/ItemUpdateButton';
+import ItemDeleteButton from '../item-delete/ItemDeleteButton';
+import ItemUpdateButton from '../item-update/ItemUpdateButton';
 import Item from '../../../../data/lib/Item';
 import { createDateFormat } from '../../../../tools/utils';
 

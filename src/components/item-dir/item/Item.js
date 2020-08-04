@@ -4,7 +4,7 @@ import React from 'react';
 import ITEM from '../../../constants/itemConstant';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import s from './Item.module.css';
-import Image from '../Image';
+import Image from '../image/Image';
 import { createDateFormat } from '../../../tools/utils';
 
 function Item({ item, type }) {
