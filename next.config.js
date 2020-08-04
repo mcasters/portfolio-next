@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
-const withOffline = require('next-offline');
 
-module.exports = withOffline({
+module.exports = {
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
     if (!isServer) {
@@ -19,4 +18,4 @@ module.exports = withOffline({
     ls_key: 'admin',
     ls_value: 'key',
   },
-});
+};
