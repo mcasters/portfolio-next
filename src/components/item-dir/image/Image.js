@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import CONSTANT from '../../../constants/layout';
-import LightBox from '../../lightbox/LightBoxProvider';
+import LightBox from '../../react-lightbox/LightBoxProvider';
 import Item from '../../../data/lib/Item';
 import useViewport from '../../hooks/useViewport';
 import s from './Image.module.css';
