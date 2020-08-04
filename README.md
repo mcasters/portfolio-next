@@ -12,7 +12,7 @@
 - App create/modify/delete listing of items
 - App and Website view listing of items
 - Different kinds of items
-- Content page managing
-- Image managing (resizing and store in different sizes / screen size)
+- Content page administration
+- Image administration (resizing and store in different sizes / screen size)
 - Mobile first styling
 - MySQL Database
