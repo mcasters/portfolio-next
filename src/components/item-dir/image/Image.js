@@ -2,9 +2,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import CONSTANT from '../../../constants/layout';
-import LightBox from '../../LightBox/LightBoxProvider';
+import LightBox from '../../lightbox/LightBoxProvider';
 import Item from '../../../data/lib/Item';
-import useViewport from '../../Hooks/useViewport';
+import useViewport from '../../hooks/useViewport';
 import s from './Image.module.css';
 
 function Image({ title, type }) {

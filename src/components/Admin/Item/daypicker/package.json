@@ -1,6 +1,6 @@
 {
-  "name": "Image",
+  "name": "DayPicker",
   "version": "1.0.0",
   "private": true,
-  "main": "Image.js"
+  "main": ""
 }

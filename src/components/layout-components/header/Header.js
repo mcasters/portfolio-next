@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import s from './Header.module.css';
 import GLOB_CONST from '../../../constants/globalConstants';
-import useScroll from '../../Hooks/useScroll';
+import useScroll from '../../hooks/useScroll';
 
 function Header({ isHome }) {
   const scrollY = useScroll();

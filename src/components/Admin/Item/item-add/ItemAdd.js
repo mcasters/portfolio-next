@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import s from './ItemAddForm.module.css';
+import s from './ItemAdd.module.css';
 import ITEM from '../../../../constants/itemConstant';
-import DayPicker from '../DayPicker';
+import DayPicker from '../daypicker/DayPicker';
 import { addItem } from '../../../../data/api/api';
-import { useAlert } from '../../../AlertContext/AlertContext';
+import { useAlert } from '../../../alert-context/AlertContext';
 
 function ItemAdd({ type }) {
   const triggerAlert = useAlert();

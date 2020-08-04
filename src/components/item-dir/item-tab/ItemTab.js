@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Item from '../Item';
+import Item from '../item/Item';
 import s from './ItemTab.module.css';
 
 function ItemTab({ year, type, items }) {
