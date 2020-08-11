@@ -1,5 +1,3 @@
-import 'isomorphic-unfetch';
-
 const port = parseInt(process.env.PORT, 10) || 3000;
 const url = process.env.BACKEND_URL;
 const apiUrl = `${url}:${port}/api/graphql`;
