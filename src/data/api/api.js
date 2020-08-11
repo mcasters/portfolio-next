@@ -1,6 +1,6 @@
 const fetchAPI = async (query, { variables } = {}, context) => {
   const port = parseInt(process.env.PORT, 10) || 3000;
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const url = process.env.NODE_ENV === 'production' ? 'https://marioncasters.fr' : 'http://localhost';
   const apiUrl = `${url}:${port}/api/graphql`;
 
   const res = await fetch(apiUrl, {
