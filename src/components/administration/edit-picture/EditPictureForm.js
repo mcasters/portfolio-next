@@ -55,7 +55,7 @@ function EditPictureForm({ pictureTitle }) {
       method: 'POST',
       headers: {
         'Content-Type': file.type,
-        'Content-Filename': filename,
+        'X-Filename': filename,
       },
       body: file,
     })

@@ -96,7 +96,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
           method: 'POST',
           headers: {
             'Content-Type': file.type,
-            'Content-Filename': filename,
+            'X-Filename': filename,
           },
           body: file,
         }).catch(e => {

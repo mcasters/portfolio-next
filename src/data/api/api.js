@@ -1,8 +1,8 @@
-const port = parseInt(process.env.PORT, 10) || 3000;
-const url = process.env.BACKEND_URL;
-const apiUrl = `${url}:${port}/api/graphql`;
-
 const fetchAPI = async (query, { variables } = {}, context) => {
+  const port = parseInt(process.env.PORT, 10) || 3000;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const apiUrl = `${url}:${port}/api/graphql`;
+
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {

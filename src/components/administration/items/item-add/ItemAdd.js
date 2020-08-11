@@ -92,11 +92,11 @@ function ItemAdd({ type }) {
       const filename = isSculpture
         ? `${itemData.title}_${i}.jpg`
         : `${itemData.title}.jpg`;
-      await fetch('/api/tempImage', {
+      await fetch('/api/upload', {
         method: 'POST',
         headers: {
           'Content-Type': file.type,
-          'Content-Filename': filename,
+          'X-Filename': filename,
         },
         body: file,
       }).catch(e => {
