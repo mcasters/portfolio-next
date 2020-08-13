@@ -11,6 +11,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const virtualLibrary = /\/images\//g;
 const library = resolve(process.env.PHOTOS_PATH);
 const staticServer = serveStatic(library, { index: false });
 
@@ -18,7 +19,6 @@ app.prepare().then(() => {
   createServer((req, res) => {
     const { url } = req;
     const parsedUrl = parse(url, true);
-    const virtualLibrary = /\/images\//g;
 
     if (url.match(virtualLibrary)) {
       req.url = url.replace(virtualLibrary, '');
