@@ -52,18 +52,12 @@
 }
 
 .linkHome img {
-  width: 50px;
+  width: 30px;
 }
 
 @media (--lg) {
   .linkHome img {
-    width: 55px;
-  }
-}
-
-@media (--xlg) {
-  .linkHome img {
-    width: 60px;
+    width: 35px;
   }
 }
 

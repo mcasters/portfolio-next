@@ -18,7 +18,7 @@ export default function DesktopNav({ isHome }) {
             return (
               <Link href={item.PATH} key={item.NAME}>
                 <a className={s.linkHome}>
-                  <img src="/logo-100.png" alt="Signature de Marion Casters" />
+                  <img src="/logo-45.png" alt="Signature de Marion Casters" />
                 </a>
               </Link>
             );
