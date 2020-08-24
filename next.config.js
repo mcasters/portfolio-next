@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-const WebpackBar = require('webpackbar');
 
 module.exports = {
   webpack: (config, { isServer }) => {
@@ -9,14 +8,6 @@ module.exports = {
         fs: 'empty',
       };
     }
-
-    config.plugins.push(
-      new WebpackBar({
-        fancy: true,
-        profile: true,
-        basic: false,
-      }),
-    );
 
     return config;
   },

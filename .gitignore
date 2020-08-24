@@ -6,6 +6,9 @@ node_modules/
 # Compiled output
 .next/
 
+# Certificate for https on localhost
+certificates/
+
 # Test coverage
 coverage
 
