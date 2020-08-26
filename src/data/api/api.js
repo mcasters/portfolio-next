@@ -45,8 +45,17 @@ export async function signIn(username, password) {
 }
 
 export async function signUp(username, email, password) {
-  const data = await fetchAPI(
-    `
+  const port = parseInt(process.env.PORT, 10) || 3000;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const apiUrl = `${url}:${port}/api/graphql`;
+
+  const res = await fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      query: `
   mutation SignUpMutation($username: String!, $email: String!, $password: String!) {
     signUp(input: { username:$username, email: $email, password: $password }) {
       user {
@@ -56,14 +65,20 @@ export async function signUp(username, email, password) {
     }
   }
 `,
-    {
       variables: {
         username,
         email,
         password,
       },
-    },
-  );
+    }),
+  });
+
+  const json = await res.json();
+  if (json.errors) {
+    throw new Error(json.errors[0].message || 'Failed to fetch API');
+  }
+  const data = json.data;
+
   return data.signUp;
 }
 

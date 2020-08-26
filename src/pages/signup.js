@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import useSWR from 'swr';
 
 import Layout from '../components/layout-components/layout/Layout';
 import { useAlert } from '../components/alert-context/AlertContext';
-import { signUp } from '../data/api/api';
+import { signUp } from '../data/api/auth';
 import { ROUTES } from '../constants/router';
 
 function SignUp() {
@@ -25,19 +26,19 @@ function SignUp() {
     const email = userData.email;
     const password = userData.password;
 
+    // const { data, error } = useSWR('/api/graphql', signUp(username, email, password));
+
+
     try {
       const user = await signUp(username, email, password);
+        console.log(user);
       if (user) {
         triggerAlert('Utilisateur enregistré', false);
         router.push(ROUTES.SIGNIN);
       }
     } catch (error) {
-      triggerAlert(error.message, true);
-      setUserData(
-        Object.assign({}, userData, {
-          error: error.message,
-        }),
-      );
+      triggerAlert(error.response.errors[0].message, true);
+      router.push(ROUTES.HOME);
     }
   };
 
