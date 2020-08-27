@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useState } from 'react';
-import getConfig from "next/config";
+import getConfig from 'next/config';
+import useSWR from 'swr';
 
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/router';
-import { signIn } from '../data/api/api';
 import { useAlert } from '../components/alert-context/AlertContext';
+import request from 'graphql-request';
 
 const SignIn = () => {
   const { publicRuntimeConfig } = getConfig();
@@ -16,23 +17,47 @@ const SignIn = () => {
     password: '',
     error: '',
   });
-  const router = useRouter();
   const triggerAlert = useAlert();
 
-  const handleSubmit = async e => {
+  //////
+  const port = 3000;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const api = `${url}:${port}/api/graphql`;
+
+  const VIEWER = `
+  query ViewerQuery {
+    viewer
+  }
+`;
+  const SIGNIN_MUTATION = `
+  mutation SignInMutation($username: String!, $password: String!) {
+    signIn(input: { username: $username, password: $password }) {
+      user {
+        id
+        username
+      }
+    }
+  }
+`;
+  const { mutate } = useSWR(VIEWER, (query) => request(api, query));
+  const signInRequest = (variables) => request(api, SIGNIN_MUTATION, variables);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setUserData(Object.assign({}, userData, { error: '' }));
 
     const username = userData.username;
     const password = userData.password;
 
-    try {
-      const user = await signIn(username, password);
-      if (user) {
-        localStorage.setItem(ls_key, ls_value);
-        router.push(ROUTES.ADMIN);
-      }
-    } catch (error) {
+    const { signIn: user, error } = await signInRequest({ username, password });
+
+    if (user) {
+      localStorage.setItem(ls_key, ls_value);
+      await mutate();
+      return Router.push(ROUTES.ADMIN);
+    }
+
+    if (error) {
       triggerAlert(error.message, true);
       setUserData(
         Object.assign({}, userData, {
@@ -52,7 +77,7 @@ const SignIn = () => {
           name="username"
           placeholder="Utilisateur"
           value={userData.username}
-          onChange={event =>
+          onChange={(event) =>
             setUserData(
               Object.assign({}, userData, { username: event.target.value }),
             )
@@ -64,13 +89,16 @@ const SignIn = () => {
           name="password"
           placeholder="Mot de passe"
           value={userData.password}
-          onChange={event =>
+          onChange={(event) =>
             setUserData(
               Object.assign({}, userData, { password: event.target.value }),
             )
           }
         />
-        <button className="button" type="submit">Sign in</button> or{' '}
+        <button className="button" type="submit">
+          Sign in
+        </button>{' '}
+        or{' '}
         <Link href="signup">
           <a>Sign up</a>
         </Link>

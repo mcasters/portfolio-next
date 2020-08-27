@@ -52,7 +52,7 @@ export async function signUp(username, email, password) {
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      "Content-type": "application/json; charset=UTF-8",
     },
     body: JSON.stringify({
       query: `
@@ -82,15 +82,13 @@ export async function signUp(username, email, password) {
   return data.signUp;
 }
 
-export async function viewer(context) {
+export async function viewer() {
   const data = await fetchAPI(
     `
   query ViewerQuery {
     viewer
   }
 `,
-    {},
-    context,
   );
   return data?.viewer;
 }

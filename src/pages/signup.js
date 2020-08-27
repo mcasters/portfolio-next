@@ -1,24 +1,38 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useState } from 'react';
-import useSWR from 'swr';
+import request from 'graphql-request';
 
 import Layout from '../components/layout-components/layout/Layout';
 import { useAlert } from '../components/alert-context/AlertContext';
-import { signUp } from '../data/api/auth';
 import { ROUTES } from '../constants/router';
 
-function SignUp() {
+const SignUp = () => {
+  const triggerAlert = useAlert();
   const [userData, setUserData] = useState({
     username: '',
     email: '',
     password: '',
     error: '',
   });
-  const router = useRouter();
-  const triggerAlert = useAlert();
 
-  const handleSubmit = async e => {
+  ////////
+  const port = 3000;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const api = `${url}:${port}/api/graphql`;
+  const SIGNUP_MUTATION = `
+    mutation SignUpMutation($username: String!, $email: String!, $password: String!) {
+      signUp(input: { username:$username, email: $email, password: $password }) {
+        user {
+          id
+          username
+        }
+      }
+    }
+  `;
+  const signUpRequest = (variables) => request(api, SIGNUP_MUTATION, variables);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setUserData(Object.assign({}, userData, { error: '' }));
 
@@ -26,20 +40,15 @@ function SignUp() {
     const email = userData.email;
     const password = userData.password;
 
-    // const { data, error } = useSWR('/api/graphql', signUp(username, email, password));
+    const { data: signUp } = await signUpRequest({ username, email, password });
 
-
-    try {
-      const user = await signUp(username, email, password);
-        console.log(user);
-      if (user) {
-        triggerAlert('Utilisateur enregistré', false);
-        router.push(ROUTES.SIGNIN);
-      }
-    } catch (error) {
-      triggerAlert(error.response.errors[0].message, true);
-      router.push(ROUTES.HOME);
+    if (signUp.user) {
+      triggerAlert('Utilisateur enregistré', false);
+      Router.replace(ROUTES.SIGNIN);
     }
+
+    triggerAlert(error.response.errors[0].message, true);
+    Router.replace(ROUTES.HOME);
   };
 
   return (
@@ -53,7 +62,7 @@ function SignUp() {
           name="username"
           placeholder="Utilisateur"
           value={userData.username}
-          onChange={event =>
+          onChange={(event) =>
             setUserData(
               Object.assign({}, userData, { username: event.target.value }),
             )
@@ -65,7 +74,7 @@ function SignUp() {
           name="email"
           placeholder="Email"
           value={userData.email}
-          onChange={event =>
+          onChange={(event) =>
             setUserData(
               Object.assign({}, userData, { email: event.target.value }),
             )
@@ -77,19 +86,22 @@ function SignUp() {
           name="password"
           placeholder="Mot de passe"
           value={userData.password}
-          onChange={event =>
+          onChange={(event) =>
             setUserData(
               Object.assign({}, userData, { password: event.target.value }),
             )
           }
         />
-        <button className="button" type="submit">Sign up</button> or{' '}
+        <button className="button" type="submit">
+          Sign up
+        </button>{' '}
+        or{' '}
         <Link href={ROUTES.SIGNIN}>
           <a>Sign in</a>
         </Link>
       </form>
     </Layout>
   );
-}
+};
 
 export default SignUp;

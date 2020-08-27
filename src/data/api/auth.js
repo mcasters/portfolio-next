@@ -1,6 +1,6 @@
 import { request, gql } from 'graphql-request';
 
-const port = parseInt(process.env.PORT, 10) || 3000;
+const port = 3000;
 const url = process.env.NEXT_PUBLIC_BACKEND_URL;
 const api = `${url}:${port}/api/graphql`;
 
