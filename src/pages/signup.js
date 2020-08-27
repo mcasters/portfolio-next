@@ -40,15 +40,15 @@ const SignUp = () => {
     const email = userData.email;
     const password = userData.password;
 
-    const { data: signUp } = await signUpRequest({ username, email, password });
+    const { signUp: user, error } = await signUpRequest({ username, email, password });
 
-    if (signUp.user) {
+    if (user) {
       triggerAlert('Utilisateur enregistré', false);
-      Router.replace(ROUTES.SIGNIN);
+      return Router.replace(ROUTES.SIGNIN);
     }
 
     triggerAlert(error.response.errors[0].message, true);
-    Router.replace(ROUTES.HOME);
+    return Router.replace(ROUTES.HOME);
   };
 
   return (
@@ -69,7 +69,7 @@ const SignUp = () => {
           }
         />
         <input
-          type="text"
+          type="email"
           id="email"
           name="email"
           placeholder="Email"
