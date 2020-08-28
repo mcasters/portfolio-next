@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Router from 'next/router';
 import { useState } from 'react';
-import request from 'graphql-request';
 
 import Layout from '../components/layout-components/layout/Layout';
 import { useAlert } from '../components/alert-context/AlertContext';
 import { ROUTES } from '../constants/router';
+import { signUpRequest } from '../data/graphql/api/query-graphql';
 
 const SignUp = () => {
   const triggerAlert = useAlert();
@@ -16,20 +16,6 @@ const SignUp = () => {
     error: '',
   });
 
-  ////////
-  const api = `/api/graphql`;
-  const SIGNUP_MUTATION = `
-    mutation SignUpMutation($username: String!, $email: String!, $password: String!) {
-      signUp(input: { username:$username, email: $email, password: $password }) {
-        user {
-          id
-          username
-        }
-      }
-    }
-  `;
-  const signUpRequest = (variables) => request(api, SIGNUP_MUTATION, variables);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUserData(Object.assign({}, userData, { error: '' }));
@@ -38,7 +24,11 @@ const SignUp = () => {
     const email = userData.email;
     const password = userData.password;
 
-    const { signUp: user, error } = await signUpRequest({ username, email, password });
+    const { signUp: user, error } = await signUpRequest({
+      username,
+      email,
+      password,
+    });
 
     if (user) {
       triggerAlert('Utilisateur enregistré', false);

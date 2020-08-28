@@ -7,7 +7,11 @@ import useSWR from 'swr';
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/router';
 import { useAlert } from '../components/alert-context/AlertContext';
-import request from 'graphql-request';
+import {
+  signInRequest,
+  viewerRequest,
+} from '../data/graphql/api/query-graphql';
+import { VIEWER } from '../data/graphql/api/queries';
 
 const SignIn = () => {
   const { publicRuntimeConfig } = getConfig();
@@ -18,28 +22,6 @@ const SignIn = () => {
     error: '',
   });
   const triggerAlert = useAlert();
-
-  //////
-  const api = `/api/graphql`;
-
-  const VIEWER = `
-  query ViewerQuery {
-    viewer
-  }
-`;
-  const SIGNIN_MUTATION = `
-  mutation SignInMutation($username: String!, $password: String!) {
-    signIn(input: { username: $username, password: $password }) {
-      user {
-        id
-        username
-      }
-    }
-  }
-`;
-  const signInRequest = (variables) => request(api, SIGNIN_MUTATION, variables);
-  const viewerRequest = () => request(api, VIEWER);
-
   const { mutate } = useSWR(VIEWER, viewerRequest);
 
   const handleSubmit = async (e) => {

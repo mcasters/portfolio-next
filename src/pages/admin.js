@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import Router from 'next/router';
-import Link from 'next/link';
+import getConfig from "next/config";
 
 import s from './styles/admin.module.css';
 import ItemConstant from '../constants/itemConstant';
@@ -16,10 +16,19 @@ import { ROUTES } from '../constants/router';
 import { getAllItems, getContent } from '../data/api/api';
 import { useAlert } from '../components/alert-context/AlertContext';
 import { queryGraphql } from './api/graphql';
+import useSWR from 'swr';
+import { VIEWER } from '../data/graphql/api/queries';
+import {
+  signoutRequest,
+  viewerRequest,
+} from '../data/graphql/api/query-graphql';
 
 const Admin = ({ isAuthenticated, allContent }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const triggerAlert = useAlert();
+  const { mutate } = useSWR(VIEWER, viewerRequest);
+  const { publicRuntimeConfig } = getConfig();
+  const { ls_key } = publicRuntimeConfig;
 
   useEffect(() => {
     if (!isAuthenticated && typeof window !== 'undefined') {
@@ -46,15 +55,20 @@ const Admin = ({ isAuthenticated, allContent }) => {
       <Layout>
         <div className={s.container}>
           <h1 className={s.title}>{TITLE.ADMINISTRATION}</h1>
-          {/*<button type="button" onClick={() => {
-          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-          triggerAlert('Déconnecté', false);
-          mutate();
-          Router.replace(ROUTES.HOME);
-        }}>Déconnexion</button>*/}
-          <Link href={ROUTES.SIGNOUT}>
-            <a>Déconnexion</a>
-          </Link>
+          <button
+            type="button"
+            className="button"
+            onClick={() => {
+              localStorage.removeItem(ls_key);
+              signoutRequest().then(() => {
+                mutate();
+                triggerAlert('Déconnecté', false);
+                Router.replace(ROUTES.HOME);
+              });
+            }}
+          >
+            Déconnexion
+          </button>
           <Tabs
             selectedIndex={selectedTab}
             onSelect={handleSelectTab}
