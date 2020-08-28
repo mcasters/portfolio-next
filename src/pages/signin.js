@@ -20,9 +20,7 @@ const SignIn = () => {
   const triggerAlert = useAlert();
 
   //////
-  const port = 3000;
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const api = `${url}:${port}/api/graphql`;
+  const api = `/api/graphql`;
 
   const VIEWER = `
   query ViewerQuery {
@@ -39,8 +37,10 @@ const SignIn = () => {
     }
   }
 `;
-  const { mutate } = useSWR(VIEWER, (query) => request(api, query));
   const signInRequest = (variables) => request(api, SIGNIN_MUTATION, variables);
+  const viewerRequest = () => request(api, VIEWER);
+
+  const { mutate } = useSWR(VIEWER, viewerRequest);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ const SignIn = () => {
     if (user) {
       localStorage.setItem(ls_key, ls_value);
       await mutate();
-      return Router.push(ROUTES.ADMIN);
+      return Router.replace(ROUTES.ADMIN);
     }
 
     if (error) {

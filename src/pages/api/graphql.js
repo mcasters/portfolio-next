@@ -1,12 +1,11 @@
 import { ApolloServer } from 'apollo-server-micro';
+import { graphql } from 'graphql';
 import Cors from 'micro-cors';
 
-import { resolvers } from '../../data/graphql/schema';
-import { typeDefs } from '../../data/graphql/typeDefs';
+import { schema } from '../../data/graphql/schema';
 
 const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   context: ({ req, res }) => {
     return {
       req,
@@ -14,16 +13,22 @@ const apolloServer = new ApolloServer({
     };
   },
 });
-
-const apolloHandler = apolloServer.createHandler({ path: '/api/graphql' });
+const handler = apolloServer.createHandler({ path: '/api/graphql' });
+// const cors = Cors();
 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
-// export default apolloHandler;
 
-const cors = Cors();
+export default handler;
 
-export default cors(apolloHandler);
+export async function queryGraphql(query, variables = {}) {
+  const { data } = await graphql({ schema, source: query, variables });
+  return data || {};
+}
+
+/*export default cors((req, res) =>
+  req.method === 'OPTIONS' ? res.end() : handler(req, res),
+);*/

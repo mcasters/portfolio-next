@@ -17,9 +17,7 @@ const SignUp = () => {
   });
 
   ////////
-  const port = 3000;
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const api = `${url}:${port}/api/graphql`;
+  const api = `/api/graphql`;
   const SIGNUP_MUTATION = `
     mutation SignUpMutation($username: String!, $email: String!, $password: String!) {
       signUp(input: { username:$username, email: $email, password: $password }) {

@@ -52,7 +52,7 @@ export async function signUp(username, email, password) {
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {
-      "Content-type": "application/json; charset=UTF-8",
+      'Content-type': 'application/json; charset=UTF-8',
     },
     body: JSON.stringify({
       query: `

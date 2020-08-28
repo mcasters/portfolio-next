@@ -1,6 +1,6 @@
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import { User } from '../../models/index';
 import isAuthenticated from '../../lib/authUtils';
