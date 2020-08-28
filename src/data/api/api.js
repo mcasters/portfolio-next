@@ -22,29 +22,11 @@ const fetchAPI = async (query, { variables } = {}, context) => {
   return json.data;
 };
 
-export async function getContent(key) {
-  const data = await fetchAPI(
-    `
-  query getContent($key: String!) {
-    getContent(key: $key) {
-      text
-    }
-  }
-`,
-    {
-      variables: {
-        key,
-      },
-    },
-  );
-  return data?.getContent;
-}
-
 export async function getItemsByPart(year, type, half) {
   const data = await fetchAPI(
     `
-  query getItemsByPart($year: Int!, $type: String!, $half: Int!) {
-    getItemsByPart(year: $year, type: $type, half: $half) {
+  query ItemsByPart($year: Int!, $type: String!, $half: Int!) {
+    itemsByPart(year: $year, type: $type, half: $half) {
       title
       date
       technique
@@ -69,8 +51,8 @@ export async function getItemsByPart(year, type, half) {
 export async function getAllItems(type) {
   const data = await fetchAPI(
     `
-  query getAllItems($type: String!) {
-  getAllItems(type: $type) {
+  query AllItems($type: String!) {
+   allItems(type: $type) {
     id
     title
     date

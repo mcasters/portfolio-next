@@ -70,8 +70,8 @@ export default gql`
   type Query {
     allContent: [Content]
     content(key: String!): Content
-    getAllItems(type: String!): [Item]
-    getItemsByPart(year: Int!, type: String!, half: Int!): [Item]
+    allItems(type: String!): [Item]
+    itemsByPart(year: Int!, type: String!, half: Int!): [Item]
     user(id: ID!): User!
     viewer: Boolean!
   }

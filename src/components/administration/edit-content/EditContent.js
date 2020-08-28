@@ -1,15 +1,21 @@
 import PropTypes from 'prop-types';
 
 import ContentForm from './ContentForm';
+import useSWR from 'swr';
 
-function EditContent({ keyContent, content, isTextArea }) {
+import { CONTENT } from '../../../data/graphql/api/queries';
+import { contentRequest } from '../../../data/graphql/api/query-graphql';
+
+function EditContent({ keyContent, isTextArea }) {
+  const { data } = useSWR([CONTENT, keyContent], contentRequest);
+
   return (
     <>
-      {content && (
+      {data && (
         <ContentForm
           keyContent={keyContent}
           isTextArea={isTextArea}
-          initialContent={content.text}
+          initialContent={data.content.text}
         />
       )}
     </>
@@ -18,7 +24,6 @@ function EditContent({ keyContent, content, isTextArea }) {
 
 EditContent.propTypes = {
   keyContent: PropTypes.string.isRequired,
-  content: PropTypes.object.isRequired,
   isTextArea: PropTypes.bool.isRequired,
 };
 

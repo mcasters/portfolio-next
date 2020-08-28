@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import Router from 'next/router';
 import getConfig from "next/config";
+import useSWR from 'swr';
 
 import s from './styles/admin.module.css';
 import ItemConstant from '../constants/itemConstant';
@@ -13,17 +14,16 @@ import AdminItemParent from '../components/administration/items/admin-item-paren
 import EditPictureForm from '../components/administration/edit-picture/EditPictureForm';
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/router';
-import { getAllItems, getContent } from '../data/api/api';
+import { getAllItems } from '../data/api/api';
 import { useAlert } from '../components/alert-context/AlertContext';
 import { queryGraphql } from './api/graphql';
-import useSWR from 'swr';
 import { VIEWER } from '../data/graphql/api/queries';
 import {
   signoutRequest,
   viewerRequest,
 } from '../data/graphql/api/query-graphql';
 
-const Admin = ({ isAuthenticated, allContent }) => {
+const Admin = ({ isAuthenticated }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const triggerAlert = useAlert();
   const { mutate } = useSWR(VIEWER, viewerRequest);
@@ -89,17 +89,14 @@ const Admin = ({ isAuthenticated, allContent }) => {
                 <EditPictureForm pictureTitle={CONTENT.HOME_IMAGE_LANDSCAPE} />
                 <EditContent
                   keyContent={CONTENT.KEY.HOME1}
-                  content={allContent.homeContent1}
                   isTextArea
                 />
                 <EditContent
                   keyContent={CONTENT.KEY.HOME2}
-                  content={allContent.homeContent2}
                   isTextArea
                 />
                 <EditContent
                   keyContent={CONTENT.KEY.HOME3}
-                  content={allContent.homeContent3}
                   isTextArea
                 />
               </div>
@@ -111,7 +108,6 @@ const Admin = ({ isAuthenticated, allContent }) => {
                 />
                 <EditContent
                   keyContent={CONTENT.KEY.PRESENTATION}
-                  content={allContent.presentation}
                   isTextArea
                 />
               </div>
@@ -119,36 +115,30 @@ const Admin = ({ isAuthenticated, allContent }) => {
             <TabPanel>
               <AdminItemParent
                 type={ItemConstant.PAINTING.TYPE}
-                items={allContent.paintings}
               />
             </TabPanel>
             <TabPanel>
               <AdminItemParent
                 type={ItemConstant.SCULPTURE.TYPE}
-                items={allContent.sculptures}
               />
             </TabPanel>
             <TabPanel>
               <AdminItemParent
                 type={ItemConstant.DRAWING.TYPE}
-                items={allContent.drawings}
               />
             </TabPanel>
             <TabPanel>
               <div className={s.tabContainer}>
                 <EditContent
                   keyContent={CONTENT.KEY.CONTACT_ADDRESS}
-                  content={allContent.address}
                   isTextArea
                 />
                 <EditContent
                   keyContent={CONTENT.KEY.CONTACT_PHONE}
-                  content={allContent.phone}
                   isTextArea={false}
                 />
                 <EditContent
                   keyContent={CONTENT.KEY.CONTACT_EMAIL}
-                  content={allContent.email}
                   isTextArea={false}
                 />
               </div>
@@ -166,32 +156,9 @@ export async function getServerSideProps() {
     viewer
   }
 `);
-  const drawings = await getAllItems(ItemConstant.DRAWING.TYPE);
-  const paintings = await getAllItems(ItemConstant.PAINTING.TYPE);
-  const sculptures = await getAllItems(ItemConstant.SCULPTURE.TYPE);
-  const homeContent1 = await getContent(CONTENT.KEY.HOME1);
-  const homeContent2 = await getContent(CONTENT.KEY.HOME2);
-  const homeContent3 = await getContent(CONTENT.KEY.HOME3);
-  const presentation = await getContent(CONTENT.KEY.PRESENTATION);
-  const address = await getContent(CONTENT.KEY.CONTACT_ADDRESS);
-  const phone = await getContent(CONTENT.KEY.CONTACT_PHONE);
-  const email = await getContent(CONTENT.KEY.CONTACT_EMAIL);
-
   return {
     props: {
       isAuthenticated,
-      allContent: {
-        drawings,
-        paintings,
-        sculptures,
-        homeContent1,
-        homeContent2,
-        homeContent3,
-        presentation,
-        address,
-        phone,
-        email,
-      },
     },
   };
 }

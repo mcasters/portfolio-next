@@ -10,13 +10,13 @@ function ContentForm({ keyContent, isTextArea, initialContent }) {
   const [text, setText] = useState(initialContent);
   const triggerAlert = useAlert();
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     e.preventDefault();
     setIsChanged(true);
     setText(e.target.value);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await addContent({
@@ -51,7 +51,11 @@ function ContentForm({ keyContent, isTextArea, initialContent }) {
             onChange={handleChange}
           />
         )}
-        {isChanged && <button className={`${s.adminButton} button`} type="submit">OK</button>}
+        {isChanged && (
+          <button className={`${s.adminButton} button`} type="submit">
+            OK
+          </button>
+        )}
       </form>
     </>
   );

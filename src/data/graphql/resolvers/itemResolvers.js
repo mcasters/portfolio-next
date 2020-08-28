@@ -4,9 +4,9 @@ import * as imageUtils from '../../lib/imageUtils';
 
 export default {
   Query: {
-    getAllItems: async (parent, { type }) =>
+    allItems: async (parent, { type }) =>
       new ModelService(type).getAllItems(),
-    getItemsByPart: (parent, { type, year, half }) =>
+    itemsByPart: (parent, { type, year, half }) =>
       new ModelService(type).getItemsByPart(year, half),
   },
 
