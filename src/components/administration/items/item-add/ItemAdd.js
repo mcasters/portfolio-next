@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import useSWR from "swr";
 
 import s from './ItemAdd.module.css';
 import ITEM from '../../../../constants/itemConstant';
 import DayPicker from '../daypicker/DayPicker';
 import { addItem } from '../../../../data/api/api';
 import { useAlert } from '../../../alert-context/AlertContext';
+import {ALL_ITEMS} from "../../../../data/graphql/api/queries";
+import {allItemsRequest} from "../../../../data/graphql/api/query-graphql";
 
 function ItemAdd({ type }) {
   const triggerAlert = useAlert();
@@ -24,6 +27,8 @@ function ItemAdd({ type }) {
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const [isTitleBlocked, setIsTitleBlocked] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
+
+  const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
 
   const isSculpture = type === ITEM.SCULPTURE.TYPE;
   const titleForm = 'Ajout';
@@ -118,6 +123,7 @@ function ItemAdd({ type }) {
       const res = addItem({ ...item, hasImages: true, type });
       if (res) {
         triggerAlert('Item ajouté', false);
+        mutate();
         clearState();
       }
     } catch (e) {

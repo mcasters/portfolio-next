@@ -14,7 +14,6 @@ import AdminItemParent from '../components/administration/items/admin-item-paren
 import EditPictureForm from '../components/administration/edit-picture/EditPictureForm';
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/router';
-import { getAllItems } from '../data/api/api';
 import { useAlert } from '../components/alert-context/AlertContext';
 import { queryGraphql } from './api/graphql';
 import { VIEWER } from '../data/graphql/api/queries';
@@ -26,9 +25,10 @@ import {
 const Admin = ({ isAuthenticated }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const triggerAlert = useAlert();
-  const { mutate } = useSWR(VIEWER, viewerRequest);
   const { publicRuntimeConfig } = getConfig();
   const { ls_key } = publicRuntimeConfig;
+
+  const { mutate } = useSWR(VIEWER, viewerRequest);
 
   useEffect(() => {
     if (!isAuthenticated && typeof window !== 'undefined') {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import useSWR from 'swr';
 import Modal from 'react-modal';
 
 import DayPicker from '../../daypicker/DayPicker';
@@ -7,6 +8,8 @@ import ITEM_CONSTANT from '../../../../../constants/itemConstant';
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../alert-context/AlertContext';
 import { updateItem } from '../../../../../data/api/api';
+import { ALL_ITEMS } from '../../../../../data/graphql/api/queries';
+import { allItemsRequest } from '../../../../../data/graphql/api/query-graphql';
 
 const customStyles = {
   overlay: {
@@ -29,6 +32,8 @@ function UpdateForm({ item, type, srcList, onClose }) {
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const [isTitleBlocked, setIsTitleBlocked] = useState(false);
   const triggerAlert = useAlert();
+
+  const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
 
   const showModal = true;
 
@@ -55,14 +60,16 @@ function UpdateForm({ item, type, srcList, onClose }) {
   const handleChange = e => {
     e.preventDefault();
     const { name, value, type } = e.target;
-    setItemData(prevState => ({
-      ...prevState,
-      [name]: type === 'number' ? parseInt(value, 10) : value,
-    }));
+
+    setItemData(
+      Object.assign({}, itemData, {
+        [name]: type === 'number' ? parseInt(value, 10) : value,
+      }),
+    );
   };
 
   const handleChangeDate = date => {
-    setItemData(prevState => ({ ...prevState, date }));
+    setItemData(Object.assign({}, itemData, { date }));
   };
 
   const handleImageChange = (e, index) => {
@@ -78,12 +85,12 @@ function UpdateForm({ item, type, srcList, onClose }) {
       copyPictures.splice(index, 1, file);
 
       setImagePreviewUrls(copyImagePreviewUrls);
-      setItemData(prevState => ({ ...prevState, pictures: copyPictures }));
+      setItemData((prevState) => ({ ...prevState, pictures: copyPictures }));
     };
     reader.readAsDataURL(file);
   };
 
-  const ImageSubmit = async e => {
+  const ImageSubmit = async (e) => {
     e.preventDefault();
 
     let i = 1;
@@ -99,7 +106,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
             'X-Filename': filename,
           },
           body: file,
-        }).catch(e => {
+        }).catch((e) => {
           triggerAlert(e.message, true);
         });
         i++;
@@ -112,19 +119,22 @@ function UpdateForm({ item, type, srcList, onClose }) {
     triggerAlert('image(s) ajoutée(s)', false);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const hasImages = itemData.pictures.length > 0;
     const { pictures, ...rest } = itemData;
-    updateItem({ ...rest, hasImages, type }).then(res => {
-      if (res) {
-        triggerAlert('Item modifié', false);
-        onClose();
-      } else triggerAlert("Modification de l'item impossible", true);
-    }).catch(err => {
-      triggerAlert(`Erreur de modification de l'item : ${err.message}`, true);
-    });
+    updateItem({ ...rest, hasImages, type })
+      .then((res) => {
+        if (res) {
+          triggerAlert('Item modifié', false);
+          mutate();
+          onClose();
+        } else triggerAlert("Modification de l'item impossible", true);
+      })
+      .catch((err) => {
+        triggerAlert(`Erreur de modification de l'item : ${err.message}`, true);
+      });
   };
 
   return (
@@ -193,7 +203,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
         )}
         <div className={s.oldImageContainer}>
           {srcList.map(
-            url =>
+            (url) =>
               url !== '' && (
                 <img
                   key={url.toString()}
@@ -207,29 +217,29 @@ function UpdateForm({ item, type, srcList, onClose }) {
         <input
           type="file"
           accept="image/jpeg, image/jpg"
-          onChange={e => handleImageChange(e, 0)}
+          onChange={(e) => handleImageChange(e, 0)}
         />
         {isSculpture && (
           <div>
             <input
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={e => handleImageChange(e, 1)}
+              onChange={(e) => handleImageChange(e, 1)}
             />
             <input
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={e => handleImageChange(e, 2)}
+              onChange={(e) => handleImageChange(e, 2)}
             />
             <input
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={e => handleImageChange(e, 3)}
+              onChange={(e) => handleImageChange(e, 3)}
             />
           </div>
         )}
         {imagePreviewUrls.map(
-          url =>
+          (url) =>
             url !== '' && (
               <img
                 key={url.toString()}

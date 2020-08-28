@@ -11,28 +11,30 @@ function ContentForm({ keyContent, isTextArea, initialContent }) {
   const triggerAlert = useAlert();
 
   const handleChange = (e) => {
-    e.preventDefault();
     setIsChanged(true);
     setText(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await addContent({
-        key: keyContent,
-        text,
-      });
-
-      if (res) triggerAlert('Contenu ajouté', false);
-    } catch (e) {
-      triggerAlert("Erreur à l'ajout du contenu", true);
-    }
-  };
-
   return (
     <>
-      <form className="formGroup" onSubmit={handleSubmit}>
+      <form
+        className="formGroup"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          try {
+            const res = await addContent({
+              key: keyContent,
+              text,
+            });
+            if (res) {
+              setIsChanged(false);
+              triggerAlert('Contenu ajouté', false);
+            }
+          } catch (e) {
+            triggerAlert(e.message, true);
+          }
+        }}
+      >
         {!isTextArea && (
           <input
             placeholder={keyContent}
