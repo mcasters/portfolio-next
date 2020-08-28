@@ -2,8 +2,6 @@
 import { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import Router from 'next/router';
-import getConfig from "next/config";
-import useSWR from 'swr';
 
 import s from './styles/admin.module.css';
 import ItemConstant from '../constants/itemConstant';
@@ -16,19 +14,11 @@ import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/router';
 import { useAlert } from '../components/alert-context/AlertContext';
 import { queryGraphql } from './api/graphql';
-import { VIEWER } from '../data/graphql/api/queries';
-import {
-  signoutRequest,
-  viewerRequest,
-} from '../data/graphql/api/query-graphql';
+import LogoutButton from '../components/administration/LogoutButton';
 
 const Admin = ({ isAuthenticated }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const triggerAlert = useAlert();
-  const { publicRuntimeConfig } = getConfig();
-  const { ls_key } = publicRuntimeConfig;
-
-  const { mutate } = useSWR(VIEWER, viewerRequest);
 
   useEffect(() => {
     if (!isAuthenticated && typeof window !== 'undefined') {
@@ -55,20 +45,7 @@ const Admin = ({ isAuthenticated }) => {
       <Layout>
         <div className={s.container}>
           <h1 className={s.title}>{TITLE.ADMINISTRATION}</h1>
-          <button
-            type="button"
-            className="button"
-            onClick={() => {
-              localStorage.removeItem(ls_key);
-              signoutRequest().then(() => {
-                mutate();
-                triggerAlert('Déconnecté', false);
-                Router.replace(ROUTES.HOME);
-              });
-            }}
-          >
-            Déconnexion
-          </button>
+          <LogoutButton />
           <Tabs
             selectedIndex={selectedTab}
             onSelect={handleSelectTab}
@@ -87,18 +64,9 @@ const Admin = ({ isAuthenticated }) => {
               <div className={s.tabContainer}>
                 <EditPictureForm pictureTitle={CONTENT.HOME_IMAGE_PORTRAIT} />
                 <EditPictureForm pictureTitle={CONTENT.HOME_IMAGE_LANDSCAPE} />
-                <EditContent
-                  keyContent={CONTENT.KEY.HOME1}
-                  isTextArea
-                />
-                <EditContent
-                  keyContent={CONTENT.KEY.HOME2}
-                  isTextArea
-                />
-                <EditContent
-                  keyContent={CONTENT.KEY.HOME3}
-                  isTextArea
-                />
+                <EditContent keyContent={CONTENT.KEY.HOME1} isTextArea />
+                <EditContent keyContent={CONTENT.KEY.HOME2} isTextArea />
+                <EditContent keyContent={CONTENT.KEY.HOME3} isTextArea />
               </div>
             </TabPanel>
             <TabPanel>
@@ -106,26 +74,17 @@ const Admin = ({ isAuthenticated }) => {
                 <EditPictureForm
                   pictureTitle={CONTENT.PRESENTATION_IMAGE_TITLE}
                 />
-                <EditContent
-                  keyContent={CONTENT.KEY.PRESENTATION}
-                  isTextArea
-                />
+                <EditContent keyContent={CONTENT.KEY.PRESENTATION} isTextArea />
               </div>
             </TabPanel>
             <TabPanel>
-              <AdminItemParent
-                type={ItemConstant.PAINTING.TYPE}
-              />
+              <AdminItemParent type={ItemConstant.PAINTING.TYPE} />
             </TabPanel>
             <TabPanel>
-              <AdminItemParent
-                type={ItemConstant.SCULPTURE.TYPE}
-              />
+              <AdminItemParent type={ItemConstant.SCULPTURE.TYPE} />
             </TabPanel>
             <TabPanel>
-              <AdminItemParent
-                type={ItemConstant.DRAWING.TYPE}
-              />
+              <AdminItemParent type={ItemConstant.DRAWING.TYPE} />
             </TabPanel>
             <TabPanel>
               <div className={s.tabContainer}>
