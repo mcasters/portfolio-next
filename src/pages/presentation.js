@@ -1,33 +1,32 @@
+import useSWR from 'swr';
+
 import s from './styles/presentation.module.css';
 import Content from '../components/content/Content';
-import CONT_CONST from '../constants/content';
+import CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import Layout from '../components/layout-components/layout/Layout';
-import { getContent } from '../data/api/api';
+import { CONTENT } from '../data/graphql/api/queries';
+import { contentRequest } from '../data/graphql/api/query-graphql';
 
-const Presentation = ({ content }) => {
-  const title = TITLE.PRESENTATION;
+const Presentation = () => {
+  const { data } = useSWR(
+    [CONTENT, CONST.KEY.PRESENTATION],
+    contentRequest,
+  );
 
   return (
     <Layout>
       <div className={s.presentationContainer}>
-        <h1 className={s.title}>{title}</h1>
+        <h1 className={s.title}>{TITLE.PRESENTATION}</h1>
         <img
           className={s.image}
-          src={`${CONT_CONST.CONTENT_IMAGE_PATH}/${CONT_CONST.PRESENTATION_IMAGE_TITLE}.jpg`}
-          alt={CONT_CONST.PRESENTATION_IMAGE_ALT}
+          src={`${CONST.CONTENT_IMAGE_PATH}/${CONST.PRESENTATION_IMAGE_TITLE}.jpg`}
+          alt={CONST.PRESENTATION_IMAGE_ALT}
         />
-        <Content content={content} />
+        {data && <Content text={data.content.text} />}
       </div>
     </Layout>
   );
 };
-
-export async function getServerSideProps() {
-  const content = await getContent(CONT_CONST.KEY.PRESENTATION);
-  return {
-    props: { content },
-  };
-}
 
 export default Presentation;
