@@ -22,38 +22,6 @@ const fetchAPI = async (query, { variables } = {}, context) => {
   return json.data;
 };
 
-export async function signIn(username, password) {
-  const data = await fetchAPI(
-    `
-  mutation SignInMutation($username: String!, $password: String!) {
-    signIn(input: { username: $username, password: $password }) {
-      user {
-        id
-        username
-      }
-    }
-  }
-`,
-    {
-      variables: {
-        username,
-        password,
-      },
-    },
-  );
-  return data.signIn;
-}
-
-export async function signOut() {
-  const data = await fetchAPI(`
-  mutation SignOutMutation {
-    signOut
-  }
-`,
-  );
-  return data.signOut;
-}
-
 export async function getContent(key) {
   const data = await fetchAPI(
     `

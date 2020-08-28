@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 
 import s from './Content.module.css';
 
-export default function Content({ content }) {
-  return <>{content && <p className={s.content}>{content.text}</p>}</>;
+export default function Content({ text }) {
+  return <>{text && <p className={s.content}>{text}</p>}</>;
 }
 
 Content.propTypes = {
-  content: PropTypes.object,
+  text: PropTypes.string,
 };

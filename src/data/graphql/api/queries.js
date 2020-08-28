@@ -30,3 +30,11 @@ export const SIGNOUT = `
     signOut
   }
 `;
+
+export const CONTENT = `
+  query Content($key: String!) {
+    content(key: $key) {
+      text
+    }
+  }
+`;

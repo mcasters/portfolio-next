@@ -7,8 +7,8 @@ import CONTENT from '../../../constants/content';
 
 export default {
   Query: {
-    getAllContent: async () => await Content.findAll(),
-    getContent: async (parent, { key }, _context, _info) =>
+    allContent: async () => await Content.findAll(),
+    content: async (parent, { key }, _context, _info) =>
       await Content.findOne({
         where: { key: {
             [Op.eq]: key,

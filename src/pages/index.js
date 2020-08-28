@@ -3,26 +3,24 @@ import CONTENT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import s from './styles/index.module.css';
 import Layout from '../components/layout-components/layout/Layout';
-import { getContent } from '../data/api/api';
+import useSWR from 'swr';
+import { CONTENT } from '../data/graphql/api/queries';
+import { contentRequest } from '../data/graphql/api/query-graphql';
+import { request } from 'graphql-request';
 
-function Home({ content }) {
+function Home() {
+  const { data } = useSWR([CONTENT, CONTENT_CONST.KEY.HOME3], contentRequest);
+
   return (
     <Layout>
       <div className={s.container}>
         <h1 className="hidden">{TITLE.HOME}</h1>
         <div className={s.content}>
-          <Content content={content} />
+          {data && <Content text={data.content.text} />}
         </div>
       </div>
     </Layout>
   );
-}
-
-export async function getServerSideProps() {
-  const content = await getContent(CONTENT_CONST.KEY.HOME3);
-  return {
-    props: { content },
-  };
 }
 
 export default Home;

@@ -68,8 +68,8 @@ export default gql`
   }
 
   type Query {
-    getAllContent: [Content]
-    getContent(key: String!): Content
+    allContent: [Content]
+    content(key: String!): Content
     getAllItems(type: String!): [Item]
     getItemsByPart(year: Int!, type: String!, half: Int!): [Item]
     user(id: ID!): User!
