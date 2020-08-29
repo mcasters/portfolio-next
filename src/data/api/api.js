@@ -22,56 +22,6 @@ const fetchAPI = async (query, { variables } = {}, context) => {
   return json.data;
 };
 
-export async function addItem(item) {
-  const data = await fetchAPI(
-    `
-  mutation AddItem($item: ItemInput!) {
-    addItem(item: $item) {
-      id
-      title
-      date
-      technique
-      description
-      height
-      width
-      length
-    }
-  }
-`,
-    {
-      variables: {
-        item,
-      },
-    },
-  );
-  return data.addItem;
-}
-
-export async function updateItem(item) {
-  const data = await fetchAPI(
-    `
-  mutation UpdateItem($item: ItemInput!) {
-    updateItem(item: $item) {
-      id
-      title
-      date
-      technique
-      description
-      height
-      width
-      length
-    }
-  }
-`,
-    {
-      variables: {
-        item,
-      },
-    },
-  );
-  return data.updateItem;
-}
-
 export async function deleteItem(id, type) {
   const data = await fetchAPI(
     `
