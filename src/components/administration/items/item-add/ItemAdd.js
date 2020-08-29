@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import useSWR from "swr";
+import useSWR from 'swr';
 
 import s from './ItemAdd.module.css';
 import ITEM from '../../../../constants/itemConstant';
 import DayPicker from '../daypicker/DayPicker';
 import { addItem } from '../../../../data/api/api';
 import { useAlert } from '../../../alert-context/AlertContext';
-import {ALL_ITEMS} from "../../../../data/graphql/api/queries";
-import {allItemsRequest} from "../../../../data/graphql/api/query-graphql";
+import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
+import {
+  addItemRequest,
+  allItemsRequest,
+  signUpRequest,
+} from '../../../../data/graphql/api/query-graphql';
 
 function ItemAdd({ type }) {
   const triggerAlert = useAlert();
@@ -54,7 +58,7 @@ function ItemAdd({ type }) {
     setImagePreviewUrls([]);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     e.preventDefault();
     const { name, value, type } = e.target;
 
@@ -65,7 +69,7 @@ function ItemAdd({ type }) {
     );
   };
 
-  const handleDayChange = date => {
+  const handleDayChange = (date) => {
     setItemData(Object.assign({}, itemData, { date }));
   };
 
@@ -89,7 +93,7 @@ function ItemAdd({ type }) {
     reader.readAsDataURL(file);
   };
 
-  const ImageSubmit = async e => {
+  const ImageSubmit = async (e) => {
     e.preventDefault();
 
     let i = 1;
@@ -104,7 +108,7 @@ function ItemAdd({ type }) {
           'X-Filename': filename,
         },
         body: file,
-      }).catch(e => {
+      }).catch((e) => {
         triggerAlert(e.message, true);
       });
       i++;
@@ -114,24 +118,24 @@ function ItemAdd({ type }) {
     triggerAlert('image(s) ajoutée(s)', false);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { pictures, error, length, ...withoutLength } = itemData;
-    const item = isSculpture ? { length, ...withoutLength } : withoutLength;
+    const { pictures, error, length, ...rest } = itemData;
+    const item = isSculpture ? { length, ...rest } : rest;
 
-    try {
-      const res = addItem({ ...item, hasImages: true, type });
-      if (res) {
-        triggerAlert('Item ajouté', false);
-        mutate();
-        clearState();
-      }
-    } catch (e) {
-      triggerAlert(e.message, true);
+    const {
+      addItem: { id, title },
+      error: err,
+    } = await addItemRequest({ ...item, type });
+    if (id) {
+      triggerAlert(`${title} ajouté`, false);
+      mutate();
+      clearState();
     }
+    if (err) triggerAlert(err.message, true);
   };
 
-  const cancel = async e => {
+  const cancel = async (e) => {
     e.preventDefault();
 
     let i = 1;
@@ -144,7 +148,7 @@ function ItemAdd({ type }) {
         headers: {
           'Content-Filename': filename,
         },
-      }).catch(e => {
+      }).catch((e) => {
         triggerAlert(e.message, true);
       });
       i++;
@@ -214,29 +218,29 @@ function ItemAdd({ type }) {
         <input
           type="file"
           accept="image/jpeg, image/jpg"
-          onChange={e => handleImageChange(e, 0)}
+          onChange={(e) => handleImageChange(e, 0)}
         />
         {isSculpture && (
           <div>
             <input
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={e => handleImageChange(e, 1)}
+              onChange={(e) => handleImageChange(e, 1)}
             />
             <input
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={e => handleImageChange(e, 2)}
+              onChange={(e) => handleImageChange(e, 2)}
             />
             <input
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={e => handleImageChange(e, 3)}
+              onChange={(e) => handleImageChange(e, 3)}
             />
           </div>
         )}
         {imagePreviewUrls.map(
-          imagePreviewUrl =>
+          (imagePreviewUrl) =>
             imagePreviewUrl !== '' && (
               <img
                 key={imagePreviewUrl.toString()}

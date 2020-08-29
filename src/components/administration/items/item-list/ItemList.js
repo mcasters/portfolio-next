@@ -14,21 +14,23 @@ function ItemList({ type, items }) {
       <table className={s.adminList}>
         <thead>
           <tr>
-            <th>Titre</th>
-            <th>Date</th>
-            <th>Technique</th>
-            <th>Description</th>
-            <th>Hauteur</th>
-            <th>Largeur</th>
-            {type === ITEM_CONSTANT.SCULPTURE.TYPE && <th>Longueur</th>}
-            <th>Image</th>
+            <th className={s.headings}>Titre</th>
+            <th className={s.headings}>Date</th>
+            <th className={s.headings}>Technique</th>
+            <th className={s.headings}>Description</th>
+            <th className={s.headings}>Hauteur</th>
+            <th className={s.headings}>Largeur</th>
+            {type === ITEM_CONSTANT.SCULPTURE.TYPE && (
+              <th className={s.headings}>Longueur</th>
+            )}
+            <th className={s.headings}>Image</th>
             <th> </th>
             <th> </th>
           </tr>
         </thead>
         <tbody>
           {items &&
-            items.map(item => (
+            items.map((item) => (
               <ItemRow key={item.id} item={item} type={type} />
             ))}
         </tbody>

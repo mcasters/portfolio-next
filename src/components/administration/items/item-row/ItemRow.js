@@ -13,26 +13,22 @@ function ItemRow({ item, type }) {
 
   return (
     <tr className={s.row}>
-      <th>{item.title}</th>
-      <th>{createDateFormat(item.date)}</th>
-      <th>{item.technique}</th>
-      <th>{item.description}</th>
-      <th>{item.height}</th>
-      <th>{item.width}</th>
-      {itemModel.isSculpture && <th>{item.length}</th>}
-      <th>
-        <img
-          src={`${srcList[0]}`}
-          alt="image admin"
-          className={s.thumbnail}
-        />
-      </th>
-      <th>
+      <td>{item.title}</td>
+      <td>{createDateFormat(item.date)}</td>
+      <td>{item.technique}</td>
+      <td>{item.description}</td>
+      <td>{item.height}</td>
+      <td>{item.width}</td>
+      {itemModel.isSculpture && <td>{item.length}</td>}
+      <td>
+        <img src={`${srcList[0]}`} alt="image admin" className={s.thumbnail} />
+      </td>
+      <td>
         <ItemDeleteButton id={item.id} type={type} />
-      </th>
-      <th>
+      </td>
+      <td>
         <ItemUpdateButton item={item} type={type} srcList={srcList} />
-      </th>
+      </td>
     </tr>
   );
 }

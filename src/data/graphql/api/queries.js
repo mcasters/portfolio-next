@@ -68,7 +68,7 @@ export const ITEMS_BY_PART = `
   }
 `;
 
-export const addItem = `
+export const ADD_ITEM = `
   mutation AddItem($item: ItemInput!) {
     addItem(item: $item) {
       id
