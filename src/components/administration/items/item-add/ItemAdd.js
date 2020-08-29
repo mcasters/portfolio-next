@@ -5,13 +5,11 @@ import useSWR from 'swr';
 import s from './ItemAdd.module.css';
 import ITEM from '../../../../constants/itemConstant';
 import DayPicker from '../daypicker/DayPicker';
-import { addItem } from '../../../../data/api/api';
 import { useAlert } from '../../../alert-context/AlertContext';
 import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
 import {
   addItemRequest,
   allItemsRequest,
-  signUpRequest,
 } from '../../../../data/graphql/api/query-graphql';
 
 function ItemAdd({ type }) {
@@ -143,7 +141,7 @@ function ItemAdd({ type }) {
       const filename = isSculpture
         ? `${itemData.title}_${i}.jpg`
         : `${itemData.title}.jpg`;
-      await fetch('/api/tempImage', {
+      await fetch('/api/upload', {
         method: 'DELETE',
         headers: {
           'Content-Filename': filename,

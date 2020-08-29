@@ -7,9 +7,11 @@ import DayPicker from '../../daypicker/DayPicker';
 import ITEM_CONSTANT from '../../../../../constants/itemConstant';
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../alert-context/AlertContext';
-import { updateItem } from '../../../../../data/api/api';
 import { ALL_ITEMS } from '../../../../../data/graphql/api/queries';
-import { allItemsRequest } from '../../../../../data/graphql/api/query-graphql';
+import {
+  allItemsRequest,
+  updateItemRequest,
+} from '../../../../../data/graphql/api/query-graphql';
 
 const customStyles = {
   overlay: {
@@ -57,7 +59,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
     onClose();
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     e.preventDefault();
     const { name, value, type } = e.target;
 
@@ -68,7 +70,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
     );
   };
 
-  const handleChangeDate = date => {
+  const handleChangeDate = (date) => {
     setItemData(Object.assign({}, itemData, { date }));
   };
 
@@ -119,22 +121,24 @@ function UpdateForm({ item, type, srcList, onClose }) {
     triggerAlert('image(s) ajoutée(s)', false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const hasImages = itemData.pictures.length > 0;
     const { pictures, ...rest } = itemData;
-    updateItem({ ...rest, hasImages, type })
-      .then((res) => {
-        if (res) {
-          triggerAlert('Item modifié', false);
-          mutate();
-          onClose();
-        } else triggerAlert("Modification de l'item impossible", true);
-      })
-      .catch((err) => {
-        triggerAlert(`Erreur de modification de l'item : ${err.message}`, true);
-      });
+
+    const {
+      updateItem: { id, title },
+      error,
+    } = await updateItemRequest({ ...rest, hasImages, type });
+
+    if (id) {
+      triggerAlert(`${title} modifié`, false);
+      mutate();
+      onClose();
+    }
+    if (error)
+      triggerAlert(`Erreur de modification de l'item : ${error.message}`, true);
   };
 
   return (

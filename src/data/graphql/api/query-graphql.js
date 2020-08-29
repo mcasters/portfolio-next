@@ -1,5 +1,12 @@
 import { request } from 'graphql-request';
-import { VIEWER, SIGNIN, SIGNUP, SIGNOUT, ADD_ITEM } from './queries';
+import {
+  VIEWER,
+  SIGNIN,
+  SIGNUP,
+  SIGNOUT,
+  ADD_ITEM,
+  UPDATE_ITEM,
+} from './queries';
 
 const api = '/api/graphql';
 
@@ -18,3 +25,4 @@ export const itemsByPartRequest = (query, year, type, part) =>
     part,
   });
 export const addItemRequest = (item) => request(api, ADD_ITEM, { item });
+export const updateItemRequest = (item) => request(api, UPDATE_ITEM, { item });

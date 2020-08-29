@@ -82,3 +82,18 @@ export const ADD_ITEM = `
     }
   }
 `;
+
+export const UPDATE_ITEM = `
+  mutation UpdateItem($item: ItemInput!) {
+    updateItem(item: $item) {
+      id
+      title
+      date
+      technique
+      description
+      height
+      width
+      length
+    }
+  }
+`;
