@@ -6,8 +6,8 @@ export default {
   Query: {
     allItems: async (parent, { type }) =>
       new ModelService(type).getAllItems(),
-    itemsByPart: (parent, { type, year, half }) =>
-      new ModelService(type).getItemsByPart(year, half),
+    itemsByPart: (parent, { type, year, part }) =>
+      new ModelService(type).getItemsByPart(year, part),
   },
 
   Mutation: {

@@ -52,19 +52,21 @@ class ModelService {
   // O = one year
   // 1 = first semester
   // 2 = second semester
-  getItemsByPart = async (year, half) => {
+  getItemsByPart = async (year, part) => {
     let start;
     let end;
 
-    if (half === 0) {
+    if (part === 0) {
       start = new Date(year, 0, 1);
       end = new Date(year, 11, 31);
-    } else if (half === 1) {
+    } else if (part === 1) {
       start = new Date(year, 0, 1);
       end = new Date(year, 5, 31);
-    } else {
+    } else if (part === 2){
       start = new Date(year, 6, 1);
       end = new Date(year, 11, 31);
+    } else {
+      throw new Error('wrong part')
     }
 
     return this.model.findAll({

@@ -71,7 +71,7 @@ export default gql`
     allContent: [Content]
     content(key: String!): Content
     allItems(type: String!): [Item]
-    itemsByPart(year: Int!, type: String!, half: Int!): [Item]
+    itemsByPart(year: Int!, type: String!, part: Int!): [Item]
     user(id: ID!): User!
     viewer: Boolean!
   }

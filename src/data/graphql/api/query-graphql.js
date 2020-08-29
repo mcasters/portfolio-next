@@ -11,3 +11,9 @@ export const contentRequest = (query, variables) =>
   request(api, query, { key: variables });
 export const allItemsRequest = (query, variables) =>
   request(api, query, { type: variables });
+export const itemsByPartRequest = (query, year, type, part) =>
+  request(api, query, {
+    year,
+    type,
+    part,
+  });

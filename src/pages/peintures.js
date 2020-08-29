@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import ITEM from '../constants/itemConstant';
+import CONST from '../constants/itemConstant';
 import ItemTab from '../components/item-dir/item-tab/ItemTab';
 import useOnSrr from '../components/hooks/useOnSrr';
 import Layout from '../components/layout-components/layout/Layout';
-import { getItemsByPart } from '../data/api/api';
 
-const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
-  const title = 'Peintures';
+const Peintures = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const onSsr = useOnSrr();
 
-  const year1 = ITEM.PAINTING.YEAR1;
-  const year2 = ITEM.PAINTING.YEAR2;
-  const year3 = ITEM.PAINTING.YEAR3;
-  const type = ITEM.PAINTING.TYPE;
+  const year1 = CONST.PAINTING.YEAR1;
+  const year2 = CONST.PAINTING.YEAR2;
+  const year3 = CONST.PAINTING.YEAR3;
+  const type = CONST.PAINTING.TYPE;
 
   useEffect(() => {
     if (
@@ -30,15 +28,14 @@ const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
   };
 
   const handleSelectTab = (index) => {
-    if (typeof window !== 'undefined')
-    localStorage.setItem('indexTab', index);
+    if (typeof window !== 'undefined') localStorage.setItem('indexTab', index);
     setSelectedTab(index);
     scrollTop();
   };
 
   return (
     <Layout>
-      <h1 className="hidden">{title}</h1>
+      <h1 className="hidden">{CONST.PAINTING.TITLE}</h1>
       <Tabs
         selectedIndex={selectedTab}
         onSelect={handleSelectTab}
@@ -53,38 +50,38 @@ const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
         {onSsr ? (
           <>
             <TabPanel>
-              <ItemTab year={year1} type={type} items={items2017} />
+              <ItemTab year={year1} type={type} part={0} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year2} type={type} items={items2018_1} />
+              <ItemTab year={year2} type={type} part={1} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year2} type={type} items={items2018_2} />
+              <ItemTab year={year2} type={type} part={2} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year3} type={type} items={items2019} />
+              <ItemTab year={year3} type={type} part={0} />
             </TabPanel>
           </>
         ) : (
           <>
             <TabPanel>
               {selectedTab === 0 && (
-                <ItemTab year={year1} type={type} items={items2017} />
+                <ItemTab year={year1} type={type} part={0} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 1 && (
-                <ItemTab year={year2} type={type} items={items2018_1} />
+                <ItemTab year={year2} type={type} part={1} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 2 && (
-                <ItemTab year={year2} type={type} items={items2018_2} />
+                <ItemTab year={year2} type={type} part={2} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 3 && (
-                <ItemTab year={year3} type={type} items={items2019} />
+                <ItemTab year={year3} type={type} part={0} />
               )}
             </TabPanel>
           </>
@@ -93,15 +90,5 @@ const Peintures = ({ items2017, items2018_1, items2018_2, items2019 }) => {
     </Layout>
   );
 };
-
-export async function getServerSideProps() {
-  const items2017 = await getItemsByPart(ITEM.PAINTING.YEAR1, ITEM.PAINTING.TYPE, 0);
-  const items2018_1 = await getItemsByPart(ITEM.PAINTING.YEAR2, ITEM.PAINTING.TYPE, 1);
-  const items2018_2 = await getItemsByPart(ITEM.PAINTING.YEAR2, ITEM.PAINTING.TYPE, 2);
-  const items2019 = await getItemsByPart(ITEM.PAINTING.YEAR3, ITEM.PAINTING.TYPE, 0);
-  return {
-    props: { items2017, items2018_1, items2018_2, items2019 },
-  };
-}
 
 export default Peintures;

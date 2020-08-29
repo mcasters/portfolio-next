@@ -53,3 +53,17 @@ export const ALL_ITEMS = `
   }
 }
 `;
+
+export const ITEMS_BY_PART = `
+  query ItemsByPart($year: Int!, $type: String!, $part: Int!) {
+    itemsByPart(year: $year, type: $type, part: $part) {
+      title
+      date
+      technique
+      description
+      height
+      width
+      length
+    }
+  }
+`;
