@@ -29,23 +29,23 @@ export default {
   },
 
   Mutation: {
-    async signUp(_parent, args, _context, _info) {
+    async signUp(_parent, { signUpInput }, _context, _info) {
       const lookupUser = await User.findOne({
-        where: { username: args.input.username },
+        where: { username: signUpInput.username },
       });
 
       if (lookupUser) {
         throw new Error('Utilisateur déjà existant');
       }
-      const user = await User.create(createUserData(args.input));
+      const user = await User.create(createUserData(signUpInput));
       return { user };
     },
 
-    async signIn(_parent, args, context, _info) {
+    async signIn(_parent, { signInInput }, context, _info) {
       const user = await User.findOne({
-        where: { username: args.input.username },
+        where: { username: signInInput.username },
       });
-      if (user && validPassword(user, args.input.password)) {
+      if (user && validPassword(user, signInInput.password)) {
         const token = jwt.sign(
           { username: user.username, id: user.id, time: new Date() },
           JWT_SECRET,

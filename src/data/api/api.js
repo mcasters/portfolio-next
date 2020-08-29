@@ -22,57 +22,6 @@ const fetchAPI = async (query, { variables } = {}, context) => {
   return json.data;
 };
 
-export async function getItemsByPart(year, type, half) {
-  const data = await fetchAPI(
-    `
-  query ItemsByPart($year: Int!, $type: String!, $half: Int!) {
-    itemsByPart(year: $year, type: $type, half: $half) {
-      title
-      date
-      technique
-      description
-      height
-      width
-      length
-    }
-  }
-`,
-    {
-      variables: {
-        year,
-        type,
-        half,
-      },
-    },
-  );
-  return data?.getItemsByPart;
-}
-
-export async function getAllItems(type) {
-  const data = await fetchAPI(
-    `
-  query AllItems($type: String!) {
-   allItems(type: $type) {
-    id
-    title
-    date
-    technique
-    description
-    height
-    width
-    length
-  }
-}
-`,
-    {
-      variables: {
-        type,
-      },
-    },
-  );
-  return data?.getAllItems;
-}
-
 export async function addItem(item) {
   const data = await fetchAPI(
     `

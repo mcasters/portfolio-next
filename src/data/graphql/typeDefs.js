@@ -82,8 +82,8 @@ export default gql`
     addItem(item: ItemInput!): Item!
     updateItem(item: ItemInput!): Item!
     deleteItem(id: ID!, type: String!): ID!
-    signUp(input: SignUpInput!): SignUpPayload!
-    signIn(input: SignInInput!): SignInPayload!
+    signUp(signUpInput: SignUpInput!): SignUpPayload!
+    signIn(signInInput: SignInInput!): SignInPayload!
     signOut: Boolean!
   }
 

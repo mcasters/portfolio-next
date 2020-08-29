@@ -31,7 +31,7 @@ const SignIn = () => {
     const username = userData.username;
     const password = userData.password;
 
-    const { signIn: user, error } = await signInRequest({ username, password });
+    const { signIn: user, error } = await signInRequest(username, password);
 
     if (user) {
       localStorage.setItem(ls_key, ls_value);

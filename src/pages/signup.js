@@ -24,11 +24,11 @@ const SignUp = () => {
     const email = userData.email;
     const password = userData.password;
 
-    const { signUp: user, error } = await signUpRequest({
+    const { signUp: user, error } = await signUpRequest(
       username,
       email,
       password,
-    });
+    );
 
     if (user) {
       triggerAlert('Utilisateur enregistré', false);

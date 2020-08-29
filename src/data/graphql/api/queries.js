@@ -4,8 +4,8 @@ export const VIEWER = `
   }
 `;
 export const SIGNIN = `
-  mutation SignInMutation($username: String!, $password: String!) {
-    signIn(input: { username: $username, password: $password }) {
+  mutation SignInMutation($signInInput: SignInInput!) {
+    signIn(signInInput: $signInInput) {
       user {
         id
         username
@@ -15,8 +15,8 @@ export const SIGNIN = `
 `;
 
 export const SIGNUP = `
-  mutation SignUpMutation($username: String!, $email: String!, $password: String!) {
-    signUp(input: { username:$username, email: $email, password: $password }) {
+  mutation SignUpMutation($signUpInput: SignUpInput!) {
+    signUp(signUpInput: $signUpInput) {
       user {
         id
         username
@@ -57,6 +57,21 @@ export const ALL_ITEMS = `
 export const ITEMS_BY_PART = `
   query ItemsByPart($year: Int!, $type: String!, $part: Int!) {
     itemsByPart(year: $year, type: $type, part: $part) {
+      title
+      date
+      technique
+      description
+      height
+      width
+      length
+    }
+  }
+`;
+
+export const addItem = `
+  mutation AddItem($item: ItemInput!) {
+    addItem(item: $item) {
+      id
       title
       date
       technique
