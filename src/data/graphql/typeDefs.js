@@ -1,10 +1,17 @@
 import { gql } from 'apollo-server-micro';
 
 export default gql`
-  type Content {
-    id: ID!
-    key: String!
-    text: String!
+  input ItemInput {
+    id: ID
+    type: String!
+    title: String!
+    date: String!
+    technique: String!
+    description: String
+    length: Int
+    height: Int!
+    width: Int!
+    hasImages: Boolean
   }
 
   type Item {
@@ -44,17 +51,10 @@ export default gql`
     text: String!
   }
 
-  input ItemInput {
-    id: ID
-    type: String!
-    title: String!
-    date: String!
-    technique: String!
-    description: String
-    length: Int
-    height: Int!
-    width: Int!
-    hasImages: Boolean
+  type Content {
+    id: ID!
+    key: String!
+    text: String!
   }
 
   input SignUpInput {
@@ -77,7 +77,7 @@ export default gql`
   }
 
   type Mutation {
-    addContent(input: ContentInput!): Content!
+    addContent(contentInput: ContentInput!): Content!
     addPicture(title: String!): Boolean!
     addItem(item: ItemInput!): Item!
     updateItem(item: ItemInput!): Item!

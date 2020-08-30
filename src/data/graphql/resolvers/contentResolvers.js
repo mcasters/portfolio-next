@@ -10,35 +10,44 @@ export default {
     allContent: async () => await Content.findAll(),
     content: async (parent, { key }, _context, _info) =>
       await Content.findOne({
-        where: { key: {
+        where: {
+          key: {
             [Op.eq]: key,
-          } },
+          },
+        },
       }),
   },
 
   Mutation: {
-    addContent: async (parent, { input }, { req }, _info) => {
+    addContent: async (parent, { contentInput }, { req }, _info) => {
       if (!(await isAuthenticated(req)))
         throw new Error("Erreur d'authentification");
 
-      const { key } = input;
+      const { key, text } = contentInput;
 
       let content = await Content.findOne({
-        where: { key: {
+        where: {
+          key: {
             [Op.eq]: key,
-          } },
+          },
+        },
       });
       if (content) {
         await content.update({
-          text: input.text,
+          text,
         });
         content = await Content.findOne({
-          where: { key: {
+          where: {
+            key: {
               [Op.eq]: key,
-            } },
+            },
+          },
         });
       } else {
-        content = await Content.create(input);
+        content = await Content.create({
+          key,
+          text,
+        });
       }
       return content;
     },

@@ -41,8 +41,8 @@ export async function addPicture(title) {
 export async function addContent(input) {
   const data = await fetchAPI(
     `
-  mutation AddContent($input: ContentInput!) {
-    addContent(input: $input) {
+  mutation AddContent($contentInput: ContentInput!) {
+    addContent(contentInput: $contentInput) {
       id
       key
       text

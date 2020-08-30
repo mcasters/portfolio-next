@@ -1,5 +1,6 @@
 import { request } from 'graphql-request';
 import {
+  ADD_CONTENT,
   ADD_ITEM,
   DELETE_ITEM,
   SIGNIN,
@@ -35,17 +36,19 @@ export const signUpRequest = (username, email, password) =>
 
 export const addItemRequest = (item) => withErrorHandler(ADD_ITEM, { item });
 
-export const updateItemRequest = (item) => withErrorHandler(UPDATE_ITEM, { item });
+export const updateItemRequest = (item) =>
+  withErrorHandler(UPDATE_ITEM, { item });
 
 export const deleteItemRequest = async (id, type) =>
   withErrorHandler(DELETE_ITEM, { id, type });
 
-export const addContentRequest = (item) => withErrorHandler(ADD_ITEM, { item });
+export const addContentRequest = (key, text) =>
+  withErrorHandler(ADD_CONTENT, { contentInput: { key, text } });
 
 const withErrorHandler = async (query, variables) => {
   try {
     return Object.assign({}, { data: await request(api, query, variables) });
   } catch (e) {
-    return Object.assign({}, { error: e });
+    return Object.assign({}, { error: e.response.errors[0] });
   }
 };

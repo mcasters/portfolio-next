@@ -103,3 +103,13 @@ export const DELETE_ITEM = `
     deleteItem(id: $id, type: $type)
   }
 `;
+
+export const ADD_CONTENT = `
+  mutation AddContent($contentInput: ContentInput!) {
+    addContent(contentInput: $contentInput) {
+      id
+      key
+      text
+    }
+  }
+`;

@@ -34,4 +34,7 @@ const Content = Model.define('Content', {
   },
 });
 
+// To force drop table if it exists
+// Content.sync({ force: true });
+
 export default Content;
