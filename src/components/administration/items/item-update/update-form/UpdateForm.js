@@ -127,18 +127,19 @@ function UpdateForm({ item, type, srcList, onClose }) {
     const hasImages = itemData.pictures.length > 0;
     const { pictures, ...rest } = itemData;
 
-    const {
-      updateItem: { id, title },
-      error,
-    } = await updateItemRequest({ ...rest, hasImages, type });
+    const { data, error } = await updateItemRequest({
+      ...rest,
+      hasImages,
+      type,
+    });
 
-    if (id) {
-      triggerAlert(`${title} modifié`, false);
+    if (data) {
+      triggerAlert(`${data.updateItem.title} modifié`, false);
       mutate();
       onClose();
     }
     if (error)
-      triggerAlert(`Erreur de modification de l'item : ${error.message}`, true);
+      triggerAlert(`Erreur de modification de l'item`, true);
   };
 
   return (

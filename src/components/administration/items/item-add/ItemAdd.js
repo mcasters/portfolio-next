@@ -122,15 +122,16 @@ function ItemAdd({ type }) {
     const item = isSculpture ? { length, ...rest } : rest;
 
     const {
-      addItem: { id, title },
+      data,
       error: err,
     } = await addItemRequest({ ...item, type });
-    if (id) {
-      triggerAlert(`${title} ajouté`, false);
+    if (data) {
+      triggerAlert(`${data.addItem.title} ajouté`, false);
       mutate();
       clearState();
+    } else {
+      triggerAlert(err ? err.message : "Erreur à l'ajout de l'item", true);
     }
-    if (err) triggerAlert(err.message, true);
   };
 
   const cancel = async (e) => {

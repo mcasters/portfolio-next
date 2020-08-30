@@ -4,8 +4,7 @@ import * as imageUtils from '../../lib/imageUtils';
 
 export default {
   Query: {
-    allItems: async (parent, { type }) =>
-      new ModelService(type).getAllItems(),
+    allItems: async (parent, { type }) => new ModelService(type).getAllItems(),
     itemsByPart: (parent, { type, year, part }) =>
       new ModelService(type).getItemsByPart(year, part),
   },
@@ -53,16 +52,12 @@ export default {
 
       const oldTitle = oldItem.title;
       if (hasImages) {
-        const imageDeleted = await imageUtils.deleteItemImages(
-          oldTitle,
-          type,
-        );
+        const imageDeleted = await imageUtils.deleteItemImages(oldTitle, type);
         if (!imageDeleted)
           throw new Error(`Echec de la suppression des anciennes images`);
 
         const res = await imageUtils.addItemImages(title, type);
         if (!res) throw new Error("Erreur à l'écriture des nouveaux fichiers");
-
       } else if (oldTitle !== title) {
         const res = await imageUtils.renameItemImages(oldTitle, title, type);
         if (!res) throw new Error('Erreur au renommage des fichiers');
@@ -85,16 +80,13 @@ export default {
       if (!item) throw new Error('Item absent en BDD');
 
       const isDeleted = await imageUtils.deleteItemImages(item.title, type);
+
       if (!isDeleted) throw new Error(`Echec de la suppression des images`);
       else {
-        itemService
-          .delete(id)
-          .then(res => res)
-          .catch(() => {
-            throw new Error('Echec de la suppression en Bdd');
-          });
+        const res = await itemService.delete(id);
+        if (res) return true;
+        else throw new Error('Echec de la suppression en Bdd');
       }
-      return id;
     },
   },
 };

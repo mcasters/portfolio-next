@@ -22,23 +22,6 @@ const fetchAPI = async (query, { variables } = {}, context) => {
   return json.data;
 };
 
-export async function deleteItem(id, type) {
-  const data = await fetchAPI(
-    `
-  mutation deleteItem($id: ID!, $type: String!) {
-    deleteItem(id: $id, type: $type)
-  }
-`,
-    {
-      variables: {
-        id,
-        type,
-      },
-    },
-  );
-  return data.deleteItem;
-}
-
 export async function addPicture(title) {
   const data = await fetchAPI(
     `

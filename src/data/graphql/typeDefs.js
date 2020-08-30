@@ -81,7 +81,7 @@ export default gql`
     addPicture(title: String!): Boolean!
     addItem(item: ItemInput!): Item!
     updateItem(item: ItemInput!): Item!
-    deleteItem(id: ID!, type: String!): ID!
+    deleteItem(id: ID!, type: String!): Boolean!
     signUp(signUpInput: SignUpInput!): SignUpPayload!
     signIn(signInInput: SignInInput!): SignInPayload!
     signOut: Boolean!

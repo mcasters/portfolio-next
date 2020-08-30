@@ -97,3 +97,9 @@ export const UPDATE_ITEM = `
     }
   }
 `;
+
+export const DELETE_ITEM = `
+  mutation deleteItem($id: ID!, $type: String!) {
+    deleteItem(id: $id, type: $type)
+  }
+`;
