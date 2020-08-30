@@ -78,10 +78,10 @@ const SignIn = () => {
         <button className="button" type="submit">
           Sign in
         </button>{' '}
-        or{' '}
+        {/*or{' '}
         <Link href="signup">
           <a>Sign up</a>
-        </Link>
+        </Link>*/}
         {userData.error && <p className="error">Error: {userData.error}</p>}
       </form>
     </Layout>
