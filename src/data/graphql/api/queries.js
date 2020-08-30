@@ -113,3 +113,9 @@ export const ADD_CONTENT = `
     }
   }
 `;
+
+export const ADD_PICTURE = `
+  mutation AddPicture($title: String!) {
+  addPicture(title: $title)
+}
+`;

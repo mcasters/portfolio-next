@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import s from './EditPictureForm.module.css';
 import CONT_CONST from '../../../constants/content';
 import { useAlert } from '../../alert-context/AlertContext';
-import {addPicture} from "../../../data/api/api";
+import {addPictureRequest} from "../../../data/graphql/api/query-graphql";
 
 function EditPictureForm({ pictureTitle }) {
   const triggerAlert = useAlert();
@@ -51,7 +51,7 @@ function EditPictureForm({ pictureTitle }) {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const res = await fetch('/api/upload', {
+    const res = await fetch('api/temp-image', {
       method: 'POST',
       headers: {
         'Content-Type': file.type,
@@ -62,15 +62,13 @@ function EditPictureForm({ pictureTitle }) {
       .catch(e => {
         triggerAlert(e.message, true);
       })
-      .then(() => {
-        const res = addPicture(pictureTitle);
-        if (res) {
+      .then(async () => {
+        const { data, error } = await addPictureRequest(pictureTitle);
+        if (data) {
           triggerAlert('image ajoutée', false);
           setImagePreviewUrl('');
           setFile('');
-        } else {
-          triggerAlert("Erreur à l'ajout de l'image", true);
-        }
+        } else triggerAlert(error ? error.message : "Echec de l'ajout de l'image", true);
       });
   };
 

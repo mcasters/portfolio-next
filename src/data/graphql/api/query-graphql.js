@@ -1,7 +1,7 @@
 import { request } from 'graphql-request';
 import {
   ADD_CONTENT,
-  ADD_ITEM,
+  ADD_ITEM, ADD_PICTURE,
   DELETE_ITEM,
   SIGNIN,
   SIGNOUT,
@@ -45,6 +45,12 @@ export const deleteItemRequest = async (id, type) =>
 export const addContentRequest = (key, text) =>
   withErrorHandler(ADD_CONTENT, { contentInput: { key, text } });
 
+export const addPictureRequest = (title) =>
+  withErrorHandler(ADD_PICTURE, { title });
+
+/*
+Error handling for post methods
+ */
 const withErrorHandler = async (query, variables) => {
   try {
     return Object.assign({}, { data: await request(api, query, variables) });

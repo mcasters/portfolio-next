@@ -37,23 +37,3 @@ export async function addPicture(title) {
   );
   return data.addPicture;
 }
-
-export async function addContent(input) {
-  const data = await fetchAPI(
-    `
-  mutation AddContent($contentInput: ContentInput!) {
-    addContent(contentInput: $contentInput) {
-      id
-      key
-      text
-    }
-  }
-`,
-    {
-      variables: {
-        input,
-      },
-    },
-  );
-  return data.addContent;
-}

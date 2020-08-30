@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 
 import isAuthenticated from '../../lib/authUtils';
-import * as imageService from '../../lib/imageUtils';
+import { addImages } from '../../lib/imageUtils';
 import { Content } from '../../models';
 import CONTENT from '../../../constants/content';
 
@@ -56,7 +56,7 @@ export default {
       if (!(await isAuthenticated(req)))
         throw new Error("Erreur d'authentification");
 
-      const res = await imageService.addItemImages(title, CONTENT.TYPE);
+      const res = await addImages(title, CONTENT.TYPE);
 
       if (!res) throw new Error("Erreur à l'écriture des fichiers");
 

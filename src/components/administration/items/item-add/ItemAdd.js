@@ -99,7 +99,7 @@ function ItemAdd({ type }) {
       const filename = isSculpture
         ? `${itemData.title}_${i}.jpg`
         : `${itemData.title}.jpg`;
-      await fetch('/api/upload', {
+      await fetch('/api/temp-image', {
         method: 'POST',
         headers: {
           'Content-Type': file.type,
@@ -137,7 +137,7 @@ function ItemAdd({ type }) {
       const filename = isSculpture
         ? `${itemData.title}_${i}.jpg`
         : `${itemData.title}.jpg`;
-      await fetch('/api/upload', {
+      await fetch('/api/temp-image', {
         method: 'DELETE',
         headers: {
           'Content-Filename': filename,

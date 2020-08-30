@@ -208,7 +208,7 @@ const deleteImage = path => {
 /****************
  * Entry point *
  ****************/
-export const addItemImages = (title, type) => {
+export const addImages = (title, type) => {
   if (type === CONTENT.TYPE) {
     return storeContentImage(title);
   } else {
