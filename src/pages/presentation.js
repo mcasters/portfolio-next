@@ -23,7 +23,7 @@ const Presentation = () => {
           src={`${CONST.CONTENT_IMAGE_PATH}/${CONST.PRESENTATION_IMAGE_TITLE}.jpg`}
           alt={CONST.PRESENTATION_IMAGE_ALT}
         />
-        {data && <Content text={data.content.text} />}
+        {data && data.content && <Content text={data.content.text} />}
       </div>
     </Layout>
   );

@@ -24,19 +24,19 @@ const SignUp = () => {
     const email = userData.email;
     const password = userData.password;
 
-    const { signUp: user, error } = await signUpRequest(
+    const { data, error } = await signUpRequest(
       username,
       email,
       password,
     );
 
-    if (user) {
+    if (data) {
       triggerAlert('Utilisateur enregistré', false);
       return Router.replace(ROUTES.SIGNIN);
+    } else {
+      triggerAlert(error ? error.message : "Echec à l'inscription", true);
+      return Router.replace(ROUTES.HOME);
     }
-
-    triggerAlert(error.response.errors[0].message, true);
-    return Router.replace(ROUTES.HOME);
   };
 
   return (

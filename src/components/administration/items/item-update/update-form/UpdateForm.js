@@ -137,9 +137,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
       triggerAlert(`${data.updateItem.title} modifié`, false);
       mutate();
       onClose();
-    }
-    if (error)
-      triggerAlert(`Erreur de modification de l'item`, true);
+    } else triggerAlert(error ? error.message : "Echec de modification de l'item", true);
   };
 
   return (

@@ -1,14 +1,18 @@
+import useSWR from 'swr';
+
 import Content from '../components/content/Content';
 import CONTENT_CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import s from './styles/index.module.css';
 import Layout from '../components/layout-components/layout/Layout';
-import useSWR from 'swr';
 import { CONTENT } from '../data/graphql/api/queries';
 import { contentRequest } from '../data/graphql/api/query-graphql';
 
 function Home() {
-  const { data } = useSWR([CONTENT, CONTENT_CONST.KEY.HOME3], contentRequest);
+  const { data } = useSWR(
+    [CONTENT, CONTENT_CONST.KEY.HOME3],
+    contentRequest,
+  );
 
   return (
     <Layout>

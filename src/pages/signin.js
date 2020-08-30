@@ -31,16 +31,14 @@ const SignIn = () => {
     const username = userData.username;
     const password = userData.password;
 
-    const { signIn: user, error } = await signInRequest(username, password);
+    const { data, error } = await signInRequest(username, password);
 
-    if (user) {
+    if (data) {
       localStorage.setItem(ls_key, ls_value);
       await mutate();
-      return Router.replace(ROUTES.ADMIN);
-    }
-
-    if (error) {
-      triggerAlert(error.message, true);
+      Router.replace(ROUTES.ADMIN);
+    } else {
+      triggerAlert(error ? error.message : "Echec à l'authentification", true);
       setUserData(
         Object.assign({}, userData, {
           error: error.message,

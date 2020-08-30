@@ -19,13 +19,11 @@ function ItemDeleteButton({ id, type }) {
     <button
       onClick={async (e) => {
         e.preventDefault();
-        const { data } = await deleteItemRequest(id, type);
+        const { data, error } = await deleteItemRequest(id, type);
         if (data) {
           mutate();
           triggerAlert('Item supprimé', false);
-        } else {
-          triggerAlert("Erreur à la suppression de l'item", true);
-        }
+        } else triggerAlert(error ? error.message : "Echec de la suppression de l'item", true);
       }}
       className={`${s.command} button`}
       type="button"
