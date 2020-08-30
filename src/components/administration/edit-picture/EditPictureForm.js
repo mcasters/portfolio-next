@@ -51,7 +51,7 @@ function EditPictureForm({ pictureTitle }) {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const res = await fetch('api/temp-image', {
+    await fetch('api/temp-image', {
       method: 'POST',
       headers: {
         'Content-Type': file.type,

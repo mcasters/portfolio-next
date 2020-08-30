@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 
 import { CONTENT } from '../../../data/graphql/api/queries';
 import {
@@ -12,10 +12,10 @@ import s from './EditContent.module.css';
 
 function EditContent({ keyContent, isTextArea }) {
   const [isChanged, setIsChanged] = useState(false);
-  const [text, setText] = useState('');
   const triggerAlert = useAlert();
 
   const { data, mutate } = useSWR([CONTENT, keyContent], contentRequest);
+  const [text, setText] = useState(data && data.content ? data.content.text : '');
 
   const handleChange = (e) => {
     setIsChanged(true);
@@ -46,7 +46,7 @@ function EditContent({ keyContent, isTextArea }) {
             placeholder={keyContent}
             name="text"
             type="text"
-            value={data && data.content ? data.content.text : text}
+            value={text}
             onChange={handleChange}
           />
         )}
@@ -55,7 +55,7 @@ function EditContent({ keyContent, isTextArea }) {
             className={s.textarea}
             placeholder={keyContent}
             name="textarea"
-            value={data && data.content ? data.content.text : text}
+            value={text}
             onChange={handleChange}
           />
         )}
