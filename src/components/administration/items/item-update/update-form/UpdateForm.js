@@ -11,7 +11,7 @@ import { ALL_ITEMS } from '../../../../../data/graphql/api/queries';
 import {
   allItemsRequest,
   updateItemRequest,
-} from '../../../../../data/graphql/api/query-graphql';
+} from '../../../../../data/graphql/api/client-side/query-graphql';
 
 const customStyles = {
   overlay: {

@@ -10,7 +10,7 @@ import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
 import {
   addItemRequest,
   allItemsRequest,
-} from '../../../../data/graphql/api/query-graphql';
+} from '../../../../data/graphql/api/client-side/query-graphql';
 
 function ItemAdd({ type }) {
   const triggerAlert = useAlert();

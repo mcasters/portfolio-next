@@ -6,7 +6,7 @@ import TITLE from '../constants/pageTitle';
 import s from './styles/index.module.css';
 import Layout from '../components/layout-components/layout/Layout';
 import { CONTENT } from '../data/graphql/api/queries';
-import { contentRequest } from '../data/graphql/api/query-graphql';
+import { contentRequest } from '../data/graphql/api/client-side/query-graphql';
 
 function Home() {
   const { data } = useSWR(

@@ -8,7 +8,7 @@ import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
 import {
   allItemsRequest,
   deleteItemRequest,
-} from '../../../../data/graphql/api/query-graphql';
+} from '../../../../data/graphql/api/client-side/query-graphql';
 
 function ItemDeleteButton({ id, type }) {
   const triggerAlert = useAlert();

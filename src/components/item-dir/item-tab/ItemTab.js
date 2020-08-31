@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import Item from '../item/Item';
 import s from './ItemTab.module.css';
 import { ITEMS_BY_PART } from '../../../data/graphql/api/queries';
-import { itemsByPartRequest } from '../../../data/graphql/api/query-graphql';
+import { itemsByPartRequest } from '../../../data/graphql/api/client-side/query-graphql';
 
 function ItemTab({ year, type, part }) {
   const { data } = useSWR(

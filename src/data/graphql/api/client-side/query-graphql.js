@@ -1,3 +1,9 @@
+/*
+* *****************************
+* Queries from front = No ssr
+* *****************************
+ */
+
 import { request } from 'graphql-request';
 import {
   ADD_CONTENT,
@@ -8,18 +14,48 @@ import {
   SIGNUP,
   UPDATE_ITEM,
   VIEWER,
-} from './queries';
+} from '../queries';
 
 const api = '/api/graphql';
 
-export const viewerRequest = () => request(api, VIEWER);
+/*
+* *****************************
+* Authentication
+* *****************************
+ */
 
+// GET
+export const viewerRequest = () => request(api, VIEWER);
 export const signoutRequest = () => request(api, SIGNOUT);
 
+// POST
+export const signInRequest = async (username, password) =>
+  withErrorHandler(SIGNIN, { signInInput: { username, password } });
+export const signUpRequest = (username, email, password) =>
+  withErrorHandler(SIGNUP, { signUpInput: { username, email, password } });
+
+/*
+* *****************************
+* Content
+* *****************************
+ */
+
+// GET
 export const contentRequest = (query, key) => request(api, query, { key });
 
-export const allItemsRequest = (query, type) => request(api, query, { type });
+// POST
+export const addContentRequest = (key, text) =>
+  withErrorHandler(ADD_CONTENT, { contentInput: { key, text } });
 
+
+/*
+* *****************************
+* Items
+* *****************************
+ */
+
+// GET
+export const allItemsRequest = (query, type) => request(api, query, { type });
 export const itemsByPartRequest = (query, year, type, part) =>
   request(api, query, {
     year,
@@ -27,26 +63,24 @@ export const itemsByPartRequest = (query, year, type, part) =>
     part,
   });
 
-/// POST
-export const signInRequest = async (username, password) =>
-  withErrorHandler(SIGNIN, { signInInput: { username, password } });
-
-export const signUpRequest = (username, email, password) =>
-  withErrorHandler(SIGNUP, { signUpInput: { username, email, password } });
-
+// POST
 export const addItemRequest = (item) => withErrorHandler(ADD_ITEM, { item });
-
 export const updateItemRequest = (item) =>
   withErrorHandler(UPDATE_ITEM, { item });
-
 export const deleteItemRequest = async (id, type) =>
   withErrorHandler(DELETE_ITEM, { id, type });
 
-export const addContentRequest = (key, text) =>
-  withErrorHandler(ADD_CONTENT, { contentInput: { key, text } });
 
+/*
+* *****************************
+* Images
+* *****************************
+ */
+
+/// POST
 export const addPictureRequest = (title) =>
   withErrorHandler(ADD_PICTURE, { title });
+
 
 /*
 Error handling for post methods

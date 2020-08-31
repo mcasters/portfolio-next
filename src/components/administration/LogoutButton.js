@@ -5,7 +5,7 @@ import Router from 'next/router';
 import {
   signoutRequest,
   viewerRequest,
-} from '../../data/graphql/api/query-graphql';
+} from '../../data/graphql/api/client-side/query-graphql';
 import { ROUTES } from '../../constants/router';
 import { VIEWER } from '../../data/graphql/api/queries';
 import { useAlert } from '../alert-context/AlertContext';

@@ -13,8 +13,9 @@ import EditPictureForm from '../components/administration/edit-picture/EditPictu
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/router';
 import { useAlert } from '../components/alert-context/AlertContext';
-import { queryGraphql } from './api/graphql';
+import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
 import LogoutButton from '../components/administration/LogoutButton';
+import { VIEWER } from '../data/graphql/api/queries';
 
 const Admin = ({ isAuthenticated }) => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -109,15 +110,11 @@ const Admin = ({ isAuthenticated }) => {
   return <p>loading...</p>;
 };
 
-export async function getServerSideProps() {
-  const isAuthenticated = await queryGraphql(`
-  query ViewerQuery {
-    viewer
-  }
-`);
+export async function getServerSideProps(context) {
+  const data = await queryGraphql(VIEWER, {}, context);
   return {
     props: {
-      isAuthenticated,
+      isAuthenticated: data.viewer,
     },
   };
 }

@@ -2,10 +2,9 @@ import Item from '../components/item-dir/item/Item';
 import CONST from '../constants/itemConstant';
 import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/api/queries';
-import { queryGraphql } from './api/graphql';
+import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr'
 
 const Dessins = ({ items }) => {
-
   return (
     <Layout>
       <section>

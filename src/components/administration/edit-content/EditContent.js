@@ -6,7 +6,7 @@ import { CONTENT } from '../../../data/graphql/api/queries';
 import {
   addContentRequest,
   contentRequest,
-} from '../../../data/graphql/api/query-graphql';
+} from '../../../data/graphql/api/client-side/query-graphql';
 import { useAlert } from '../../alert-context/AlertContext';
 import s from './EditContent.module.css';
 

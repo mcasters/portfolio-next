@@ -6,7 +6,7 @@ import CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import Layout from '../components/layout-components/layout/Layout';
 import { CONTENT } from '../data/graphql/api/queries';
-import { contentRequest } from '../data/graphql/api/query-graphql';
+import { contentRequest } from '../data/graphql/api/client-side/query-graphql';
 
 const Presentation = () => {
   const { data } = useSWR(

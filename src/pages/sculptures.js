@@ -4,7 +4,7 @@ import Item from '../components/item-dir/item/Item';
 import CONST from '../constants/itemConstant';
 import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/api/queries';
-import { allItemsRequest } from '../data/graphql/api/query-graphql';
+import { allItemsRequest } from '../data/graphql/api/client-side/query-graphql';
 
 const Sculptures = () => {
   const type = CONST.SCULPTURE.TYPE;

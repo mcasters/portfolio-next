@@ -1,5 +1,4 @@
 import { ApolloServer } from 'apollo-server-micro';
-import { graphql } from 'graphql';
 
 import { schema } from '../../data/graphql/schema';
 
@@ -21,10 +20,3 @@ export const config = {
 };
 
 export default handler;
-
-export async function queryGraphql(query, variableValues = {}) {
-  const { data } = await graphql({schema, source: query, variableValues});
-  // const data = res.json();
-  // console.log('//// res into query : ' + data);
-  return data || {};
-}

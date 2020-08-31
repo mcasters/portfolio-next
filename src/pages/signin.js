@@ -9,7 +9,7 @@ import { useAlert } from '../components/alert-context/AlertContext';
 import {
   signInRequest,
   viewerRequest,
-} from '../data/graphql/api/query-graphql';
+} from '../data/graphql/api/client-side/query-graphql';
 import { VIEWER } from '../data/graphql/api/queries';
 
 const SignIn = () => {
