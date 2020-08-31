@@ -2,10 +2,6 @@
   height: 800px;
 }
 
-.titleTab {
-  display: none;
-}
-
 .buttonLink {
   font-family: var(--font-family-base) !important;
   font-size: var(--font-size-current-plus-plus);

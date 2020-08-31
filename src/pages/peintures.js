@@ -5,14 +5,16 @@ import CONST from '../constants/itemConstant';
 import ItemTab from '../components/item-dir/item-tab/ItemTab';
 import useOnSrr from '../components/hooks/useOnSrr';
 import Layout from '../components/layout-components/layout/Layout';
+import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
+import { ITEMS_BY_PART } from '../data/graphql/api/queries';
 
-const Peintures = () => {
+const Peintures = ({ items2017, items2018_a, items2018_b, items2019 }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const onSsr = useOnSrr();
 
-  const year1 = CONST.PAINTING.YEAR1;
-  const year2 = CONST.PAINTING.YEAR2;
-  const year3 = CONST.PAINTING.YEAR3;
+  const year2017 = CONST.PAINTING.YEAR2017;
+  const year2018 = CONST.PAINTING.YEAR2018;
+  const year2019 = CONST.PAINTING.YEAR2019;
   const type = CONST.PAINTING.TYPE;
 
   useEffect(() => {
@@ -42,46 +44,46 @@ const Peintures = () => {
         forceRenderTabPanel
       >
         <TabList>
-          <Tab>{year1.toString()}</Tab>
-          <Tab>{year2.toString()} a</Tab>
-          <Tab>{year2.toString()} b</Tab>
-          <Tab>{year3.toString()}</Tab>
+          <Tab>{year2017.toString()}</Tab>
+          <Tab>{year2018.toString()} a</Tab>
+          <Tab>{year2018.toString()} b</Tab>
+          <Tab>{year2019.toString()}</Tab>
         </TabList>
         {onSsr ? (
           <>
             <TabPanel>
-              <ItemTab year={year1} type={type} part={0} />
+              <ItemTab year={year2017} type={type} items={items2017} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year2} type={type} part={1} />
+              <ItemTab year={year2018} type={type} items={items2018_a} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year2} type={type} part={2} />
+              <ItemTab year={year2018} type={type} items={items2018_b} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year3} type={type} part={0} />
+              <ItemTab year={year2019} type={type} items={items2019} />
             </TabPanel>
           </>
         ) : (
           <>
             <TabPanel>
               {selectedTab === 0 && (
-                <ItemTab year={year1} type={type} part={0} />
+                <ItemTab year={year2017} type={type} items={items2017} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 1 && (
-                <ItemTab year={year2} type={type} part={1} />
+                <ItemTab year={year2018} type={type} items={items2018_a} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 2 && (
-                <ItemTab year={year2} type={type} part={2} />
+                <ItemTab year={year2018} type={type} items={items2018_b} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 3 && (
-                <ItemTab year={year3} type={type} part={0} />
+                <ItemTab year={year2019} type={type} items={items2019} />
               )}
             </TabPanel>
           </>
@@ -90,5 +92,37 @@ const Peintures = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps() {
+  const type = CONST.PAINTING.TYPE;
+  const data2017 = await queryGraphql(ITEMS_BY_PART, {
+    year: CONST.PAINTING.YEAR2017,
+    type,
+    part: 0,
+  });
+  const data2018_a = await queryGraphql(ITEMS_BY_PART, {
+    year: CONST.PAINTING.YEAR2018,
+    type,
+    part: 1,
+  });
+  const data2018_b = await queryGraphql(ITEMS_BY_PART, {
+    year: CONST.PAINTING.YEAR2018,
+    type,
+    part: 2,
+  });
+  const data2019 = await queryGraphql(ITEMS_BY_PART, {
+    year: CONST.PAINTING.YEAR2019,
+    type,
+    part: 0,
+  });
+  return {
+    props: {
+      items2017: data2017.itemsByPart,
+      items2018_a: data2018_a.itemsByPart,
+      items2018_b: data2018_b.itemsByPart,
+      items2019: data2019.itemsByPart,
+    },
+  };
+}
 
 export default Peintures;
