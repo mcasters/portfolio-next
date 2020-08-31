@@ -4,9 +4,9 @@ import { addImages, deleteItemImages, renameItemImages } from '../../lib/imageUt
 
 export default {
   Query: {
-    allItems: async (parent, { type }) => new ModelService(type).getAllItems(),
-    itemsByPart: (parent, { type, year, part }) =>
-      new ModelService(type).getItemsByPart(year, part),
+    allItems: async (parent, { type }) => await new ModelService(type).getAllItems(),
+    itemsByPart: async (parent, { type, year, part }) =>
+      await new ModelService(type).getItemsByPart(year, part),
   },
 
   Mutation: {
@@ -65,8 +65,10 @@ export default {
 
       const updatedItem = await modelService.update(id, data);
 
-      if (!updatedItem)
+      if (!updatedItem) {
+        await deleteItemImages(title, type);
         throw new Error("Erreur à l'enregistrement en base de donnée");
+      }
 
       return updatedItem;
     },

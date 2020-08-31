@@ -1,26 +1,32 @@
-import useSWR from 'swr';
-
 import Item from '../components/item-dir/item/Item';
 import CONST from '../constants/itemConstant';
 import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/api/queries';
-import { allItemsRequest } from '../data/graphql/api/query-graphql';
+import { queryGraphql } from './api/graphql';
 
-const Dessins = () => {
-  const type = CONST.DRAWING.TYPE;
-  const { data } = useSWR([ALL_ITEMS, type], allItemsRequest);
+const Dessins = ({ items }) => {
 
   return (
     <Layout>
       <section>
         <h1 className="hidden">{CONST.DRAWING.TITLE}</h1>
-        {data &&
-          data.allItems.map((drawing) => (
-            <Item key={drawing.title} item={drawing} type={type} />
+        {items &&
+          items.map((drawing) => (
+            <Item key={drawing.title} item={drawing} type={CONST.DRAWING.TYPE} />
           ))}
       </section>
     </Layout>
   );
 };
+
+export async function getServerSideProps() {
+  const type = CONST.DRAWING.TYPE;
+  const data = await queryGraphql(ALL_ITEMS, { type });
+  return {
+    props: {
+      items: data.allItems,
+    },
+  };
+}
 
 export default Dessins;

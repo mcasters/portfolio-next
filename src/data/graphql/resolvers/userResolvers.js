@@ -60,7 +60,7 @@ export default {
             maxAge: 6 * 60 * 60,
             path: '/',
             sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production',
+            // secure: process.env.NODE_ENV === 'production',
           }),
         );
         return { user };
@@ -77,7 +77,7 @@ export default {
           maxAge: -1,
           path: '/',
           sameSite: 'lax',
-          secure: process.env.NODE_ENV === 'production',
+          // secure: process.env.NODE_ENV === 'production',
         }),
       );
       return true;
