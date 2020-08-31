@@ -1,19 +1,12 @@
-import useSWR from 'swr';
-
 import s from './styles/presentation.module.css';
 import Content from '../components/content/Content';
 import CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import Layout from '../components/layout-components/layout/Layout';
 import { CONTENT } from '../data/graphql/api/queries';
-import { contentRequest } from '../data/graphql/api/client-side/query-graphql';
+import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
 
-const Presentation = () => {
-  const { data } = useSWR(
-    [CONTENT, CONST.KEY.PRESENTATION],
-    contentRequest,
-  );
-
+const Presentation = ({ data }) => {
   return (
     <Layout>
       <div className={s.presentationContainer}>
@@ -23,10 +16,19 @@ const Presentation = () => {
           src={`${CONST.CONTENT_IMAGE_PATH}/${CONST.PRESENTATION_IMAGE_TITLE}.jpg`}
           alt={CONST.PRESENTATION_IMAGE_ALT}
         />
-        {data && data.content && <Content text={data.content.text} />}
+        {data.content && <Content text={data.content.text} />}
       </div>
     </Layout>
   );
 };
+
+export async function getServerSideProps() {
+  const data = await queryGraphql(CONTENT, { key: CONST.KEY.PRESENTATION });
+  return {
+    props: {
+      data,
+    },
+  };
+}
 
 export default Presentation;

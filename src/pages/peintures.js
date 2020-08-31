@@ -8,7 +8,7 @@ import Layout from '../components/layout-components/layout/Layout';
 import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
 import { ITEMS_BY_PART } from '../data/graphql/api/queries';
 
-const Peintures = ({ items2017, items2018_a, items2018_b, items2019 }) => {
+const Peintures = ({ data2017, data2018_a, data2018_b, data2019 }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const onSsr = useOnSrr();
 
@@ -52,38 +52,38 @@ const Peintures = ({ items2017, items2018_a, items2018_b, items2019 }) => {
         {onSsr ? (
           <>
             <TabPanel>
-              <ItemTab year={year2017} type={type} items={items2017} />
+              <ItemTab year={year2017} type={type} data={data2017} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year2018} type={type} items={items2018_a} />
+              <ItemTab year={year2018} type={type} data={data2018_a} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year2018} type={type} items={items2018_b} />
+              <ItemTab year={year2018} type={type} data={data2018_b} />
             </TabPanel>
             <TabPanel>
-              <ItemTab year={year2019} type={type} items={items2019} />
+              <ItemTab year={year2019} type={type} data={data2019} />
             </TabPanel>
           </>
         ) : (
           <>
             <TabPanel>
               {selectedTab === 0 && (
-                <ItemTab year={year2017} type={type} items={items2017} />
+                <ItemTab year={year2017} type={type} data={items2017} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 1 && (
-                <ItemTab year={year2018} type={type} items={items2018_a} />
+                <ItemTab year={year2018} type={type} data={data2018_a} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 2 && (
-                <ItemTab year={year2018} type={type} items={items2018_b} />
+                <ItemTab year={year2018} type={type} data={data2018_b} />
               )}
             </TabPanel>
             <TabPanel>
               {selectedTab === 3 && (
-                <ItemTab year={year2019} type={type} items={items2019} />
+                <ItemTab year={year2019} type={type} data={data2019} />
               )}
             </TabPanel>
           </>
@@ -117,10 +117,10 @@ export async function getServerSideProps() {
   });
   return {
     props: {
-      items2017: data2017.itemsByPart,
-      items2018_a: data2018_a.itemsByPart,
-      items2018_b: data2018_b.itemsByPart,
-      items2019: data2019.itemsByPart,
+      data2017,
+      data2018_a,
+      data2018_b,
+      data2019,
     },
   };
 }
