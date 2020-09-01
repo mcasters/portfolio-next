@@ -3,19 +3,7 @@ const virtualLibraryPath = '/images';
 
 class ItemObject {
   constructor(item, type) {
-    this.type = type;
-    this.isSculpture = type === ITEM.SCULPTURE.TYPE;
-
-    this.id = item.id;
-    this.title = item.title;
-    this.date = item.date;
-    this.technique = item.technique;
-    this.description = item.description;
-    this.height = item.height;
-    this.width = item.width;
-    this.length = this.isSculpture ? item.length : null;
-
-    this.hasImages = false;
+    this.setAttributes(item, type);
 
     this.constDatas = {};
     this.filenames = [];
@@ -23,6 +11,24 @@ class ItemObject {
     this.initConstDatas();
     this.initFilenames();
   }
+
+  setAttributes = (item, type) => {
+    this.id = item.id;
+    this.type = type;
+    this.isSculpture = this.type === ITEM.SCULPTURE.TYPE;
+    this.setUpdateAttributes(item);
+  };
+
+  setUpdateAttributes = (item) => {
+    this.title = item.title;
+    this.date = item.date;
+    this.technique = item.technique;
+    this.description = item.description;
+    this.height = item.height;
+    this.width = item.width;
+    this.length = item.length || null;
+    this.hasImages = false;
+  };
 
   initConstDatas = () => {
     switch (this.type) {
@@ -36,7 +42,7 @@ class ItemObject {
         this.constDatas = ITEM.SCULPTURE;
         break;
       default:
-        throw new Error(`Type ${type} inexistant`);
+        throw new Error(`Type ${this.type} inexistant`);
     }
   };
 
@@ -94,6 +100,25 @@ class ItemObject {
     return this.isSculpture;
   };
 
+  getItemData = () => {
+    return {
+      title: this.title,
+      date: this.date,
+      technique: this.technique,
+      description: this.description,
+      height: this.height,
+      width: this.width,
+      length: this.length,
+      isSculpture: this.isSculpture,
+      pictures: this.isSculpture ? [4] : [1],
+    };
+  };
+
+  updateFromItemData = (itemData) => {
+    this.setUpdateAttributes(itemData);
+    this.hasImages = itemData.pictures.length > 0;
+  };
+
   getGraphqlObject = () => {
     return {
       id: this.id,
@@ -104,7 +129,7 @@ class ItemObject {
       description: this.description,
       height: this.height,
       width: this.width,
-      length: this.length || null,
+      length: this.length,
       hasImages: this.hasImages,
     };
   };
