@@ -63,7 +63,7 @@ function MobileNav() {
         {menuItems.map((item) => {
           if (item.NAME === 'Home')
             return (
-              <li>
+              <li key={item.NAME}>
                 <Link key={item.NAME} href={item.PATH}>
                   <a className={s.navHomeLink} onClick={close}>
                     <img
@@ -77,7 +77,7 @@ function MobileNav() {
               </li>
             );
           return (
-            <li>
+            <li key={item.NAME}>
               <Link key={item.NAME} href={item.PATH}>
                 <a className={s.item} onClick={close}>
                   {item.NAME}

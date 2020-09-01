@@ -68,7 +68,7 @@ const Peintures = ({ data2017, data2018_a, data2018_b, data2019 }) => {
           <>
             <TabPanel>
               {selectedTab === 0 && (
-                <ItemTab year={year2017} type={type} data={items2017} />
+                <ItemTab year={year2017} type={type} data={data2017} />
               )}
             </TabPanel>
             <TabPanel>

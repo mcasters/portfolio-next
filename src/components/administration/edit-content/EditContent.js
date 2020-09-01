@@ -17,6 +17,11 @@ function EditContent({ keyContent, isTextArea }) {
   const { data, mutate } = useSWR([CONTENT, keyContent], contentRequest);
   const [text, setText] = useState(data && data.content ? data.content.text : '');
 
+  useEffect(() => {
+    if (data && data.content)
+    setText(data.content.text);
+  }, [data]);
+
   const handleChange = (e) => {
     setIsChanged(true);
     setText(e.target.value);

@@ -17,7 +17,7 @@ export default function DesktopNav({ isHome }) {
           {menuItems.map((item) => {
             if (item.NAME === 'Home')
               return (
-                <li>
+                <li key={item.NAME}>
                   <Link href={item.PATH} key={item.NAME}>
                     <a className={s.linkHome}>
                       <img
@@ -29,7 +29,7 @@ export default function DesktopNav({ isHome }) {
                 </li>
               );
             return (
-              <li>
+              <li key={item.NAME}>
                 <Link href={item.PATH} key={item.NAME}>
                   <a
                     className={
