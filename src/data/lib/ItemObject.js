@@ -6,6 +6,7 @@ class ItemObject {
     this.type = type;
     this.isSculpture = type === ITEM.SCULPTURE.TYPE;
 
+    this.id = item.id;
     this.title = item.title;
     this.date = item.date;
     this.technique = item.technique;
@@ -13,6 +14,8 @@ class ItemObject {
     this.height = item.height;
     this.width = item.width;
     this.length = this.isSculpture ? item.length : null;
+
+    this.hasImages = false;
 
     this.constDatas = {};
     this.filenames = [];
@@ -89,6 +92,21 @@ class ItemObject {
 
   getIsSculpture = () => {
     return this.isSculpture;
+  };
+
+  getGraphqlObject = () => {
+    return {
+      id: this.id,
+      type: this.type,
+      title: this.title,
+      date: this.date,
+      technique: this.technique,
+      description: this.description,
+      height: this.height,
+      width: this.width,
+      length: this.length || null,
+      hasImages: this.hasImages,
+    };
   };
 }
 

@@ -8,9 +8,9 @@ export default gql`
     date: String!
     technique: String!
     description: String
-    length: Int
     height: Int!
     width: Int!
+    length: Int
     hasImages: Boolean
   }
 

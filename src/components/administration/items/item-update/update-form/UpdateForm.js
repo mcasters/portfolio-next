@@ -29,17 +29,18 @@ const customStyles = {
 
 Modal.setAppElement('#__next');
 
-function UpdateForm({ item, type, srcList, onClose }) {
-  const [itemData, setItemData] = useState({ ...item, pictures: [] });
+function UpdateForm({ itemObject, onClose }) {
+  const graphqlObject = itemObject.getGraphqlObject();
+  const [itemData, setItemData] = useState({ ...graphqlObject, pictures: [] });
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const [isTitleBlocked, setIsTitleBlocked] = useState(false);
   const triggerAlert = useAlert();
 
-  const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
+  const { mutate } = useSWR([ALL_ITEMS, itemObject.type], allItemsRequest);
 
   const showModal = true;
 
-  const isSculpture = type === ITEM_CONSTANT.SCULPTURE.TYPE;
+  const isSculpture = itemObject.type === ITEM_CONSTANT.SCULPTURE.TYPE;
   const haveMain = !!(
     itemData.title &&
     itemData.date &&
@@ -130,7 +131,6 @@ function UpdateForm({ item, type, srcList, onClose }) {
     const { data, error } = await updateItemRequest({
       ...rest,
       hasImages,
-      type,
     });
 
     if (data) {
@@ -205,7 +205,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
           />
         )}
         <div className={s.oldImageContainer}>
-          {srcList.map(
+          {itemObject.getSMPaths().map(
             (url) =>
               url !== '' && (
                 <img
@@ -277,18 +277,7 @@ function UpdateForm({ item, type, srcList, onClose }) {
 }
 
 UpdateForm.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.string,
-    title: PropTypes.string,
-    date: PropTypes.string,
-    technique: PropTypes.string,
-    description: PropTypes.string,
-    height: PropTypes.number,
-    width: PropTypes.number,
-    length: PropTypes.number,
-  }).isRequired,
-  type: PropTypes.string.isRequired,
-  srcList: PropTypes.array.isRequired,
+  itemObject: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
