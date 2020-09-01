@@ -434,6 +434,10 @@ ul {
   text-shadow: none;
 }
 
+button::selection, img::selection, button:focus, img:focus {
+  background: none;
+}
+
 .hidden {
   display: none;
 }

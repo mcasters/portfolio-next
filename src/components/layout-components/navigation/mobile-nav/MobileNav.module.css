@@ -65,17 +65,17 @@ Menu
       max-width: 30px;
     }
   }
+}
 
-  .name {
-    text-align: center;
-    font-size: var(--font-size-minus);
-    letter-spacing: 1em;
-    white-space: pre;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-  }
+.name {
+  text-align: center;
+  font-size: var(--font-size-minus);
+  letter-spacing: 1em;
+  white-space: pre;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .open {

@@ -86,8 +86,8 @@ function MobileNav() {
             </li>
           );
         })}
-        <p className={s.name}>Marion Casters</p>
       </ul>
+      <p className={s.name}>Marion Casters</p>
     </nav>
   );
 }
