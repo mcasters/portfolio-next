@@ -4,28 +4,30 @@ import React from 'react';
 import ITEM from '../../../constants/itemConstant';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import s from './Item.module.css';
-import Image from '../image/Image';
+import Images from '../images/Images';
 import { createDateFormat } from '../../../tools/utils';
 
-function Item({ item, type }) {
+function Item({ itemObject }) {
   const email = GLOBAL_CONSTANTS.EMAIL;
 
   return (
     <article className={s.itemContainer}>
       <h2 className={s.itemTitle}>
-        <cite>{item.title}</cite>
+        <cite>{itemObject.title}</cite>
       </h2>
-      <Image type={type} title={item.title} />
+      <Images itemObject={itemObject} />
       <figcaption>
-        <time dateTime={item.date} className={s.noWrap}>
-          {createDateFormat(item.date)}
+        <time dateTime={itemObject.date} className={s.noWrap}>
+          {createDateFormat(itemObject.date)}
         </time>
         <span className={s.spacer}> | </span>
-        <p className={s.noWrap}>{item.technique}</p>
+        <p className={s.noWrap}>{itemObject.technique}</p>
         <span className={s.spacer}> | </span>
         <p className={s.noWrap}>
-          {item.height} x {item.width}
-          {type === ITEM.SCULPTURE.TYPE && ` x ${item.length}`} cm
+          {itemObject.height} x {itemObject.width}
+          {itemObject.type === ITEM.SCULPTURE.TYPE &&
+            ` x ${itemObject.length}`}{' '}
+          cm
         </p>
       </figcaption>
       <address className={s.email}>{email}</address>
@@ -34,16 +36,7 @@ function Item({ item, type }) {
 }
 
 Item.propTypes = {
-  item: PropTypes.shape({
-    title: PropTypes.string,
-    date: PropTypes.string,
-    technique: PropTypes.string,
-    description: PropTypes.string,
-    height: PropTypes.number,
-    width: PropTypes.number,
-    length: PropTypes.number,
-  }).isRequired,
-  type: PropTypes.string.isRequired,
+  itemObject: PropTypes.object.isRequired,
 };
 
 export default Item;

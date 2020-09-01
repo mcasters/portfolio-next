@@ -3,22 +3,20 @@ import PropTypes from 'prop-types';
 
 import CONSTANT from '../../../constants/layout';
 import LightBox from '../../react-lightbox/LightBoxProvider';
-import Item from '../../../data/lib/Item';
 import useViewport from '../../hooks/useViewport';
-import s from './Image.module.css';
+import s from './Images.module.css';
 
-function Image({ title, type }) {
-  const { width } = useViewport();
+function Images({ itemObject }) {
+  const { windowWidth } = useViewport();
   const [isOpen, setIsOpen] = useState(false);
 
-  const isLessThanSM = width < CONSTANT.BREAKPOINT.SM;
-  const item = new Item(title, type);
+  const isLessThanSM = windowWidth < CONSTANT.BREAKPOINT.SM;
 
   const getCurrentPaths = () =>
-    isLessThanSM ? item.getSMPaths() : item.getMDPaths();
+    isLessThanSM ? itemObject.getSMPaths() : itemObject.getMDPaths();
 
   const getLightboxPaths = () =>
-    isLessThanSM ? item.getMDPaths() : item.getMainPaths();
+    isLessThanSM ? itemObject.getMDPaths() : itemObject.getMainPaths();
 
   const closeLightbox = () => {
     setIsOpen(false);
@@ -31,17 +29,19 @@ function Image({ title, type }) {
   return (
     <>
       <figure>
-        {getCurrentPaths().map(src => {
+        {getCurrentPaths().map((src) => {
           return (
             <button
               type="button"
               onClick={openLightbox}
-              className={item.isSculpture ? s.sculptureButton : s.imageButton}
+              className={
+                itemObject.isSculpture ? s.sculptureButton : s.imageButton
+              }
               key={src}
             >
               <img
                 src={`${src}`}
-                alt={item.getAltImage()}
+                alt={itemObject.getAltImage()}
                 className={s.image}
               />
             </button>
@@ -50,7 +50,7 @@ function Image({ title, type }) {
       </figure>
       {isOpen && typeof window !== 'undefined' && (
         <LightBox
-          title={title}
+          title={itemObject.title}
           images={getLightboxPaths()}
           onClose={closeLightbox}
         />
@@ -59,9 +59,8 @@ function Image({ title, type }) {
   );
 }
 
-Image.propTypes = {
-  title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+Images.propTypes = {
+  itemObject: PropTypes.object.isRequired,
 };
 
-export default Image;
+export default Images;

@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 
-import isAuthenticated from '../../lib/authUtils';
-import { addImages } from '../../lib/imageUtils';
+import isAuthenticated from '../../utils/authUtils';
+import { addImages } from '../../utils/writeImageUtils';
 import { Content } from '../../models';
 import CONTENT from '../../../constants/content';
 
