@@ -36,15 +36,15 @@ function MobileNav() {
     },
   };
 
-  const toggle = e => {
+  const toggle = (e) => {
     e.preventDefault();
     setMenuOpen(!isOpen);
   };
 
   return (
-    <div className={s.container}>
+    <nav className={s.menu}>
       <button
-        className={s.buttonContainer}
+        className={s.menuButton}
         onClick={toggle}
         aria-label="Menu"
         tabIndex={0}
@@ -54,16 +54,16 @@ function MobileNav() {
         <div style={{ ...styles.line, ...styles.lineMiddle }} />
         <div style={{ ...styles.line, ...styles.lineBottom }} />
       </button>
-      <div
+      <ul
         ref={menuRef}
         className={
-          isOpen ? `${s.menuContainer} ${s.open}` : `${s.menuContainer}`
+          isOpen ? `${s.menuList} ${s.open}` : `${s.menuList}`
         }
       >
-        <nav className={s.menuList}>
-          {menuItems.map((item) => {
-            if (item.NAME === 'Home')
-              return (
+        {menuItems.map((item) => {
+          if (item.NAME === 'Home')
+            return (
+              <li>
                 <Link key={item.NAME} href={item.PATH}>
                   <a className={s.navHomeLink} onClick={close}>
                     <img
@@ -74,19 +74,21 @@ function MobileNav() {
                     />
                   </a>
                 </Link>
-              );
-            return (
+              </li>
+            );
+          return (
+            <li>
               <Link key={item.NAME} href={item.PATH}>
                 <a className={s.item} onClick={close}>
                   {item.NAME}
                 </a>
               </Link>
-            );
-          })}
-          <p className={s.name}>Marion Casters</p>
-        </nav>
-      </div>
-    </div>
+            </li>
+          );
+        })}
+        <p className={s.name}>Marion Casters</p>
+      </ul>
+    </nav>
   );
 }
 

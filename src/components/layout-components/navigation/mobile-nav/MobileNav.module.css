@@ -1,7 +1,7 @@
 /*
 Navigation
  */
-.container {
+.menu {
   position: absolute;
   top: 0;
   left: 0;
@@ -17,7 +17,7 @@ Navigation
 /*
 Button
  */
-.buttonContainer {
+.menuButton {
   position: fixed;
   top: 8px;
   height: 32px;
@@ -31,7 +31,7 @@ Button
 }
 
 @media (--sm) {
-  .buttonContainer {
+  .menuButton {
     top: 16px;
     left: 12px;
   }
@@ -40,20 +40,17 @@ Button
 /*
 Menu
  */
-.menuContainer {
+.menuList {
   position: fixed;
   top: 0;
   height: 100vh;
   width: 250px;
+  padding: 6rem 3rem 0;
   background-color: black;
   opacity: 0.9;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   overflow: auto;
-
-  .menuList {
-    padding: 6rem 3rem 0;
-  }
 
   .item {
     display: block;

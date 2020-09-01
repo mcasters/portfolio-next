@@ -13,29 +13,38 @@ export default function DesktopNav({ isHome }) {
     <aside className={s.aside}>
       <div className={isHome ? [s.bar, s.homeBar].join(' ') : s.bar}> </div>
       <nav className={s.desktopNav}>
-        {menuItems.map((item) => {
-          if (item.NAME === 'Home')
+        <ul>
+          {menuItems.map((item) => {
+            if (item.NAME === 'Home')
+              return (
+                <li>
+                  <Link href={item.PATH} key={item.NAME}>
+                    <a className={s.linkHome}>
+                      <img
+                        src="/logo-45.png"
+                        alt="Signature de Marion Casters"
+                      />
+                    </a>
+                  </Link>
+                </li>
+              );
             return (
-              <Link href={item.PATH} key={item.NAME}>
-                <a className={s.linkHome}>
-                  <img src="/logo-45.png" alt="Signature de Marion Casters" />
-                </a>
-              </Link>
+              <li>
+                <Link href={item.PATH} key={item.NAME}>
+                  <a
+                    className={
+                      router.pathname === item.PATH
+                        ? `${s.link} ${s.active}`
+                        : `${s.link}`
+                    }
+                  >
+                    {item.NAME}
+                  </a>
+                </Link>
+              </li>
             );
-          return (
-            <Link href={item.PATH} key={item.NAME}>
-              <a
-                className={
-                  router.pathname === item.PATH
-                    ? `${s.link} ${s.active}`
-                    : `${s.link}`
-                }
-              >
-                {item.NAME}
-              </a>
-            </Link>
-          );
-        })}
+          })}
+        </ul>
       </nav>
     </aside>
   );

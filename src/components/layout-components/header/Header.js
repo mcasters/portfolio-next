@@ -10,20 +10,14 @@ function Header({ isHome }) {
   const title = GLOB_CONST.SITE_TITLE;
 
   return isHome ? (
-    <header>
-      <div className={s.homeContainer}>
-        <h1>{title}</h1>
-      </div>
+    <header className={s.homeContainer}>
+      <h1>{title}</h1>
     </header>
   ) : (
-    <header>
-      <div
-        className={
-          scrollY > 0 ? `${s.container} ${s.sticky}` : `${s.container}`
-        }
-      >
-        <h1>{title}</h1>
-      </div>
+    <header
+      className={scrollY > 0 ? `${s.container} ${s.sticky}` : `${s.container}`}
+    >
+      <h1>{title}</h1>
     </header>
   );
 }
