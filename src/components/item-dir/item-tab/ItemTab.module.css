@@ -5,7 +5,7 @@
 .buttonLink {
   font-family: var(--font-family-base) !important;
   font-size: var(--font-size-current-plus-plus);
-  color: var(--link-color);
+  color: var(--link-color-dark);
   padding: 2px 5px;
   display: inline;
   margin: 0;
