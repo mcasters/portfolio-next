@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import Modal from 'react-modal';
 
 import DayPicker from '../../daypicker/DayPicker';
-import ITEM_CONSTANT from '../../../../../constants/itemConstant';
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../alert-context/AlertContext';
 import { ALL_ITEMS } from '../../../../../data/graphql/api/queries';
@@ -14,7 +13,7 @@ import {
 } from '../../../../../data/graphql/api/client-side/query-graphql';
 import {
   canSubmitData,
-  getImagePreviewUrls,
+  getPreviewUrls,
   uploadTempImages,
 } from '../../../utils/itemFormUtils';
 
@@ -34,22 +33,17 @@ const customStyles = {
 
 Modal.setAppElement('#__next');
 
-function UpdateForm({ itemObject, onClose }) {
+function UpdateForm({ itemObject, close }) {
   const [itemData, setItemData] = useState(itemObject.getItemData());
-  const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState([]);
   const triggerAlert = useAlert();
-  const [canSubmit, setCanSubmit] = useState(false);
-
+  const isSculpture = itemObject.isSculpture;
+  const canSubmit = canSubmitData(itemData, isSculpture);
+  const showModal = true;
   const { mutate } = useSWR([ALL_ITEMS, itemObject.type], allItemsRequest);
 
-  const showModal = true;
-
-  useEffect(() => {
-    setCanSubmit(canSubmitData(itemData));
-  }, [itemData]);
-
   const handleCloseModal = () => {
-    onClose();
+    close();
   };
 
   const handleChange = (e) => {
@@ -66,33 +60,39 @@ function UpdateForm({ itemObject, onClose }) {
     setItemData(Object.assign({}, itemData, { date }));
   };
 
-  const handleImageChange = async (e, index) => {
+  const handleImageChange = (i) => (e) => {
     e.preventDefault();
     const file = e.target.files[0];
 
-    const updatedImagesPreview = await getImagePreviewUrls(
-      imagePreviewUrls,
-      file,
-      index,
-    );
-    setImagePreviewUrls(updatedImagesPreview);
-    setItemData(Object.assign({}, itemData, (itemData.pictures[index] = file)));
+    const newPreviewUrls = [...previewUrls];
+    const reader = new FileReader();
+    reader.onload = () => {
+      newPreviewUrls[i] = reader.result;
+      setPreviewUrls(newPreviewUrls);
+    };
+    reader.readAsDataURL(file);
+
+    const newPictures = [...itemData.pictures];
+    newPictures[i] = file;
+    setItemData(Object.assign({}, itemData, { pictures: newPictures }));
   };
 
-  const deleteTempPictures = (e, index) => {
+  const deleteTempPicture = (i) => (e) => {
     e.preventDefault();
-    setItemData(Object.assign({}, itemData, (itemData.pictures[index] = '')));
 
-    const copyPreviewUrls = imagePreviewUrls;
-    copyPreviewUrls[index] = '';
-    setImagePreviewUrls(copyPreviewUrls);
+    const newPreviewUrls = [...previewUrls];
+    const newPictures = [...itemData.pictures];
+    newPreviewUrls[i] = '';
+    newPictures[i] = '';
+    setPreviewUrls(newPreviewUrls);
+    setItemData(Object.assign({}, itemData, { pictures: newPictures }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      if (itemData.pictures.length > 0) await uploadTempImages(itemData);
+      await uploadTempImages(itemData, isSculpture);
 
       itemObject.updateFromItemData(itemData);
       const graphqlItem = itemObject.getGraphqlObject();
@@ -102,7 +102,7 @@ function UpdateForm({ itemObject, onClose }) {
       if (data) {
         triggerAlert(`${data.updateItem.title} modifié`, false);
         mutate();
-        onClose();
+        close();
       } else
         triggerAlert(
           error ? error.message : "Echec de modification de l'item",
@@ -132,7 +132,10 @@ function UpdateForm({ itemObject, onClose }) {
           onChange={handleChange}
         />
         <div className={s.DayInputContainer}>
-          <DayPicker onDayChange={handleChangeDate} />
+          <DayPicker
+            onDayChange={handleChangeDate}
+            selectedDay={itemData.date}
+          />
         </div>
         <input
           className={s.inputL}
@@ -166,7 +169,7 @@ function UpdateForm({ itemObject, onClose }) {
           value={itemData.width}
           onChange={handleChange}
         />
-        {itemObject.isSculpture && (
+        {isSculpture && (
           <input
             className={s.inputL}
             placeholder="Longueur (cm)"
@@ -180,10 +183,10 @@ function UpdateForm({ itemObject, onClose }) {
           {itemObject
             .getSMPaths()
             .map(
-              (url, i) =>
+              (url) =>
                 url !== '' && (
                   <img
-                    key={`image${i}`}
+                    key={url.toString()}
                     src={url}
                     alt="Oeuvre de Marion Casters"
                     className={s.oldImagePreview}
@@ -191,63 +194,65 @@ function UpdateForm({ itemObject, onClose }) {
                 ),
             )}
         </div>
-        <input
-          key="file1"
-          type="file"
-          accept="image/jpeg, image/jpg"
-          onChange={(e) => handleImageChange(e, 0)}
-        />
-        {itemObject.isSculpture && (
-          <div>
-            <input
-              key="file2"
-              type="file"
-              accept="image/jpeg, image/jpg"
-              onChange={(e) => handleImageChange(e, 1)}
-            />
-            <input
-              key="file3"
-              type="file"
-              accept="image/jpeg, image/jpg"
-              onChange={(e) => handleImageChange(e, 2)}
-            />
-            <input
-              key="file4"
-              type="file"
-              accept="image/jpeg, image/jpg"
-              onChange={(e) => handleImageChange(e, 3)}
-            />
-          </div>
-        )}
-        {imagePreviewUrls.length > 0 && imagePreviewUrls.map(
-          (url, index) =>
+        <div>
+          <input
+            className={s.uploadButton}
+            type="file"
+            accept="image/jpeg, image/jpg"
+            onChange={handleImageChange(0)}
+          />
+          {isSculpture && (
+            <>
+              <input
+                className={s.uploadButton}
+                type="file"
+                accept="image/jpeg, image/jpg"
+                onChange={handleImageChange(1)}
+              />
+              <input
+                className={s.uploadButton}
+                type="file"
+                accept="image/jpeg, image/jpg"
+                onChange={handleImageChange(2)}
+              />
+              <input
+                className={s.uploadButton}
+                type="file"
+                accept="image/jpeg, image/jpg"
+                onChange={handleImageChange(3)}
+              />
+            </>
+          )}
+        </div>
+        {previewUrls.map(
+          (url, i) =>
             url !== '' && (
-              <>
+              <div className={s.imagePreviewContainer}>
                 <img
-                  key={`imagePreview${index}`}
+                  key={`${i}button`}
                   src={url}
                   alt="Sculpture de Marion Casters"
                   className={s.imagePreview}
                 />
                 <button
-                  key={`buttonPreview${index}`}
-                  className={`${s.updateButton} button`}
-                  onClick={() => deleteTempPictures(index)}
+                  key={url}
+                  className="button"
+                  onClick={deleteTempPicture(i)}
                 >
                   Supprimer
                 </button>
-              </>
+              </div>
             ),
         )}
         <div>
           {canSubmit && (
-            <button className={`${s.updateButton} button`} type="submit">
+            <button className="button" type="submit">
               OK
             </button>
           )}
           <button
             type="button"
-            className={`${s.updateButton} button`}
+            className={`${s.cancelButton} button`}
             onClick={handleCloseModal}
           >
             Annuler
@@ -260,7 +265,7 @@ function UpdateForm({ itemObject, onClose }) {
 
 UpdateForm.propTypes = {
   itemObject: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
 };
 
 export default UpdateForm;

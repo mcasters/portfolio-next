@@ -1,5 +1,5 @@
 .updateTitle {
-  padding-bottom: 20px;
+  padding: 10px;
 }
 
 .inputL {
@@ -27,13 +27,21 @@
   margin-bottom: 1em;
 }
 
-.imagePreview {
+.uploadButton {
   width: 25%;
+  display: inline-block;
+}
+
+.imagePreviewContainer {
+  display: inline-block;
+  width: 25%;
+}
+
+.imagePreview {
+  width: 100%;
   margin-bottom: 1em;
 }
 
-.updateButton {
-  margin: 40px 5% 10px;
-  width: 40%;
-  display: inline-block;
+.cancelButton {
+  margin-bottom: 0;
 }

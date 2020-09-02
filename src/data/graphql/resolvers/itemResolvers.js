@@ -52,10 +52,6 @@ export default {
 
       const oldTitle = oldItem.title;
       if (hasImages) {
-        const imageDeleted = await deleteItemImages(oldTitle, type);
-        if (!imageDeleted)
-          throw new Error(`Echec de la suppression des anciennes images`);
-
         const res = await addImages(title, type);
         if (!res) throw new Error("Erreur à l'écriture des nouveaux fichiers");
       } else if (oldTitle !== title) {

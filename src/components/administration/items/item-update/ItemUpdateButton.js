@@ -21,7 +21,7 @@ function ItemUpdateButton({ itemObject }) {
       <button type="button" onClick={toggle} className={`${s.command} button`}>
         <FaPen />
       </button>
-      {openUpdate && <UpdateForm itemObject={itemObject} onClose={close} />}
+      {openUpdate && <UpdateForm itemObject={itemObject} close={close} />}
     </>
   );
 }

@@ -1,4 +1,5 @@
 import ITEM from '../../constants/itemConstant';
+import { picturesIsFull } from '../../components/administration/utils/itemFormUtils';
 const virtualLibraryPath = '/images';
 
 class ItemObject {
@@ -109,14 +110,13 @@ class ItemObject {
       height: this.height,
       width: this.width,
       length: this.length,
-      isSculpture: this.isSculpture,
-      pictures: this.isSculpture ? [4] : [1],
+      pictures: [],
     };
   };
 
   updateFromItemData = (itemData) => {
     this.setUpdateAttributes(itemData);
-    this.hasImages = itemData.pictures.length > 0;
+    this.hasImages = picturesIsFull(itemData.pictures, this.isSculpture);
   };
 
   getGraphqlObject = () => {

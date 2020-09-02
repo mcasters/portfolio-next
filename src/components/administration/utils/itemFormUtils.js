@@ -1,5 +1,4 @@
-export const canSubmitData = (itemData) => {
-  const isSculpture = itemData.isSculpture;
+export const canSubmitData = (itemData, isSculpture) => {
   const haveMain = !!(
     itemData.title &&
     itemData.date &&
@@ -8,24 +7,35 @@ export const canSubmitData = (itemData) => {
     itemData.width
   );
 
-  const picturesToCheck = itemData.pictures.length > 0;
-  const picturesOK = picturesToCheck
-    ? (isSculpture && itemData.pictures.length === 4) ||
-      (!itemData.isSculpture && itemData.pictures.length === 1)
-    : true;
+  const picturesOK = picturesIsFullOrEmpty(itemData.pictures, isSculpture);
 
   return (
     picturesOK &&
-    ((!itemData.isSculpture && haveMain) ||
-      !!(itemData.isSculpture && haveMain && itemData.length))
+    ((!isSculpture && haveMain) ||
+      !!(isSculpture && haveMain && itemData.length))
   );
 };
 
-export async function uploadTempImages(itemData) {
-    let i = 1;
-    for (const file of itemData.pictures) {
-      const filename = itemData.isSculpture
-        ? `${itemData.title}_${i}.jpg`
+export const picturesIsFullOrEmpty = (pictures, isSculpture) => {
+  return picturesIsFull(pictures, isSculpture) || picturesIsEmpty(pictures);
+};
+
+export const picturesIsFull = (pictures, isSculpture) => {
+  const full = (picture) => picture !== undefined && picture !== '';
+  const sizeOk = isSculpture ? pictures.length === 4 : pictures.length === 1;
+  return pictures.every(full) && sizeOk;
+};
+
+const picturesIsEmpty = (pictures) => {
+  const empty = (picture) => picture === undefined || picture === '';
+  return pictures.length === 0 || pictures.every(empty);
+};
+
+export async function uploadTempImages(itemData, isSculpture) {
+  if (picturesIsFull(itemData.pictures, isSculpture)) {
+    for (const [i, file] of itemData.pictures.entries()) {
+      const filename = isSculpture
+        ? `${itemData.title}_${i + 1}.jpg`
         : `${itemData.title}.jpg`;
 
       await fetch('/api/temp-image', {
@@ -36,18 +46,14 @@ export async function uploadTempImages(itemData) {
         },
         body: file,
       }).catch((e) => {
-        throw e;
+        throw e
       });
-      i++;
     }
+  }
 }
 
-export const getImagePreviewUrls = async (imagePreviewUrls, file, index) => {
-  const copy = imagePreviewUrls;
+export const getPreviewUrls = async (file) => {
   const reader = new FileReader();
-  reader.onload = () => {
-    copy.splice(index, 1, reader.result);
-  };
-  await reader.readAsDataURL(file);
-  return copy;
+  reader.readAsDataURL(file);
+  reader.onload = () => reader.result;
 };
