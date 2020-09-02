@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import Modal from 'react-modal';
 
-import DayPicker from '../../daypicker/DayPicker';
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../alert-context/AlertContext';
 import { ALL_ITEMS } from '../../../../../data/graphql/api/queries';
@@ -11,11 +10,10 @@ import {
   allItemsRequest,
   updateItemRequest,
 } from '../../../../../data/graphql/api/client-side/query-graphql';
-import {
-  canSubmitData,
-  getPreviewUrls,
-  uploadTempImages,
-} from '../../../utils/itemFormUtils';
+import { canSubmitData, uploadTempImages } from '../../../utils/itemFormUtils';
+import PreviewPartForm from './PreviewPartForm';
+import ImagePartForm from './ImagePartForm';
+import DataPartForm from './DataPartForm';
 
 const customStyles = {
   overlay: {
@@ -123,127 +121,20 @@ function UpdateForm({ itemObject, close }) {
     >
       <h1 className={s.updateTitle}>Modification</h1>
       <form className="formGroup" onSubmit={handleSubmit}>
-        <input
-          className={s.inputL}
-          placeholder="Titre"
-          name="title"
-          type="text"
-          value={itemData.title}
-          onChange={handleChange}
+        <DataPartForm
+          itemData={itemData}
+          handleChange={handleChange}
+          handleChangeDate={handleChangeDate}
+          isSculpture={isSculpture}
         />
-        <div className={s.DayInputContainer}>
-          <DayPicker
-            onDayChange={handleChangeDate}
-            selectedDay={itemData.date}
-          />
-        </div>
-        <input
-          className={s.inputL}
-          placeholder="Technique"
-          name="technique"
-          type="text"
-          value={itemData.technique}
-          onChange={handleChange}
+        <ImagePartForm
+          itemObject={itemObject}
+          handleImageChange={handleImageChange}
         />
-        <input
-          className={s.inputR}
-          placeholder="Description"
-          name="description"
-          type="text"
-          value={itemData.description}
-          onChange={handleChange}
+        <PreviewPartForm
+          previewUrls={previewUrls}
+          deleteTempPicture={deleteTempPicture}
         />
-        <input
-          className={s.inputL}
-          placeholder="Hauteur (cm)"
-          name="height"
-          type="number"
-          value={itemData.height}
-          onChange={handleChange}
-        />
-        <input
-          className={s.inputR}
-          placeholder="Largeur (cm)"
-          name="width"
-          type="number"
-          value={itemData.width}
-          onChange={handleChange}
-        />
-        {isSculpture && (
-          <input
-            className={s.inputL}
-            placeholder="Longueur (cm)"
-            name="length"
-            type="number"
-            value={itemData.length}
-            onChange={handleChange}
-          />
-        )}
-        <div className={s.oldImageContainer}>
-          {itemObject
-            .getSMPaths()
-            .map(
-              (url) =>
-                url !== '' && (
-                  <img
-                    key={url.toString()}
-                    src={url}
-                    alt="Oeuvre de Marion Casters"
-                    className={s.oldImagePreview}
-                  />
-                ),
-            )}
-        </div>
-        <div>
-          <input
-            className={s.uploadButton}
-            type="file"
-            accept="image/jpeg, image/jpg"
-            onChange={handleImageChange(0)}
-          />
-          {isSculpture && (
-            <>
-              <input
-                className={s.uploadButton}
-                type="file"
-                accept="image/jpeg, image/jpg"
-                onChange={handleImageChange(1)}
-              />
-              <input
-                className={s.uploadButton}
-                type="file"
-                accept="image/jpeg, image/jpg"
-                onChange={handleImageChange(2)}
-              />
-              <input
-                className={s.uploadButton}
-                type="file"
-                accept="image/jpeg, image/jpg"
-                onChange={handleImageChange(3)}
-              />
-            </>
-          )}
-        </div>
-        {previewUrls.map(
-          (url, i) =>
-            url !== '' && (
-              <div className={s.imagePreviewContainer}>
-                <img
-                  key={`${i}button`}
-                  src={url}
-                  alt="Sculpture de Marion Casters"
-                  className={s.imagePreview}
-                />
-                <button
-                  key={url}
-                  className="button"
-                  onClick={deleteTempPicture(i)}
-                >
-                  Supprimer
-                </button>
-              </div>
-            ),
-        )}
         <div>
           {canSubmit && (
             <button className="button" type="submit">

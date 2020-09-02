@@ -2,46 +2,6 @@
   padding: 10px;
 }
 
-.inputL {
-  width: 49%;
-  margin-right: 1%;
-}
-
-.DayInputContainer {
-  display: inline-block;
-  width: 49%;
-  margin-left: 1%;
-}
-
-.inputR {
-  width: 49%;
-  margin-left: 1%;
-}
-
-.oldImageContainer {
-  padding: 2em 0;
-}
-
-.oldImagePreview {
-  width: 25%;
-  margin-bottom: 1em;
-}
-
-.uploadButton {
-  width: 25%;
-  display: inline-block;
-}
-
-.imagePreviewContainer {
-  display: inline-block;
-  width: 25%;
-}
-
-.imagePreview {
-  width: 100%;
-  margin-bottom: 1em;
-}
-
 .cancelButton {
   margin-bottom: 0;
 }

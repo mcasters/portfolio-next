@@ -1,0 +1,15 @@
+.inputL {
+  width: 49%;
+  margin-right: 1%;
+}
+
+.DayInputContainer {
+  display: inline-block;
+  width: 49%;
+  margin-left: 1%;
+}
+
+.inputR {
+  width: 49%;
+  margin-left: 1%;
+}

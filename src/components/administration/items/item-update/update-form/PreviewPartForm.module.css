@@ -1,0 +1,9 @@
+.imagePreviewContainer {
+  display: inline-block;
+  width: 25%;
+}
+
+.imagePreview {
+  width: 100%;
+  margin-bottom: 1em;
+}
