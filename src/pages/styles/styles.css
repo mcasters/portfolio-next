@@ -533,7 +533,7 @@ input[type='file'] {
 @media (--sm) {
   a,
   .loginLink {
-    color: var(--link-color);
+    color: var(--link-color-dark);
     transition: color 0.5s;
   }
 

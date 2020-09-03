@@ -1,6 +1,6 @@
 import ITEM from '../../constants/itemConstant';
 import { picturesIsFull } from '../../components/administration/utils/itemFormUtils';
-const virtualLibraryPath = '/images';
+const libraryPath = '/images';
 
 class ItemObject {
   constructor(item, type) {
@@ -61,21 +61,21 @@ class ItemObject {
   getMainPaths = () => {
     return this.filenames.map(
       (filename) =>
-        `${virtualLibraryPath}${this.constDatas.IMAGE.PATH}/${filename}`,
+        `${libraryPath}${this.constDatas.IMAGE.PATH}/${filename}`,
     );
   };
 
   getMDPaths = () => {
     return this.filenames.map(
       (filename) =>
-        `${virtualLibraryPath}${this.constDatas.IMAGE.PATH_MD}/${filename}`,
+        `${libraryPath}${this.constDatas.IMAGE.PATH_MD}/${filename}`,
     );
   };
 
   getSMPaths = () => {
     return this.filenames.map(
       (filename) =>
-        `${virtualLibraryPath}${this.constDatas.IMAGE.PATH_SM}/${filename}`,
+        `${libraryPath}${this.constDatas.IMAGE.PATH_SM}/${filename}`,
     );
   };
 
