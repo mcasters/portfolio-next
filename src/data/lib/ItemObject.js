@@ -1,5 +1,5 @@
 import ITEM from '../../constants/itemConstant';
-import { picturesIsFull } from '../../components/administration/utils/itemFormUtils';
+import { picturesIsFull } from '../utils/itemFormUtils';
 const libraryPath = '/images';
 
 class ItemObject {
@@ -110,13 +110,13 @@ class ItemObject {
       height: this.height,
       width: this.width,
       length: this.length,
-      pictures: [],
+      pictures: this.isSculpture ? ['', '', '', ''] : [''],
     };
   };
 
   updateFromItemData = (itemData) => {
     this.setUpdateAttributes(itemData);
-    this.hasImages = picturesIsFull(itemData.pictures, this.isSculpture);
+    this.hasImages = picturesIsFull(itemData.pictures);
   };
 
   getGraphqlObject = () => {

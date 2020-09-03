@@ -1,6 +1,13 @@
+.uploadButton {
+  width: 25%;
+  display: inline-block;
+}
+
 .imagePreviewContainer {
   display: inline-block;
   width: 25%;
+  vertical-align: top;
+  text-align: center;
 }
 
 .imagePreview {

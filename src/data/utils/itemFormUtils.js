@@ -7,7 +7,7 @@ export const canSubmitData = (itemData, isSculpture) => {
     itemData.width
   );
 
-  const picturesOK = picturesIsFullOrEmpty(itemData.pictures, isSculpture);
+  const picturesOK = picturesIsFullOrEmpty(itemData.pictures);
 
   return (
     picturesOK &&
@@ -16,19 +16,18 @@ export const canSubmitData = (itemData, isSculpture) => {
   );
 };
 
-export const picturesIsFullOrEmpty = (pictures, isSculpture) => {
-  return picturesIsFull(pictures, isSculpture) || picturesIsEmpty(pictures);
+export const picturesIsFullOrEmpty = (pictures) => {
+  return picturesIsFull(pictures) || picturesIsEmpty(pictures);
 };
 
-export const picturesIsFull = (pictures, isSculpture) => {
-  const full = (picture) => picture !== undefined && picture !== '';
-  const sizeOk = isSculpture ? pictures.length === 4 : pictures.length === 1;
-  return pictures.every(full) && sizeOk;
+export const picturesIsFull = (pictures) => {
+  const full = (picture) => picture !== '';
+  return pictures.every(full);
 };
 
-const picturesIsEmpty = (pictures) => {
-  const empty = (picture) => picture === undefined || picture === '';
-  return pictures.length === 0 || pictures.every(empty);
+export const picturesIsEmpty = (pictures) => {
+  const empty = (picture) => picture === '';
+  return pictures.every(empty);
 };
 
 export async function uploadTempImages(itemData, isSculpture) {

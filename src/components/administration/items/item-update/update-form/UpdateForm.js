@@ -10,7 +10,7 @@ import {
   allItemsRequest,
   updateItemRequest,
 } from '../../../../../data/graphql/api/client-side/query-graphql';
-import { canSubmitData, uploadTempImages } from '../../../utils/itemFormUtils';
+import { canSubmitData, uploadTempImages } from '../../../../../data/utils/itemFormUtils';
 import PreviewPartForm from './PreviewPartForm';
 import ImagePartForm from './ImagePartForm';
 import DataPartForm from './DataPartForm';
@@ -33,7 +33,6 @@ Modal.setAppElement('#__next');
 
 function UpdateForm({ itemObject, close }) {
   const [itemData, setItemData] = useState(itemObject.getItemData());
-  const [previewUrls, setPreviewUrls] = useState([]);
   const triggerAlert = useAlert();
   const isSculpture = itemObject.isSculpture;
   const canSubmit = canSubmitData(itemData, isSculpture);
@@ -58,31 +57,15 @@ function UpdateForm({ itemObject, close }) {
     setItemData(Object.assign({}, itemData, { date }));
   };
 
-  const handleImageChange = (i) => (e) => {
-    e.preventDefault();
-    const file = e.target.files[0];
-
-    const newPreviewUrls = [...previewUrls];
-    const reader = new FileReader();
-    reader.onload = () => {
-      newPreviewUrls[i] = reader.result;
-      setPreviewUrls(newPreviewUrls);
-    };
-    reader.readAsDataURL(file);
-
+  const handleImageChange = (index, file) => {
     const newPictures = [...itemData.pictures];
-    newPictures[i] = file;
+    newPictures[index] = file;
     setItemData(Object.assign({}, itemData, { pictures: newPictures }));
   };
 
-  const deleteTempPicture = (i) => (e) => {
-    e.preventDefault();
-
-    const newPreviewUrls = [...previewUrls];
+  const deleteTempPicture = (index) => {
     const newPictures = [...itemData.pictures];
-    newPreviewUrls[i] = '';
-    newPictures[i] = '';
-    setPreviewUrls(newPreviewUrls);
+    newPictures[index] = '';
     setItemData(Object.assign({}, itemData, { pictures: newPictures }));
   };
 
@@ -129,10 +112,10 @@ function UpdateForm({ itemObject, close }) {
         />
         <ImagePartForm
           itemObject={itemObject}
-          handleImageChange={handleImageChange}
         />
         <PreviewPartForm
-          previewUrls={previewUrls}
+          isSculpture={isSculpture}
+          handleImageChange={handleImageChange}
           deleteTempPicture={deleteTempPicture}
         />
         <div>
