@@ -24,7 +24,7 @@ function ItemRow({ itemObject }) {
         />
       </td>
       <td>
-        <ItemDeleteButton id={itemObject.id} type={itemObject.type} />
+        <ItemDeleteButton id={itemObject.getId()} type={itemObject.getType()} />
       </td>
       <td>
         <ItemUpdateButton itemObject={itemObject} />

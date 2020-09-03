@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Item from '../item/Item';
 import s from './ItemTab.module.css';
-import ItemObject from '../../../data/lib/ItemObject';
+import ItemObject from '../../../lib/ItemObject';
 
 function ItemTab({ year, type, data }) {
   const scrollTop = () => {
