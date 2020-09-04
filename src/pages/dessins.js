@@ -4,6 +4,7 @@ import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/api/queries';
 import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
 import ItemObject from '../lib/ItemObject';
+import ScrollTop from "../components/item-dir/ScrollTop/ScrollTop";
 
 const Dessins = ({ data }) => {
   return (
@@ -16,6 +17,7 @@ const Dessins = ({ data }) => {
             return <Item key={drawing.title} itemObject={itemObject} />;
           })}
       </section>
+      <ScrollTop />
     </Layout>
   );
 };

@@ -3,17 +3,21 @@ import CONST from '../constants/itemConstant';
 import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/api/queries';
 import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
-import ItemObject from "../lib/ItemObject";
+import ItemObject from '../lib/ItemObject';
+import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
 
 const Sculptures = ({ data }) => {
   return (
     <Layout>
-      <h1 className="hidden">{CONST.SCULPTURE.TITLE}</h1>
-      {data.allItems &&
-        data.allItems.map((sculpture) => {
-          const itemObject = new ItemObject(sculpture, CONST.SCULPTURE.TYPE);
-          return <Item key={sculpture.title} itemObject={itemObject} />;
-        })}
+      <section>
+        <h1 className="hidden">{CONST.SCULPTURE.TITLE}</h1>
+        {data.allItems &&
+          data.allItems.map((sculpture) => {
+            const itemObject = new ItemObject(sculpture, CONST.SCULPTURE.TYPE);
+            return <Item key={sculpture.title} itemObject={itemObject} />;
+          })}
+      </section>
+      <ScrollTop />
     </Layout>
   );
 };

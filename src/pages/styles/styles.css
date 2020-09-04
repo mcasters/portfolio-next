@@ -405,11 +405,34 @@ h2 {
   letter-spacing: 0.4em;
 }
 
-a {
-  color: var(--link-color);
+a,
+.buttonLink {
+  color: var(--link-color-dark);
   text-decoration: none;
-  transition: color 0.4s;
+  transition: color 0.5s;
   outline: none;
+}
+
+a:hover,
+.buttonLink:hover,
+a:focus,
+.buttonLink:focus {
+  color: var(--link-color-xdark);
+  transition: color 0.5s;
+}
+
+.buttonLink {
+  font-family: var(--font-family-base) !important;
+  font-size: var(--font-size-current-plus-plus);
+  color: var(--link-color-dark);
+  padding: 2px 5px;
+  display: inline;
+  margin: 0;
+  background: none;
+  border: none;
+  width: inherit;
+  line-height: inherit;
+  cursor: pointer;
 }
 
 li {
@@ -531,18 +554,6 @@ input[type='file'] {
 }
 
 @media (--sm) {
-  a,
-  .loginLink {
-    color: var(--link-color-dark);
-    transition: color 0.5s;
-  }
-
-  a:hover,
-  .loginLink:hover {
-    color: var(--link-color-xdark);
-    transition: color 0.5s;
-  }
-
   .listContainer {
     padding: 2.5em 10em 0;
   }

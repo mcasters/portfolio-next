@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import ITEM from '../../../constants/itemConstant';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
