@@ -1,4 +1,4 @@
-.imageButton,
+.noSculptureButton,
 .sculptureButton {
   padding: 0.2em;
   background-color: unset;
@@ -49,7 +49,6 @@
 @media (--xlg) {
   .image {
     max-width: 32vw;
-    //max-height: 52vh;
   }
 
   .sculptureButton .image {

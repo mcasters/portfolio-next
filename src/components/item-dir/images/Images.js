@@ -35,7 +35,9 @@ function Images({ itemObject }) {
               type="button"
               onClick={openLightbox}
               className={
-                itemObject.isSculpture ? s.sculptureButton : s.imageButton
+                itemObject.getIsSculpture()
+                  ? s.sculptureButton
+                  : s.noSculptureButton
               }
               key={src}
             >

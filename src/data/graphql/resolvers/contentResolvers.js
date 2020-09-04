@@ -8,7 +8,7 @@ export default {
     allContent: async () => await Content.findAll(),
     content: async (parent, { key }, _context, _info) =>
       await Content.findOne({
-        where: { key: key },
+        where: { key },
       }),
   },
 
@@ -20,12 +20,12 @@ export default {
       const { key, text } = contentInput;
 
       let content = await Content.findOne({
-        where: { key: key },
+        where: { key },
       });
       if (content) {
         await content.update({ text });
         content = await Content.findOne({
-          where: { key: key },
+          where: { key },
         });
       } else {
         content = await Content.create({

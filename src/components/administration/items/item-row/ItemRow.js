@@ -15,7 +15,7 @@ function ItemRow({ itemObject }) {
       <td>{itemObject.description}</td>
       <td>{itemObject.height}</td>
       <td>{itemObject.width}</td>
-      {itemObject.isSculpture && <td>{itemObject.length}</td>}
+      {itemObject.getIsSculpture() && <td>{itemObject.length}</td>}
       <td>
         <img
           src={`${itemObject.getSMPaths()[0]}`}
