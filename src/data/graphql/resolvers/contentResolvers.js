@@ -1,5 +1,3 @@
-import { Op } from 'sequelize';
-
 import isAuthenticated from '../../utils/authUtils';
 import { addImages } from '../../utils/writeImageUtils';
 import { Content } from '../../models';
@@ -10,7 +8,7 @@ export default {
     allContent: async () => await Content.findAll(),
     content: async (parent, { key }, _context, _info) =>
       await Content.findOne({
-        where: { key: { [Op.eq]: key } },
+        where: { key: key },
       }),
   },
 
@@ -22,14 +20,12 @@ export default {
       const { key, text } = contentInput;
 
       let content = await Content.findOne({
-        where: { key: { [Op.eq]: key } },
+        where: { key: key },
       });
       if (content) {
         await content.update({ text });
         content = await Content.findOne({
-          where: {
-            key: { [Op.eq]: key },
-          },
+          where: { key: key },
         });
       } else {
         content = await Content.create({

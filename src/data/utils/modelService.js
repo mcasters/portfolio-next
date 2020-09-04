@@ -1,4 +1,4 @@
-import { Sequelize, Op } from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 import ITEM from '../../constants/itemConstant';
 import { Drawing, Painting, Sculpture } from '../models';
@@ -33,13 +33,13 @@ class ModelService {
 
   getByName = async (title) => {
     return this.model.findOne({
-      where: { title: { [Op.eq]: title } },
+      where: { title: title },
     });
   };
 
   getById = async (id) => {
     return this.model.findOne({
-      where: { id: { [Op.eq]: id } },
+      where: { id: id },
     });
   };
 
@@ -93,14 +93,14 @@ class ModelService {
       { where: { id: { [Op.eq]: id } } },
     );
     const updatedItem = await this.model.findOne({
-      where: { id: { [Op.eq]: id } },
+      where: { id: id },
     });
     return updatedItem;
   };
 
   delete = async (id) => {
     return this.model.destroy({
-      where: { id: { [Op.eq]: id } },
+      where: { id: id },
     });
   };
 }
