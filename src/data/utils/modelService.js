@@ -31,15 +31,15 @@ class ModelService {
     return name in this.model;
   }
 
-  getByName = async title => {
+  getByName = async (title) => {
     return this.model.findOne({
-      where: { title },
+      where: { title: { [Op.eq]: title } },
     });
   };
 
-  getById = async id => {
+  getById = async (id) => {
     return this.model.findOne({
-      where: { id },
+      where: { id: { [Op.eq]: id } },
     });
   };
 
@@ -62,11 +62,11 @@ class ModelService {
     } else if (part === 1) {
       start = new Date(year, 0, 1);
       end = new Date(year, 5, 31);
-    } else if (part === 2){
+    } else if (part === 2) {
       start = new Date(year, 6, 1);
       end = new Date(year, 11, 31);
     } else {
-      throw new Error('wrong part')
+      throw new Error('wrong part');
     }
 
     return this.model.findAll({
@@ -80,7 +80,7 @@ class ModelService {
     });
   };
 
-  add = async data => {
+  add = async (data) => {
     return this.model.create(data);
   };
 
@@ -90,17 +90,17 @@ class ModelService {
         id,
         ...data,
       },
-      { where: { id } },
+      { where: { id: { [Op.eq]: id } } },
     );
     const updatedItem = await this.model.findOne({
-      where: { id },
+      where: { id: { [Op.eq]: id } },
     });
     return updatedItem;
   };
 
-  delete = async id => {
+  delete = async (id) => {
     return this.model.destroy({
-      where: { id },
+      where: { id: { [Op.eq]: id } },
     });
   };
 }

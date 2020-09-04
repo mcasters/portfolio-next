@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 
 import { User } from '../../models/index';
 import isAuthenticated from '../../utils/authUtils';
+import { Op } from 'sequelize';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -31,7 +32,7 @@ export default {
   Mutation: {
     async signUp(_parent, { signUpInput }, _context, _info) {
       const lookupUser = await User.findOne({
-        where: { username: signUpInput.username },
+        where: { username: { [Op.eq]: signUpInput.username } },
       });
 
       if (lookupUser) {
@@ -43,7 +44,7 @@ export default {
 
     async signIn(_parent, { signInInput }, context, _info) {
       const user = await User.findOne({
-        where: { username: signInInput.username },
+        where: { username: { [Op.eq]: signInInput.username } },
       });
       if (user && validPassword(user, signInInput.password)) {
         const token = jwt.sign(

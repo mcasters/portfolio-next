@@ -10,11 +10,7 @@ export default {
     allContent: async () => await Content.findAll(),
     content: async (parent, { key }, _context, _info) =>
       await Content.findOne({
-        where: {
-          key: {
-            [Op.eq]: key,
-          },
-        },
+        where: { key: { [Op.eq]: key } },
       }),
   },
 
@@ -26,21 +22,13 @@ export default {
       const { key, text } = contentInput;
 
       let content = await Content.findOne({
-        where: {
-          key: {
-            [Op.eq]: key,
-          },
-        },
+        where: { key: { [Op.eq]: key } },
       });
       if (content) {
-        await content.update({
-          text,
-        });
+        await content.update({ text });
         content = await Content.findOne({
           where: {
-            key: {
-              [Op.eq]: key,
-            },
+            key: { [Op.eq]: key },
           },
         });
       } else {
