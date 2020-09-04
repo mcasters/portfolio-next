@@ -1,3 +1,7 @@
+.previewContainer {
+  margin-top: 2em;
+}
+
 .uploadButton {
   width: 25%;
   display: inline-block;
