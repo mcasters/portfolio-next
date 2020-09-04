@@ -15,7 +15,7 @@ export default gql`
   }
 
   type Item {
-    id: ID!
+    id: ID
     title: String!
     date: String!
     technique: String!

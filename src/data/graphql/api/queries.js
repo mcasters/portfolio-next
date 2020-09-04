@@ -42,6 +42,20 @@ export const CONTENT = `
 export const ALL_ITEMS = `
   query allItems($type: String!) {
   allItems(type: $type) {
+    title
+    date
+    technique
+    description
+    height
+    width
+    length
+  }
+}
+`;
+
+export const ALL_ITEMS_ADMIN = `
+  query allItems($type: String!) {
+  allItems(type: $type) {
     id
     title
     date

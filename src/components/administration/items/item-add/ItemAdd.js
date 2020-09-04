@@ -4,59 +4,27 @@ import useSWR from 'swr';
 
 import s from './ItemAdd.module.css';
 import ITEM from '../../../../constants/itemConstant';
-import DayPicker from '../daypicker/DayPicker';
 import { useAlert } from '../../../alert-context/AlertContext';
 import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
-import {
-  addItemRequest,
-  allItemsRequest,
-} from '../../../../data/graphql/api/client-side/query-graphql';
+import { allItemsRequest } from '../../../../data/graphql/api/client-side/query-graphql';
+import { canSubmitData, submitAddOrUpdateItem } from '../../itemFormUtils';
+import ItemObject from '../../../../lib/ItemObject';
+import DataPartForm from '../item-update/update-form/DataPartForm';
+import PreviewPartForm from '../item-update/update-form/PreviewPartForm';
 
 function ItemAdd({ type }) {
-  const triggerAlert = useAlert();
-  const item = {
-    title: '',
-    date: '',
-    technique: '',
-    description: '',
-    length: '',
-    height: '',
-    width: '',
-    pictures: [],
-    error: '',
-  };
-  const [itemData, setItemData] = useState(item);
-  const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
-  const [isTitleBlocked, setIsTitleBlocked] = useState(false);
-  const [isUploaded, setIsUploaded] = useState(false);
-
-  const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
-
   const isSculpture = type === ITEM.SCULPTURE.TYPE;
   const titleForm = 'Ajout';
-  const haveMain = !!(
-    itemData.title &&
-    itemData.date &&
-    itemData.technique &&
-    itemData.height &&
-    itemData.width
-  );
-  const canUpload =
-    (!isSculpture && itemData.pictures.length === 1 && itemData.title !== '') ||
-    (isSculpture && itemData.pictures.length === 4 && itemData.title !== '');
-  const canSubmit =
-    (!isSculpture && haveMain && itemData.pictures.length === 1) ||
-    (isSculpture &&
-      haveMain &&
-      itemData.length &&
-      itemData.pictures.length === 4);
+  let itemObject = new ItemObject(null, type);
 
-  const clearState = () => {
-    setItemData(item);
-    setImagePreviewUrls([]);
-  };
+  const triggerAlert = useAlert();
+  const [onClear, setOnClear] = useState(0);
+  const [itemData, setItemData] = useState(itemObject.getItemData());
+  const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
 
-  const handleChange = (e) => {
+  const canSubmit = canSubmitData(itemData, isSculpture, false);
+
+  const handleDataChange = (e) => {
     e.preventDefault();
     const { name, value, type } = e.target;
 
@@ -71,195 +39,67 @@ function ItemAdd({ type }) {
     setItemData(Object.assign({}, itemData, { date }));
   };
 
-  const handleImageChange = (e, index) => {
-    e.preventDefault();
-
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    const copyImagePreviewUrls = imagePreviewUrls;
-    const copyPictures = itemData.pictures;
-
-    reader.onload = () => {
-      copyImagePreviewUrls.splice(index, 1, reader.result);
-      copyPictures.splice(index, 1, file);
-
-      setImagePreviewUrls(copyImagePreviewUrls);
-      setItemData(Object.assign({}, itemData, { pictures: copyPictures }));
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  const ImageSubmit = async (e) => {
-    e.preventDefault();
-
-    let i = 1;
-    for (const file of itemData.pictures) {
-      const filename = isSculpture
-        ? `${itemData.title}_${i}.jpg`
-        : `${itemData.title}.jpg`;
-      await fetch('/api/temp-image', {
-        method: 'POST',
-        headers: {
-          'Content-Type': file.type,
-          'X-Filename': filename,
-        },
-        body: file,
-      }).catch((e) => {
-        triggerAlert(e.message, true);
-      });
-      i++;
-    }
-    setIsTitleBlocked(true);
-    setIsUploaded(true);
-    triggerAlert('image(s) ajoutée(s)', false);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { pictures, error, length, ...rest } = itemData;
-    const item = isSculpture ? { length, ...rest } : rest;
-
-    const { data, error: err } = await addItemRequest({ ...item, type });
-    if (data) {
-      triggerAlert(`${data.addItem.title} ajouté`, false);
-      mutate();
-      clearState();
-    } else triggerAlert(err ? err.message : "Echec de l'ajout de l'item", true);
+  const handleImageChange = (index, content) => {
+    const newPictures = [...itemData.pictures];
+    newPictures[index] = content;
+    setItemData(Object.assign({}, itemData, { pictures: newPictures }));
   };
 
   const cancel = async (e) => {
     e.preventDefault();
+    setItemData(itemObject.getItemData());
+    setOnClear((prev) => prev + 1);
+  };
 
-    let i = 1;
-    for (const file of itemData.pictures) {
-      const filename = isSculpture
-        ? `${itemData.title}_${i}.jpg`
-        : `${itemData.title}.jpg`;
-      await fetch('/api/temp-image', {
-        method: 'DELETE',
-        headers: {
-          'Content-Filename': filename,
-        },
-      }).catch((e) => {
-        triggerAlert(e.message, true);
-      });
-      i++;
+  const clear= () => {
+    itemObject = new ItemObject(null, type);
+    setItemData(itemObject.getItemData());
+    setOnClear((prev) => prev + 1);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    itemObject.updateFromItemData(itemData);
+    const res = await submitAddOrUpdateItem(
+      itemObject,
+      itemData.pictures,
+      false,
+    );
+    triggerAlert(res.getMessage(), res.getIsError());
+    if (!res.getIsError()) {
+      mutate();
+      clear();
     }
-    clearState();
-    triggerAlert('image(s) temporaire(s) supprimée(s)', false);
   };
 
   return (
     <div className={s.addContainer}>
       <h2>{titleForm}</h2>
       <form className="formGroup" onSubmit={handleSubmit}>
-        <input
-          className={s.inputL}
-          placeholder="Titre"
-          name="title"
-          type="text"
-          value={itemData.title}
-          onChange={handleChange}
-          readOnly={isTitleBlocked}
+        <DataPartForm
+          itemData={itemData}
+          handleDataChange={handleDataChange}
+          handleDayChange={handleDayChange}
+          isSculpture={isSculpture}
         />
-        <div className={s.DayInputContainer}>
-          <DayPicker onDayChange={handleDayChange} />
-        </div>
-        <input
-          className={s.inputL}
-          placeholder="Technique"
-          name="technique"
-          type="text"
-          value={itemData.technique}
-          onChange={handleChange}
+        <PreviewPartForm
+          isSculpture={isSculpture}
+          handleImageChange={handleImageChange}
+          onClear={onClear}
         />
-        <input
-          className={s.inputR}
-          placeholder="Description"
-          name="description"
-          type="text"
-          value={itemData.description}
-          onChange={handleChange}
-        />
-        <input
-          className={s.inputL}
-          placeholder="Hauteur (cm)"
-          name="height"
-          type="number"
-          value={itemData.height}
-          onChange={handleChange}
-        />
-        <input
-          className={s.inputR}
-          placeholder="Largeur (cm)"
-          name="width"
-          type="number"
-          value={itemData.width}
-          onChange={handleChange}
-        />
-        {isSculpture && (
-          <input
-            className={s.inputL}
-            placeholder="Longueur (cm)"
-            name="length"
-            type="number"
-            value={itemData.length}
-            onChange={handleChange}
-          />
-        )}
-        <input
-          type="file"
-          accept="image/jpeg, image/jpg"
-          onChange={(e) => handleImageChange(e, 0)}
-        />
-        {isSculpture && (
-          <div>
-            <input
-              type="file"
-              accept="image/jpeg, image/jpg"
-              onChange={(e) => handleImageChange(e, 1)}
-            />
-            <input
-              type="file"
-              accept="image/jpeg, image/jpg"
-              onChange={(e) => handleImageChange(e, 2)}
-            />
-            <input
-              type="file"
-              accept="image/jpeg, image/jpg"
-              onChange={(e) => handleImageChange(e, 3)}
-            />
-          </div>
-        )}
-        {imagePreviewUrls.map(
-          (imagePreviewUrl) =>
-            imagePreviewUrl !== '' && (
-              <img
-                key={imagePreviewUrl.toString()}
-                src={imagePreviewUrl}
-                alt="Sculpture de Marion Casters"
-                className={s.imagePreview}
-              />
-            ),
-        )}
         <div>
-          {canUpload && !isUploaded && (
-            <button className={`${s.adminButton} button`} onClick={ImageSubmit}>
-              Upload
-            </button>
-          )}
-          {canSubmit && isUploaded && (
+          {canSubmit && (
             <button className={`${s.adminButton} button`} type="submit">
               OK
             </button>
           )}
-          {isUploaded && (
-            <button className={`${s.adminButton} button`} onClick={cancel}>
-              Annuler
-            </button>
-          )}
+          <button
+            type="button"
+            className={`${s.adminButton} button`}
+            onClick={cancel}
+          >
+            Annuler
+          </button>
         </div>
       </form>
     </div>

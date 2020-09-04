@@ -1,26 +1,31 @@
 import s from './PreviewPartForm.module.css';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { picturesIsEmpty } from '../../../../../data/utils/itemFormUtils';
+import { useEffect, useState } from 'react';
+
+import { picturesIsEmpty } from '../../../itemFormUtils';
 
 export default function PreviewPartForm({
   isSculpture,
   handleImageChange,
-  deleteTempPicture,
+  onClear,
 }) {
   const [previewUrls, setPreviewUrls] = useState([]);
+
+  useEffect(() => {
+    clear();
+  }, [onClear]);
 
   const getInitPreview = () => {
     return isSculpture ? ['', '', '', ''] : [''];
   };
 
-  const handleUpload = (index) => (e) => {
+  const getPreview = (index) => (e) => {
     e.preventDefault();
     const file = e.target.files[0];
-
     const newPreviewUrls =
       previewUrls.length === 0 ? getInitPreview() : [...previewUrls];
     const reader = new FileReader();
+
     reader.onload = () => {
       newPreviewUrls[index] = reader.result;
       setPreviewUrls(newPreviewUrls);
@@ -36,7 +41,11 @@ export default function PreviewPartForm({
     newPreviewUrls[index] = '';
     setPreviewUrls(newPreviewUrls);
 
-    deleteTempPicture(index);
+    handleImageChange(index, '');
+  };
+
+  const clear = () => {
+    setPreviewUrls(getInitPreview());
   };
 
   const previews = previewUrls.map((url, index) => {
@@ -44,14 +53,18 @@ export default function PreviewPartForm({
       return <div className={s.imagePreviewContainer}>A renseigner</div>;
     else if (url !== '')
       return (
-        <div className={s.imagePreviewContainer}>
+        <div key={`container${index}`} className={s.imagePreviewContainer}>
           <img
-            key={`${index}button`}
+            key={`img${index}`}
             src={url}
             alt="Image formulaire"
             className={s.imagePreview}
           />
-          <button key={url} className="button" onClick={deletePicture(index)}>
+          <button
+            key={`button${index}`}
+            className="button"
+            onClick={deletePicture(index)}
+          >
             Supprimer
           </button>
         </div>
@@ -60,12 +73,12 @@ export default function PreviewPartForm({
 
   return (
     <>
-      <div>
+      <div className={s.previewContainer}>
         <input
           className={s.uploadButton}
           type="file"
           accept="image/jpeg, image/jpg"
-          onChange={handleUpload(0)}
+          onChange={getPreview(0)}
         />
         {isSculpture && (
           <>
@@ -73,19 +86,19 @@ export default function PreviewPartForm({
               className={s.uploadButton}
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={handleUpload(1)}
+              onChange={getPreview(1)}
             />
             <input
               className={s.uploadButton}
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={handleUpload(2)}
+              onChange={getPreview(2)}
             />
             <input
               className={s.uploadButton}
               type="file"
               accept="image/jpeg, image/jpg"
-              onChange={handleUpload(3)}
+              onChange={getPreview(3)}
             />
           </>
         )}
@@ -98,5 +111,5 @@ export default function PreviewPartForm({
 PreviewPartForm.propTypes = {
   isSculpture: PropTypes.bool.isRequired,
   handleImageChange: PropTypes.func.isRequired,
-  deleteTempPicture: PropTypes.func.isRequired,
+  onClear: PropTypes.number,
 };

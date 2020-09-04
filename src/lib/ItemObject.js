@@ -133,9 +133,8 @@ class ItemObject {
     this.filenames = this.getFilenamesTab(title);
   };
 
-  getGraphqlObject = () => {
-    const graphqlObject = {
-      id: this.#id,
+  getGraphqlObject = (isUpdate) => {
+    let graphqlObject = {
       type: this.#type,
       title: this.title,
       date: this.date,
@@ -143,9 +142,19 @@ class ItemObject {
       description: this.description,
       height: this.height,
       width: this.width,
-      hasImages: this.hasImages,
     };
-    return this.#isSculpture ? { ...graphqlObject, length: this.length } : graphqlObject;
+
+    if (this.#isSculpture)
+      graphqlObject = { ...graphqlObject, length: this.length };
+
+    if (isUpdate)
+      graphqlObject = {
+        ...graphqlObject,
+        id: this.#id,
+        hasImages: this.hasImages,
+      };
+
+    return graphqlObject;
   };
 }
 

@@ -5,12 +5,12 @@ import Modal from 'react-modal';
 
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../alert-context/AlertContext';
-import { ALL_ITEMS } from '../../../../../data/graphql/api/queries';
+import {ALL_ITEMS, ALL_ITEMS_ADMIN} from '../../../../../data/graphql/api/queries';
+import { allItemsRequest } from '../../../../../data/graphql/api/client-side/query-graphql';
 import {
-  allItemsRequest,
-  updateItemRequest,
-} from '../../../../../data/graphql/api/client-side/query-graphql';
-import { canSubmitData, uploadTempImages } from '../../../../../data/utils/itemFormUtils';
+  canSubmitData,
+  submitAddOrUpdateItem,
+} from '../../../itemFormUtils';
 import PreviewPartForm from './PreviewPartForm';
 import ImagePartForm from './ImagePartForm';
 import DataPartForm from './DataPartForm';
@@ -34,16 +34,16 @@ Modal.setAppElement('#__next');
 function UpdateForm({ itemObject, close }) {
   const [itemData, setItemData] = useState(itemObject.getItemData());
   const triggerAlert = useAlert();
-  const isSculpture = itemObject.isSculpture;
-  const canSubmit = canSubmitData(itemData, isSculpture);
+  const isSculpture = itemObject.getIsSculpture();
+  const canSubmit = canSubmitData(itemData, isSculpture, true);
   const showModal = true;
-  const { mutate } = useSWR([ALL_ITEMS, itemObject.type], allItemsRequest);
+  const { mutate } = useSWR([ALL_ITEMS_ADMIN, itemObject.getType()], allItemsRequest);
 
   const handleCloseModal = () => {
     close();
   };
 
-  const handleChange = (e) => {
+  const handleDataChange = (e) => {
     e.preventDefault();
     const { name, value, type } = e.target;
     setItemData(
@@ -53,44 +53,24 @@ function UpdateForm({ itemObject, close }) {
     );
   };
 
-  const handleChangeDate = (date) => {
+  const handleDayChange = (date) => {
     setItemData(Object.assign({}, itemData, { date }));
   };
 
-  const handleImageChange = (index, file) => {
+  const handleImageChange = (index, content) => {
     const newPictures = [...itemData.pictures];
-    newPictures[index] = file;
-    setItemData(Object.assign({}, itemData, { pictures: newPictures }));
-  };
-
-  const deleteTempPicture = (index) => {
-    const newPictures = [...itemData.pictures];
-    newPictures[index] = '';
+    newPictures[index] = content;
     setItemData(Object.assign({}, itemData, { pictures: newPictures }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      await uploadTempImages(itemData, isSculpture);
-
-      itemObject.updateFromItemData(itemData);
-      const graphqlItem = itemObject.getGraphqlObject();
-
-      const { data, error } = await updateItemRequest(graphqlItem);
-
-      if (data) {
-        triggerAlert(`${data.updateItem.title} modifié`, false);
-        mutate();
-        close();
-      } else
-        triggerAlert(
-          error ? error.message : "Echec de modification de l'item",
-          true,
-        );
-    } catch (e) {
-      triggerAlert(e.message, true);
+    itemObject.updateFromItemData(itemData);
+    const res = await submitAddOrUpdateItem(itemObject, itemData.pictures, true);
+    triggerAlert(res.getMessage(), res.getIsError());
+    if (!res.getIsError()) {
+      mutate();
+      close();
     }
   };
 
@@ -106,17 +86,14 @@ function UpdateForm({ itemObject, close }) {
       <form className="formGroup" onSubmit={handleSubmit}>
         <DataPartForm
           itemData={itemData}
-          handleChange={handleChange}
-          handleChangeDate={handleChangeDate}
+          handleDataChange={handleDataChange}
+          handleDayChange={handleDayChange}
           isSculpture={isSculpture}
         />
-        <ImagePartForm
-          itemObject={itemObject}
-        />
+        <ImagePartForm itemObject={itemObject} />
         <PreviewPartForm
           isSculpture={isSculpture}
           handleImageChange={handleImageChange}
-          deleteTempPicture={deleteTempPicture}
         />
         <div>
           {canSubmit && (

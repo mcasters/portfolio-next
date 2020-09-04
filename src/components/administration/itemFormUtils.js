@@ -60,13 +60,14 @@ export const submitAddOrUpdateItem = async (itemObject, pictures, isUpdate) => {
   const messageOk = isUpdate ? CONST.UPDATE.MESSAGE_OK : CONST.ADD.MESSAGE_OK;
   const messageKO = isUpdate ? CONST.UPDATE.MESSAGE_KO : CONST.ADD.MESSAGE_KO;
   try {
-    if (itemObject.hasImages)
+    if (picturesIsFull(pictures))
       await uploadTempImages(itemObject.filenames, pictures);
 
-    const graphqlItem = itemObject.getGraphqlObject();
-    let queryRes;
-    if (isUpdate) queryRes = await updateItemRequest(graphqlItem);
-    else queryRes = await addItemRequest(graphqlItem);
+    const graphqlItem = itemObject.getGraphqlObject(isUpdate);
+
+    const queryRes = isUpdate
+      ? await updateItemRequest(graphqlItem)
+      : await addItemRequest(graphqlItem);
 
     const { data, error } = queryRes;
     if (data)

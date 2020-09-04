@@ -25,7 +25,7 @@ function Item({ itemObject }) {
         <span className={s.spacer}> | </span>
         <p className={s.noWrap}>
           {itemObject.height} x {itemObject.width}
-          {itemObject.type === ITEM.SCULPTURE.TYPE &&
+          {itemObject.getType() === ITEM.SCULPTURE.TYPE &&
             ` x ${itemObject.length}`}{' '}
           cm
         </p>

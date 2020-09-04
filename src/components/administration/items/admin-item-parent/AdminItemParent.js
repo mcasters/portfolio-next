@@ -3,11 +3,11 @@ import useSWR from 'swr';
 
 import ItemList from '../item-list/ItemList';
 import ItemAdd from '../item-add/ItemAdd';
-import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
+import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/api/queries';
 import { allItemsRequest } from '../../../../data/graphql/api/client-side/query-graphql';
 
 export default function AdminItemParent({ type }) {
-  const { data } = useSWR([ALL_ITEMS, type], allItemsRequest);
+  const { data } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
 
   return (
     <>
