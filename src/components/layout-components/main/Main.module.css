@@ -6,13 +6,6 @@
   text-align: center;
 }
 
-.mainHome {
-  background-image: url('/images/miscellaneous/home-portrait.jpg');
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 @media (--sm) {
   .main {
     padding: var(--main-top-padding-mobile) var(--main-side-padding)
@@ -35,12 +28,6 @@
     padding: var(--main-top-padding) var(--mainHome-side-padding)
       var(--mainHome-bottom-padding);
     padding-left: var(--aside-width);
-  }
-}
-
-@media (--lg) {
-  .mainHome {
-    background-image: url('/images/miscellaneous/home-landscape.jpg');
   }
 }
 
