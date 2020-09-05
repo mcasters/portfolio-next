@@ -1,4 +1,4 @@
-const LAYOUT_CONSTANTS = {
+const LAYOUT_CONST = {
   BREAKPOINT: {
     XS: 480,
     SM: 765,
@@ -8,6 +8,9 @@ const LAYOUT_CONSTANTS = {
   },
 
   MOBILE_HEADER_HEIGHT: 50,
+
+  BACKGROUND_IMAGE_MOBILE: "url('/images/miscellaneous/home-portrait.jpg')",
+  BACKGROUND_IMAGE_DESKTOP: "url('/images/miscellaneous/home-landscape.jpg')",
 };
 
-export default LAYOUT_CONSTANTS;
+export default LAYOUT_CONST;

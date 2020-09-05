@@ -6,7 +6,7 @@ import {
   signoutRequest,
   viewerRequest,
 } from '../../data/graphql/api/client-side/query-graphql';
-import { ROUTES } from '../../constants/router';
+import { ROUTES } from '../../constants/routes';
 import { VIEWER } from '../../data/graphql/api/queries';
 import { useAlert } from '../alert-context/AlertContext';
 

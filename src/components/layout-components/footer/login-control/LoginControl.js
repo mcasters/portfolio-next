@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import s from './LoginControl.module.css';
-import { NAMES, ROUTES } from '../../../../constants/router';
+import { NAMES, ROUTES } from '../../../../constants/routes';
 import getConfig from 'next/config';
 
 const LoginControl = () => {

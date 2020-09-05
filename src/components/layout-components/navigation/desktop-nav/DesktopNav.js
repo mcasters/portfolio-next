@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import s from './DesktopNav.module.css';
-import { MENU as menuItems } from '../../../../constants/router';
-import { useRouter } from 'next/router';
+import { MENU as menuItems } from '../../../../constants/routes';
 
 export default function DesktopNav({ isHome }) {
   const router = useRouter();

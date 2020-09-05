@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import Lightbox from './react-image-lightbox';
-import LAYOUT_CONSTANTS from '../../constants/layout';
+import LAYOUT_CONST from '../../constants/layout';
 import {
   LIGHTBOX_PADDING,
   LIGHTBOX_MOBILE_PADDING,
@@ -26,7 +26,7 @@ export default function LightBoxProvider({ title, images, onClose }) {
         isSculpture ? () => setIndex((index + 1) % length) : null
       }
       imageTitle={`Marion Casters | ${title}`}
-      mobileSizeBreakpoint={LAYOUT_CONSTANTS.BREAKPOINT.MD}
+      mobileSizeBreakpoint={LAYOUT_CONST.BREAKPOINT.MD}
       imagePadding={LIGHTBOX_PADDING}
       imageMobilePadding={LIGHTBOX_MOBILE_PADDING}
       imageLoadErrorMessage="Erreur au chargement de l'image"

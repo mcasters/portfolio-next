@@ -11,7 +11,7 @@ import EditContent from '../components/administration/edit-content/EditContent';
 import AdminItemParent from '../components/administration/items/admin-item-parent/AdminItemParent';
 import EditPictureForm from '../components/administration/edit-picture/EditPictureForm';
 import Layout from '../components/layout-components/layout/Layout';
-import { ROUTES } from '../constants/router';
+import { ROUTES } from '../constants/routes';
 import { useAlert } from '../components/alert-context/AlertContext';
 import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
 import LogoutButton from '../components/administration/LogoutButton';
