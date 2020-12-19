@@ -14,7 +14,7 @@ Nous nous engageons à ne collecter aucun renseignement personnel, d'aucune sort
       <style jsx global>{`
         .markdown {
           font-size: 13px;
-          padding: 13em 0em;
+          padding: 13em 0;
         }
       `}</style>
     </Layout>

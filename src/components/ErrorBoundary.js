@@ -7,7 +7,7 @@ function ErrorBoundary({ children }) {
   const [error, setError] = useState(null);
   const [info, setInfo] = useState(null);
 
-  React.getDerivedStateFromError = error => {
+  React.getDerivedStateFromError = (error) => {
     return { error: error };
   };
 

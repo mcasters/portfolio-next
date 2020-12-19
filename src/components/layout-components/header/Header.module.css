@@ -31,41 +31,33 @@
 }
 
 @media (--md) {
-  .homeContainer {
+  .homeContainer,
+  .container {
     position: fixed;
     padding-left: var(--side-padding);
-    box-sizing: border-box;
-    background: none;
     width: 100%;
+    background: none;
     text-align: left;
     z-index: 1;
   }
 
   .container {
-    position: fixed;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 1em 6.5em;
-    text-align: left;
     background-color: rgba(0, 0, 0, 0.4);
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
-    z-index: 1;
     transition: all 2s ease;
   }
 
   .homeContainer h1 {
-    padding-left: unset;
     color: var(--color-dark);
     margin: 1.2em 0;
-    letter-spacing: 2.2rem;
   }
 
+  .homeContainer h1,
   .container h1 {
     margin: 0.67em 0;
     padding-left: unset;
-    font-size: var(--font-size-header);
+    letter-spacing: 2.2rem;
     transition: all 2s ease;
-    opacity: 1;
   }
 
   .sticky {
@@ -79,6 +71,7 @@
   }
 
   .sticky h1 {
+    color: var(--color-light-brown);
     letter-spacing: 2rem;
   }
 }

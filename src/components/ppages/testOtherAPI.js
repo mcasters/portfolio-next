@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import Layout from '../components/layout-components/layout/Layout';
+import Layout from '../layout-components/layout/Layout';
 
 function fetcher(url) {
   return fetch(url).then(r => r.json());
@@ -8,7 +8,7 @@ function fetcher(url) {
 
 export default function TestOtherAPI() {
   const { query } = useRouter();
-  const { data, error } = useSWR(
+  let { data, error } = useSWR(
     `/api/randomQuote${query.author ? '?author=' + query.author : ''}`,
     fetcher,
   );

@@ -9,7 +9,7 @@ import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr'
 const Presentation = ({ data }) => {
   return (
     <Layout>
-      <article className={s.presentationContainer}>
+      <article className={s.container}>
         <h1 className={s.title}>{TITLE.PRESENTATION}</h1>
         <img
           className={s.image}

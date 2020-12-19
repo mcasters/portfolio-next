@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import s from './Main.module.css';
-import LAYOUT_CONST from "../../../constants/layout";
+import LAYOUT_CONST from '../../../constants/layout';
 
 function Main({ isHome, height, isLessThanMD, children }) {
   const commonStyle = {

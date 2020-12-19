@@ -46,9 +46,12 @@
   --color-dark: #776e65;
   --color-xdark: #555;
   --color-xxdark: #333;
-  --color-light-brown: #7b6a58;
+
+  --color-light-brown: #cabeaf;
+  --color-medium-brown: #7b6a58;
   --color-dark-brown: #574530;
   --color-xdark-brown: #453322;
+
   --link-color-light: #d1bb9f;
   --link-color: #997964;
   --link-color-dark: #8d6246;

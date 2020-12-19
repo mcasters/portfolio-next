@@ -26,7 +26,7 @@
 
 .homeBar {
   width: 2px;
-  background-image: linear-gradient(var(--color-light-brown), var(--link-color-dark));
+  background-image: linear-gradient(var(--color-medium-brown), var(--link-color-dark));
 }
 
 .desktopNav {

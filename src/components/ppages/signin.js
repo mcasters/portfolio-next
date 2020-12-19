@@ -3,14 +3,14 @@ import { useState } from 'react';
 import getConfig from 'next/config';
 import useSWR from 'swr';
 
-import Layout from '../components/layout-components/layout/Layout';
-import { ROUTES } from '../constants/routes';
-import { useAlert } from '../components/alert-context/AlertContext';
+import Layout from '../layout-components/layout/Layout';
+import { ROUTES } from '../../constants/routes';
+import { useAlert } from '../alert-context/AlertContext';
 import {
   signInRequest,
   viewerRequest,
-} from '../data/graphql/api/client-side/query-graphql';
-import { VIEWER } from '../data/graphql/api/queries';
+} from '../../data/graphql/api/client-side/query-graphql';
+import { VIEWER } from '../../data/graphql/api/queries';
 
 const SignIn = () => {
   const { publicRuntimeConfig } = getConfig();
