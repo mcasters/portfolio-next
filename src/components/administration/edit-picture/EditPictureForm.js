@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import s from './EditPictureForm.module.css';
 import CONT_CONST from '../../../constants/content';
 import { useAlert } from '../../alert-context/AlertContext';
-import {addPictureRequest} from "../../../data/graphql/api/client-side/query-graphql";
+import { addPictureRequest } from '../../../data/graphql/api/client-side/query-graphql';
 
 function EditPictureForm({ pictureTitle }) {
   const triggerAlert = useAlert();
@@ -16,11 +16,11 @@ function EditPictureForm({ pictureTitle }) {
     let filename;
     switch (pictureTitle) {
       case CONT_CONST.HOME_IMAGE_PORTRAIT:
-        pageTitle = 'Format portrait';
+        pageTitle = 'Format portrait (écran mobile)';
         filename = CONT_CONST.HOME_IMAGE_PORTRAIT_FILENAME;
         break;
       case CONT_CONST.HOME_IMAGE_LANDSCAPE:
-        pageTitle = 'Format paysage';
+        pageTitle = 'Format paysage (écran ordinateur)';
         filename = CONT_CONST.HOME_IMAGE_LANDSCAPE_FILENAME;
         break;
       default:
@@ -35,7 +35,7 @@ function EditPictureForm({ pictureTitle }) {
 
   const { pageTitle, filename } = getInfos();
 
-  const handleImageChange = e => {
+  const handleImageChange = (e) => {
     e.preventDefault();
 
     const reader = new FileReader();
@@ -48,7 +48,7 @@ function EditPictureForm({ pictureTitle }) {
     reader.readAsDataURL(f);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     await fetch('api/temp-image', {
@@ -59,7 +59,7 @@ function EditPictureForm({ pictureTitle }) {
       },
       body: file,
     })
-      .catch(e => {
+      .catch((e) => {
         triggerAlert(e.message, true);
       })
       .then(async () => {
@@ -68,7 +68,11 @@ function EditPictureForm({ pictureTitle }) {
           triggerAlert('image ajoutée', false);
           setImagePreviewUrl('');
           setFile('');
-        } else triggerAlert(error ? error.message : "Echec de l'ajout de l'image", true);
+        } else
+          triggerAlert(
+            error ? error.message : "Echec de l'ajout de l'image",
+            true,
+          );
       });
   };
 
@@ -85,16 +89,18 @@ function EditPictureForm({ pictureTitle }) {
         }
       />
       <form className="formGroup" onSubmit={handleSubmit}>
-        <label className={s.fileLabel}>
-          Choisir un fichier
-          <input
-            name="add-file"
-            className={s.fileButton}
-            type="file"
-            accept="image/jpg, image/jpeg"
-            onChange={e => handleImageChange(e)}
-          />
-        </label>
+        <button className="button">
+          <label>
+            Choisir un fichier
+            <input
+              name="add-file"
+              className={s.fileButton}
+              type="file"
+              accept="image/jpg, image/jpeg"
+              onChange={(e) => handleImageChange(e)}
+            />
+          </label>
+        </button>
         {imagePreviewUrl !== '' && (
           <img
             key={imagePreviewUrl.toString()}

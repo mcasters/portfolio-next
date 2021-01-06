@@ -51,20 +51,19 @@ Menu
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   overflow: auto;
+}
+.menuList .item {
+  display: block;
+  padding: 1.7rem 0;
+}
 
-  .item {
-    display: block;
-    padding: 1.7rem 0;
-  }
+.menuList .navHomeLink {
+  display: block;
+  padding-top: 4rem;
+}
 
-  .navHomeLink {
-    display: block;
-    padding-top: 4rem;
-
-    .logo {
-      max-width: 30px;
-    }
-  }
+.menuList .logo {
+  max-width: 30px;
 }
 
 .name {

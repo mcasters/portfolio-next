@@ -1,7 +1,14 @@
 .addContainer {
-  display: inline-block;
-  width: 100%;
+  padding: 3em 0 4em;
+  box-sizing: border-box;
   text-align: center;
+}
+
+@media (--lg) {
+  .addContainer {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
 }
 
 .title {
@@ -9,17 +16,8 @@
 }
 
 .image {
-  width: 100%;
-}
-
-.fileLabel {
-  display: block;
-  margin: 20px 0;
-  color: var(--link-color);
-  font-size: var(--font-size-current-plus-plus);
-  background: none;
-  cursor: pointer;
-  transition: color 0.4s;
+  max-width: 52vw;
+  max-height: 52vh;
 }
 
 .fileLabel:hover {
@@ -37,12 +35,4 @@
 .imagePreview {
   width: 100%;
   margin-bottom: 1em;
-}
-
-@media (--lg) {
-  .addContainer {
-    box-sizing: border-box;
-    width: 50%;
-    padding: 0 2em;
-  }
 }

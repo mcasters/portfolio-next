@@ -6,6 +6,7 @@ import Router from 'next/router';
 import s from './styles/admin.module.css';
 import ItemConstant from '../constants/itemConstant';
 import TITLE from '../constants/pageTitle';
+import TAB from '../constants/adminPage';
 import CONTENT from '../constants/content';
 import EditContent from '../components/administration/edit-content/EditContent';
 import AdminItemParent from '../components/administration/items/admin-item-parent/AdminItemParent';
@@ -54,12 +55,12 @@ const Admin = ({ isAuthenticated }) => {
             forceRenderTabPanel
           >
             <TabList>
-              <Tab>{TITLE.HOME}</Tab>
-              <Tab>{TITLE.PRESENTATION}</Tab>
+              <Tab>{TAB.HOME}</Tab>
+              <Tab>{TAB.PRESENTATION}</Tab>
               <Tab>{ItemConstant.PAINTING.TITLE}</Tab>
               <Tab>{ItemConstant.SCULPTURE.TITLE}</Tab>
               <Tab>{ItemConstant.DRAWING.TITLE}</Tab>
-              <Tab>{TITLE.CONTACT}</Tab>
+              <Tab>{TAB.CONTACT}</Tab>
             </TabList>
             <TabPanel>
               <div className={s.tabContainer}>
