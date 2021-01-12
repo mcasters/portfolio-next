@@ -365,6 +365,14 @@ template {
 * ==========================================================================
 * ========================================================================== */
 
+
+
+
+
+
+
+
+
 /*
  * ==========================================================================
  * LAYOUT
@@ -386,6 +394,7 @@ h4,
 h5,
 input,
 button,
+.button,
 select,
 textarea {
   font-family: var(--font-family-base);
@@ -461,6 +470,7 @@ ul {
   text-shadow: none;
 }
 
+.button,
 button::selection,
 img::selection,
 button:focus,
@@ -538,11 +548,12 @@ input[type='file'] {
 }
 
 .button {
-  line-height: 2.3;
-  display: block;
-  outline: none;
   padding: 0 2em;
   margin: 2em auto;
+  box-shadow: inset 0 0.8em 1em 0 #e2e2e2;
+  border: solid 1px #aaaaaa;
+  line-height: 2.7;
+  outline: none;
 }
 
 [type='submit'] {
