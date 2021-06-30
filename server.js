@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-/*
 const { createServer } = require('http');
 const next = require('next');
 const { parse } = require('url');
@@ -20,8 +19,8 @@ app.prepare().then(() => {
     console.log(`> Ready on http://localhost:${port}`);
   });
 });
-$/
- */
+
+/*
 
 const { createServer } = require('http');
 const { parse } = require('url');
@@ -46,7 +45,6 @@ app
     if (dev) {
       server.listen(port, (err) => {
         if (err) throw err;
-        /* eslint-disable no-console */
         console.log(
           `> Server listening at http://localhost:${port} as ${
             dev ? 'development' : process.env.NODE_ENV
@@ -57,3 +55,4 @@ app
       server.listen(port);
     }
   });
+*/
