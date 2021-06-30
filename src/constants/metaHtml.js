@@ -1,5 +1,5 @@
 export const KEYWORDS =
-  'Marion Casters,Artiste,Peintre,Peinture,Sculpture,Dessin,Oeuvres,Bordeaux,France';
+  'Marion Casters,Artiste,Peintre,Peinture,Sculpture,Dessin,Oeuvres,Bordeaux,Rue Pilet,France';
 
 export const DESCRIPTION = {
   PAINTING: 'Images et descriptions des peintures de Marion Casters',
