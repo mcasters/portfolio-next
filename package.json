@@ -15,6 +15,7 @@
     "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "@graphql-tools/schema": "^9.0.4",
     "@types/react": "^18.0.0",
     "acorn": "^8.8.0",
     "apollo-server-micro": "^3.0.0",
@@ -36,6 +37,7 @@
     "jimp": "^0.16.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
+    "micro": "^9.4.1",
     "mysql2": "^2.3.3",
     "next": "^12.0.0",
     "object-assign": "^4.1.1",
@@ -48,14 +50,14 @@
     "postcss-preset-env": "^7.0.0",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
-    "react": "^18.0.0",
+    "react": "^17.0.2",
     "react-day-picker": "^8.0.0",
-    "react-dom": "^18.0.0",
+    "react-dom": "^17.0.2",
     "react-icons": "^4.6.0",
     "react-image-lightbox": "^5.1.4",
     "react-markdown": "^8.0.0",
     "react-modal": "^3.16.1",
-    "react-tabs": "^5.0.0",
+    "react-tabs": "^4.2.1",
     "sequelize": "^6.0.0",
     "swr": "^1.0.0"
   },
