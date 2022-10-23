@@ -1,6 +1,4 @@
-import { gql } from 'apollo-server-micro';
-
-export default gql`
+const typeDefs = `
   input ItemInput {
     id: ID
     type: String!
@@ -92,3 +90,5 @@ export default gql`
     mutation: Mutation
   }
 `;
+
+export default typeDefs;

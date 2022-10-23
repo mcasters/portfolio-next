@@ -1,22 +1,9 @@
-import { ApolloServer } from 'apollo-server-micro';
+import { createServer } from '@graphql-yoga/node'
 
 import { schema } from '../../data/graphql/schema';
 
-const apolloServer = new ApolloServer({
+export default createServer({
   schema,
-  context: ({ req, res }) => {
-    return {
-      req,
-      res,
-    };
-  },
-});
-const handler = apolloServer.createHandler({ path: '/api/graphql' });
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-export default handler;
+  // Needed to be defined explicitly because our endpoint lives at a different path other than `/graphql`
+  graphqlEndpoint: '/api/graphql',
+})

@@ -8,4 +8,7 @@ import typeDefs from './typeDefs';
 
 export const resolvers = merge(userResolvers, contentResolvers, itemResolvers);
 
-export const schema = makeExecutableSchema({ typeDefs, resolvers });
+export const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+})
