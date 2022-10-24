@@ -1,4 +1,6 @@
-const typeDefs = `
+import { gql } from 'graphql-request';
+
+const typeDefs = gql`
   input ItemInput {
     id: ID
     type: String!

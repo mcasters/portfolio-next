@@ -113,6 +113,7 @@ const Admin = ({ isAuthenticated }) => {
 
 export async function getServerSideProps(context) {
   const data = await queryGraphql(VIEWER, {}, context);
+  console.log('///// isAuthenticated : ' + data.viewer);
   return {
     props: {
       isAuthenticated: data.viewer,

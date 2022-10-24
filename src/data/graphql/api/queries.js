@@ -1,9 +1,11 @@
-export const VIEWER = `
+import { gql } from 'graphql-request'
+
+export const VIEWER = gql`
   query ViewerQuery {
     viewer
   }
 `;
-export const SIGNIN = `
+export const SIGNIN = gql`
   mutation SignInMutation($signInInput: SignInInput!) {
     signIn(signInInput: $signInInput) {
       user {
@@ -14,7 +16,7 @@ export const SIGNIN = `
   }
 `;
 
-export const SIGNUP = `
+export const SIGNUP = gql`
   mutation SignUpMutation($signUpInput: SignUpInput!) {
     signUp(signUpInput: $signUpInput) {
       user {
@@ -25,13 +27,13 @@ export const SIGNUP = `
   }
 `;
 
-export const SIGNOUT = `
+export const SIGNOUT = gql`
   mutation SignOutMutation {
     signOut
   }
 `;
 
-export const CONTENT = `
+export const CONTENT = gql`
   query Content($key: String!) {
     content(key: $key) {
       text
@@ -39,7 +41,7 @@ export const CONTENT = `
   }
 `;
 
-export const ALL_ITEMS = `
+export const ALL_ITEMS = gql`
   query allItems($type: String!) {
   allItems(type: $type) {
     title
@@ -53,7 +55,7 @@ export const ALL_ITEMS = `
 }
 `;
 
-export const ALL_ITEMS_ADMIN = `
+export const ALL_ITEMS_ADMIN = gql`
   query allItems($type: String!) {
   allItems(type: $type) {
     id
@@ -68,7 +70,7 @@ export const ALL_ITEMS_ADMIN = `
 }
 `;
 
-export const ITEMS_BY_PART = `
+export const ITEMS_BY_PART = gql`
   query ItemsByPart($year: Int!, $type: String!, $part: Int!) {
     itemsByPart(year: $year, type: $type, part: $part) {
       title
@@ -82,7 +84,7 @@ export const ITEMS_BY_PART = `
   }
 `;
 
-export const ADD_ITEM = `
+export const ADD_ITEM = gql`
   mutation AddItem($item: ItemInput!) {
     addItem(item: $item) {
       id
@@ -97,7 +99,7 @@ export const ADD_ITEM = `
   }
 `;
 
-export const UPDATE_ITEM = `
+export const UPDATE_ITEM = gql`
   mutation UpdateItem($item: ItemInput!) {
     updateItem(item: $item) {
       id
@@ -112,13 +114,13 @@ export const UPDATE_ITEM = `
   }
 `;
 
-export const DELETE_ITEM = `
+export const DELETE_ITEM = gql`
   mutation deleteItem($id: ID!, $type: String!) {
     deleteItem(id: $id, type: $type)
   }
 `;
 
-export const ADD_CONTENT = `
+export const ADD_CONTENT = gql`
   mutation AddContent($contentInput: ContentInput!) {
     addContent(contentInput: $contentInput) {
       id
@@ -128,7 +130,7 @@ export const ADD_CONTENT = `
   }
 `;
 
-export const ADD_PICTURE = `
+export const ADD_PICTURE = gql`
   mutation AddPicture($title: String!) {
   addPicture(title: $title)
 }

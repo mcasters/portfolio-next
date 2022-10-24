@@ -7,3 +7,9 @@ export default createServer({
   // Needed to be defined explicitly because our endpoint lives at a different path other than `/graphql`
   graphqlEndpoint: '/api/graphql',
 })
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
