@@ -6,6 +6,10 @@ module.exports = (phase, { defaultConfig }) => {
    */
   const nextConfig = {
     /* config options here */
+    publicRuntimeConfig: {
+      ls_key: 'admin',
+      ls_value: 'key',
+    },
   }
   return nextConfig
 }
