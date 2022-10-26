@@ -2,8 +2,8 @@ import Content from '../components/content/Content';
 import TITLE from '../constants/pageTitle';
 import s from './styles/index.module.css';
 import Layout from '../components/layout-components/layout/Layout';
-import { CONTENT } from '../data/graphql/api/queries';
-import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
+import { CONTENT } from '../data/graphql/queries';
+import { queryGraphql } from '../data/request/request-ssr';
 import CONST from '../constants/content';
 
 function Home({ data }) {

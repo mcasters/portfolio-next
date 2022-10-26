@@ -1,4 +1,4 @@
-import sequelize from '../sequelize';
+import sequelize from './sequelize';
 import User from './User';
 import Painting from './Painting';
 import Sculpture from './Sculpture';

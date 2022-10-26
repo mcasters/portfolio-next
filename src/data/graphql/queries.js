@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
 
-export const VIEWER = gql`
-  query ViewerQuery {
-    viewer
+export const ISAUTHENTICATED = gql`
+  query IsAuthenticatedQuery {
+    isAuthenticated
   }
 `;
 export const SIGNIN = gql`

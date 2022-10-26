@@ -1,4 +1,4 @@
-import isAuthenticated from '../../../utils/auth';
+import { isAuthenticated } from '../../../utils/auth';
 import { addImages } from '../../../utils/writeImageUtils';
 import { Content } from '../../models';
 import CONTENT from '../../../constants/content';

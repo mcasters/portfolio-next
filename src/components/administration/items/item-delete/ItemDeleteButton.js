@@ -4,11 +4,11 @@ import useSWR from 'swr';
 
 import s from './ItemDeleteButton.module.css';
 import { useAlert } from '../../../alert-context/AlertContext';
-import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
+import { ALL_ITEMS } from '../../../../data/graphql/queries';
 import {
   allItemsRequest,
   deleteItemRequest,
-} from '../../../../data/graphql/api/client-side/query-graphql';
+} from '../../../../data/request/request';
 
 function ItemDeleteButton({ id, type }) {
   const triggerAlert = useAlert();

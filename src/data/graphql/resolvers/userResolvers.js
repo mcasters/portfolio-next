@@ -9,7 +9,7 @@ import {
 
 export default {
   Query: {
-    async viewer(_parent, _args, context, _info) {
+    async isAuthenticated(_parent, _args, context, _info) {
       return await isAuthenticated(context.req);
     },
   },

@@ -5,8 +5,8 @@ import Modal from 'react-modal';
 
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../alert-context/AlertContext';
-import {ALL_ITEMS, ALL_ITEMS_ADMIN} from '../../../../../data/graphql/api/queries';
-import { allItemsRequest } from '../../../../../data/graphql/api/client-side/query-graphql';
+import {ALL_ITEMS, ALL_ITEMS_ADMIN} from '../../../../../data/graphql/queries';
+import { allItemsRequest } from '../../../../../data/request/request';
 import {
   canSubmitData,
   submitAddOrUpdateItem,
