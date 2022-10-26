@@ -1,5 +1,5 @@
 import fs, { createWriteStream } from 'fs';
-import isAuthenticated from '../../data/utils/authUtils';
+import isAuthenticated from '../../utils/auth';
 
 const tempImage = async (req, res) => {
   if (!(await isAuthenticated(req)))

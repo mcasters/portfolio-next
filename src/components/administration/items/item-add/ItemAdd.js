@@ -8,7 +8,7 @@ import { useAlert } from '../../../alert-context/AlertContext';
 import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
 import { allItemsRequest } from '../../../../data/graphql/api/client-side/query-graphql';
 import { canSubmitData, submitAddOrUpdateItem } from '../../itemFormUtils';
-import ItemObject from '../../../../lib/ItemObject';
+import ItemObject from '../../../../utils/ItemObject';
 import DataPartForm from '../item-update/update-form/DataPartForm';
 import PreviewPartForm from '../item-update/update-form/PreviewPartForm';
 

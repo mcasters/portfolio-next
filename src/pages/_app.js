@@ -6,7 +6,6 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import './styles/styles.css';
 import './styles/style-lightbox.css';
 import './styles/style-reactTab.css';
-import './styles/style-daypicker.css';
 
 import { ROUTES } from '../constants/routes';
 import { DESCRIPTION, KEYWORDS } from '../constants/metaHtml';

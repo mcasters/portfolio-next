@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import Item from '../item/Item';
-import ItemObject from '../../../lib/ItemObject';
+import ItemObject from '../../../utils/ItemObject';
 import ScrollTop from '../ScrollTop/ScrollTop';
 
 function ItemTab({ year, type, data }) {

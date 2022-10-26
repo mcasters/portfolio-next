@@ -2,7 +2,7 @@ import {
   addItemRequest,
   updateItemRequest,
 } from '../../data/graphql/api/client-side/query-graphql';
-import ResultForm from '../../lib/ResultForm';
+import ResultForm from '../../utils/ResultForm';
 import { FORM_CONSTANT as CONST } from '../../constants/formConstant';
 
 export const canSubmitData = (itemData, isSculpture, isUpdate) => {

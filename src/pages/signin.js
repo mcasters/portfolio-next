@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import getConfig from 'next/config';
 import useSWR from 'swr';
@@ -6,6 +6,8 @@ import useSWR from 'swr';
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/routes';
 import { useAlert } from '../components/alert-context/AlertContext';
+import useCookie from '../components/hooks/useCookie';
+
 import {
   signInRequest,
   viewerRequest,
@@ -18,31 +20,33 @@ const SignIn = () => {
   const [userData, setUserData] = useState({
     username: '',
     password: '',
-    error: '',
+    message: '',
   });
   const triggerAlert = useAlert();
+  const router = useRouter();
   const { mutate } = useSWR(VIEWER, viewerRequest);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setUserData(Object.assign({}, userData, { error: '' }));
+    setUserData(Object.assign({}, userData, { message: '' }));
 
     const username = userData.username;
     const password = userData.password;
 
     const { data, error } = await signInRequest(username, password);
 
-    if (data) {
-      localStorage.setItem(ls_key, ls_value);
-      await mutate();
-      Router.replace(ROUTES.ADMIN);
-    } else {
-      triggerAlert(error ? error.message : "Echec à l'authentification", true);
+    if (error) {
       setUserData(
         Object.assign({}, userData, {
-          error: error.message,
+          message: error.message ? error.message : 'Failed to authenticate',
         }),
       );
+      triggerAlert('Failed to authenticate', true);
+    }
+    if (data.signIn) {
+      localStorage.setItem(ls_key, ls_value);
+      await mutate();
+      await router.push(ROUTES.ADMIN);
     }
   };
 
@@ -77,11 +81,8 @@ const SignIn = () => {
         <button className="button" type="submit">
           Sign in
         </button>{' '}
-        {/*or{' '}
-        <Link href="signup">
-          <a>Sign up</a>
-        </Link>*/}
-        {userData.error && <p className="error">Error: {userData.error}</p>}
+        {/*<a href="signup">Sign up</a>*/}
+        {userData.message && <p className="error">Error: {userData.message}</p>}
       </form>
     </Layout>
   );

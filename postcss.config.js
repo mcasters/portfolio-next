@@ -11,8 +11,9 @@ module.exports = {
       },
       stage: 2,
       features: {
+
         'custom-properties': true,
-        'custom-media': true,
+        //'custom-media': true,
       },
     },
     'postcss-custom-properties': {},
