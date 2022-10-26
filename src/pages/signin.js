@@ -1,8 +1,7 @@
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import getConfig from 'next/config';
 import useSWR from 'swr';
-import fetch from 'isomorphic-unfetch';
 
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/routes';
@@ -11,7 +10,6 @@ import useCookie from '../components/hooks/useCookie';
 
 import {
   signInRequest,
-  signoutRequest,
   viewerRequest,
 } from '../data/graphql/api/client-side/query-graphql';
 import { VIEWER } from '../data/graphql/api/queries';
@@ -27,7 +25,6 @@ const SignIn = () => {
   const triggerAlert = useAlert();
   const router = useRouter();
   const { mutate } = useSWR(VIEWER, viewerRequest);
-  const { data, error } = useCookie();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,32 +33,20 @@ const SignIn = () => {
     const username = userData.username;
     const password = userData.password;
 
-    const user = await signInRequest(username, password);
+    const { data, error } = await signInRequest(username, password);
 
-    if (!user) {
+    if (error) {
       setUserData(
-          Object.assign({}, userData, {
-            message: "Erreur d'authentification",
-          }),
+        Object.assign({}, userData, {
+          message: error.message ? error.message : 'Failed to authenticate',
+        }),
       );
-      triggerAlert("Erreur d'authentification", true);
+      triggerAlert('Failed to authenticate', true);
     }
-
-    if (user) {
-      try {
-        const res = fetch('/api/cookies');
-        const hh = await res.json();
-        localStorage.setItem(ls_key, 'rrrr');
-        await mutate();
-        await Router.push(ROUTES.ADMIN);
-      } catch (error) {
-        setUserData(
-          Object.assign({}, userData, {
-            message: 'failed to setCookie',
-          }),
-        );
-        triggerAlert('failed to setCookie', true);
-      }
+    if (data.signIn) {
+      localStorage.setItem(ls_key, ls_value);
+      await mutate();
+      await router.push(ROUTES.ADMIN);
     }
   };
 

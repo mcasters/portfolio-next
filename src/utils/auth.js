@@ -15,15 +15,20 @@ export const isAuthenticated = async (req) => {
   return false;
 };
 
-export const setCookie = (res, name, value) => {
-  const stringValue =
-    typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value);
+export const setCookie = (res, user) => {
+  const token = jwt.sign(
+      { username: user.username, id: user.id, time: new Date() },
+      JWT_SECRET,
+      {
+        expiresIn: '6h',
+      },
+  );
 
   const expires = new Date(new Date().getTime() + 60 * 60 * 6);
 
   res.setHeader(
     'Set-Cookie',
-    serialize(name, stringValue, {
+    serialize('token', token, {
       httpOnly: true,
       expires,
       path: '/',
@@ -31,17 +36,6 @@ export const setCookie = (res, name, value) => {
       secure: process.env.NODE_ENV === 'production',
     }),
   );
-
-  /*
-        if (user && validPassword(user, signInInput.password)) {
-        const token = jwt.sign(
-          { username: user.username, id: user.id, time: new Date() },
-          JWT_SECRET,
-          {
-            expiresIn: '6h',
-          },
-        );
-   */
 };
 
 export const createUser = (data) => {
