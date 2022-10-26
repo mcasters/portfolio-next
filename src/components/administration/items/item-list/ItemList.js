@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ItemRow from '../item-row/ItemRow';
 import s from './ItemList.module.css';
 import ITEM_CONSTANT from '../../../../constants/itemConstant';
-import ItemObject from '../../../../lib/ItemObject';
+import ItemObject from '../../../../utils/ItemObject';
 
 function ItemList({ type, items }) {
   const title = 'Modification - Suppression';

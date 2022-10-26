@@ -1,6 +1,6 @@
-import ModelService from '../../utils/modelService';
-import isAuthenticated from '../../utils/authUtils';
-import { addImages, deleteItemImages, renameItemImages } from '../../utils/writeImageUtils';
+import ModelService from '../../../utils/modelService';
+import isAuthenticated from '../../../utils/auth';
+import { addImages, deleteItemImages, renameItemImages } from '../../../utils/writeImageUtils';
 
 export default {
   Query: {
