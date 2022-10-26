@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Alert from '../alert/Alert';
 
-const AlertContext = React.createContext();
+const AlertContext = React.createContext({});
 
 // eslint-disable-next-line react/prop-types
 export const AlertProvider = ({ children }) => {
