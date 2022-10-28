@@ -1,4 +1,4 @@
-import { isAuthenticated } from '../../../utils/auth';
+import { isAuth } from '../../../utils/auth';
 import { addImages } from '../../../utils/writeImageUtils';
 import { Content } from '../../models';
 import CONTENT from '../../../constants/content';
@@ -14,7 +14,7 @@ export default {
 
   Mutation: {
     addContent: async (parent, { contentInput }, { req }, _info) => {
-      if (!(await isAuthenticated(req)))
+      if (!(await isAuth(req)))
         throw new Error("Erreur d'authentification");
 
       const { key, text } = contentInput;
@@ -37,7 +37,7 @@ export default {
     },
 
     addPicture: async (root, { title }, { req }, _info) => {
-      if (!(await isAuthenticated(req)))
+      if (!(await isAuth(req)))
         throw new Error("Erreur d'authentification");
 
       const res = await addImages(title, CONTENT.TYPE);

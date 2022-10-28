@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 export const ISAUTHENTICATED = gql`
-  query IsAuthenticatedQuery {
+  query IsAuthenticated {
     isAuthenticated
   }
 `;

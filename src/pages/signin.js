@@ -42,7 +42,7 @@ const SignIn = () => {
       );
       triggerAlert('Failed to authenticate', true);
     }
-    if (data.signIn) {
+    if (data) {
       localStorage.setItem(ls_key, ls_value);
       await mutate();
       await router.push(ROUTES.ADMIN);

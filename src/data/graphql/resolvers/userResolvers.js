@@ -2,7 +2,7 @@ import cookie from 'cookie';
 
 import { User } from '../../models/index';
 import {
-    isAuthenticated,
+    isAuth,
     createUser,
     validPassword, setCookie,
 } from '../../../utils/auth';
@@ -10,7 +10,7 @@ import {
 export default {
   Query: {
     async isAuthenticated(_parent, _args, context, _info) {
-      return await isAuthenticated(context.req);
+      return await isAuth(context.req);
     },
   },
 

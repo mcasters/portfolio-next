@@ -1,8 +1,8 @@
 import fs, { createWriteStream } from 'fs';
-import isAuthenticated from '../../utils/auth';
+import { isAuth } from '../../utils/auth';
 
 const tempImage = async (req, res) => {
-  if (!(await isAuthenticated(req)))
+  if (!(await isAuth(req)))
     throw new Error("Erreur d'authentification");
 
   const tempPath = `${process.env.PHOTOS_PATH}/tmp`;

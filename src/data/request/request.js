@@ -75,7 +75,7 @@ export const itemsByPartRequest = (query, year, type, part) =>
 export const addItemRequest = (item) => withErrorHandler(ADD_ITEM, { item });
 export const updateItemRequest = (item) =>
   withErrorHandler(UPDATE_ITEM, { item });
-export const deleteItemRequest = async (id, type) =>
+export const deleteItemRequest = (id, type) =>
   withErrorHandler(DELETE_ITEM, { id, type });
 
 /*

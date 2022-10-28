@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import Router from 'next/router';
 
 import s from './styles/admin.module.css';
 import ItemConstant from '../constants/itemConstant';
@@ -12,22 +11,12 @@ import EditContent from '../components/administration/edit-content/EditContent';
 import AdminItemParent from '../components/administration/items/admin-item-parent/AdminItemParent';
 import EditPictureForm from '../components/administration/edit-picture/EditPictureForm';
 import Layout from '../components/layout-components/layout/Layout';
-import { ROUTES } from '../constants/routes';
-import { useAlert } from '../components/alert-context/AlertContext';
 import { queryGraphql } from '../data/request/request-ssr';
 import LogoutButton from '../components/administration/LogoutButton';
 import { ISAUTHENTICATED } from '../data/graphql/queries';
 
 const Admin = ({ isAuthenticated }) => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const triggerAlert = useAlert();
-
-  useEffect(() => {
-    if (!isAuthenticated && typeof window !== 'undefined') {
-      triggerAlert('Authentification recquise', true);
-      Router.replace(ROUTES.SIGNIN);
-    }
-  });
 
   useEffect(() => {
     if (

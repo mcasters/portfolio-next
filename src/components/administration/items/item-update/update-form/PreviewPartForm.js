@@ -2,7 +2,7 @@ import s from './PreviewPartForm.module.css';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
-import { picturesIsEmpty } from '../../../itemFormUtils';
+import { picturesIsEmpty } from '../../../formUtils';
 
 export default function PreviewPartForm({
   isSculpture,

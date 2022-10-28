@@ -41,7 +41,7 @@ const ITEM_CONSTANT = {
   SM_PX: 384,
   MD_PX: 640,
 
-  FORMAT_DATE: 'dd/MM/yyyy',
+  FORMAT_DATE: 'd/M/yyyy',
 };
 
 export default ITEM_CONSTANT;

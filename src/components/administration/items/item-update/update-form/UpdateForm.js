@@ -10,7 +10,7 @@ import { allItemsRequest } from '../../../../../data/request/request';
 import {
   canSubmitData,
   submitAddOrUpdateItem,
-} from '../../../itemFormUtils';
+} from '../../../formUtils';
 import PreviewPartForm from './PreviewPartForm';
 import ImagePartForm from './ImagePartForm';
 import DataPartForm from './DataPartForm';
