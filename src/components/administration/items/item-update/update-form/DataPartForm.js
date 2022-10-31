@@ -19,7 +19,7 @@ function DataPartForm({
         onChange={handleDataChange}
       />
       <div className={s.DayInputContainer}>
-        <DayPickerComponent handleDayChange={handleDayChange} selectedDay={itemData.date} />
+        <DayPickerComponent handleDayChange={handleDayChange} alreadyDay={itemData.date} />
       </div>
       <input
         className={s.inputL}

@@ -6,45 +6,47 @@ import { format, isValid, parse } from 'date-fns';
 
 import ITEM_CONSTANT from '../../../../constants/itemConstant';
 
-function DayPickerComponent({ handleDayChange, selectedDay }) {
+function DayPickerComponent({ handleDayChange, alreadyDay }) {
   const FORMAT = ITEM_CONSTANT.FORMAT_DATE;
-  const [inputValue, setInputValue] = useState('');
-  const [selected, setSelected] = useState(format(new Date, FORMAT));
+  const [inputString, setInputString] = useState('');
+  const [selected, setSelected] = useState(format(new Date(), FORMAT));
 
   const handleInputChange = (e) => {
-    setInputValue(e.currentTarget.value);
+    setInputString(e.currentTarget.value);
     const date = parse(e.currentTarget.value, FORMAT, new Date());
     if (isValid(date)) {
       setSelected(date);
-      handleDayChange(date);
+      const stringDate = format(date, FORMAT);
+      handleDayChange(stringDate);
     } else {
       setSelected(undefined);
     }
   };
-2
+
   const handleSelect = (date) => {
     setSelected(date);
-    handleDayChange(date);
     if (date) {
-      setInputValue(format(date, FORMAT));
+      const stringDate = format(date, FORMAT);
+      handleDayChange(stringDate);
+      setInputString(stringDate);
     } else {
-      setInputValue('');
+      setInputString('');
     }
   };
 
   return (
     <div>
       <input
-          type="text"
-          placeholder={selectedDay !== '' ? selectedDay : selected}
-          value={inputValue}
-          onChange={handleInputChange}
+        type="text"
+        placeholder={alreadyDay !== '' ? alreadyDay : selected}
+        value={inputString}
+        onChange={handleInputChange}
       />
       <DayPicker
-          initialFocus={true}
-          mode="single"
-          selected={selected}
-          onSelect={handleSelect}
+        initialFocus={true}
+        mode="single"
+        selected={selected}
+        onSelect={handleSelect}
       />
     </div>
   );
@@ -52,7 +54,7 @@ function DayPickerComponent({ handleDayChange, selectedDay }) {
 
 DayPickerComponent.propTypes = {
   handleDayChange: PropTypes.func.isRequired,
-  selectedDay: PropTypes.object,
+  alreadyDay: PropTypes.string,
 };
 
 export default DayPickerComponent;
