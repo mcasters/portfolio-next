@@ -1,5 +1,5 @@
 import ModelService from '../../../utils/modelService';
-import isAuthenticated from '../../../utils/auth';
+import { isAuth } from '../../../utils/auth';
 import { addImages, deleteItemImages, renameItemImages } from '../../../utils/writeImageUtils';
 
 export default {
@@ -11,7 +11,7 @@ export default {
 
   Mutation: {
     addItem: async (root, { item: { type, ...data } }, { req }) => {
-      if (!(await isAuthenticated(req)))
+      if (!(await isAuth(req)))
         throw new Error("Erreur d'authentification");
 
       const { title } = data;
@@ -37,7 +37,7 @@ export default {
       { item: { id, type, hasImages, ...data } },
       { req },
     ) => {
-      if (!(await isAuthenticated(req)))
+      if (!(await isAuth(req)))
         throw new Error("Erreur d'authentification");
 
       const modelService = new ModelService(type);
@@ -70,7 +70,7 @@ export default {
     },
 
     deleteItem: async (root, { id, type }, { req }) => {
-      if (!(await isAuthenticated(req)))
+      if (!(await isAuth(req)))
         throw new Error("Erreur d'authentification");
 
       const itemService = new ModelService(type);

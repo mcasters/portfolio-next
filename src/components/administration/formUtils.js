@@ -1,9 +1,4 @@
-import {
-  addItemRequest,
-  updateItemRequest,
-} from '../../data/request/request';
-import ResultForm from '../../utils/ResultForm';
-import { FORM_CONSTANT as CONST } from '../../constants/formConstant';
+import { addItemRequest, updateItemRequest } from '../../data/request/request';
 
 export const canSubmitData = (itemData, isSculpture, isUpdate) => {
   const haveMain = !!(
@@ -40,42 +35,43 @@ export const picturesIsEmpty = (pictures) => {
 };
 
 export async function uploadTempImages(filenames, pictures) {
+  const result = { data: null, error: null };
+
+  const formData = new FormData();
+
   for (const [index, filename] of filenames.entries()) {
     const file = pictures[index];
-    await fetch('/api/temp-image', {
-      method: 'POST',
-      headers: {
-        'Content-Type': file.type,
-        'X-Filename': filename,
-      },
-      body: file,
-    }).catch((e) => {
-      throw e;
-    });
+    formData.append(filename, file);
+    result.data += `${filename} uploaded `;
   }
+  const res = await fetch('/api/upload', {
+    method: 'POST',
+    body: formData,
+  });
+
+  console.log('///// res  : ', res);
+
+  if (!res.ok) return Object.assign(result, { error: 'Error uploading files' });
+
+  return result;
 }
 
 export const submitAddOrUpdateItem = async (itemObject, pictures, isUpdate) => {
-  let result;
-  const messageOk = isUpdate ? CONST.UPDATE.MESSAGE_OK : CONST.ADD.MESSAGE_OK;
-  const messageKO = isUpdate ? CONST.UPDATE.MESSAGE_KO : CONST.ADD.MESSAGE_KO;
-  try {
-    if (picturesIsFull(pictures))
-      await uploadTempImages(itemObject.filenames, pictures);
+  const graphqlItem = itemObject.getGraphqlObject(isUpdate);
 
-    const graphqlItem = itemObject.getGraphqlObject(isUpdate);
+  let resultUpload;
 
-    const queryRes = isUpdate
-      ? await updateItemRequest(graphqlItem)
-      : await addItemRequest(graphqlItem);
+  // if (picturesIsFull(pictures))
+  //   resultUpload = await uploadTempImages(itemObject.filenames, pictures);
 
-    const { data, error } = queryRes;
-    if (data)
-      result = new ResultForm(`${itemObject.title} ${messageOk}`, false);
-    else if (error) result = new ResultForm(error.message, true);
-    else result = new ResultForm(messageKO, true);
-  } catch (e) {
-    result = new ResultForm(e.message, true);
-  }
-  return result;
+  return resultUpload.error
+    ? resultUpload
+    : Object.assign(
+        {},
+        {
+          data: isUpdate
+            ? await updateItemRequest(graphqlItem)
+            : await addItemRequest(graphqlItem),
+        },
+      );
 };

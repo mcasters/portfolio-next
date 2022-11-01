@@ -51,15 +51,15 @@ class ItemObject {
     this.filenames = this.getFilenamesTab(this.title);
   };
 
-  getFilenamesTab = (title) => {
+  getFilenamesTab = () => {
     let tab = [];
     if (this.#isSculpture) {
       let i;
       for (i = 1; i < 5; i++) {
-        tab[i - 1] = `${title}_${i}.jpg`;
+        tab[i - 1] = `${this.title}_${i}.jpg`;
       }
     } else {
-      tab[0] = `${title}.jpg`;
+      tab[0] = `${this.title}.jpg`;
     }
     return tab;
   };

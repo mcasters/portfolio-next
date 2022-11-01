@@ -1,4 +1,6 @@
 const ITEM_CONSTANT = {
+  UPLOAD_NAME: 'photos',
+
   PAINTING: {
     TYPE: 'painting',
     IMAGE: {

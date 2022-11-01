@@ -11,7 +11,7 @@ import {
   canSubmitData,
   submitAddOrUpdateItem,
 } from '../../../formUtils';
-import PreviewPartForm from './PreviewPartForm';
+import UploadImage from '../../../forms/uploadImage';
 import ImagePartForm from './ImagePartForm';
 import DataPartForm from './DataPartForm';
 
@@ -69,7 +69,7 @@ function UpdateForm({ itemObject, close }) {
     const res = await submitAddOrUpdateItem(itemObject, itemData.pictures, true);
     triggerAlert(res.getMessage(), res.getIsError());
     if (!res.getIsError()) {
-      mutate();
+      await mutate();
       close();
     }
   };
@@ -91,9 +91,9 @@ function UpdateForm({ itemObject, close }) {
           isSculpture={isSculpture}
         />
         <ImagePartForm itemObject={itemObject} />
-        <PreviewPartForm
+        <UploadImage
           isSculpture={isSculpture}
-          handleImageChange={handleImageChange}
+          onChange={handleImageChange}
         />
         <div>
           {canSubmit && (
