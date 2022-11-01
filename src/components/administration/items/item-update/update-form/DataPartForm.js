@@ -1,5 +1,5 @@
 import s from './DataPartForm.module.css';
-import DayPickerComponent from '../../daypicker/DayPickerComponent';
+import DayPickerComponent from '../../../forms/daypicker/DayPickerComponent';
 import PropTypes from 'prop-types';
 
 function DataPartForm({

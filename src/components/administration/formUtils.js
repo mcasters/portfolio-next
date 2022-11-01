@@ -1,4 +1,5 @@
 import { addItemRequest, updateItemRequest } from '../../data/request/request';
+import CONSTANT from '../../constants/itemConstant';
 
 export const canSubmitData = (itemData, isSculpture, isUpdate) => {
   const haveMain = !!(
@@ -34,44 +35,38 @@ export const picturesIsEmpty = (pictures) => {
   return pictures.every(empty);
 };
 
-export async function uploadTempImages(filenames, pictures) {
-  const result = { data: null, error: null };
+const uploadImage = async (filenames, pictures) => {
+  try {
+    let formData = new FormData();
+    pictures.forEach((file) => {
+      formData.append(CONSTANT.UPLOAD_NAME, file);
+    });
 
-  const formData = new FormData();
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
 
-  for (const [index, filename] of filenames.entries()) {
-    const file = pictures[index];
-    formData.append(filename, file);
-    result.data += `${filename} uploaded `;
+    return await res.json();
+  } catch (e) {
+    return Object.assign({}, { error: 'Error uploading files' });
   }
-  const res = await fetch('/api/upload', {
-    method: 'POST',
-    body: formData,
-  });
-
-  console.log('///// res  : ', res);
-
-  if (!res.ok) return Object.assign(result, { error: 'Error uploading files' });
-
-  return result;
-}
+};
 
 export const submitAddOrUpdateItem = async (itemObject, pictures, isUpdate) => {
   const graphqlItem = itemObject.getGraphqlObject(isUpdate);
 
   let resultUpload;
 
-  // if (picturesIsFull(pictures))
-  //   resultUpload = await uploadTempImages(itemObject.filenames, pictures);
+  if (picturesIsFull(pictures))
+    resultUpload = await uploadImage(itemObject.filenames, pictures);
 
-  return resultUpload.error
-    ? resultUpload
-    : Object.assign(
-        {},
-        {
-          data: isUpdate
-            ? await updateItemRequest(graphqlItem)
-            : await addItemRequest(graphqlItem),
-        },
-      );
+  if (resultUpload.error) return resultUpload;
+
+  const result = isUpdate
+    ? await updateItemRequest(graphqlItem)
+    : await addItemRequest(graphqlItem);
+
+  console.log('//// result : ', result);
+  return result;
 };

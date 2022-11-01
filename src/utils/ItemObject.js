@@ -123,7 +123,7 @@ class ItemObject {
     };
   };
 
-  updateFromItemData = (itemData) => {
+  updateFromItem = (itemData) => {
     if (itemData.title !== this.title) this.updateFilenames(itemData.title);
     this.setUpdatableAttributes(itemData);
     return this;

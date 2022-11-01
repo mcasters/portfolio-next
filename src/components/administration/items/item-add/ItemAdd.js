@@ -63,58 +63,21 @@ function ItemAdd({ type }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      let formData = new FormData();
-      item.pictures.forEach((file) => {
-        formData.append(CONSTANT.UPLOAD_NAME, file);
-      });
+    itemObject.updateFromItem(item);
 
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const { data, error } = await res.json();
-
-      if (error || !data) {
-        alert(error || 'Sorry! something went wrong.');
-        return;
-      }
-
-      console.log('File was uploaded successfylly:', data);
-
-    } catch (error) {
-      console.error(error);
-      alert('Sorry! something went wrong.');
-    }
-
-    //await mutate();
-    // clear();
-    /*
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: JSON.stringify({ filename: itemObject.getFilenamesTab() }),
-    });
-
-    if (res) {
-      await mutate();
-      clear();
-    }
-
-    itemObject.updateFromItemData(itemData);
     const { data, error } = await submitAddOrUpdateItem(
       itemObject,
-      itemData.pictures,
+      item.pictures,
       false,
     );
-    if (error) {
-      triggerAlert(error, true);
+
+    if (error || !data) {
+      triggerAlert(error ? error.message : 'Sorry! something went wrong.', true);
     } else {
+      triggerAlert('Item ajouté', false);
       await mutate();
       clear();
     }
-
- */
   };
 
   return (
