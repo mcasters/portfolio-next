@@ -1,7 +1,7 @@
 import {
   addItemRequest,
   updateItemRequest,
-} from '../../data/graphql/api/client-side/query-graphql';
+} from '../../data/request/request';
 import ResultForm from '../../utils/ResultForm';
 import { FORM_CONSTANT as CONST } from '../../constants/formConstant';
 

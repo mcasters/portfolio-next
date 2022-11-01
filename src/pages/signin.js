@@ -6,13 +6,12 @@ import useSWR from 'swr';
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/routes';
 import { useAlert } from '../components/alert-context/AlertContext';
-import useCookie from '../components/hooks/useCookie';
 
 import {
   signInRequest,
-  viewerRequest,
-} from '../data/graphql/api/client-side/query-graphql';
-import { VIEWER } from '../data/graphql/api/queries';
+  isAuthenticatedRequest,
+} from '../data/request/request';
+import { ISAUTHENTICATED } from '../data/graphql/queries';
 
 const SignIn = () => {
   const { publicRuntimeConfig } = getConfig();
@@ -24,7 +23,7 @@ const SignIn = () => {
   });
   const triggerAlert = useAlert();
   const router = useRouter();
-  const { mutate } = useSWR(VIEWER, viewerRequest);
+  const { mutate } = useSWR(ISAUTHENTICATED, isAuthenticatedRequest);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +42,7 @@ const SignIn = () => {
       );
       triggerAlert('Failed to authenticate', true);
     }
-    if (data.signIn) {
+    if (data) {
       localStorage.setItem(ls_key, ls_value);
       await mutate();
       await router.push(ROUTES.ADMIN);

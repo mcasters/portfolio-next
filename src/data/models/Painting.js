@@ -1,5 +1,5 @@
 import DataType from 'sequelize';
-import Model from '../sequelize';
+import Model from './sequelize';
 
 const Painting = Model.define(
   'Painting',

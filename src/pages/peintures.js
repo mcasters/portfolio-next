@@ -5,8 +5,8 @@ import CONST from '../constants/itemConstant';
 import ItemTab from '../components/item-dir/item-tab/ItemTab';
 import useOnSrr from '../components/hooks/useOnSrr';
 import Layout from '../components/layout-components/layout/Layout';
-import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
-import { ITEMS_BY_PART } from '../data/graphql/api/queries';
+import { queryGraphql } from '../data/request/request-ssr';
+import { ITEMS_BY_PART } from '../data/graphql/queries';
 
 const Peintures = ({ data2017, data2018_a, data2018_b, data2019 }) => {
   const [selectedTab, setSelectedTab] = useState(0);

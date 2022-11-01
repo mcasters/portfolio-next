@@ -73,7 +73,7 @@ const typeDefs = gql`
     allItems(type: String!): [Item]
     itemsByPart(year: Int!, type: String!, part: Int!): [Item]
     user(id: ID!): User!
-    viewer: Boolean!
+    isAuthenticated: Boolean!
   }
 
   type Mutation {

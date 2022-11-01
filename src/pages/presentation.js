@@ -3,8 +3,8 @@ import Content from '../components/content/Content';
 import CONST from '../constants/content';
 import TITLE from '../constants/pageTitle';
 import Layout from '../components/layout-components/layout/Layout';
-import { CONTENT } from '../data/graphql/api/queries';
-import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
+import { CONTENT } from '../data/graphql/queries';
+import { queryGraphql } from '../data/request/request-ssr';
 
 const Presentation = ({ data }) => {
   return (

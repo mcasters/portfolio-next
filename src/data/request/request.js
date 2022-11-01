@@ -1,9 +1,3 @@
-/*
- * *****************************
- * Queries from front = No ssr
- * *****************************
- */
-import fetch from 'isomorphic-unfetch';
 import { request } from 'graphql-request';
 
 import {
@@ -15,8 +9,14 @@ import {
   SIGNOUT,
   SIGNUP,
   UPDATE_ITEM,
-  VIEWER,
-} from '../queries';
+  ISAUTHENTICATED,
+} from '../graphql/queries';
+
+/*
+ * *****************************
+ * From front = No ssr
+ * *****************************
+ */
 
 const api = '/api/graphql';
 
@@ -33,13 +33,11 @@ const withErrorHandler = async (query, variables) => {
 };
 
 /*
- * *****************************
  * Authentication
- * *****************************
  */
 
 // GET
-export const viewerRequest = () => request(api, VIEWER);
+export const isAuthenticatedRequest = () => request(api, ISAUTHENTICATED);
 export const signoutRequest = () => request(api, SIGNOUT);
 
 // POST
@@ -50,9 +48,7 @@ export const signUpRequest = (username, email, password) =>
   withErrorHandler(SIGNUP, { signUpInput: { username, email, password } });
 
 /*
- * *****************************
  * Content
- * *****************************
  */
 
 // GET
@@ -63,9 +59,7 @@ export const addContentRequest = (key, text) =>
   withErrorHandler(ADD_CONTENT, { contentInput: { key, text } });
 
 /*
- * *****************************
  * Items
- * *****************************
  */
 
 // GET
@@ -81,15 +75,13 @@ export const itemsByPartRequest = (query, year, type, part) =>
 export const addItemRequest = (item) => withErrorHandler(ADD_ITEM, { item });
 export const updateItemRequest = (item) =>
   withErrorHandler(UPDATE_ITEM, { item });
-export const deleteItemRequest = async (id, type) =>
+export const deleteItemRequest = (id, type) =>
   withErrorHandler(DELETE_ITEM, { id, type });
 
 /*
- * *****************************
  * Images
- * *****************************
  */
 
-/// POST
+// POST
 export const addPictureRequest = (title) =>
   withErrorHandler(ADD_PICTURE, { title });

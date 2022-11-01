@@ -1,5 +1,5 @@
 import s from './DataPartForm.module.css';
-import DayPicker from '../../daypicker/DayPicker';
+import DayPickerComponent from '../../daypicker/DayPickerComponent';
 import PropTypes from 'prop-types';
 
 function DataPartForm({
@@ -19,7 +19,7 @@ function DataPartForm({
         onChange={handleDataChange}
       />
       <div className={s.DayInputContainer}>
-        <DayPicker onDayChange={handleDayChange} selectedDay={itemData.date} />
+        <DayPickerComponent handleDayChange={handleDayChange} alreadyDay={itemData.date} />
       </div>
       <input
         className={s.inputL}

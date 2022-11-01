@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import s from './EditPictureForm.module.css';
 import CONT_CONST from '../../../constants/content';
 import { useAlert } from '../../alert-context/AlertContext';
-import { addPictureRequest } from '../../../data/graphql/api/client-side/query-graphql';
+import { addPictureRequest } from '../../../data/request/request';
 
 function EditPictureForm({ pictureTitle }) {
   const triggerAlert = useAlert();

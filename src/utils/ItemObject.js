@@ -1,5 +1,5 @@
 import ITEM from '../constants/itemConstant';
-import { picturesIsFull } from '../components/administration/itemFormUtils';
+import { picturesIsFull } from '../components/administration/formUtils';
 const libraryPath = '/images';
 
 class ItemObject {

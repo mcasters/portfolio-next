@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import {useEffect, useState} from 'react';
 
-import { CONTENT } from '../../../data/graphql/api/queries';
+import { CONTENT } from '../../../data/graphql/queries';
 import {
   addContentRequest,
   contentRequest,
-} from '../../../data/graphql/api/client-side/query-graphql';
+} from '../../../data/request/request';
 import { useAlert } from '../../alert-context/AlertContext';
 import s from './EditContent.module.css';
 

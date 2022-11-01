@@ -2,15 +2,15 @@ import cookie from 'cookie';
 
 import { User } from '../../models/index';
 import {
-    isAuthenticated,
+    isAuth,
     createUser,
     validPassword, setCookie,
 } from '../../../utils/auth';
 
 export default {
   Query: {
-    async viewer(_parent, _args, context, _info) {
-      return await isAuthenticated(context.req);
+    async isAuthenticated(_parent, _args, context, _info) {
+      return await isAuth(context.req);
     },
   },
 

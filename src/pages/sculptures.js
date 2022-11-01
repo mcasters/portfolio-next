@@ -1,8 +1,8 @@
 import Item from '../components/item-dir/item/Item';
 import CONST from '../constants/itemConstant';
 import Layout from '../components/layout-components/layout/Layout';
-import { ALL_ITEMS } from '../data/graphql/api/queries';
-import { queryGraphql } from '../data/graphql/api/server-side/query-graphql-ssr';
+import { ALL_ITEMS } from '../data/graphql/queries';
+import { queryGraphql } from '../data/request/request-ssr';
 import ItemObject from '../utils/ItemObject';
 import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
 

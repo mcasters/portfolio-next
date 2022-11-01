@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
 import s from './ItemAdd.module.css';
 import ITEM from '../../../../constants/itemConstant';
 import { useAlert } from '../../../alert-context/AlertContext';
-import { ALL_ITEMS } from '../../../../data/graphql/api/queries';
-import { allItemsRequest } from '../../../../data/graphql/api/client-side/query-graphql';
-import { canSubmitData, submitAddOrUpdateItem } from '../../itemFormUtils';
+import { ALL_ITEMS } from '../../../../data/graphql/queries';
+import { allItemsRequest } from '../../../../data/request/request';
+import { canSubmitData, submitAddOrUpdateItem } from '../../formUtils';
 import ItemObject from '../../../../utils/ItemObject';
 import DataPartForm from '../item-update/update-form/DataPartForm';
 import PreviewPartForm from '../item-update/update-form/PreviewPartForm';
@@ -20,9 +20,8 @@ function ItemAdd({ type }) {
   const triggerAlert = useAlert();
   const [onClear, setOnClear] = useState(0);
   const [itemData, setItemData] = useState(itemObject.getItemData());
+  const [canSubmit, setCanSubmit] = useState(false);
   const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
-
-  const canSubmit = canSubmitData(itemData, isSculpture, false);
 
   const handleDataChange = (e) => {
     e.preventDefault();
@@ -35,8 +34,12 @@ function ItemAdd({ type }) {
     );
   };
 
+  useEffect(() => {
+    setCanSubmit(canSubmitData(itemData, isSculpture, false));
+  }, [itemData]);
+
   const handleDayChange = (date) => {
-    setItemData(Object.assign({}, itemData, { date }));
+      setItemData(Object.assign({}, itemData, { date }));
   };
 
   const handleImageChange = (index, content) => {
@@ -51,7 +54,7 @@ function ItemAdd({ type }) {
     setOnClear((prev) => prev + 1);
   };
 
-  const clear= () => {
+  const clear = () => {
     itemObject = new ItemObject(null, type);
     setItemData(itemObject.getItemData());
     setOnClear((prev) => prev + 1);
@@ -67,7 +70,7 @@ function ItemAdd({ type }) {
     );
     triggerAlert(res.getMessage(), res.getIsError());
     if (!res.getIsError()) {
-      mutate();
+      await mutate();
       clear();
     }
   };

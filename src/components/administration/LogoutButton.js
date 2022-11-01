@@ -4,16 +4,16 @@ import Router from 'next/router';
 
 import {
   signoutRequest,
-  viewerRequest,
-} from '../../data/graphql/api/client-side/query-graphql';
+  isAuthenticatedRequest,
+} from '../../data/request/request';
 import { ROUTES } from '../../constants/routes';
-import { VIEWER } from '../../data/graphql/api/queries';
+import { ISAUTHENTICATED } from '../../data/graphql/queries';
 import { useAlert } from '../alert-context/AlertContext';
 
 const LogoutButton = () => {
   const { publicRuntimeConfig } = getConfig();
   const { ls_key } = publicRuntimeConfig;
-  const { mutate } = useSWR(VIEWER, viewerRequest);
+  const { mutate } = useSWR(ISAUTHENTICATED, isAuthenticatedRequest);
   const triggerAlert = useAlert();
 
   return (
