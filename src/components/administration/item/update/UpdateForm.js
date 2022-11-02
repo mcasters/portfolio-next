@@ -4,13 +4,13 @@ import useSWR from 'swr';
 import Modal from 'react-modal';
 
 import s from './UpdateForm.module.css';
-import { useAlert } from '../../../../alert-context/AlertContext';
-import { ALL_ITEMS_ADMIN } from '../../../../../data/graphql/queries';
-import { allItemsRequest } from '../../../../../data/request/request';
-import { canSubmitData, submitUpdateItem } from '../../../formUtils';
-import UploadImage from '../../../forms/uploadImage';
-import ImagePartForm from './ImagePartForm';
-import DataPartForm from './DataPartForm';
+import { useAlert } from '../../../alert-context/AlertContext';
+import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
+import { allItemsRequest } from '../../../../data/request/request';
+import { canSubmitData, submitUpdateItem } from '../../utils/formUtils';
+import UploadImage from '../uploadImage';
+import ImagePart from '../ImagePart';
+import DataPart from '../DataPart';
 
 const customStyles = {
   overlay: {
@@ -87,13 +87,13 @@ function UpdateForm({ itemObject, close }) {
     >
       <h1 className={s.updateTitle}>Modification</h1>
       <form className="formGroup" onSubmit={handleSubmit}>
-        <DataPartForm
+        <DataPart
           itemData={itemData}
           handleDataChange={handleDataChange}
           handleDayChange={handleDayChange}
           isSculpture={isSculpture}
         />
-        <ImagePartForm itemObject={itemObject} />
+        <ImagePart itemObject={itemObject} />
         <UploadImage isSculpture={isSculpture} onChange={handleImageChange} />
         <div>
           {canSubmit && (

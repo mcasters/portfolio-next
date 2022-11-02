@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
-import s from './ItemAdd.module.css';
+import s from './AddForm.module.css';
 import CONSTANT from '../../../../constants/itemConstant';
 import { useAlert } from '../../../alert-context/AlertContext';
 import { ALL_ITEMS } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
-import { canSubmitData, submitAddItem } from '../../formUtils';
-import DataPartForm from '../item-update/update-form/DataPartForm';
-import UploadImage from '../../forms/uploadImage';
-import {getEmptyItem} from "../../itemUtils";
+import { canSubmitData, submitAddItem } from '../../utils/formUtils';
+import DataPart from '../DataPart';
+import UploadImage from '../uploadImage';
+import {getEmptyItem} from "../../utils/itemUtils";
 
-function ItemAdd({ type }) {
+function AddForm({ type }) {
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const titleForm = 'Ajout';
 
@@ -88,7 +88,7 @@ function ItemAdd({ type }) {
         encType="multipart/form-data"
         ref={formRef}
       >
-        <DataPartForm
+        <DataPart
           itemData={item}
           handleDataChange={handleDataChange}
           handleDayChange={handleDayChange}
@@ -118,8 +118,8 @@ function ItemAdd({ type }) {
   );
 }
 
-ItemAdd.propTypes = {
+AddForm.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-export default ItemAdd;
+export default AddForm;

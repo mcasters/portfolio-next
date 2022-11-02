@@ -1,4 +1,4 @@
-import s from '../items/item-update/update-form/PreviewPartForm.module.css';
+import s from './Preview.module.css';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
