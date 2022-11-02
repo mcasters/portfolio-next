@@ -5,12 +5,12 @@ import Modal from 'react-modal';
 
 import s from './UpdateForm.module.css';
 import { useAlert } from '../../../../alert-context/AlertContext';
-import {ALL_ITEMS, ALL_ITEMS_ADMIN} from '../../../../../data/graphql/queries';
-import { allItemsRequest } from '../../../../../data/request/request';
 import {
-  canSubmitData,
-  submitAddOrUpdateItem,
-} from '../../../formUtils';
+  ALL_ITEMS,
+  ALL_ITEMS_ADMIN,
+} from '../../../../../data/graphql/queries';
+import { allItemsRequest } from '../../../../../data/request/request';
+import { canSubmitData, submitUpdateItem } from '../../../formUtils';
 import UploadImage from '../../../forms/uploadImage';
 import ImagePartForm from './ImagePartForm';
 import DataPartForm from './DataPartForm';
@@ -37,7 +37,10 @@ function UpdateForm({ itemObject, close }) {
   const isSculpture = itemObject.getIsSculpture();
   const canSubmit = canSubmitData(itemData, isSculpture, true);
   const showModal = true;
-  const { mutate } = useSWR([ALL_ITEMS_ADMIN, itemObject.getType()], allItemsRequest);
+  const { mutate } = useSWR(
+    [ALL_ITEMS_ADMIN, itemObject.getType()],
+    allItemsRequest,
+  );
 
   const handleCloseModal = () => {
     close();
@@ -65,8 +68,11 @@ function UpdateForm({ itemObject, close }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // TODO
+
     itemObject.updateFromItemData(itemData);
-    const res = await submitAddOrUpdateItem(itemObject, itemData.pictures, true);
+    const res = await submitUpdateItem(item, type);
     triggerAlert(res.getMessage(), res.getIsError());
     if (!res.getIsError()) {
       await mutate();
@@ -91,10 +97,7 @@ function UpdateForm({ itemObject, close }) {
           isSculpture={isSculpture}
         />
         <ImagePartForm itemObject={itemObject} />
-        <UploadImage
-          isSculpture={isSculpture}
-          onChange={handleImageChange}
-        />
+        <UploadImage isSculpture={isSculpture} onChange={handleImageChange} />
         <div>
           {canSubmit && (
             <button className="button" type="submit">

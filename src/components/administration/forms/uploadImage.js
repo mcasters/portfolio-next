@@ -65,9 +65,9 @@ export default function UploadImage({ isSculpture, onChange, onClear }) {
         <ImageInput onChange={onChangeHandler} onClear={onClear} index={0} />
         {isSculpture && (
           <>
-            <ImageInput onChange={onChangeHandler} onClear={onClear} index={1} />
-            <ImageInput onChange={onChangeHandler} onClear={onClear} index={2} />
-            <ImageInput onChange={onChangeHandler} onClear={onClear} index={3} />
+            <ImageInput onChange={onChangeHandler} index={1} />
+            <ImageInput onChange={onChangeHandler} index={2} />
+            <ImageInput onChange={onChangeHandler} index={3} />
           </>
         )}
       </div>
