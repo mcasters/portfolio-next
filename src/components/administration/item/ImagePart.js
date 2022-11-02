@@ -1,8 +1,8 @@
-import s from './ImagePartForm.module.css';
+import s from './ImagePart.module.css';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function ImagePartForm({ itemObject }) {
+function ImagePart({ itemObject }) {
   return (
     <>
       <div className={s.oldImageContainer}>
@@ -24,8 +24,8 @@ function ImagePartForm({ itemObject }) {
   );
 }
 
-ImagePartForm.propTypes = {
+ImagePart.propTypes = {
   itemObject: PropTypes.object.isRequired,
 };
 
-export default ImagePartForm;
+export default ImagePart;

@@ -1,4 +1,4 @@
-import CONSTANT from '../../constants/itemConstant';
+import CONSTANT from '../../../constants/itemConstant';
 
 export const getGraphqlObject = (item, type) => {
   const object = {

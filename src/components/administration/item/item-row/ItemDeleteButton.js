@@ -21,7 +21,7 @@ function ItemDeleteButton({ id, type }) {
         e.preventDefault();
         const { data, error } = await deleteItemRequest(id, type);
         if (data) {
-          mutate();
+          await mutate();
           triggerAlert('Item supprimé', false);
         } else triggerAlert(error ? error.message : "Echec de la suppression de l'item", true);
       }}

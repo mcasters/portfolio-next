@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 
-import CONSTANT from '../../../constants/itemConstant';
-import s from '../items/item-update/update-form/PreviewPartForm.module.css';
+import s from './Preview.module.css';
 
 export const ImageInput = ({ onChange, index }) => {
 

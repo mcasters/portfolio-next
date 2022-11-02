@@ -1,8 +1,8 @@
-import s from './DataPartForm.module.css';
-import DayPickerComponent from '../../../forms/daypicker/DayPickerComponent';
+import s from './DataPart.module.css';
+import DayPickerComponent from './daypicker/DayPickerComponent';
 import PropTypes from 'prop-types';
 
-function DataPartForm({
+function DataPart({
   itemData,
   handleDataChange,
   handleDayChange,
@@ -67,11 +67,11 @@ function DataPartForm({
   );
 }
 
-DataPartForm.propTypes = {
+DataPart.propTypes = {
   itemData: PropTypes.object.isRequired,
   handleDataChange: PropTypes.func.isRequired,
   handleDayChange: PropTypes.func.isRequired,
   isSculpture: PropTypes.bool.isRequired,
 };
 
-export default DataPartForm;
+export default DataPart;
