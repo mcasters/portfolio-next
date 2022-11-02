@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 import { ImageInput } from './ImageInput';
+import Preview from './Preview';
 
 export default function UploadImage({ isSculpture, onChange, onClear }) {
   const [previewUrls, setPreviewUrls] = useState([]);
@@ -25,7 +26,7 @@ export default function UploadImage({ isSculpture, onChange, onClear }) {
     onChange(index, file);
   };
 
-  const deletePicture = (index) => (e) => {
+  const handleOnDelete = (index) => (e) => {
     e.preventDefault();
     const newPreviewUrls = [...previewUrls];
     newPreviewUrls[index] = '';
@@ -38,41 +39,18 @@ export default function UploadImage({ isSculpture, onChange, onClear }) {
     setPreviewUrls(initPreview());
   };
 
-  const previews = previewUrls.map((url, index) => {
-    if (url !== '')
-      return (
-        <div key={`container${index}`} className={s.imagePreviewContainer}>
-          <img
-            key={`img${index}`}
-            src={url}
-            alt="Image formulaire"
-            className={s.imagePreview}
-          />
-          <button
-            key={`button${index}`}
-            className="button"
-            onClick={deletePicture(index)}
-          >
-            Supprimer
-          </button>
-        </div>
-      );
-  });
-
   return (
-    <>
-      <div className={s.previewContainer}>
-        <ImageInput onChange={onChangeHandler} onClear={onClear} index={0} />
-        {isSculpture && (
-          <>
-            <ImageInput onChange={onChangeHandler} index={1} />
-            <ImageInput onChange={onChangeHandler} index={2} />
-            <ImageInput onChange={onChangeHandler} index={3} />
-          </>
-        )}
-      </div>
-      <>{previews}</>
-    </>
+    <div className={s.inputContainer}>
+      <ImageInput onChange={onChangeHandler} onClear={onClear} index={0} />
+      {isSculpture && (
+        <>
+          <ImageInput onChange={onChangeHandler} index={1} />
+          <ImageInput onChange={onChangeHandler} index={2} />
+          <ImageInput onChange={onChangeHandler} index={3} />
+        </>
+      )}
+      <Preview previewUrls={previewUrls} onDelete={handleOnDelete} />
+    </div>
   );
 }
 
