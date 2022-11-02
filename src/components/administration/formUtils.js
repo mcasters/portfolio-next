@@ -1,45 +1,36 @@
 import { addItemRequest, updateItemRequest } from '../../data/request/request';
 import CONSTANT from '../../constants/itemConstant';
+import {
+  getFilenamesTab,
+  getGraphqlObject,
+  picturesIsFull,
+  picturesIsFullOrEmpty,
+} from './itemUtils';
 
-export const canSubmitData = (itemData, isSculpture, isUpdate) => {
+export const canSubmitData = (item, isSculpture, isUpdate) => {
   const haveMain = !!(
-    itemData.title &&
-    itemData.date &&
-    itemData.technique &&
-    itemData.height &&
-    itemData.width
+    item.title &&
+    item.date &&
+    item.technique &&
+    item.height &&
+    item.width
   );
 
   const picturesOK = isUpdate
-    ? picturesIsFullOrEmpty(itemData.pictures)
-    : picturesIsFull(itemData.pictures);
+    ? picturesIsFullOrEmpty(item)
+    : picturesIsFull(item);
 
   return (
     picturesOK &&
-    ((!isSculpture && haveMain) ||
-      !!(isSculpture && haveMain && itemData.length))
+    ((!isSculpture && haveMain) || !!(isSculpture && haveMain && item.length))
   );
-};
-
-export const picturesIsFullOrEmpty = (pictures) => {
-  return picturesIsFull(pictures) || picturesIsEmpty(pictures);
-};
-
-export const picturesIsFull = (pictures) => {
-  const full = (picture) => picture !== '';
-  return pictures.every(full);
-};
-
-export const picturesIsEmpty = (pictures) => {
-  const empty = (picture) => picture === '';
-  return pictures.every(empty);
 };
 
 const uploadImage = async (filenames, pictures) => {
   try {
     let formData = new FormData();
-    pictures.forEach((file) => {
-      formData.append(CONSTANT.UPLOAD_NAME, file);
+    pictures.forEach((file, index) => {
+      formData.append(filenames[index], file);
     });
 
     const res = await fetch('/api/upload', {
@@ -53,20 +44,22 @@ const uploadImage = async (filenames, pictures) => {
   }
 };
 
-export const submitAddOrUpdateItem = async (itemObject, pictures, isUpdate) => {
-  const graphqlItem = itemObject.getGraphqlObject(isUpdate);
+export const submitUpdateItem = async (item, type) => {
+  // TODO
+};
 
+export const submitAddItem = async (item, type) => {
   let resultUpload;
 
-  if (picturesIsFull(pictures))
-    resultUpload = await uploadImage(itemObject.filenames, pictures);
-
+  if (picturesIsFull(item)) {
+    resultUpload = await uploadImage(
+      getFilenamesTab(item, type),
+      item.pictures,
+    );
+  } else {
+    resultUpload = Object.assign({}, { error: 'Image(s) manquante(s)' });
+  }
   if (resultUpload.error) return resultUpload;
 
-  const result = isUpdate
-    ? await updateItemRequest(graphqlItem)
-    : await addItemRequest(graphqlItem);
-
-  console.log('//// result : ', result);
-  return result;
+  return await addItemRequest(getGraphqlObject(item, type));
 };
