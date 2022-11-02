@@ -7,6 +7,7 @@ class ItemObject {
   #type;
   #isSculpture;
   #constDatas;
+
   constructor(item, type) {
     this.initAttributes(item, type);
   }
@@ -17,7 +18,6 @@ class ItemObject {
     this.#isSculpture = this.#type === ITEM.SCULPTURE.TYPE;
     this.setUpdatableAttributes(item);
     this.initConstDatas();
-    this.initFilenames();
   };
 
   setUpdatableAttributes = (item) => {
@@ -29,6 +29,7 @@ class ItemObject {
     this.width = item?.width || '';
     this.length = item?.length || '';
     this.hasImages = item?.pictures ? picturesIsFull(item.pictures) : false;
+    this.filenames = this.title === '' ? [] : this.getFilenamesTab();
   };
 
   initConstDatas = () => {
@@ -45,10 +46,6 @@ class ItemObject {
       default:
         throw new Error(`Type ${this.type} inexistant`);
     }
-  };
-
-  initFilenames = () => {
-    this.filenames = this.getFilenamesTab(this.title);
   };
 
   getFilenamesTab = () => {
@@ -84,16 +81,6 @@ class ItemObject {
     );
   };
 
-  getAllPaths = () => {
-    let tab = [];
-
-    tab.push(this.getMainPaths());
-    tab.push(this.getMDPaths());
-    tab.push(this.getSMPaths());
-
-    return tab;
-  };
-
   getId = () => {
     return this.#id;
   };
@@ -108,53 +95,6 @@ class ItemObject {
 
   getAltImage = () => {
     return this.#constDatas.IMAGE.ALT_IMAGE;
-  };
-
-  getItemData = () => {
-    return {
-      title: this.title,
-      date: this.date,
-      technique: this.technique,
-      description: this.description,
-      height: this.height,
-      width: this.width,
-      length: this.length,
-      pictures: this.#isSculpture ? ['', '', '', ''] : [''],
-    };
-  };
-
-  updateFromItemData = (itemData) => {
-    if (itemData.title !== this.title) this.updateFilenames(itemData.title);
-    this.setUpdatableAttributes(itemData);
-    return this;
-  };
-
-  updateFilenames = (title) => {
-    this.filenames = this.getFilenamesTab(title);
-  };
-
-  getGraphqlObject = (isUpdate) => {
-    let graphqlObject = {
-      type: this.#type,
-      title: this.title,
-      date: this.date,
-      technique: this.technique,
-      description: this.description,
-      height: this.height,
-      width: this.width,
-    };
-
-    if (this.#isSculpture)
-      graphqlObject = { ...graphqlObject, length: this.length };
-
-    if (isUpdate)
-      graphqlObject = {
-        ...graphqlObject,
-        id: this.#id,
-        hasImages: this.hasImages,
-      };
-
-    return graphqlObject;
   };
 }
 

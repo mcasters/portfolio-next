@@ -1,77 +1,65 @@
 import { addItemRequest, updateItemRequest } from '../../data/request/request';
+import CONSTANT from '../../constants/itemConstant';
+import {
+  getFilenamesTab,
+  getGraphqlObject,
+  picturesIsFull,
+  picturesIsFullOrEmpty,
+} from './itemUtils';
 
-export const canSubmitData = (itemData, isSculpture, isUpdate) => {
+export const canSubmitData = (item, isSculpture, isUpdate) => {
   const haveMain = !!(
-    itemData.title &&
-    itemData.date &&
-    itemData.technique &&
-    itemData.height &&
-    itemData.width
+    item.title &&
+    item.date &&
+    item.technique &&
+    item.height &&
+    item.width
   );
 
   const picturesOK = isUpdate
-    ? picturesIsFullOrEmpty(itemData.pictures)
-    : picturesIsFull(itemData.pictures);
+    ? picturesIsFullOrEmpty(item)
+    : picturesIsFull(item);
 
   return (
     picturesOK &&
-    ((!isSculpture && haveMain) ||
-      !!(isSculpture && haveMain && itemData.length))
+    ((!isSculpture && haveMain) || !!(isSculpture && haveMain && item.length))
   );
 };
 
-export const picturesIsFullOrEmpty = (pictures) => {
-  return picturesIsFull(pictures) || picturesIsEmpty(pictures);
-};
+const uploadImage = async (filenames, pictures) => {
+  try {
+    let formData = new FormData();
+    pictures.forEach((file, index) => {
+      formData.append(filenames[index], file);
+    });
 
-export const picturesIsFull = (pictures) => {
-  const full = (picture) => picture !== '';
-  return pictures.every(full);
-};
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
 
-export const picturesIsEmpty = (pictures) => {
-  const empty = (picture) => picture === '';
-  return pictures.every(empty);
-};
-
-export async function uploadTempImages(filenames, pictures) {
-  const result = { data: null, error: null };
-
-  const formData = new FormData();
-
-  for (const [index, filename] of filenames.entries()) {
-    const file = pictures[index];
-    formData.append(filename, file);
-    result.data += `${filename} uploaded `;
+    return await res.json();
+  } catch (e) {
+    return Object.assign({}, { error: 'Error uploading files' });
   }
-  const res = await fetch('/api/upload', {
-    method: 'POST',
-    body: formData,
-  });
+};
 
-  console.log('///// res  : ', res);
+export const submitUpdateItem = async (item, type) => {
+  // TODO
+};
 
-  if (!res.ok) return Object.assign(result, { error: 'Error uploading files' });
-
-  return result;
-}
-
-export const submitAddOrUpdateItem = async (itemObject, pictures, isUpdate) => {
-  const graphqlItem = itemObject.getGraphqlObject(isUpdate);
-
+export const submitAddItem = async (item, type) => {
   let resultUpload;
 
-  // if (picturesIsFull(pictures))
-  //   resultUpload = await uploadTempImages(itemObject.filenames, pictures);
+  if (picturesIsFull(item)) {
+    resultUpload = await uploadImage(
+      getFilenamesTab(item, type),
+      item.pictures,
+    );
+  } else {
+    resultUpload = Object.assign({}, { error: 'Image(s) manquante(s)' });
+  }
+  if (resultUpload.error) return resultUpload;
 
-  return resultUpload.error
-    ? resultUpload
-    : Object.assign(
-        {},
-        {
-          data: isUpdate
-            ? await updateItemRequest(graphqlItem)
-            : await addItemRequest(graphqlItem),
-        },
-      );
+  return await addItemRequest(getGraphqlObject(item, type));
 };

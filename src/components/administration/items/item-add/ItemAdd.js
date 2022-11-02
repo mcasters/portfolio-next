@@ -7,22 +7,29 @@ import CONSTANT from '../../../../constants/itemConstant';
 import { useAlert } from '../../../alert-context/AlertContext';
 import { ALL_ITEMS } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
-import { canSubmitData, submitAddOrUpdateItem } from '../../formUtils';
-import ItemObject from '../../../../utils/ItemObject';
+import { canSubmitData, submitAddItem } from '../../formUtils';
 import DataPartForm from '../item-update/update-form/DataPartForm';
 import UploadImage from '../../forms/uploadImage';
+import {getEmptyItem} from "../../itemUtils";
 
 function ItemAdd({ type }) {
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const titleForm = 'Ajout';
-  let itemObject = new ItemObject(null, type);
 
   const triggerAlert = useAlert();
   const [onClear, setOnClear] = useState(0);
-  const [item, setItem] = useState(itemObject.getItemData());
+  const [item, setItem] = useState(getEmptyItem(isSculpture));
   const [canSubmit, setCanSubmit] = useState(false);
   const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
+  const formRef = React.useRef(null);
 
+  useEffect(() => {
+    setCanSubmit(canSubmitData(item, isSculpture, false));
+  }, [item]);
+
+  const initItem = () => {
+    setItem(getEmptyItem(isSculpture));
+  };
   const handleDataChange = (e) => {
     e.preventDefault();
     const { name, value, type } = e.target;
@@ -33,10 +40,6 @@ function ItemAdd({ type }) {
       }),
     );
   };
-
-  useEffect(() => {
-    setCanSubmit(canSubmitData(item, isSculpture, false));
-  }, [item]);
 
   const handleDayChange = (date) => {
     setItem(Object.assign({}, item, { date }));
@@ -50,71 +53,30 @@ function ItemAdd({ type }) {
 
   const cancel = async (e) => {
     e.preventDefault();
-    setItem(itemObject.getItemData());
-    setOnClear((prev) => prev + 1);
+    clear();
   };
 
   const clear = () => {
-    itemObject = new ItemObject(null, type);
-    setItem(itemObject.getItemData());
+    initItem();
     setOnClear((prev) => prev + 1);
+    formRef.current?.reset();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      let formData = new FormData();
-      item.pictures.forEach((file) => {
-        formData.append(CONSTANT.UPLOAD_NAME, file);
-      });
+    const { data, error } = await submitAddItem(item, type);
 
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const { data, error } = await res.json();
-
-      if (error || !data) {
-        alert(error || 'Sorry! something went wrong.');
-        return;
-      }
-
-      console.log('File was uploaded successfylly:', data);
-
-    } catch (error) {
-      console.error(error);
-      alert('Sorry! something went wrong.');
-    }
-
-    //await mutate();
-    // clear();
-    /*
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: JSON.stringify({ filename: itemObject.getFilenamesTab() }),
-    });
-
-    if (res) {
-      await mutate();
-      clear();
-    }
-
-    itemObject.updateFromItemData(itemData);
-    const { data, error } = await submitAddOrUpdateItem(
-      itemObject,
-      itemData.pictures,
-      false,
-    );
-    if (error) {
-      triggerAlert(error, true);
+    if (error || !data) {
+      triggerAlert(
+        error.message ? error.message : 'Sorry! something went wrong.',
+        true,
+      );
     } else {
+      triggerAlert('Item ajouté', false);
       await mutate();
       clear();
     }
-
- */
   };
 
   return (
@@ -124,6 +86,7 @@ function ItemAdd({ type }) {
         className="formGroup"
         onSubmit={handleSubmit}
         encType="multipart/form-data"
+        ref={formRef}
       >
         <DataPartForm
           itemData={item}
