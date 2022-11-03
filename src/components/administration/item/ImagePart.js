@@ -1,31 +1,61 @@
-import s from './ImagePart.module.css';
+import s from './imagePart.module.css';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { useEffect, useState } from 'react';
 
-function ImagePart({ itemObject }) {
+import { ImageInput } from './ImageInput';
+import Preview from './Preview';
+
+export default function ImagePart({ isSculpture, onChange, onClear }) {
+  const [previewUrls, setPreviewUrls] = useState([]);
+
+  useEffect(() => {
+    clear();
+  }, [onClear]);
+
+  const initPreview = () => {
+    return isSculpture ? ['', '', '', ''] : [''];
+  };
+
+  const onChangeHandler = (file, index) => {
+    const newPreviewUrls =
+      previewUrls.length === 0 ? initPreview() : [...previewUrls];
+
+    newPreviewUrls[index] = URL.createObjectURL(file);
+    setPreviewUrls(newPreviewUrls);
+
+    onChange(index, file);
+  };
+
+  const handleOnDelete = (index) => (e) => {
+    e.preventDefault();
+    const newPreviewUrls = [...previewUrls];
+    newPreviewUrls[index] = '';
+    setPreviewUrls(newPreviewUrls);
+
+    onChange(index, '');
+  };
+
+  const clear = () => {
+    setPreviewUrls(initPreview());
+  };
+
   return (
-    <>
-      <div className={s.oldImageContainer}>
-        {itemObject
-          .getSMPaths()
-          .map(
-            (url) =>
-              url !== '' && (
-                <img
-                  key={url.toString()}
-                  src={url}
-                  alt="Incommensurable chef d'oeuvre de Marion Casters"
-                  className={s.oldImagePreview}
-                />
-              ),
-          )}
-      </div>
-    </>
+    <div className={s.container}>
+      <ImageInput onChange={onChangeHandler} index={0} />
+      {isSculpture && (
+        <>
+          <ImageInput onChange={onChangeHandler} index={1} />
+          <ImageInput onChange={onChangeHandler} index={2} />
+          <ImageInput onChange={onChangeHandler} index={3} />
+        </>
+      )}
+      <Preview previewUrls={previewUrls} onDelete={handleOnDelete} />
+    </div>
   );
 }
 
 ImagePart.propTypes = {
-  itemObject: PropTypes.object.isRequired,
+  isSculpture: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClear: PropTypes.number,
 };
-
-export default ImagePart;

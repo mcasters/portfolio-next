@@ -5,7 +5,7 @@ import { FaPen } from 'react-icons/fa';
 import UpdateForm from '../update/UpdateForm';
 import s from './ItemUpdateButton.module.css';
 
-function ItemUpdateButton({ itemObject }) {
+function ItemUpdateButton({ item, type }) {
   const [openUpdate, setOpenUpdate] = useState(false);
 
   const close = () => {
@@ -21,13 +21,14 @@ function ItemUpdateButton({ itemObject }) {
       <button type="button" onClick={toggle} className={`${s.command} button`}>
         <FaPen />
       </button>
-      {openUpdate && <UpdateForm itemObject={itemObject} close={close} />}
+      {openUpdate && <UpdateForm item={item} type={type} close={close} />}
     </>
   );
 }
 
 ItemUpdateButton.propTypes = {
-  itemObject: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default ItemUpdateButton;

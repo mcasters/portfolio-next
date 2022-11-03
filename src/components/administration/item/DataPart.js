@@ -3,7 +3,7 @@ import DayPickerComponent from './daypicker/DayPickerComponent';
 import PropTypes from 'prop-types';
 
 function DataPart({
-  itemData,
+  item,
   handleDataChange,
   handleDayChange,
   isSculpture,
@@ -15,18 +15,18 @@ function DataPart({
         placeholder="Titre"
         name="title"
         type="text"
-        value={itemData.title}
+        value={item.title}
         onChange={handleDataChange}
       />
       <div className={s.DayInputContainer}>
-        <DayPickerComponent handleDayChange={handleDayChange} alreadyDay={itemData.date} />
+        <DayPickerComponent handleDayChange={handleDayChange} alreadyDay={item.date} />
       </div>
       <input
         className={s.inputL}
         placeholder="Technique"
         name="technique"
         type="text"
-        value={itemData.technique}
+        value={item.technique}
         onChange={handleDataChange}
       />
       <input
@@ -34,7 +34,7 @@ function DataPart({
         placeholder="Description"
         name="description"
         type="text"
-        value={itemData.description}
+        value={item.description}
         onChange={handleDataChange}
       />
       <input
@@ -42,7 +42,7 @@ function DataPart({
         placeholder="Hauteur (cm)"
         name="height"
         type="number"
-        value={itemData.height}
+        value={item.height}
         onChange={handleDataChange}
       />
       <input
@@ -50,7 +50,7 @@ function DataPart({
         placeholder="Largeur (cm)"
         name="width"
         type="number"
-        value={itemData.width}
+        value={item.width}
         onChange={handleDataChange}
       />
       {isSculpture && (
@@ -59,7 +59,7 @@ function DataPart({
           placeholder="Longueur (cm)"
           name="length"
           type="number"
-          value={itemData.length}
+          value={item.length}
           onChange={handleDataChange}
         />
       )}
@@ -68,7 +68,7 @@ function DataPart({
 }
 
 DataPart.propTypes = {
-  itemData: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
   handleDataChange: PropTypes.func.isRequired,
   handleDayChange: PropTypes.func.isRequired,
   isSculpture: PropTypes.bool.isRequired,

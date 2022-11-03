@@ -23,7 +23,11 @@ function ItemDeleteButton({ id, type }) {
         if (data) {
           await mutate();
           triggerAlert('Item supprimé', false);
-        } else triggerAlert(error ? error.message : "Echec de la suppression de l'item", true);
+        } else
+          triggerAlert(
+            error ? error.message : "Echec de la suppression de l'item",
+            true,
+          );
       }}
       className={`${s.command} button`}
       type="button"

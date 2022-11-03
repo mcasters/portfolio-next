@@ -5,36 +5,39 @@ import s from './ItemRow.module.css';
 import ItemDeleteButton from './ItemDeleteButton';
 import ItemUpdateButton from './ItemUpdateButton';
 import { createDateFormat } from '../../../../tools/utils';
+import CONSTANT from '../../../../constants/itemConstant';
+import { getSMPaths } from '../../utils/itemUtils';
 
-function ItemRow({ itemObject }) {
+function ItemRow({ item, type }) {
   return (
     <tr className={s.row}>
-      <td>{itemObject.title}</td>
-      <td>{createDateFormat(itemObject.date)}</td>
-      <td>{itemObject.technique}</td>
-      <td>{itemObject.description}</td>
-      <td>{itemObject.height}</td>
-      <td>{itemObject.width}</td>
-      {itemObject.getIsSculpture() && <td>{itemObject.length}</td>}
+      <td>{item.title}</td>
+      <td>{createDateFormat(item.date)}</td>
+      <td>{item.technique}</td>
+      <td>{item.description}</td>
+      <td>{item.height}</td>
+      <td>{item.width}</td>
+      {type === CONSTANT.SCULPTURE.TYPE && <td>{item.length}</td>}
       <td>
         <img
-          src={`${itemObject.getSMPaths()[0]}`}
+          src={`${getSMPaths(item, type)[0]}`}
           alt="image admin"
           className={s.thumbnail}
         />
       </td>
       <td>
-        <ItemDeleteButton id={itemObject.getId()} type={itemObject.getType()} />
+        <ItemDeleteButton id={item.id} type={type} />
       </td>
       <td>
-        <ItemUpdateButton itemObject={itemObject} />
+        <ItemUpdateButton id={item.id} item={item} type={type} />
       </td>
     </tr>
   );
 }
 
 ItemRow.propTypes = {
-  itemObject: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default ItemRow;

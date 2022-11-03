@@ -1,20 +1,20 @@
 import Item from '../components/item-dir/item/Item';
-import CONST from '../constants/itemConstant';
+import ITEM from '../constants/itemConstant';
 import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
-import ItemObject from '../utils/ItemObject';
-import ScrollTop from "../components/item-dir/ScrollTop/ScrollTop";
+import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
 
 const Dessins = ({ data }) => {
+  const type = ITEM.DRAWING.TYPE;
+
   return (
     <Layout>
       <section>
-        <h1 className="hidden">{CONST.DRAWING.TITLE}</h1>
+        <h1 className="hidden">{type}</h1>
         {data.allItems &&
           data.allItems.map((drawing) => {
-            const itemObject = new ItemObject(drawing, CONST.DRAWING.TYPE);
-            return <Item key={drawing.title} itemObject={itemObject} />;
+            return <Item key={drawing.title} item={drawing} type={type} />;
           })}
       </section>
       <ScrollTop />
@@ -23,7 +23,7 @@ const Dessins = ({ data }) => {
 };
 
 export async function getServerSideProps() {
-  const data = await queryGraphql(ALL_ITEMS, { type: CONST.DRAWING.TYPE });
+  const data = await queryGraphql(ALL_ITEMS, { type: ITEM.DRAWING.TYPE });
   return {
     props: {
       data,

@@ -35,7 +35,7 @@ function DayPickerComponent({ handleDayChange, alreadyDay }) {
   };
 
   return (
-    <div>
+    <>
       <input
         type="text"
         placeholder={alreadyDay !== '' ? alreadyDay : selected}
@@ -48,7 +48,7 @@ function DayPickerComponent({ handleDayChange, alreadyDay }) {
         selected={selected}
         onSelect={handleSelect}
       />
-    </div>
+    </>
   );
 }
 
