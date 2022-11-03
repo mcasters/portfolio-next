@@ -2,6 +2,11 @@
   padding: 10px;
 }
 
-.cancelButton {
-  margin-bottom: 0;
+.updateButton {
+  width: 25%;
+  margin: 2em 1em;
+}
+
+.formGroup {
+  text-align: center;
 }

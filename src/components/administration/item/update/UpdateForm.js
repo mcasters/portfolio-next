@@ -34,7 +34,7 @@ Modal.setAppElement('#__next');
 function UpdateForm({ item, type, close }) {
   const [itemUpdated, setItemUpdated] = useState(getItemToUpdate(item, type));
   const triggerAlert = useAlert();
-  const isSculpture = item === CONSTANT.SCULPTURE.TYPE;
+  const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const canSubmit = canSubmitData(itemUpdated, isSculpture, true);
   const showModal = true;
   const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);

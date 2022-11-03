@@ -1,4 +1,4 @@
-import s from './Preview.module.css';
+import s from './imagePart.module.css';
 import PropTypes from 'prop-types';
 
 export default function Preview({ previewUrls, onDelete }) {

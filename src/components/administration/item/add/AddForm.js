@@ -9,7 +9,7 @@ import { ALL_ITEMS } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
 import { canSubmitData, submitAddItem } from '../../utils/formUtils';
 import DataPart from '../DataPart';
-import UploadImage from '../uploadImage';
+import ImagePart from '../ImagePart';
 import {getEmptyItem} from "../../utils/itemUtils";
 
 function AddForm({ type }) {
@@ -89,12 +89,12 @@ function AddForm({ type }) {
         ref={formRef}
       >
         <DataPart
-          itemData={item}
+          item={item}
           handleDataChange={handleDataChange}
           handleDayChange={handleDayChange}
           isSculpture={isSculpture}
         />
-        <UploadImage
+        <ImagePart
           isSculpture={isSculpture}
           onChange={handleImageChange}
           onClear={onClear}
