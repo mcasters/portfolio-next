@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 import ItemRow from '../item-row/ItemRow';
 import s from './ItemList.module.css';
-import ITEM_CONSTANT from '../../../../constants/itemConstant';
-import ItemObject from '../../../../utils/ItemObject';
+import CONSTANT from '../../../../constants/itemConstant';
 
 function ItemList({ type, items }) {
   const title = 'Modification - Suppression';
@@ -21,7 +20,7 @@ function ItemList({ type, items }) {
             <th className={s.headings}>Description</th>
             <th className={s.headings}>Hauteur</th>
             <th className={s.headings}>Largeur</th>
-            {type === ITEM_CONSTANT.SCULPTURE.TYPE && (
+            {type === CONSTANT.SCULPTURE.TYPE && (
               <th className={s.headings}>Longueur</th>
             )}
             <th className={s.headings}>Image</th>
@@ -32,8 +31,7 @@ function ItemList({ type, items }) {
         <tbody>
           {items &&
             items.map((item) => {
-              const itemObject = new ItemObject(item, type);
-              return <ItemRow key={item.id} itemObject={itemObject} />;
+              return <ItemRow key={item.id} item={item} type={type} />;
             })}
         </tbody>
       </table>

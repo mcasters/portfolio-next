@@ -8,9 +8,11 @@ import { useAlert } from '../../../alert-context/AlertContext';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
 import { canSubmitData, submitUpdateItem } from '../../utils/formUtils';
-import UploadImage from '../uploadImage';
 import ImagePart from '../ImagePart';
+import OldImagePart from './OldImagePart';
 import DataPart from '../DataPart';
+import { getItemToUpdate } from '../../utils/itemUtils';
+import CONSTANT from '../../../../constants/itemConstant';
 
 const customStyles = {
   overlay: {
@@ -23,21 +25,19 @@ const customStyles = {
     bottom: 'auto',
     maxHeight: '90%',
     transform: 'translate(-50%, -50%)',
+    width: '70%',
   },
 };
 
 Modal.setAppElement('#__next');
 
-function UpdateForm({ itemObject, close }) {
-  const [itemData, setItemData] = useState(itemObject.getItemData());
+function UpdateForm({ item, type, close }) {
+  const [itemUpdated, setItemUpdated] = useState(getItemToUpdate(item, type));
   const triggerAlert = useAlert();
-  const isSculpture = itemObject.getIsSculpture();
-  const canSubmit = canSubmitData(itemData, isSculpture, true);
+  const isSculpture = item === CONSTANT.SCULPTURE.TYPE;
+  const canSubmit = canSubmitData(itemUpdated, isSculpture, true);
   const showModal = true;
-  const { mutate } = useSWR(
-    [ALL_ITEMS_ADMIN, itemObject.getType()],
-    allItemsRequest,
-  );
+  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
 
   const handleCloseModal = () => {
     close();
@@ -46,32 +46,35 @@ function UpdateForm({ itemObject, close }) {
   const handleDataChange = (e) => {
     e.preventDefault();
     const { name, value, type } = e.target;
-    setItemData(
-      Object.assign({}, itemData, {
+    setItemUpdated(
+      Object.assign({}, itemUpdated, {
         [name]: type === 'number' ? parseInt(value, 10) : value,
       }),
     );
   };
 
   const handleDayChange = (date) => {
-    setItemData(Object.assign({}, itemData, { date }));
+    setItemUpdated(Object.assign({}, itemUpdated, { date }));
   };
 
   const handleImageChange = (index, content) => {
-    const newPictures = [...itemData.pictures];
+    const newPictures = [...itemUpdated.pictures];
     newPictures[index] = content;
-    setItemData(Object.assign({}, itemData, { pictures: newPictures }));
+    setItemUpdated(Object.assign({}, itemUpdated, { pictures: newPictures }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TODO
+    const { data, error } = await submitUpdateItem(itemUpdated, type);
 
-    itemObject.updateFromItemData(itemData);
-    const res = await submitUpdateItem(item, type);
-    triggerAlert(res.getMessage(), res.getIsError());
-    if (!res.getIsError()) {
+    if (error || !data) {
+      triggerAlert(
+        error.message ? error.message : 'Sorry! something went wrong.',
+        true,
+      );
+    } else {
+      triggerAlert('Item modifié', false);
       await mutate();
       close();
     }
@@ -86,24 +89,24 @@ function UpdateForm({ itemObject, close }) {
       style={customStyles}
     >
       <h1 className={s.updateTitle}>Modification</h1>
-      <form className="formGroup" onSubmit={handleSubmit}>
+      <form className={s.formGroup} onSubmit={handleSubmit}>
         <DataPart
-          itemData={itemData}
+          item={itemUpdated}
           handleDataChange={handleDataChange}
           handleDayChange={handleDayChange}
           isSculpture={isSculpture}
         />
-        <ImagePart itemObject={itemObject} />
-        <UploadImage isSculpture={isSculpture} onChange={handleImageChange} />
+        <OldImagePart item={item} type={type} />
+        <ImagePart isSculpture={isSculpture} onChange={handleImageChange} />
         <div>
           {canSubmit && (
-            <button className="button" type="submit">
+            <button className={`${s.updateButton} button`} type="submit">
               OK
             </button>
           )}
           <button
             type="button"
-            className={`${s.cancelButton} button`}
+            className={`${s.updateButton} button`}
             onClick={handleCloseModal}
           >
             Annuler
@@ -115,7 +118,8 @@ function UpdateForm({ itemObject, close }) {
 }
 
 UpdateForm.propTypes = {
-  itemObject: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,
 };
 

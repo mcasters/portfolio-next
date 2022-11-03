@@ -81,10 +81,6 @@ class ItemObject {
     );
   };
 
-  getId = () => {
-    return this.#id;
-  };
-
   getType = () => {
     return this.#type;
   };
