@@ -6,27 +6,25 @@ import s from './Item.module.css';
 import Images from '../images/Images';
 import { createDateFormat } from '../../../tools/utils';
 
-function Item({ itemObject }) {
+function Item({ item, type }) {
   const email = GLOBAL_CONSTANTS.EMAIL;
 
   return (
     <article className={s.itemContainer}>
       <h2 className={s.itemTitle}>
-        <cite>{itemObject.title}</cite>
+        <cite>{item.title}</cite>
       </h2>
-      <Images itemObject={itemObject} />
+      <Images item={item} type={type} />
       <figcaption>
-        <time dateTime={itemObject.date} className={s.noWrap}>
-          {createDateFormat(itemObject.date)}
+        <time dateTime={item.date} className={s.noWrap}>
+          {createDateFormat(item.date)}
         </time>
         <span className={s.spacer}> | </span>
-        <p className={s.noWrap}>{itemObject.technique}</p>
+        <p className={s.noWrap}>{item.technique}</p>
         <span className={s.spacer}> | </span>
         <p className={s.noWrap}>
-          {itemObject.height} x {itemObject.width}
-          {itemObject.getType() === ITEM.SCULPTURE.TYPE &&
-            ` x ${itemObject.length}`}{' '}
-          cm
+          {item.height} x {item.width}
+          {type === ITEM.SCULPTURE.TYPE && ` x ${item.length}`} cm
         </p>
       </figcaption>
       <address className={s.email}>{email}</address>
@@ -35,7 +33,8 @@ function Item({ itemObject }) {
 }
 
 Item.propTypes = {
-  itemObject: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default Item;

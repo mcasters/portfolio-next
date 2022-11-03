@@ -1,20 +1,19 @@
 import Item from '../components/item-dir/item/Item';
-import CONST from '../constants/itemConstant';
+import ITEM from '../constants/itemConstant';
 import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
-import ItemObject from '../utils/ItemObject';
 import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
 
 const Sculptures = ({ data }) => {
+  const type = ITEM.SCULPTURE.TYPE;
   return (
     <Layout>
       <section>
-        <h1 className="hidden">{CONST.SCULPTURE.TITLE}</h1>
+        <h1 className="hidden">{type}</h1>
         {data.allItems &&
           data.allItems.map((sculpture) => {
-            const itemObject = new ItemObject(sculpture, CONST.SCULPTURE.TYPE);
-            return <Item key={sculpture.title} itemObject={itemObject} />;
+            return <Item key={sculpture.title} item={sculpture} type={type} />;
           })}
       </section>
       <ScrollTop />
@@ -23,7 +22,7 @@ const Sculptures = ({ data }) => {
 };
 
 export async function getServerSideProps() {
-  const data = await queryGraphql(ALL_ITEMS, { type: CONST.SCULPTURE.TYPE });
+  const data = await queryGraphql(ALL_ITEMS, { type: ITEM.SCULPTURE.TYPE });
   return {
     props: {
       data,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import CONST from '../constants/itemConstant';
+import ITEM from '../constants/itemConstant';
 import ItemTab from '../components/item-dir/item-tab/ItemTab';
 import useOnSrr from '../components/hooks/useOnSrr';
 import Layout from '../components/layout-components/layout/Layout';
@@ -12,10 +12,10 @@ const Peintures = ({ data2017, data2018_a, data2018_b, data2019 }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const onSsr = useOnSrr();
 
-  const year2017 = CONST.PAINTING.YEAR2017;
-  const year2018 = CONST.PAINTING.YEAR2018;
-  const year2019 = CONST.PAINTING.YEAR2019;
-  const type = CONST.PAINTING.TYPE;
+  const year2017 = ITEM.PAINTING.YEAR2017;
+  const year2018 = ITEM.PAINTING.YEAR2018;
+  const year2019 = ITEM.PAINTING.YEAR2019;
+  const type = ITEM.PAINTING.TYPE;
 
   useEffect(() => {
     if (
@@ -37,7 +37,7 @@ const Peintures = ({ data2017, data2018_a, data2018_b, data2019 }) => {
 
   return (
     <Layout>
-      <h1 className="hidden">{CONST.PAINTING.TITLE}</h1>
+      <h1 className="hidden">{ITEM.PAINTING.TITLE}</h1>
       <Tabs
         selectedIndex={selectedTab}
         onSelect={handleSelectTab}
@@ -94,24 +94,24 @@ const Peintures = ({ data2017, data2018_a, data2018_b, data2019 }) => {
 };
 
 export async function getServerSideProps() {
-  const type = CONST.PAINTING.TYPE;
+  const type = ITEM.PAINTING.TYPE;
   const data2017 = await queryGraphql(ITEMS_BY_PART, {
-    year: CONST.PAINTING.YEAR2017,
+    year: ITEM.PAINTING.YEAR2017,
     type,
     part: 0,
   });
   const data2018_a = await queryGraphql(ITEMS_BY_PART, {
-    year: CONST.PAINTING.YEAR2018,
+    year: ITEM.PAINTING.YEAR2018,
     type,
     part: 1,
   });
   const data2018_b = await queryGraphql(ITEMS_BY_PART, {
-    year: CONST.PAINTING.YEAR2018,
+    year: ITEM.PAINTING.YEAR2018,
     type,
     part: 2,
   });
   const data2019 = await queryGraphql(ITEMS_BY_PART, {
-    year: CONST.PAINTING.YEAR2019,
+    year: ITEM.PAINTING.YEAR2019,
     type,
     part: 0,
   });
