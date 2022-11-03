@@ -1,25 +1,44 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import CONSTANT from '../../../constants/layout';
+import LAYOUT from '../../../constants/layout';
+import ITEM from '../../../constants/itemConstant';
 import LightBox from '../../react-lightbox/LightBoxProvider';
 import useViewport from '../../hooks/useViewport';
 import s from './Images.module.css';
+import {
+  getMainPaths,
+  getMDPaths,
+  getSMPaths,
+} from '../../administration/utils/itemUtils';
 
-function Images({ itemObject }) {
+function Images({ item, type }) {
   const { windowWidth } = useViewport();
   const [isOpen, setIsOpen] = useState(false);
 
-  const isLessThanSM = windowWidth < CONSTANT.BREAKPOINT.SM;
+  const isLessThanSM = windowWidth < LAYOUT.BREAKPOINT.SM;
 
   const getCurrentPaths = () =>
-    isLessThanSM ? itemObject.getSMPaths() : itemObject.getMDPaths();
+    isLessThanSM ? getSMPaths(item, type) : getMDPaths(item, type);
 
   const getLightboxPaths = () =>
-    isLessThanSM ? itemObject.getMDPaths() : itemObject.getMainPaths();
+    isLessThanSM ? getMDPaths(item, type) : getMainPaths(item, type);
 
   const closeLightbox = () => {
     setIsOpen(false);
+  };
+
+  const getAltImage = () => {
+    switch (type) {
+      case ITEM.PAINTING.TYPE:
+        return ITEM.PAINTING.IMAGE.ALT_IMAGE;
+      case ITEM.DRAWING.TYPE:
+        return ITEM.DRAWING.IMAGE.ALT_IMAGE;
+      case ITEM.SCULPTURE.IMAGE.ALT_IMAGE:
+        return ITEM.SCULPTURE.IMAGE.ALT_IMAGE;
+      default:
+        return;
+    }
   };
 
   const openLightbox = () => {
@@ -35,24 +54,20 @@ function Images({ itemObject }) {
               type="button"
               onClick={openLightbox}
               className={
-                itemObject.getIsSculpture()
+                type === ITEM.SCULPTURE.TYPE
                   ? s.sculptureButton
                   : s.noSculptureButton
               }
               key={src}
             >
-              <img
-                src={`${src}`}
-                alt={itemObject.getAltImage()}
-                className={s.image}
-              />
+              <img src={`${src}`} alt={getAltImage()} className={s.image} />
             </button>
           );
         })}
       </figure>
       {isOpen && typeof window !== 'undefined' && (
         <LightBox
-          title={itemObject.title}
+          title={item.title}
           images={getLightboxPaths()}
           onClose={closeLightbox}
         />
@@ -62,7 +77,8 @@ function Images({ itemObject }) {
 }
 
 Images.propTypes = {
-  itemObject: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default Images;

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import Item from '../item/Item';
-import ItemObject from '../../../utils/ItemObject';
 import ScrollTop from '../ScrollTop/ScrollTop';
 
 function ItemTab({ year, type, data }) {
@@ -10,8 +9,7 @@ function ItemTab({ year, type, data }) {
       <h2 className="hidden">{year}</h2>
       {data.itemsByPart &&
         data.itemsByPart.map((item) => {
-          const itemObject = new ItemObject(item, type);
-          return <Item key={item.title} itemObject={itemObject} />;
+          return <Item key={item.title} item={item} type={type} />;
         })}
       <ScrollTop />
     </section>
