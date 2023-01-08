@@ -71,7 +71,7 @@ const typeDefs = gql`
     allContent: [Content]
     content(key: String!): Content
     allItems(type: String!): [Item]
-    itemsByPart(year: Int!, type: String!, part: Int!): [Item]
+    itemsByYear(type: String!, year: Int!): [Item]
     user(id: ID!): User!
     isAuthenticated: Boolean!
   }

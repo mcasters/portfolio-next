@@ -70,9 +70,9 @@ export const ALL_ITEMS_ADMIN = gql`
 }
 `;
 
-export const ITEMS_BY_PART = gql`
-  query ItemsByPart($year: Int!, $type: String!, $part: Int!) {
-    itemsByPart(year: $year, type: $type, part: $part) {
+export const ITEMS_BY_YEAR = gql`
+  query ItemsByYear($type: String!, $year: Int!) {
+    itemsByYear(type: $type, year: $year) {
       title
       date
       technique

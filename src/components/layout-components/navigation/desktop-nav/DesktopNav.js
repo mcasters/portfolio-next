@@ -15,6 +15,10 @@ export default function DesktopNav({ isHome }) {
       <nav className={s.desktopNav}>
         <ul>
           {menuItems.map((item) => {
+            const isActive =
+              router.pathname === item.PATH ||
+              router.pathname === `${item.PATH}/[year]`;
+
             if (item.NAME === 'Home')
               return (
                 <li key={item.NAME}>
@@ -32,11 +36,7 @@ export default function DesktopNav({ isHome }) {
               <li key={item.NAME}>
                 <Link href={item.PATH} key={item.NAME}>
                   <a
-                    className={
-                      router.pathname === item.PATH
-                        ? `${s.link} ${s.active}`
-                        : `${s.link}`
-                    }
+                    className={isActive ? `${s.link} ${s.active}` : `${s.link}`}
                   >
                     {item.NAME}
                   </a>

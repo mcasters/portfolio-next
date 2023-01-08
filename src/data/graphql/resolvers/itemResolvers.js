@@ -30,8 +30,8 @@ export default {
   Query: {
     allItems: async (parent, { type }) =>
       await new ModelService(type).getAllItems(),
-    itemsByPart: async (parent, { type, year, part }) =>
-      await new ModelService(type).getItemsByPart(year, part),
+    itemsByYear: async (parent, { type, year }) =>
+      await new ModelService(type).getItemsByYear(year),
   },
 
   Mutation: {
