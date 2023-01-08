@@ -5,6 +5,7 @@ import ITEM from '../../constants/itemConstant';
 import { queryGraphql } from '../../data/request/request-ssr';
 import { ITEMS_BY_YEAR } from '../../data/graphql/queries';
 import Layout from '../../components/layout-components/layout/Layout';
+import s from '../styles/item.module.css';
 
 export default function YearPage({ data }) {
   const router = useRouter();
@@ -13,7 +14,8 @@ export default function YearPage({ data }) {
   return (
     <Layout>
       <section>
-        <h1>{year}</h1>
+        <h1 className={s.title}>{`${ITEM.PAINTING.TITLE} ${year}`}</h1>
+        <p className={s.yearTitle}>{year}</p>
         {data.itemsByYear &&
           data.itemsByYear.map((item) =>
             item != null ? (

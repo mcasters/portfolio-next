@@ -4,17 +4,21 @@ import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
 import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
+import s from './styles/item.module.css';
 
 const Sculptures = ({ data }) => {
-  const type = ITEM.SCULPTURE.TYPE;
   return (
     <Layout>
       <section>
-        <h1 className="hidden">{type}</h1>
+        <h1 className={s.title}>{ITEM.SCULPTURE.TITLE}</h1>
         {data.allItems &&
           data.allItems.map((sculpture) =>
             sculpture != null ? (
-              <Item key={sculpture.title} item={sculpture} type={type} />
+              <Item
+                key={sculpture.title}
+                item={sculpture}
+                type={ITEM.SCULPTURE.TYPE}
+              />
             ) : null,
           )}
       </section>

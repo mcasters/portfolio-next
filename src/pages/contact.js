@@ -10,7 +10,7 @@ const contact = ({ dataAddress, dataPhone, dataEmail }) => {
   return (
     <Layout>
       <address>
-        <h1 className="hidden">{TITLE.CONTACT}</h1>
+        <h1 className={s.title}>{TITLE.CONTACT}</h1>
         <div className={s.contactContent}>
           {dataAddress.content && <Content text={dataAddress.content.text} />}
         </div>

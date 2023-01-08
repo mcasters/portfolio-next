@@ -1,15 +1,17 @@
 import Markdown from 'react-markdown';
 import Layout from '../components/layout-components/layout/Layout';
+import CONSTANT from '../constants/pageTitle';
 
 const Privacy = () => {
+    const markdown = `
+Nous nous engageons à ne collecter aucun renseignement personnel, d'aucune sorte que ce soit.
+      `;
   return (
     <Layout>
+      <h1>{CONSTANT.PRIVACY}</h1>
       <div className="markdown">
         <Markdown
-          source={`
-Nous nous engageons à ne collecter aucun renseignement personnel, d'aucune sorte que ce soit.
-      `}
-        />
+         children={markdown}/>
       </div>
       <style jsx global>{`
         .markdown {

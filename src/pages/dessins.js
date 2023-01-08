@@ -4,18 +4,21 @@ import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
 import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
+import s from './styles/item.module.css';
 
 const Dessins = ({ data }) => {
-  const type = ITEM.DRAWING.TYPE;
-
   return (
     <Layout>
       <section>
-        <h1 className="hidden">{type}</h1>
+        <h1 className={s.title}>{ITEM.DRAWING.TITLE}</h1>
         {data.allItems &&
           data.allItems.map((drawing) =>
             drawing != null ? (
-              <Item key={drawing.title} item={drawing} type={type} />
+              <Item
+                key={drawing.title}
+                item={drawing}
+                type={ITEM.DRAWING.TYPE}
+              />
             ) : null,
           )}
       </section>
@@ -26,7 +29,6 @@ const Dessins = ({ data }) => {
 
 export async function getServerSideProps() {
   const data = await queryGraphql(ALL_ITEMS, { type: ITEM.DRAWING.TYPE });
-  console.log(data);
   return {
     props: {
       data,

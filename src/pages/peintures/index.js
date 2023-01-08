@@ -1,17 +1,13 @@
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import ITEM from '../../constants/itemConstant';
 import Layout from '../../components/layout-components/layout/Layout';
-import s from '../styles/peintures.module.css';
+import s from '../styles/item.module.css';
 
-export default function PostPage() {
-  const router = useRouter();
-  const year = router.query.id;
-
+export default function Peintures() {
   return (
     <Layout>
-      <h1 className="hidden">{ITEM.PAINTING.TITLE}</h1>
+      <h1 className={s.title}>{ITEM.PAINTING.TITLE}</h1>
       <ul>
         <li>
           <Link href={`/peintures/2017`}>

@@ -1,0 +1,23 @@
+.yearTitle {
+  display: none;
+}
+
+@media (--md) {
+  .title {
+    display: none;
+  }
+
+  .yearTitle {
+    display: block;
+    font-weight: lighter;
+    letter-spacing: 0.4em;
+    font-size: 2em;
+    margin-bottom: 2em;
+  }
+}
+
+.year {
+  display: block;
+  padding: 1em 0;
+  margin: 1em 0;
+}

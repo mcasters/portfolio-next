@@ -1,16 +1,17 @@
 import s from './styles/presentation.module.css';
 import Content from '../components/content/Content';
 import CONST from '../constants/content';
-import TITLE from '../constants/pageTitle';
+import TITLES from '../constants/pageTitle';
 import Layout from '../components/layout-components/layout/Layout';
 import { CONTENT } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
 
 const Presentation = ({ data }) => {
+  const title = TITLES.PRESENTATION;
   return (
     <Layout>
       <article className={s.container}>
-        <h1 className={s.title}>{TITLE.PRESENTATION}</h1>
+        <h1 className={s.title}>{title}</h1>
         <img
           className={s.image}
           src={`${CONST.CONTENT_IMAGE_PATH}/${CONST.PRESENTATION_IMAGE_TITLE}.jpg`}
