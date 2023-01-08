@@ -9,11 +9,9 @@ module.exports = {
       autoprefixer: {
         flexbox: 'no-2009',
       },
-      stage: 2,
+      stage: 3,
       features: {
-
-        'custom-properties': true,
-        //'custom-media': true,
+        'custom-properties': false,
       },
     },
     'postcss-custom-properties': {},
