@@ -14,15 +14,16 @@ export default function DesktopNav({ isHome }) {
       <div className={isHome ? [s.bar, s.homeBar].join(' ') : s.bar}> </div>
       <nav className={s.desktopNav}>
         <ul>
-          {menuItems.map((item) => {
+          {menuItems.map((menuItem) => {
+            const isSubPageActive =
+              router.pathname === `${menuItem.PATH}/[year]`;
             const isActive =
-              router.pathname === item.PATH ||
-              router.pathname === `${item.PATH}/[year]`;
+              router.pathname === menuItem.PATH || isSubPageActive;
 
-            if (item.NAME === 'Home')
+            if (menuItem.NAME === 'Home')
               return (
-                <li key={item.NAME}>
-                  <Link href={item.PATH} key={item.NAME}>
+                <li key={menuItem.NAME}>
+                  <Link href={menuItem.PATH} key={menuItem.NAME}>
                     <a className={s.linkHome}>
                       <img
                         src="/logo-45.png"
@@ -33,12 +34,12 @@ export default function DesktopNav({ isHome }) {
                 </li>
               );
             return (
-              <li key={item.NAME}>
-                <Link href={item.PATH} key={item.NAME}>
+              <li key={menuItem.NAME}>
+                <Link href={menuItem.PATH} key={menuItem.NAME}>
                   <a
                     className={isActive ? `${s.link} ${s.active}` : `${s.link}`}
                   >
-                    {item.NAME}
+                    {menuItem.NAME}
                   </a>
                 </Link>
               </li>

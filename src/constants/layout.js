@@ -1,6 +1,5 @@
 const LAYOUT_CONST = {
   BREAKPOINT: {
-    XS: 480,
     SM: 765,
     MD: 992,
     LG: 1200,
