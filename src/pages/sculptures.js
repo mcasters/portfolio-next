@@ -12,9 +12,11 @@ const Sculptures = ({ data }) => {
       <section>
         <h1 className="hidden">{type}</h1>
         {data.allItems &&
-          data.allItems.map((sculpture) => {
-            return <Item key={sculpture.title} item={sculpture} type={type} />;
-          })}
+          data.allItems.map((sculpture) =>
+            sculpture != null ? (
+              <Item key={sculpture.title} item={sculpture} type={type} />
+            ) : null,
+          )}
       </section>
       <ScrollTop />
     </Layout>

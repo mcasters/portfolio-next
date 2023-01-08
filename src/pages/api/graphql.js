@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-micro';
 
 import { resolvers } from '../../data/graphql/schema';
-import typeDefs from '../../data/graphql/typeDefs'
+import typeDefs from '../../data/graphql/typeDefs';
 
 const dev = process.env.NODE_ENV !== 'production';
 

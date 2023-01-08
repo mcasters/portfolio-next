@@ -5,7 +5,7 @@ const typeDefs = gql`
     id: ID
     type: String!
     title: String!
-    date: String!
+    date: Date!
     technique: String!
     description: String
     height: Int!
@@ -17,7 +17,7 @@ const typeDefs = gql`
   type Item {
     id: ID
     title: String!
-    date: String!
+    date: Date!
     technique: String!
     description: String
     length: Int
@@ -86,6 +86,8 @@ const typeDefs = gql`
     signIn(signInInput: SignInInput!): SignInPayload!
     signOut: Boolean!
   }
+
+  scalar Date
 
   schema {
     query: Query

@@ -8,9 +8,11 @@ function ItemTab({ year, type, data }) {
     <section>
       <h2 className="hidden">{year}</h2>
       {data.itemsByPart &&
-        data.itemsByPart.map((item) => {
-          return <Item key={item.title} item={item} type={type} />;
-        })}
+        data.itemsByPart.map((item) =>
+          item != null ? (
+            <Item key={item.title} item={item} type={type} />
+          ) : null,
+        )}
       <ScrollTop />
     </section>
   );

@@ -8,29 +8,25 @@ import ITEM_CONSTANT from '../../../../constants/itemConstant';
 
 function DayPickerComponent({ handleDayChange, alreadyDay }) {
   const FORMAT = ITEM_CONSTANT.FORMAT_DATE;
-  const [inputString, setInputString] = useState('');
-  const [selected, setSelected] = useState(format(new Date(), FORMAT));
+  const [formattedDate, setFormattedDate] = useState(format(alreadyDay, FORMAT));
+  const [selected, setSelected] = useState(format(alreadyDay, FORMAT));
 
-  const handleInputChange = (e) => {
-    setInputString(e.currentTarget.value);
+  const handleInputChange = e => {
     const date = parse(e.currentTarget.value, FORMAT, new Date());
     if (isValid(date)) {
       setSelected(date);
-      const stringDate = format(date, FORMAT);
-      handleDayChange(stringDate);
+      handleDayChange(date);
     } else {
       setSelected(undefined);
     }
   };
 
-  const handleSelect = (date) => {
-    setSelected(date);
+  const handleSelect = date => {
     if (date) {
-      const stringDate = format(date, FORMAT);
-      handleDayChange(stringDate);
-      setInputString(stringDate);
-    } else {
-      setInputString('');
+      handleDayChange(date);
+      const dateFormatted = format(date, FORMAT);
+      setFormattedDate(dateFormatted);
+      setSelected(date);
     }
   };
 
@@ -38,8 +34,8 @@ function DayPickerComponent({ handleDayChange, alreadyDay }) {
     <>
       <input
         type="text"
-        placeholder={alreadyDay !== '' ? alreadyDay : selected}
-        value={inputString}
+        placeholder={formattedDate}
+        value={formattedDate}
         onChange={handleInputChange}
       />
       <DayPicker
@@ -54,7 +50,7 @@ function DayPickerComponent({ handleDayChange, alreadyDay }) {
 
 DayPickerComponent.propTypes = {
   handleDayChange: PropTypes.func.isRequired,
-  alreadyDay: PropTypes.string,
+  alreadyDay: PropTypes.object,
 };
 
 export default DayPickerComponent;

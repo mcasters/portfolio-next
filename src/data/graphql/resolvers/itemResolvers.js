@@ -1,18 +1,42 @@
+import { GraphQLScalarType, Kind } from 'graphql';
+
 import ModelService from '../../../utils/modelService';
 import { isAuth } from '../../../utils/auth';
-import { addImages, deleteItemImages, renameItemImages } from '../../../utils/writeImageUtils';
+import {
+  addImages,
+  deleteItemImages,
+  renameItemImages,
+} from '../../../utils/writeImageUtils';
+
+const dateScalar = new GraphQLScalarType({
+  name: 'Date',
+  serialize(value) {
+    return value.getTime();
+  },
+  parseValue(value) {
+    return new Date(value);
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      return new Date(parseInt(ast.value, 10));
+    }
+    return null;
+  },
+});
 
 export default {
+  Date: dateScalar,
+
   Query: {
-    allItems: async (parent, { type }) => await new ModelService(type).getAllItems(),
+    allItems: async (parent, { type }) =>
+      await new ModelService(type).getAllItems(),
     itemsByPart: async (parent, { type, year, part }) =>
       await new ModelService(type).getItemsByPart(year, part),
   },
 
   Mutation: {
     addItem: async (root, { item: { type, ...data } }, { req }) => {
-      if (!(await isAuth(req)))
-        throw new Error("Erreur d'authentification");
+      if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
 
       const { title } = data;
       const service = new ModelService(type);
@@ -37,8 +61,7 @@ export default {
       { item: { id, type, hasImages, ...data } },
       { req },
     ) => {
-      if (!(await isAuth(req)))
-        throw new Error("Erreur d'authentification");
+      if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
 
       const modelService = new ModelService(type);
 
@@ -70,8 +93,7 @@ export default {
     },
 
     deleteItem: async (root, { id, type }, { req }) => {
-      if (!(await isAuth(req)))
-        throw new Error("Erreur d'authentification");
+      if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
 
       const itemService = new ModelService(type);
       const item = await itemService.getById(id);

@@ -21,7 +21,7 @@ export const getGraphqlObject = (item, type) => {
 export const getEmptyItem = (isSculpture) => {
   return {
     title: '',
-    date: '',
+    date: new Date(),
     technique: '',
     description: '',
     height: '',

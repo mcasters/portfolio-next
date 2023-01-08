@@ -13,9 +13,11 @@ const Dessins = ({ data }) => {
       <section>
         <h1 className="hidden">{type}</h1>
         {data.allItems &&
-          data.allItems.map((drawing) => {
-            return <Item key={drawing.title} item={drawing} type={type} />;
-          })}
+          data.allItems.map((drawing) =>
+            drawing != null ? (
+              <Item key={drawing.title} item={drawing} type={type} />
+            ) : null,
+          )}
       </section>
       <ScrollTop />
     </Layout>
@@ -24,6 +26,7 @@ const Dessins = ({ data }) => {
 
 export async function getServerSideProps() {
   const data = await queryGraphql(ALL_ITEMS, { type: ITEM.DRAWING.TYPE });
+  console.log(data);
   return {
     props: {
       data,

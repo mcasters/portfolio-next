@@ -1,5 +1,7 @@
 import DataType from 'sequelize';
 import Model from './sequelize';
+import {format, parseISO} from 'date-fns';
+import ITEM_CONSTANT from '../../constants/itemConstant';
 
 const Drawing = Model.define(
   'Drawing',
@@ -25,10 +27,14 @@ const Drawing = Model.define(
     },
 
     date: {
-      type: DataType.DATEONLY(10),
+      type: DataType.DATEONLY,
       allowNull: false,
       get() {
-        return this.getDataValue('date');
+        return parseISO(
+          this.getDataValue('date'),
+          ITEM_CONSTANT.FORMAT_DATE,
+          new Date(),
+        );
       },
       set(value) {
         this.setDataValue('date', value);

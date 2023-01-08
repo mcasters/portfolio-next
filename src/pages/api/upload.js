@@ -4,8 +4,6 @@ import { rename } from 'fs';
 
 import { isAuth } from '../../utils/auth';
 
-const FormidableError = formidable.errors.FormidableError;
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -46,6 +44,8 @@ export default async function handler(req, res) {
     });
   });
 
+  const FormidableError = formidable.errors.FormidableError;
+
   form.parse(req, async (err, fields, files) => {
     if (err) {
       if (err instanceof FormidableError) {
@@ -56,15 +56,10 @@ export default async function handler(req, res) {
         res.status(500).json({ data: null, error: 'Internal Server Error' });
       }
     }
-    const file = files.photos;
-    console.log('//// file.name : ', file);
-
-    let url = 'coucou';
-    //Array.isArray(file) ? file.map((f) => f.filepath) : file.filepath;
 
     res.status(200).json({
       data: {
-        url,
+        files,
       },
       error: null,
     });
