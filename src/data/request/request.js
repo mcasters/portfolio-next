@@ -24,7 +24,7 @@ const api = '/api/graphql';
 Error handling for post methods
  */
 
-const withErrorHandler = async (query, variables) => {
+const postErrorHandler = async (query, variables) => {
   try {
     return Object.assign({}, { data: await request(api, query, variables) });
   } catch (e) {
@@ -38,14 +38,14 @@ const withErrorHandler = async (query, variables) => {
 
 // GET
 export const isAuthenticatedRequest = () => request(api, ISAUTHENTICATED);
-export const signoutRequest = () => request(api, SIGNOUT);
+export const signOutRequest = () => request(api, SIGNOUT);
 
 // POST
 export const signInRequest = (username, password) =>
-  withErrorHandler(SIGNIN, { signInInput: { username, password } });
+  postErrorHandler(SIGNIN, { signInInput: { username, password } });
 
 export const signUpRequest = (username, email, password) =>
-  withErrorHandler(SIGNUP, { signUpInput: { username, email, password } });
+  postErrorHandler(SIGNUP, { signUpInput: { username, email, password } });
 
 /*
  * Content
@@ -56,7 +56,7 @@ export const contentRequest = (query, key) => request(api, query, { key });
 
 // POST
 export const addContentRequest = (key, text) =>
-  withErrorHandler(ADD_CONTENT, { contentInput: { key, text } });
+  postErrorHandler(ADD_CONTENT, { contentInput: { key, text } });
 
 /*
  * Items
@@ -72,11 +72,11 @@ export const itemsByPartRequest = (query, year, type, part) =>
   });
 
 // POST
-export const addItemRequest = (item) => withErrorHandler(ADD_ITEM, { item });
+export const addItemRequest = (item) => postErrorHandler(ADD_ITEM, { item });
 export const updateItemRequest = (item) =>
-  withErrorHandler(UPDATE_ITEM, { item });
+  postErrorHandler(UPDATE_ITEM, { item });
 export const deleteItemRequest = (id, type) =>
-  withErrorHandler(DELETE_ITEM, { id, type });
+  postErrorHandler(DELETE_ITEM, { id, type });
 
 /*
  * Images
@@ -84,4 +84,4 @@ export const deleteItemRequest = (id, type) =>
 
 // POST
 export const addPictureRequest = (title) =>
-  withErrorHandler(ADD_PICTURE, { title });
+  postErrorHandler(ADD_PICTURE, { title });

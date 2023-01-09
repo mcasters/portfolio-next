@@ -1,10 +1,10 @@
-import cookie from 'cookie';
-
 import { User } from '../../models/index';
 import {
-    isAuth,
-    createUser,
-    validPassword, setCookie,
+  isAuth,
+  createUser,
+  validPassword,
+  setCookie,
+  deleteCookie,
 } from '../../../utils/auth';
 
 export default {
@@ -31,25 +31,21 @@ export default {
       const user = await User.findOne({
         where: { username: signInInput.username },
       });
+
       if (user && validPassword(user, signInInput.password)) {
-        setCookie(context.res, user);
+        await setCookie(context.res, user);
         return { user };
       }
       throw new Error('Authentification incorrecte');
     },
 
     async signOut(_parent, _args, context, _info) {
-      context.res.setHeader(
-        'Set-cookie',
-        cookie.serialize('token', '', {
-          httpOnly: true,
-          maxAge: -1,
-          path: '/',
-          sameSite: 'lax',
-          // secure: process.env.NODE_ENV === 'production',
-        }),
-      );
-      return true;
+      try {
+        await deleteCookie(context.res);
+        return true;
+      } catch (e) {
+        return false;
+      }
     },
   },
 };

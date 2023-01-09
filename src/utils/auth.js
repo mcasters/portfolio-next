@@ -15,7 +15,7 @@ export const isAuth = async (req) => {
   return false;
 };
 
-export const setCookie = (res, user) => {
+export const setCookie = async (res, user) => {
   const token = jwt.sign(
     { username: user.username, id: user.id, time: new Date() },
     JWT_SECRET,
@@ -34,6 +34,17 @@ export const setCookie = (res, user) => {
     }),
   );
 };
+
+export const deleteCookie = async (res) =>
+  res.setHeader(
+    'Set-Cookie',
+    serialize('token', '', {
+      httpOnly: true,
+      path: '/',
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    }),
+  );
 
 export const createUser = (data) => {
   const salt = bcrypt.genSaltSync();

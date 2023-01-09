@@ -3,7 +3,7 @@ import getConfig from 'next/config';
 import Router from 'next/router';
 
 import {
-  signoutRequest,
+  signOutRequest,
   isAuthenticatedRequest,
 } from '../../data/request/request';
 import { ROUTES } from '../../constants/routes';
@@ -22,10 +22,15 @@ const LogoutButton = () => {
       className="button"
       onClick={() => {
         localStorage.removeItem(ls_key);
-        signoutRequest().then(() => {
-          mutate();
-          triggerAlert('Déconnecté', false);
-          Router.replace(ROUTES.HOME);
+        signOutRequest().then((res) => {
+          if (res.signOut) {
+            mutate().then(() => {
+              triggerAlert('Déconnecté', false);
+              Router.replace(ROUTES.HOME);
+            });
+          } else {
+            triggerAlert('Problème à la déconnexion', true);
+          }
         });
       }}
     >
