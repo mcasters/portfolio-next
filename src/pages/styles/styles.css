@@ -544,6 +544,7 @@ input {
 
 input[type='file'] {
   padding: 0;
+  cursor: pointer;
 }
 
 .button {
@@ -553,6 +554,7 @@ input[type='file'] {
   border: solid 1px #aaaaaa;
   line-height: 2.7;
   outline: none;
+  cursor: pointer;
 }
 
 [type='submit'] {
