@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { getClientHeight } from '../../../tools/windowUtils';
+import { getClientHeight } from '../../tools/windowUtils';
 
 function useHeight() {
   const [height, setHeight] = useState(0);

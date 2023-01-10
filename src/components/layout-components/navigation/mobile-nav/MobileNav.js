@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import s from './MobileNav.module.css';
-import useOnClickOutside from '../../../hooks/useOnClickOutside/useOnClickOutside';
+import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { MENU as menuItems } from '../../../../constants/routes';
 import Link from 'next/link';
 

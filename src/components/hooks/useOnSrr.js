@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { canUseDom } from '../../../tools/windowUtils';
+import { canUseDom } from '../../tools/windowUtils';
 
 function useOnSrr() {
   const [onSsr, setOnSsr] = useState(true);

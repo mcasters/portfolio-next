@@ -1,7 +1,7 @@
 import {useState, useEffect, useCallback} from 'react';
 import throttle from 'lodash/throttle';
 
-import { getScrollY } from '../../../tools/windowUtils';
+import { getScrollY } from '../../tools/windowUtils';
 
 function useScroll() {
   const [scrollY, setScrollY] = useState(0);

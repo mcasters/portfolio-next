@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getWindowWidth, getWindowHeight } from '../../../tools/windowUtils';
+import { getWindowWidth, getWindowHeight } from '../../tools/windowUtils';
 
 function useViewport() {
   const [windowWidth, setWindowWidth] = useState(getWindowWidth());

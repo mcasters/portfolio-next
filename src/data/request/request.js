@@ -64,12 +64,6 @@ export const addContentRequest = (key, text) =>
 
 // GET
 export const allItemsRequest = (query, type) => request(api, query, { type });
-export const itemsByPartRequest = (query, year, type, part) =>
-  request(api, query, {
-    year,
-    type,
-    part,
-  });
 
 // POST
 export const addItemRequest = (item) => postErrorHandler(ADD_ITEM, { item });
