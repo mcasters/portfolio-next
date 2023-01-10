@@ -12,7 +12,7 @@
     "dev": "node server.js",
     "build": "next build",
     "startdev": "cross-env node server.js",
-    "start": "cross-env NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@graphql-tools/schema": "^9.0.4",

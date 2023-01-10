@@ -1,0 +1,5 @@
+/* @custom-media --xs (width >= 480px);  phone */
+@custom-media --sm (min-width: 765px); /* ipad */
+@custom-media --md (min-width: 992px); /* ipad plus */
+@custom-media --lg (min-width: 1200px); /* 13' */
+@custom-media --xlg (min-width: 1600px); /* > 15' */

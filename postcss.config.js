@@ -17,10 +17,9 @@ module.exports = {
     'postcss-custom-properties': {},
     // W3C CSS Custom Media Queries, e.g. @custom-media --small-viewport (max-width: 30em);
     // https://github.com/postcss/postcss-custom-media
-    'postcss-custom-media': {},
-    // CSS4 Media Queries, e.g. @media screen and (width >= 500px) and (width <= 1200px) { }
-    // https://github.com/postcss/postcss-media-minmax
-    'postcss-media-minmax': {},
+    'postcss-custom-media': {
+      "importFrom": "src/pages/styles/media.module.css"
+    },
     // W3C CSS Custom Selectors, e.g. @custom-selector :--heading h1, h2, h3, h4, h5, h6;
     // https://github.com/postcss/postcss-custom-selectors
     'postcss-custom-selectors': {},
