@@ -13,11 +13,3 @@ function useEventListener(e, handler, cleanup, passive = false) {
 }
 
 export default useEventListener;
-
-// To set into the caller component :
-//
-// const handleWheel = useCallback(_.throttle(() => {
-//   setCount(count => count + 1);
-// }, 10000, { leading: false }), [setCount]);
-//
-// useEventListener("wheel", handleWheel, handleWheel.cancel);
