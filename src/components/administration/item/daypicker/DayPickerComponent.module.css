@@ -1,0 +1,11 @@
+.input {
+  display: inline-block;
+  width: 80%;
+}
+
+.command {
+  padding: 0.4em 1em;
+  margin: 0;
+  display: inline-block;
+  width: 20%;
+}

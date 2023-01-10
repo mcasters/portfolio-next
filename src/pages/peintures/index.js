@@ -25,6 +25,11 @@ export default function Peintures() {
           </Link>
         </li>
         <li>
+          <Link href={`/peintures/2021`}>
+            <a className={s.year}>2021</a>
+          </Link>
+        </li>
+        <li>
           <Link href={`/peintures/2022`}>
             <a className={s.year}>2022</a>
           </Link>

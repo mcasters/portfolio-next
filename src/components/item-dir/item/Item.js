@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 
 import ITEM from '../../../constants/itemConstant';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import s from './Item.module.css';
 import Images from '../images/Images';
-import { createDateFormat } from '../../../tools/utils';
 
 function Item({ item, type }) {
-  const email = GLOBAL_CONSTANTS.EMAIL;
 
   return (
     <article className={s.itemContainer}>
@@ -17,7 +16,7 @@ function Item({ item, type }) {
       <Images item={item} type={type} />
       <figcaption>
         <time dateTime={item.date} className={s.noWrap}>
-          {createDateFormat(item.date)}
+          {format(item.date, ITEM.FORMAT_DATE)}
         </time>
         <span className={s.spacer}> | </span>
         <p className={s.noWrap}>{item.technique}</p>
@@ -27,7 +26,7 @@ function Item({ item, type }) {
           {type === ITEM.SCULPTURE.TYPE && ` x ${item.length}`} cm
         </p>
       </figcaption>
-      <address className={s.email}>{email}</address>
+      <address className={s.email}>{GLOBAL_CONSTANTS.EMAIL}</address>
     </article>
   );
 }

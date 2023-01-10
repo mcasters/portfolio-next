@@ -1,18 +1,18 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 
 import s from './ItemRow.module.css';
 import ItemDeleteButton from './ItemDeleteButton';
 import ItemUpdateButton from './ItemUpdateButton';
-import { createDateFormat } from '../../../../tools/utils';
 import CONSTANT from '../../../../constants/itemConstant';
 import { getSMPaths } from '../../utils/itemUtils';
 
 function ItemRow({ item, type }) {
+  const FORMAT = CONSTANT.FORMAT_DATE;
   return (
     <tr className={s.row}>
       <td>{item.title}</td>
-      <td>{createDateFormat(item.date)}</td>
+      <td>{format(item.date, FORMAT)}</td>
       <td>{item.technique}</td>
       <td>{item.description}</td>
       <td>{item.height}</td>

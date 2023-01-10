@@ -36,7 +36,7 @@ export const getItemToUpdate = (item, type) => {
   return {
     id: item.id,
     title: item.title,
-    date: item.date,
+    date: new Date(item.date),
     technique: item.technique,
     description: item.description,
     height: item.height,

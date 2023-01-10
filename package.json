@@ -27,6 +27,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "focus-trap-react": "^10.0.2",
     "formidable": "^2.0.1",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
@@ -52,6 +53,7 @@
     "react-image-lightbox": "^5.1.4",
     "react-markdown": "^8.0.0",
     "react-modal": "^3.16.1",
+    "react-popper": "^2.3.0",
     "react-tabs": "^4.2.1",
     "sequelize": "^6.0.0",
     "swr": "^1.0.0"
