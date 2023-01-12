@@ -45,13 +45,14 @@ export default {
       if (item) throw new Error("Nom de l'item déjà existant en Bdd");
 
       const res = await addImages(title, type);
-      if (!res) throw new Error("Erreur à l'écriture des fichiers");
+      if (!res) throw new Error("Erreur à l'écriture des fichiers image");
 
-      const newItem = await service.add(data, type);
-
-      if (!newItem) {
+      let newItem;
+      try {
+        newItem = await service.add(data, type);
+      } catch (e) {
         await deleteItemImages(title, type);
-        throw new Error("Erreur à l'enregistrement en base de donnée");
+        throw new Error("Erreur à l'enregistrement en base de donnée : " + e);
       }
       return newItem;
     },
@@ -74,22 +75,35 @@ export default {
         throw new Error("Nom d'item déjà existant en Bdd");
 
       const oldTitle = oldItem.title;
+      let res;
+
       if (hasImages) {
-        const res = await addImages(title, type);
-        if (!res) throw new Error("Erreur à l'écriture des nouveaux fichiers");
+        res = await addImages(title, type);
+        if (!res)
+          throw new Error("Erreur à l'écriture des nouveaux fichiers image");
+
+        if (oldTitle !== title) {
+          res = await deleteItemImages(oldTitle, type);
+          if (!res)
+            throw new Error(
+              'Erreur à la suppression des anciens fichiers image',
+            );
+        }
       } else if (oldTitle !== title) {
-        const res = await renameItemImages(oldTitle, title, type);
-        if (!res) throw new Error('Erreur au renommage des fichiers');
+        res = await renameItemImages(oldTitle, title, type);
+        if (!res) throw new Error('Erreur au renommage des fichiers image');
       }
 
-      const updatedItem = await modelService.update(id, data);
-
-      if (!updatedItem) {
-        await deleteItemImages(title, type);
-        throw new Error("Erreur à l'enregistrement en base de donnée");
+      try {
+        res = await modelService.update(id, data);
+      } catch (e) {
+        if (oldTitle !== title) await renameItemImages(title, oldTitle, type);
+        throw new Error(
+          "Erreur à l'enregistrement en base de donnée : " + e,
+        );
       }
 
-      return updatedItem;
+      return res;
     },
 
     deleteItem: async (root, { id, type }, { req }) => {

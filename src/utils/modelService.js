@@ -71,15 +71,14 @@ class ModelService {
   update = async (id, data) => {
     await this.model.update(
       {
-        id,
         ...data,
       },
       { where: { id } },
     );
-    const updatedItem = await this.model.findOne({
+
+    return await this.model.findOne({
       where: { id },
     });
-    return updatedItem;
   };
 
   delete = async (id) => {

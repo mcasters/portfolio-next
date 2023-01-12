@@ -122,29 +122,29 @@ const storeAllSizeImages = (title, type) => {
   return res;
 };
 
-const storeItemImages = async (pTitle, type) => {
+const storeItemImages = async (title, type) => {
   const tabTitles =
     type === ITEM.SCULPTURE.TYPE
-      ? getSculptureTitlesWithIndex(pTitle)
-      : [pTitle];
+      ? getSculptureTitlesWithIndex(title)
+      : [title];
   let res = true;
 
-  tabTitles.forEach(title => {
+  tabTitles.forEach(t => {
     if (res) {
-      res = storeAllSizeImages(title, type);
+      res = storeAllSizeImages(t, type);
     } else {
       res = false;
     }
   });
 
   if (!res) {
-    tabTitles.forEach(title => {
-      deleteAllSizeImages(title, type);
+    tabTitles.forEach(t => {
+      deleteAllSizeImages(t, type);
     });
   }
 
-  tabTitles.forEach(title => {
-    const tempFile = getTempPath(title);
+  tabTitles.forEach(t => {
+    const tempFile = getTempPath(t);
     deleteImage(tempFile);
   });
 

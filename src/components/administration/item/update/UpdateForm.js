@@ -32,10 +32,10 @@ const customStyles = {
 Modal.setAppElement('#__next');
 
 function UpdateForm({ item, type, close }) {
-  const [itemUpdated, setItemUpdated] = useState(getItemToUpdate(item, type));
+  const [itemToUpdate, setItemToUpdate] = useState(getItemToUpdate(item, type));
   const triggerAlert = useAlert();
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
-  const canSubmit = canSubmitData(itemUpdated, isSculpture, true);
+  const canSubmit = canSubmitData(itemToUpdate, isSculpture, true);
   const showModal = true;
   const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
 
@@ -46,31 +46,31 @@ function UpdateForm({ item, type, close }) {
   const handleDataChange = (e) => {
     e.preventDefault();
     const { name, value, type } = e.target;
-    setItemUpdated(
-      Object.assign({}, itemUpdated, {
+    setItemToUpdate(
+      Object.assign({}, itemToUpdate, {
         [name]: type === 'number' ? parseInt(value, 10) : value,
       }),
     );
   };
 
   const handleDayChange = (date) => {
-    setItemUpdated(Object.assign({}, itemUpdated, { date }));
+    setItemToUpdate(Object.assign({}, itemToUpdate, { date }));
   };
 
   const handleImageChange = (index, content) => {
-    const newPictures = [...itemUpdated.pictures];
+    const newPictures = [...itemToUpdate.pictures];
     newPictures[index] = content;
-    setItemUpdated(Object.assign({}, itemUpdated, { pictures: newPictures }));
+    setItemToUpdate(Object.assign({}, itemToUpdate, { pictures: newPictures }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data, error } = await submitUpdateItem(itemUpdated, type);
+    const { data, error } = await submitUpdateItem(itemToUpdate, type);
 
     if (error || !data) {
       triggerAlert(
-        error.message ? error.message : 'Sorry! something went wrong.',
+        error ?  error.message || error : 'Sorry! something went wrong.',
         true,
       );
     } else {
@@ -91,7 +91,7 @@ function UpdateForm({ item, type, close }) {
       <h1 className={s.updateTitle}>Modification</h1>
       <form className={s.formGroup} onSubmit={handleSubmit}>
         <DataPart
-          item={itemUpdated}
+          item={itemToUpdate}
           handleDataChange={handleDataChange}
           handleDayChange={handleDayChange}
           isSculpture={isSculpture}

@@ -1,8 +1,11 @@
-import { addItemRequest, updateItemRequest } from '../../../data/request/request';
+import {
+  addItemRequest,
+  updateItemRequest,
+} from '../../../data/request/request';
 import CONSTANT from '../../../constants/itemConstant';
 import {
   getFilenamesTab,
-  getGraphqlObject,
+  getItemInputGraphql,
   picturesIsFull,
   picturesIsFullOrEmpty,
 } from './itemUtils';
@@ -45,21 +48,31 @@ const uploadImage = async (filenames, pictures) => {
 };
 
 export const submitUpdateItem = async (item, type) => {
-  // TODO
-};
 
-export const submitAddItem = async (item, type) => {
-  let resultUpload;
+  if (!canSubmitData(item, type === CONSTANT.SCULPTURE.TYPE, true))
+    return Object.assign({}, { error: 'Donnée(s) manquante(s)' });
 
+  let hasImages = false;
   if (picturesIsFull(item)) {
-    resultUpload = await uploadImage(
+    const resultUpload = await uploadImage(
       getFilenamesTab(item, type),
       item.pictures,
     );
-  } else {
-    resultUpload = Object.assign({}, { error: 'Image(s) manquante(s)' });
+    if (resultUpload.error) return resultUpload;
+    hasImages = true;
   }
+  return await updateItemRequest(getItemInputGraphql(item, type, hasImages));
+};
+
+export const submitAddItem = async (item, type) => {
+  if (!canSubmitData(item, type === CONSTANT.SCULPTURE.TYPE, false))
+    return Object.assign({}, { error: 'Donnée(s) manquante(s)' });
+
+  const resultUpload = await uploadImage(
+    getFilenamesTab(item, type),
+    item.pictures,
+  );
   if (resultUpload.error) return resultUpload;
 
-  return await addItemRequest(getGraphqlObject(item, type));
+  return await addItemRequest(getItemInputGraphql(item, type, true));
 };

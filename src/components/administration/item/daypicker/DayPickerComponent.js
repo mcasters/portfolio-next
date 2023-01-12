@@ -47,7 +47,6 @@ function DayPickerComponent({ handleDayChange, alreadyDay }) {
   const handleDaySelect = (date) => {
     setSelected(date);
     if (date) {
-      console.log(date);
       setInputValue(format(date, FORMAT));
       closePopper();
     }

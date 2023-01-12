@@ -2,31 +2,33 @@ import CONSTANT from '../../../constants/itemConstant';
 
 const libraryPath = '/images';
 
-export const getGraphqlObject = (item, type) => {
+export const getItemInputGraphql = (item, type, hasImages) => {
   const object = {
     type,
+    id: item.id ? item.id : undefined,
     title: item.title,
     date: item.date,
     technique: item.technique,
     description: item.description,
     height: item.height,
     width: item.width,
+    length: item.length,
+    hasImages,
   };
 
-  return type !== CONSTANT.SCULPTURE.TYPE
-    ? object
-    : Object.assign({}, object, { length: item.length });
+  return object;
 };
 
 export const getEmptyItem = (isSculpture) => {
   return {
+    id: '',
     title: '',
     date: new Date(),
     technique: '',
     description: '',
     height: '',
     width: '',
-    length: '',
+    length: isSculpture ? '' : undefined,
     pictures: isSculpture ? ['', '', '', ''] : [''],
   };
 };
@@ -41,8 +43,8 @@ export const getItemToUpdate = (item, type) => {
     description: item.description,
     height: item.height,
     width: item.width,
-    length: isSculpture ? item.length : '',
-    pictures: getFilenamesTab(item, type),
+    length: isSculpture ? item.length : undefined,
+    pictures: isSculpture ? ['', '', '', ''] : [''],
   };
 };
 
