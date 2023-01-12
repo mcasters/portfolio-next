@@ -1,9 +1,9 @@
 import fs from 'fs';
 import Jimp from 'jimp';
 
-import ITEM from '../constants/itemConstant';
-import CONTENT from '../constants/content';
-import IMAGE from '../constants/image';
+import ITEM from '../../../constants/itemConstant';
+import CONTENT from '../../../constants/content';
+import IMAGE from '../../../constants/image';
 
 const getTempPath = title => {
   const libraryPath = process.env.PHOTOS_PATH;

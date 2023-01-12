@@ -1,12 +1,12 @@
 import { GraphQLScalarType, Kind } from 'graphql';
 
-import ModelService from '../../../utils/modelService';
-import { isAuth } from '../../../utils/auth';
+import ModelService from '../../models/modelService';
+import { isAuth } from '../../../components/administration/utils/authUtils';
 import {
   addImages,
   deleteItemImages,
   renameItemImages,
-} from '../../../utils/writeImageUtils';
+} from '../../../components/administration/utils/imageUtils';
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',

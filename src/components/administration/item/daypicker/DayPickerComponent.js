@@ -21,7 +21,7 @@ function DayPickerComponent({ handleDayChange, alreadyDay }) {
   const [popperElement, setPopperElement] = useState(null);
 
   const popper = usePopper(popperRef.current, popperElement, {
-    placement: 'bottom-start',
+    placement: 'bottom-end',
   });
 
   const closePopper = () => {
@@ -48,6 +48,7 @@ function DayPickerComponent({ handleDayChange, alreadyDay }) {
     setSelected(date);
     if (date) {
       setInputValue(format(date, FORMAT));
+      handleDayChange(date);
       closePopper();
     }
   };
@@ -86,7 +87,7 @@ function DayPickerComponent({ handleDayChange, alreadyDay }) {
           <div
             tabIndex={-1}
             style={popper.styles.popper}
-            className="dialog-sheet"
+            className={s.popperContainer}
             {...popper.attributes.popper}
             ref={setPopperElement}
             role="dialog"

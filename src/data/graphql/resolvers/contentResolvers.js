@@ -1,5 +1,5 @@
-import { isAuth } from '../../../utils/auth';
-import { addImages } from '../../../utils/writeImageUtils';
+import { isAuth } from '../../../components/administration/utils/authUtils';
+import { addImages } from '../../../components/administration/utils/imageUtils';
 import { Content } from '../../models';
 import CONTENT from '../../../constants/content';
 

@@ -9,3 +9,11 @@
   display: inline-block;
   width: 20%;
 }
+
+.popperContainer {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  background-color: lightgrey;
+  padding: 20px;
+  text-align: center;
+}
