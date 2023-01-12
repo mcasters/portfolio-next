@@ -14,34 +14,13 @@ import DataPart from '../DataPart';
 import { getItemToUpdate } from '../../utils/itemUtils';
 import CONSTANT from '../../../../constants/itemConstant';
 
-const customStyles = {
-  overlay: {
-    backgroundColor: 'none',
-  },
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    maxHeight: '90%',
-    transform: 'translate(-50%, -50%)',
-    width: '70%',
-  },
-};
-
-Modal.setAppElement('#__next');
 
 function UpdateForm({ item, type, close }) {
   const [itemToUpdate, setItemToUpdate] = useState(getItemToUpdate(item, type));
   const triggerAlert = useAlert();
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const canSubmit = canSubmitData(itemToUpdate, isSculpture, true);
-  const showModal = true;
   const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
-
-  const handleCloseModal = () => {
-    close();
-  };
 
   const handleDataChange = (e) => {
     e.preventDefault();
@@ -81,15 +60,9 @@ function UpdateForm({ item, type, close }) {
   };
 
   return (
-    <Modal
-      id="updateItem"
-      contentLabel="Modification"
-      isOpen={showModal}
-      closeTimeoutMS={150}
-      style={customStyles}
-    >
-      <h1 className={s.updateTitle}>Modification</h1>
-      <form className={s.formGroup} onSubmit={handleSubmit}>
+    <>
+      <form onSubmit={handleSubmit}>
+      <h1>Modification</h1>
         <DataPart
           item={itemToUpdate}
           handleDataChange={handleDataChange}
@@ -107,13 +80,13 @@ function UpdateForm({ item, type, close }) {
           <button
             type="button"
             className={`${s.updateButton} button`}
-            onClick={handleCloseModal}
+            onClick={close}
           >
             Annuler
           </button>
         </div>
       </form>
-    </Modal>
+    </>
   );
 }
 

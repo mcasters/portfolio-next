@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 
 import s from './ItemRow.module.css';
 import ItemDeleteButton from './ItemDeleteButton';
-import ItemUpdateButton from './ItemUpdateButton';
+import UpdateButton from '../update/updateButton';
 import CONSTANT from '../../../../constants/itemConstant';
 import { getSMPaths } from '../../utils/itemUtils';
 
@@ -29,7 +29,7 @@ function ItemRow({ item, type }) {
         <ItemDeleteButton id={item.id} type={type} />
       </td>
       <td>
-        <ItemUpdateButton id={item.id} item={item} type={type} />
+        <UpdateButton id={item.id} item={item} type={type} />
       </td>
     </tr>
   );
