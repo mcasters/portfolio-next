@@ -8,7 +8,7 @@ import {
 } from '../../data/request/request';
 import { ROUTES } from '../../constants/routes';
 import { ISAUTHENTICATED } from '../../data/graphql/queries';
-import { useAlert } from '../alert-context/AlertContext';
+import { useAlert } from '../alert/Alert';
 
 const LogoutButton = () => {
   const { publicRuntimeConfig } = getConfig();

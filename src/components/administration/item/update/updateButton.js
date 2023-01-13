@@ -24,7 +24,6 @@ function UpdateButton({ item, type }) {
   };
 
   const handleButtonClick = () => {
-    console.log('// coucou');
     setIsPopperOpen(true);
   };
 

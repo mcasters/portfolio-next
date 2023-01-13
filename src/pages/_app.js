@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { AlertProvider } from '../components/alert-context/AlertContext';
-import ErrorBoundary from '../components/ErrorBoundary';
+import { AlertProvider, useAlert } from '../components/alert/Alert';
 import './styles/styles.css';
 import './styles/style-lightbox.css';
 import './styles/style-reactTab.css';
@@ -15,6 +14,7 @@ import ItemConstant from '../constants/itemConstant';
 // eslint-disable-next-line react/prop-types
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const alert = useAlert();
 
   const getTitle = () => {
     let title = '';
@@ -70,24 +70,22 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <ErrorBoundary>
-        <AlertProvider>
-          <Head>
-            <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-            <title>{getTitle()}</title>
-            <meta name="description" content={getDescription()} />
-            <meta name="keywords" content={KEYWORDS} />
-            <meta name="theme-color" content="#555555" />
-            <link rel="manifest" href="/site.webmanifest" />
-            <link rel="author" href="/humans.txt" type="text/plain" />
-            <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
-            <link rel="icon" sizes="192x192" href="/icon-192.png" />
-            <link rel="icon" sizes="512x512" href="/icon-512.png" />
-            <link rel="shortcut icon" href="/favicon.ico" />
-          </Head>
-          <Component {...pageProps} />
-        </AlertProvider>
-      </ErrorBoundary>
+      <AlertProvider>
+        <Head>
+          <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+          <title>{getTitle()}</title>
+          <meta name="description" content={getDescription()} />
+          <meta name="keywords" content={KEYWORDS} />
+          <meta name="theme-color" content="#555555" />
+          <link rel="manifest" href="/site.webmanifest" />
+          <link rel="author" href="/humans.txt" type="text/plain" />
+          <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+          <link rel="icon" sizes="192x192" href="/icon-192.png" />
+          <link rel="icon" sizes="512x512" href="/icon-512.png" />
+          <link rel="shortcut icon" href="/favicon.ico" />
+        </Head>
+        <Component {...pageProps} />
+      </AlertProvider>
     </>
   );
 }

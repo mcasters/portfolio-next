@@ -4,7 +4,7 @@ import useSWR from 'swr';
 
 import s from './AddForm.module.css';
 import CONSTANT from '../../../../constants/itemConstant';
-import { useAlert } from '../../../alert-context/AlertContext';
+import { useAlert } from '../../../alert/Alert';
 import { ALL_ITEMS } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
 import { canSubmitData, submitAddItem } from '../../utils/formUtils';

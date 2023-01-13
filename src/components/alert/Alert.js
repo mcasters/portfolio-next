@@ -1,83 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
-import PropTypes from 'prop-types';
-import { MdClose } from 'react-icons/md';
+import React, { useContext, useRef, useState } from 'react';
+import { usePopper } from 'react-popper';
+import FocusTrap from 'focus-trap-react';
 
-const errorStyles = {
-  overlay: {
-    backgroundColor: 'none',
-  },
-  content: {
-    top: '85%',
-    left: '10%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    backgroundColor: '#ffa5ac',
-    padding: '10px',
-  },
-};
+import AlertMessage from './AlertMessage';
+import s from './alert.module.css';
 
-const validStyles = {
-  overlay: {
-    backgroundColor: 'none',
-  },
-  content: {
-    top: '85%',
-    left: '10%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    backgroundColor: '#92ff8e',
-    padding: '10px',
-  },
-};
+const Alert = React.createContext({});
 
-const iconStyles = {
-  float: 'right',
-};
+export const AlertProvider = ({ children }) => {
+  const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
-Modal.setAppElement('#__next');
+  const [isPopperOpen, setIsPopperOpen] = useState(false);
+  const popperRef = useRef(null);
+  const [popperElement, setPopperElement] = useState(null);
 
-export default function Alert({ message, isError, clearAlert }) {
-  const [showModal, setShowModal] = useState(true);
-  let timeout = null;
+  const popper = usePopper(popperRef.current, popperElement);
 
-  useEffect(() => {
-    if (showModal) {
-      timeout = setTimeout(() => {
-        handleCloseModal();
-      }, 5000);
-    }
-    return function cleanup() {
-      clearAlert();
-      clearTimeout(timeout);
-    };
-  }, [showModal]);
+  const closePopper = () => {
+    setMessage('');
+    setIsPopperOpen(false);
+  };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const triggerAlert = (message, isError) => {
+    setMessage(message);
+    setIsError(isError);
+    setIsPopperOpen(true);
   };
 
   return (
-    <Modal
-      id="alert"
-      contentLabel="alert"
-      closeTimeoutMS={150}
-      isOpen={showModal}
-      onRequestClose={handleCloseModal}
-      style={isError ? errorStyles : validStyles}
-    >
-      <MdClose onClick={handleCloseModal} style={iconStyles} />
-      <div className={message} style={{ padding: '0px 10px' }}>
-        {message}
+    <Alert.Provider value={triggerAlert}>
+      <div ref={popperRef}>
+        {children}
+        {isPopperOpen && (
+          <FocusTrap
+            active
+            focusTrapOptions={{
+              initialFocus: false,
+              allowOutsideClick: true,
+              clickOutsideDeactivates: true,
+              onDeactivate: closePopper,
+              fallbackFocus: popperRef.current,
+            }}
+          >
+            <div
+              tabIndex={-1}
+              className={s.popperContainer}
+              {...popper.attributes.popper}
+              ref={setPopperElement}
+              role="dialog"
+            >
+              <AlertMessage message={message} isError={isError} close={closePopper} />
+            </div>
+          </FocusTrap>
+        )}
       </div>
-    </Modal>
+    </Alert.Provider>
   );
-}
-
-Alert.propTypes = {
-  message: PropTypes.string.isRequired,
-  isError: PropTypes.bool.isRequired,
-  clearAlert: PropTypes.func.isRequired,
 };
+
+export const useAlert = () => useContext(Alert);

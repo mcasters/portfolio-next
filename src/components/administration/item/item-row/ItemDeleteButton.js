@@ -3,7 +3,7 @@ import { FaTrash } from 'react-icons/fa';
 import useSWR from 'swr';
 
 import s from './ItemDeleteButton.module.css';
-import { useAlert } from '../../../alert-context/AlertContext';
+import { useAlert } from '../../../alert/Alert';
 import { ALL_ITEMS } from '../../../../data/graphql/queries';
 import {
   allItemsRequest,

@@ -5,7 +5,7 @@ import useSWR from 'swr';
 
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/routes';
-import { useAlert } from '../components/alert-context/AlertContext';
+import { useAlert } from '../components/alert/Alert';
 
 import { signInRequest, isAuthenticatedRequest } from '../data/request/request';
 import { ISAUTHENTICATED } from '../data/graphql/queries';
@@ -34,10 +34,10 @@ const SignIn = () => {
     if (error) {
       setUserData(
         Object.assign({}, userData, {
-          message: error.message ? error.message : 'Failed to authenticate',
+          message: 'Connexion refusée',
         }),
       );
-      triggerAlert('Failed to authenticate', true);
+      triggerAlert('Connexion refusée', true);
     }
     if (data) {
       localStorage.setItem(ls_key, ls_value);

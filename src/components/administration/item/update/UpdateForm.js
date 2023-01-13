@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import Modal from 'react-modal';
 
 import s from './UpdateForm.module.css';
-import { useAlert } from '../../../alert-context/AlertContext';
+import { useAlert } from '../../../alert/Alert';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
 import { canSubmitData, submitUpdateItem } from '../../utils/formUtils';

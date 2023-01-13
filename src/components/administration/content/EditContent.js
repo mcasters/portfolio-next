@@ -7,7 +7,7 @@ import {
   addContentRequest,
   contentRequest,
 } from '../../../data/request/request';
-import { useAlert } from '../../alert-context/AlertContext';
+import { useAlert } from '../../alert/Alert';
 import s from './EditContent.module.css';
 
 function EditContent({ keyContent, isTextArea }) {
