@@ -4,7 +4,7 @@ import useSWR from 'swr';
 
 import s from './ItemDeleteButton.module.css';
 import { useAlert } from '../../../alert/Alert';
-import { ALL_ITEMS } from '../../../../data/graphql/queries';
+import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import {
   allItemsRequest,
   deleteItemRequest,
@@ -13,7 +13,7 @@ import {
 function ItemDeleteButton({ id, type }) {
   const triggerAlert = useAlert();
 
-  const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
+  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
 
   return (
     <button

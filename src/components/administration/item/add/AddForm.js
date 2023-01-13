@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import s from './AddForm.module.css';
 import CONSTANT from '../../../../constants/itemConstant';
 import { useAlert } from '../../../alert/Alert';
-import { ALL_ITEMS } from '../../../../data/graphql/queries';
+import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
 import { canSubmitData, submitAddItem } from '../../utils/formUtils';
 import DataPart from '../DataPart';
@@ -20,7 +20,7 @@ function AddForm({ type }) {
   const [onClear, setOnClear] = useState(0);
   const [item, setItem] = useState(getEmptyItem(isSculpture));
   const [canSubmit, setCanSubmit] = useState(false);
-  const { mutate } = useSWR([ALL_ITEMS, type], allItemsRequest);
+  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
   const formRef = React.useRef(null);
 
   useEffect(() => {
