@@ -7,10 +7,10 @@ import CONSTANT from '../../../../constants/itemConstant';
 import { useAlert } from '../../../alert/Alert';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
-import { canSubmitData, submitAddItem } from '../../utils/formUtils';
+import { canSubmitData, submitAddItem } from '../../../utils/formUtils';
 import DataPart from '../DataPart';
 import ImagePart from '../ImagePart';
-import {getEmptyItem} from "../../utils/itemUtils";
+import {getEmptyItem} from "../../../utils/itemUtils";
 
 function AddForm({ type }) {
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;

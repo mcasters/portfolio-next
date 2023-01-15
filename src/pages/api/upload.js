@@ -2,7 +2,7 @@ import formidable from 'formidable';
 import { mkdir, stat } from 'fs/promises';
 import { rename } from 'fs';
 
-import { isAuth } from '../../components/administration/utils/authUtils';
+import { isAuth } from '../../components/utils/authUtils';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

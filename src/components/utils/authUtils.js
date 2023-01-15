@@ -2,7 +2,7 @@ import { serialize, parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-import { User } from '../../../data/models';
+import { User } from '../../data/models';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 

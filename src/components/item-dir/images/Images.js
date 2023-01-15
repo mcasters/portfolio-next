@@ -2,74 +2,65 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import LAYOUT from '../../../constants/layout';
-import ITEM from '../../../constants/itemConstant';
-import LightBox from '../../react-lightbox/LightBoxProvider';
+import LightBox from '../../lightbox/Lightbox';
 import useViewport from '../../hooks/useViewport';
-import s from './Images.module.css';
 import {
+  getLightboxTitle,
   getMainPaths,
   getMDPaths,
   getSMPaths,
-} from '../../administration/utils/itemUtils';
+} from '../../utils/itemUtils';
+import ImageButton from './ImageButton';
 
 function Images({ item, type }) {
   const { windowWidth } = useViewport();
-  const [isOpen, setIsOpen] = useState(false);
+  const [imageIndex, setImageIndex] = useState(null);
 
   const isLessThanSM = windowWidth < LAYOUT.BREAKPOINT.SM;
 
   const getCurrentPaths = () =>
     isLessThanSM ? getSMPaths(item, type) : getMDPaths(item, type);
 
-  const getLightboxPaths = () =>
-    isLessThanSM ? getMDPaths(item, type) : getMainPaths(item, type);
+  const getLightboxImages = () => {
+    const urls = isLessThanSM
+      ? getMDPaths(item, type)
+      : getMainPaths(item, type);
+    return urls.map((image) => {
+      let obj = {};
+      obj['url'] = image;
+      obj['title'] = getLightboxTitle(item);
+      return obj;
+    });
+  };
 
   const closeLightbox = () => {
-    setIsOpen(false);
+    setImageIndex(null);
   };
 
-  const getAltImage = () => {
-    switch (type) {
-      case ITEM.PAINTING.TYPE:
-        return ITEM.PAINTING.IMAGE.ALT_IMAGE;
-      case ITEM.DRAWING.TYPE:
-        return ITEM.DRAWING.IMAGE.ALT_IMAGE;
-      case ITEM.SCULPTURE.IMAGE.ALT_IMAGE:
-        return ITEM.SCULPTURE.IMAGE.ALT_IMAGE;
-      default:
-        return;
-    }
-  };
-
-  const openLightbox = () => {
-    setIsOpen(true);
+  const openLightbox = (i) => {
+    setImageIndex(i);
   };
 
   return (
     <>
       <figure>
-        {getCurrentPaths().map((src) => {
+        {getCurrentPaths().map((src, i) => {
           return (
-            <button
-              type="button"
-              onClick={openLightbox}
-              className={
-                type === ITEM.SCULPTURE.TYPE
-                  ? s.sculptureButton
-                  : s.noSculptureButton
-              }
+            <ImageButton
               key={src}
-            >
-              <img src={`${src}`} alt={getAltImage()} className={s.image} />
-            </button>
+              type={type}
+              src={src}
+              index={i}
+              handleLightbox={openLightbox}
+            />
           );
         })}
       </figure>
-      {isOpen && typeof window !== 'undefined' && (
+      {imageIndex !== null && (
         <LightBox
-          title={item.title}
-          images={getLightboxPaths()}
+          images={getLightboxImages()}
           onClose={closeLightbox}
+          startIndex={imageIndex}
         />
       )}
     </>

@@ -5,7 +5,7 @@ import s from './ItemRow.module.css';
 import ItemDeleteButton from './ItemDeleteButton';
 import UpdateButton from '../update/updateButton';
 import CONSTANT from '../../../../constants/itemConstant';
-import { getSMPaths } from '../../utils/itemUtils';
+import { getSMPaths } from '../../../utils/itemUtils';
 
 function ItemRow({ item, type }) {
   const FORMAT = CONSTANT.FORMAT_DATE;

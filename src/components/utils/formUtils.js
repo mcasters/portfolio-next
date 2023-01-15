@@ -1,8 +1,8 @@
 import {
   addItemRequest,
   updateItemRequest,
-} from '../../../data/request/request';
-import CONSTANT from '../../../constants/itemConstant';
+} from '../../data/request/request';
+import CONSTANT from '../../constants/itemConstant';
 import {
   getFilenamesTab,
   getItemInputGraphql,

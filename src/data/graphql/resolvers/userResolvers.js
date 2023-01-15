@@ -5,7 +5,7 @@ import {
   validPassword,
   setCookie,
   deleteCookie,
-} from '../../../components/administration/utils/authUtils';
+} from '../../../components/utils/authUtils';
 
 export default {
   Query: {

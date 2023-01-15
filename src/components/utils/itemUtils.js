@@ -1,9 +1,10 @@
-import CONSTANT from '../../../constants/itemConstant';
+import CONSTANT from '../../constants/itemConstant';
+import ITEM from '../../constants/itemConstant';
 
 const libraryPath = '/images';
 
 export const getItemInputGraphql = (item, type, hasImages) => {
-  const object = {
+  return {
     type,
     id: item.id ? item.id : undefined,
     title: item.title,
@@ -15,8 +16,6 @@ export const getItemInputGraphql = (item, type, hasImages) => {
     length: item.length,
     hasImages,
   };
-
-  return object;
 };
 
 export const getEmptyItem = (isSculpture) => {
@@ -108,3 +107,20 @@ const getConst = (type) => {
       return new Error(`Type ${type} inexistant`);
   }
 };
+
+export const getAltImage = (type) => {
+  switch (type) {
+    case ITEM.PAINTING.TYPE:
+      return ITEM.PAINTING.IMAGE.ALT_IMAGE;
+    case ITEM.DRAWING.TYPE:
+      return ITEM.DRAWING.IMAGE.ALT_IMAGE;
+    case ITEM.SCULPTURE.IMAGE.ALT_IMAGE:
+      return ITEM.SCULPTURE.IMAGE.ALT_IMAGE;
+    default:
+      return;
+  }
+};
+
+export const getLightboxTitle = (item) => {
+  return `Marion Casters | ${item.title}`;
+}

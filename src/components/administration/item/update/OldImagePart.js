@@ -1,7 +1,7 @@
 import s from './OldImagePart.module.css';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { getSMPaths } from "../../utils/itemUtils";
+import { getSMPaths } from "../../../utils/itemUtils";
 
 function OldImagePart({ item, type }) {
   return (

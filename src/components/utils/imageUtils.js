@@ -1,9 +1,46 @@
 import fs from 'fs';
 import Jimp from 'jimp';
 
-import ITEM from '../../../constants/itemConstant';
-import CONTENT from '../../../constants/content';
-import IMAGE from '../../../constants/image';
+import ITEM from '../../constants/itemConstant';
+import CONTENT from '../../constants/content';
+import IMAGE from '../../constants/image';
+
+/****************
+ * Entry point *
+ ****************/
+export const addImages = (title, type) => {
+  if (type === CONTENT.TYPE) {
+    return storeContentImage(title);
+  } else {
+    return storeItemImages(title, type);
+  }
+};
+
+/****************
+ * Entry point *
+ ****************/
+export const renameItemImages = async (oldTitle, newTitle, type) => {
+  if (type === ITEM.SCULPTURE.TYPE) {
+    let i = 1;
+    const promises = [];
+
+    while (i < 5) {
+      const oldFileName = `${oldTitle}_${i}`;
+      const newFileName = `${newTitle}_${i}`;
+      promises.push(renameItemImage(oldFileName, newFileName, type));
+      i++;
+    }
+    return Promise.all(promises);
+  }
+  return renameItemImage(oldTitle, newTitle, type);
+};
+
+/****************
+ * Entry point *
+ ****************/
+export const deleteItemImages = async (title, type) => {
+  return deleteAllSizeImages(title, type);
+};
 
 const getTempPath = title => {
   const libraryPath = process.env.PHOTOS_PATH;
@@ -20,6 +57,7 @@ const getSculpturePaths = title => {
     `${libraryPath}${IMAGE.SCULPTURE.PATH_SM}/${file}`,
   ];
 };
+
 const getPaintingPaths = title => {
   const libraryPath = process.env.PHOTOS_PATH;
   const file = `${title}.jpg`;
@@ -203,41 +241,4 @@ const deleteImage = path => {
     fs.unlinkSync(`${path}`);
   }
   return true;
-};
-
-/****************
- * Entry point *
- ****************/
-export const addImages = (title, type) => {
-  if (type === CONTENT.TYPE) {
-    return storeContentImage(title);
-  } else {
-    return storeItemImages(title, type);
-  }
-};
-
-/****************
- * Entry point *
- ****************/
-export const renameItemImages = async (oldTitle, newTitle, type) => {
-  if (type === ITEM.SCULPTURE.TYPE) {
-    let i = 1;
-    const promises = [];
-
-    while (i < 5) {
-      const oldFileName = `${oldTitle}_${i}`;
-      const newFileName = `${newTitle}_${i}`;
-      promises.push(renameItemImage(oldFileName, newFileName, type));
-      i++;
-    }
-    return Promise.all(promises);
-  }
-  return renameItemImage(oldTitle, newTitle, type);
-};
-
-/****************
- * Entry point *
- ****************/
-export const deleteItemImages = async (title, type) => {
-  return deleteAllSizeImages(title, type);
 };
