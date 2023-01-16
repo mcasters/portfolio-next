@@ -13,7 +13,6 @@ import DataPart from '../DataPart';
 import { getItemToUpdate } from '../../../utils/itemUtils';
 import CONSTANT from '../../../../constants/itemConstant';
 
-
 function UpdateForm({ item, type, close }) {
   const [itemToUpdate, setItemToUpdate] = useState(getItemToUpdate(item, type));
   const triggerAlert = useAlert();
@@ -48,7 +47,7 @@ function UpdateForm({ item, type, close }) {
 
     if (error || !data) {
       triggerAlert(
-        error ?  error.message || error : 'Sorry! something went wrong.',
+        error ? error.message || error : 'Sorry! something went wrong.',
         true,
       );
     } else {
@@ -61,7 +60,8 @@ function UpdateForm({ item, type, close }) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-      <h1>Modification</h1>
+        <h1>Modification</h1>
+        <div title="Close" className={s.closeButton} onClick={close} />
         <DataPart
           item={itemToUpdate}
           handleDataChange={handleDataChange}

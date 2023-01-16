@@ -15,7 +15,7 @@ function UpdateButton({ item, type }) {
   const [popperElement, setPopperElement] = useState(null);
 
   const popper = usePopper(popperRef.current, popperElement, {
-    placement: 'bottom-end',
+    placement: 'auto',
   });
 
   const closePopper = () => {
