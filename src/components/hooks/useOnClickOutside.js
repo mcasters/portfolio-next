@@ -16,7 +16,7 @@ function useOnClickOutside(ref, handler, isActive) {
     return function cleanup() {
       document.removeEventListener('click', listener, false);
     };
-  }, [ref, handler, isActive]);
+  }, [isActive]);
 }
 
 export default useOnClickOutside;

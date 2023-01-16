@@ -9,7 +9,7 @@ Navigation
   display: flex;
   align-items: center;
   width: 100%;
-  font-size: var(--font-size-current-plus);
+  font-size: var(--font-size-current-plus-plus);
   color: var(--color-light);
   user-select: none;
 }
@@ -19,21 +19,22 @@ Button
  */
 .menuButton {
   position: fixed;
-  top: 8px;
-  height: 32px;
-  width: 32px;
+  top: 10px;
+  left: 20px;
+  height: 40px;
+  width: 40px;
   background: none;
   border: none;
   margin: 0;
-  padding: 8px;
+  padding: 0;
   z-index: 3;
   cursor: pointer;
 }
 
 @media (--sm) {
   .menuButton {
-    top: 16px;
-    left: 12px;
+    top: 13px;
+    left: 25px;
   }
 }
 
@@ -63,18 +64,7 @@ Menu
 }
 
 .menuList .logo {
-  max-width: 30px;
-}
-
-.name {
-  text-align: center;
-  font-size: var(--font-size-minus);
-  letter-spacing: 1em;
-  white-space: pre;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
+  max-width: 40px;
 }
 
 .open {

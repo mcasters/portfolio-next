@@ -15,15 +15,15 @@ function MobileNav() {
 
   const styles = {
     line: {
-      height: '2px',
-      width: '20px',
+      height: '3px',
+      width: '40px',
       background: '#ab8b8b',
       transition: 'all 0.2s ease',
     },
     lineTop: {
       transform: isOpen ? 'rotate(45deg)' : 'none',
       transformOrigin: 'top left',
-      marginBottom: '5px',
+      marginBottom: '11px',
     },
     lineMiddle: {
       opacity: isOpen ? 0 : 1,
@@ -31,8 +31,8 @@ function MobileNav() {
     },
     lineBottom: {
       transform: isOpen ? 'translateX(-1px) rotate(-45deg)' : 'none',
-      transformOrigin: 'top left',
-      marginTop: '5px',
+      transformOrigin: 'bottom left',
+      marginTop: '11px',
     },
   };
 
@@ -56,9 +56,7 @@ function MobileNav() {
       </button>
       <ul
         ref={menuRef}
-        className={
-          isOpen ? `${s.menuList} ${s.open}` : `${s.menuList}`
-        }
+        className={isOpen ? `${s.menuList} ${s.open}` : `${s.menuList}`}
       >
         {menuItems.map((item) => {
           if (item.NAME === 'Home')
@@ -87,7 +85,6 @@ function MobileNav() {
           );
         })}
       </ul>
-      <p className={s.name}>Marion Casters</p>
     </nav>
   );
 }
