@@ -27,11 +27,7 @@ export const NAMES = {
   SIGNIN: 'Admin in',
 };
 
-export const MENU = [
-  {
-    PATH: ROUTES.PRESENTATION,
-    NAME: NAMES.PRESENTATION,
-  },
+export const MENU_1 = [
   {
     PATH: ROUTES.PAINTING,
     NAME: NAMES.PAINTING,
@@ -44,12 +40,19 @@ export const MENU = [
     PATH: ROUTES.DRAWING,
     NAME: NAMES.DRAWING,
   },
+];
+
+export const MENU_2 = [
   {
-    PATH: ROUTES.CONTACT,
-    NAME: NAMES.CONTACT,
+    PATH: ROUTES.PRESENTATION,
+    NAME: NAMES.PRESENTATION,
   },
   {
     PATH: ROUTES.HOME,
     NAME: NAMES.HOME,
+  },
+  {
+    PATH: ROUTES.CONTACT,
+    NAME: NAMES.CONTACT,
   },
 ];

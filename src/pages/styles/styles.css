@@ -397,11 +397,12 @@ button,
 select,
 textarea {
   font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased;
   font-size: var(--font-size-current);
   color: var(--color-xdark);
   font-weight: lighter;
   font-variant: small-caps;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.3em;
 }
 
 h1,

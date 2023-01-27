@@ -1,64 +1,35 @@
-
-.aside {
-  position: fixed;
-  width: var(--aside-width-md);
-  height: 650px;
-  padding: var(--main-top-padding) 0 0 var(--side-padding);
-  box-sizing: border-box;
-  vertical-align: top;
-  z-index: 0;
-  user-select: none;
+.title {
+  text-align: center;
+  margin: 0;
+  height: 50px;
 }
 
-@media (--xlg) {
-  .aside {
-    width: var(--aside-width);
-  }
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 1rem;
+  transition: 0.2s ease all;
+  width: 100%;
 }
 
-.bar {
-  display: inline-block;
-  width: 5px;
-  vertical-align: top;
-  height: 100%;
-  background-image: linear-gradient(var(--color-xxlight), var(--color-xlight));
+.primaryNav {
+  position: sticky;
+  top: 0;
+  text-align: center;
+  height: 30px;
 }
 
-.homeBar {
-  width: 2px;
-  background-image: linear-gradient(var(--color-medium-brown), var(--link-color-dark));
-}
-
-.desktopNav {
-  display: inline-block;
-  vertical-align: top;
-  width: 90%;
+.primaryNav li {
+  display: inline;
 }
 
 .link {
-  float: left;
-  width: 100%;
-  padding: 1.5em;
   font-size: var(--font-size-nav);
   transition: all 1.2s ease;
   font-variant: small-caps;
-}
-
-.linkHome {
-  float: left;
-  width: 100%;
-  padding: 3em 2em 1.5em;
-  transition: all 1.2s ease;
-}
-
-.linkHome img {
-  width: 30px;
-}
-
-@media (--lg) {
-  .linkHome img {
-    width: 35px;
-  }
 }
 
 .link:hover,
@@ -73,10 +44,4 @@
 
 .active:hover {
   transform: scale(1.15);
-}
-
-.linkHome:hover {
-  transform: scale(1.2, 1.1);
-  transform-origin: left;
-  transition: all 1.2s ease;
 }

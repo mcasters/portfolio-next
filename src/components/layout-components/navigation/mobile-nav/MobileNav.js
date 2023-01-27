@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import s from './MobileNav.module.css';
-import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import useCloseMobileNav from '../../../hooks/useCloseMobileNav';
 import { MENU as menuItems } from '../../../../constants/routes';
 import Link from 'next/link';
 
@@ -11,7 +11,7 @@ function MobileNav() {
   const close = () => {
     setMenuOpen(false);
   };
-  useOnClickOutside(menuRef, close, isOpen);
+  useCloseMobileNav(menuRef, close, isOpen);
 
   const styles = {
     line: {

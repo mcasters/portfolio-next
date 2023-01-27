@@ -30,8 +30,6 @@ const Layout = ({ router, children }) => {
   return (
     <>
       <Header isHome={isHome} />
-      {isLessThanMD && <MobileNav />}
-      {!isLessThanMD && <DesktopNav isHome={isHome} />}
       <Main isHome={isHome} height={mainHeight} isLessThanMD={isLessThanMD}>
         {children}
       </Main>

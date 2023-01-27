@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
@@ -12,13 +12,17 @@ import OldImagePart from './OldImagePart';
 import DataPart from '../DataPart';
 import { getItemToUpdate } from '../../../utils/itemUtils';
 import CONSTANT from '../../../../constants/itemConstant';
+import useOnClickOutside from "../../../hooks/useOnClickOutside";
 
 function UpdateForm({ item, type, close }) {
   const [itemToUpdate, setItemToUpdate] = useState(getItemToUpdate(item, type));
+  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
   const triggerAlert = useAlert();
+  const dialogRef = useRef();
+  useOnClickOutside(dialogRef, close);
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const canSubmit = canSubmitData(itemToUpdate, isSculpture, true);
-  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
+
 
   const handleDataChange = (e) => {
     e.preventDefault();
@@ -59,7 +63,7 @@ function UpdateForm({ item, type, close }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form ref={dialogRef} onSubmit={handleSubmit}>
         <h1>Modification</h1>
         <div title="Close" className={s.closeButton} onClick={close} />
         <DataPart

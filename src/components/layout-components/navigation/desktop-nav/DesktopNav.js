@@ -4,15 +4,21 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import s from './DesktopNav.module.css';
-import { MENU as menuItems } from '../../../../constants/routes';
+import { MENU_1 as menuItems } from '../../../../constants/routes';
+import GLOB_CONST from '../../../../constants/globalConstants';
+import useScroll from '../../../hooks/useScroll';
 
 export default function DesktopNav({ isHome }) {
   const router = useRouter();
+  const scrollY = useScroll();
+  const title = GLOB_CONST.SITE_TITLE;
 
   return (
-    <aside className={s.aside}>
-      <div className={isHome ? [s.bar, s.homeBar].join(' ') : s.bar}> </div>
-      <nav className={s.desktopNav}>
+    <>
+      <h1 className={s.title}>{title}</h1>
+      <nav
+        className={`${s.nav} ${s.primaryNav}`}
+      >
         <ul>
           {menuItems.map((menuItem) => {
             const isSubPageActive =
@@ -20,19 +26,6 @@ export default function DesktopNav({ isHome }) {
             const isActive =
               router.pathname === menuItem.PATH || isSubPageActive;
 
-            if (menuItem.NAME === 'Home')
-              return (
-                <li key={menuItem.NAME}>
-                  <Link href={menuItem.PATH} key={menuItem.NAME}>
-                    <a className={s.linkHome}>
-                      <img
-                        src="/logo-45.png"
-                        alt="Signature de Marion Casters"
-                      />
-                    </a>
-                  </Link>
-                </li>
-              );
             return (
               <li key={menuItem.NAME}>
                 <Link href={menuItem.PATH} key={menuItem.NAME}>
@@ -47,7 +40,7 @@ export default function DesktopNav({ isHome }) {
           })}
         </ul>
       </nav>
-    </aside>
+    </>
   );
 }
 

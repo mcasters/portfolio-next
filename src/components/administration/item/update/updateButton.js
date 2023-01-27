@@ -2,18 +2,15 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaPen } from 'react-icons/fa';
 import { usePopper } from 'react-popper';
-import FocusTrap from 'focus-trap-react';
 
 import UpdateForm from './UpdateForm';
 import s from './updateButton.module.css';
 
 function UpdateButton({ item, type }) {
   const [isPopperOpen, setIsPopperOpen] = useState(false);
-
+  const [popperElement, setPopperElement] = useState(null);
   const popperRef = useRef(null);
   const buttonRef = useRef(null);
-  const [popperElement, setPopperElement] = useState(null);
-
   const popper = usePopper(popperRef.current, popperElement, {
     placement: 'auto',
   });
@@ -29,7 +26,7 @@ function UpdateButton({ item, type }) {
 
   return (
     <>
-      <div ref={popperRef}>
+      <div key={item.id} ref={popperRef}>
         <button
           ref={buttonRef}
           type="button"
@@ -40,27 +37,16 @@ function UpdateButton({ item, type }) {
         </button>
       </div>
       {isPopperOpen && (
-        <FocusTrap
-          active
-          focusTrapOptions={{
-            initialFocus: false,
-            allowOutsideClick: false,
-            clickOutsideDeactivates: true,
-            onDeactivate: closePopper,
-            fallbackFocus: buttonRef.current,
-          }}
+        <div
+          tabIndex={-1}
+          style={popper.styles.popper}
+          className={s.popperContainer}
+          {...popper.attributes.popper}
+          ref={setPopperElement}
+          role="dialog"
         >
-          <div
-            tabIndex={-1}
-            style={popper.styles.popper}
-            className={s.popperContainer}
-            {...popper.attributes.popper}
-            ref={setPopperElement}
-            role="dialog"
-          >
-            <UpdateForm item={item} type={type} close={closePopper} />
-          </div>
-        </FocusTrap>
+          <UpdateForm item={item} type={type} close={closePopper} />
+        </div>
       )}
     </>
   );
