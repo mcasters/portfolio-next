@@ -1,10 +1,12 @@
 import React from 'react';
 
 import s from './Feedback.module.css';
+import GLOBAL_CONSTANTS from "../../../constants/globalConstants";
 
 function Feedback() {
   return (
     <div className={s.container}>
+      <span className={s.text}>{GLOBAL_CONSTANTS.HANDCRAFTED}</span>
       <a href="https://nodejs.org" target="_blank" rel="noreferrer">
         <img
           src="/assets/nodeJSTransparent.png"

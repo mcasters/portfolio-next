@@ -1,18 +1,16 @@
 .link {
   display: block;
-  color: var(--link-color-light);
   font-size: var(--font-size-current-plus);
   padding: 0.4em 0;
 }
 
 @media (--sm) {
   .link {
-    letter-spacing: 0.4rem;
     display: inline;
     padding: 2px 5px;
   }
 
   .link:hover {
-    color: var(--color-light);
+    color: var(--color-xdark);
   }
 }

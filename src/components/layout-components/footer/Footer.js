@@ -10,9 +10,7 @@ import LoginControl from './login-control/LoginControl';
 export default function Footer() {
   return (
     <footer className="footer">
-      <Feedback />
       <div className={s.container}>
-        <span className={s.text}>{GLOBAL_CONSTANTS.COPYRIGHT}</span>
         <Link href={ROUTES.HOME}>
           <a className={s.link}>{NAMES.HOME}</a>
         </Link>
@@ -22,6 +20,11 @@ export default function Footer() {
         <Link href={ROUTES.PRIVACY} as={NAMES.PRIVACY}>
           <a className={s.link}>{NAMES.PRIVACY}</a>
         </Link>
+        <div className={s.text}>
+          <span>{GLOBAL_CONSTANTS.CONTENT}</span>
+          <span>{GLOBAL_CONSTANTS.COPYRIGHT}</span>
+        </div>
+        <Feedback />
       </div>
     </footer>
   );

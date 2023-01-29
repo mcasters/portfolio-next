@@ -12,7 +12,6 @@ function Home({ data }) {
       <div className={s.container}>
         <h1 className="hidden">{TITLE.HOME}</h1>
         <div className={s.content}>
-          {data.content && <Content text={data.content.text} />}
         </div>
       </div>
     </Layout>

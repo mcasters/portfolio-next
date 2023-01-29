@@ -1,20 +1,6 @@
 .container {
-  z-index: 1;
-  background: var(--color-xxlight);
-  padding: 0.2em 0;
   text-align: center;
-}
-
-@media (--md) {
-  .container {
-    padding-left: var(--aside-width-md);
-  }
-}
-
-@media (--xlg) {
-  .container {
-    padding-left: var(--aside-width);
-  }
+  font-size: var(--font-size-minus);
 }
 
 .nodejsLogo {
