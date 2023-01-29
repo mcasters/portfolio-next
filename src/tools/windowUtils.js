@@ -32,7 +32,7 @@ export function getWindowHeight() {
 }
 
 export function getScrollY() {
-  return canUseDOM ? window.scrollY || window.pageYOffset : 0;
+  return canUseDOM ? window.scrollY : 0;
 }
 
 export function getClientHeight(node) {

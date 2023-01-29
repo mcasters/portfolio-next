@@ -60,7 +60,7 @@ const Admin = ({ isAuthenticated }) => {
               <EditPictureForm pictureTitle={CONTENT.HOME_IMAGE_LANDSCAPE} />
               <EditContent keyContent={CONTENT.KEY.HOME1} isTextArea />
               <EditContent keyContent={CONTENT.KEY.HOME2} isTextArea />
-              <EditContent keyContent={CONTENT.KEY.HOME3} isTextArea />
+              <EditContent keyContent={CONTENT.KEY.INTRODUCTION} isTextArea />
             </div>
           </TabPanel>
           <TabPanel>

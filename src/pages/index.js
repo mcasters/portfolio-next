@@ -8,7 +8,7 @@ import CONST from '../constants/content';
 
 function Home({ data }) {
   return (
-    <Layout>
+    <Layout introduction={data.content ? data.content.text : ''}>
       <div className={s.container}>
         <h1 className="hidden">{TITLE.HOME}</h1>
         <div className={s.content}>
@@ -21,7 +21,7 @@ function Home({ data }) {
 
 export async function getServerSideProps() {
   const data = await queryGraphql(CONTENT, {
-    key: CONST.KEY.HOME3,
+    key: CONST.KEY.INTRODUCTION,
   });
   return {
     props: {

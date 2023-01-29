@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import s from './Header.module.css';
 import GLOB_CONST from '../../../constants/globalConstants';
-import useScroll from '../../hooks/useScroll';
 import { useRouter } from 'next/router';
 import { MENU_1, MENU_2 } from '../../../constants/routes';
 import Link from 'next/link';
+import Content from '../../content/Content';
+import useElementIsUpTo from "../../hooks/useElementIsUpTo";
 
-function Header({ isHome }) {
-  const scrollY = useScroll();
+function Header({ isHome, introduction }) {
+  const titleRef = useRef();
+  const introRef = useRef();
+
+  const titleDisappear = isHome ? useElementIsUpTo(titleRef, 8) : true;
+  const introDisappear = isHome ? useElementIsUpTo(introRef, 38) : true;
   const router = useRouter();
-  const title = GLOB_CONST.SITE_TITLE;
-
-  const under50px = scrollY < 50;
-  const under80px = scrollY < 150;
 
   const style = {
     backgroundImage: "url('/assets/shadow.png')",
@@ -22,13 +23,9 @@ function Header({ isHome }) {
 
   return (
     <header className={s.container}>
-      <h1 className={s.title}>{title}</h1>
+      {isHome && <h1 ref={titleRef} className={s.title}>{GLOB_CONST.SITE_TITLE}</h1>}
       <nav
-        className={
-          under50px
-            ? `${s.nav} ${s.primaryNav}`
-            : `${s.nav} ${s.primaryNav} ${s.sticky}`
-        }
+        className={titleDisappear ? `${s.primaryNav} ${s.sticky}` : `${s.primaryNav}`}
       >
         <ul>
           {MENU_1.map((menuItem) => {
@@ -51,14 +48,17 @@ function Header({ isHome }) {
           })}
         </ul>
       </nav>
-      <div className={under50px ? `${s.intro}` : `${s.intro} ${s.introSticky}`}>
-        Introduction
-      </div>
+      {isHome && (
+        <div
+          ref={introRef}
+          className={titleDisappear ? `${s.intro} ${s.introSticky}` : `${s.intro}`}
+        >
+          {introduction && <Content text={introduction} />}
+        </div>
+      )}
       <nav
         className={
-          under80px
-            ? `${s.nav} ${s.secondaryNav}`
-            : `${s.nav} ${s.secondaryNav} ${s.sticky}`
+          introDisappear ? `${s.secondaryNav} ${s.sticky}` : `${s.secondaryNav}`
         }
       >
         <ul>
@@ -73,6 +73,7 @@ function Header({ isHome }) {
                       <img
                         src="/logo-45.png"
                         alt="Signature de Marion Casters"
+                        style={{ width: '35px' }}
                       />
                     </a>
                   </Link>
@@ -99,5 +100,6 @@ function Header({ isHome }) {
 
 Header.propTypes = {
   isHome: PropTypes.bool.isRequired,
+  introduction: PropTypes.string,
 };
 export default Header;

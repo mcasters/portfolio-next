@@ -4,7 +4,7 @@ const CONTENT = {
   KEY: {
     HOME1: 'Home 1',
     HOME2: 'Home 2',
-    HOME3: 'Home 3',
+    INTRODUCTION: 'Home 3',
     PRESENTATION: 'Présentation',
     CONTACT_ADDRESS: 'Adresse',
     CONTACT_PHONE: 'Téléphone',
