@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { MENU_1, MENU_2 } from '../../../constants/routes';
 import Link from 'next/link';
 import Content from '../../content/Content';
-import useElementIsUpTo from "../../hooks/useElementIsUpTo";
+import useElementIsUpTo from '../../hooks/useElementIsUpTo';
 
 function Header({ isHome, introduction }) {
   const titleRef = useRef();
@@ -23,9 +23,15 @@ function Header({ isHome, introduction }) {
 
   return (
     <header className={s.container}>
-      {isHome && <h1 ref={titleRef} className={s.title}>{GLOB_CONST.SITE_TITLE}</h1>}
+      {isHome && (
+        <h1 ref={titleRef} className={s.title}>
+          {GLOB_CONST.SITE_TITLE}
+        </h1>
+      )}
       <nav
-        className={titleDisappear ? `${s.primaryNav} ${s.sticky}` : `${s.primaryNav}`}
+        className={
+          titleDisappear ? `${s.primaryNav} ${s.sticky}` : `${s.primaryNav}`
+        }
       >
         <ul>
           {MENU_1.map((menuItem) => {
@@ -51,7 +57,9 @@ function Header({ isHome, introduction }) {
       {isHome && (
         <div
           ref={introRef}
-          className={titleDisappear ? `${s.intro} ${s.introSticky}` : `${s.intro}`}
+          className={
+            titleDisappear ? `${s.intro} ${s.introSticky}` : `${s.intro}`
+          }
         >
           {introduction && <Content text={introduction} />}
         </div>

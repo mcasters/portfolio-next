@@ -6,7 +6,7 @@ import AddForm from './item/add/AddForm';
 import { ALL_ITEMS_ADMIN } from '../../data/graphql/queries';
 import { allItemsRequest } from '../../data/request/request';
 
-export default function AdminItemParent({ type }) {
+export default function AdminItem({ type }) {
   const { data } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
 
   return (
@@ -17,6 +17,6 @@ export default function AdminItemParent({ type }) {
   );
 }
 
-AdminItemParent.propTypes = {
+AdminItem.propTypes = {
   type: PropTypes.string.isRequired,
 };

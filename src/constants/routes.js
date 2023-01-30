@@ -10,6 +10,12 @@ export const ROUTES = {
   ADMIN: '/admin',
   SIGNOUT: '/signout',
   SIGNIN: '/signin',
+  A_PRESENTATION: '/admin/presentation',
+  A_PAINTING: '/admin/peintures',
+  A_SCULPTURE: '/admin/sculptures',
+  A_DRAWING: '/admin/dessins',
+  A_CONTACT: '/admin/contact',
+  A_HOME: '/admin/accueil',
 };
 
 export const NAMES = {

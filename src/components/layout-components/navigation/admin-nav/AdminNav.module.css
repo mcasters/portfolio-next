@@ -1,0 +1,19 @@
+.adminNav {
+ position: fixed;
+  margin-left: -160px;
+  top: 150px;
+  text-align: right;
+  width: 110px;
+}
+
+.adminNav a {
+  font-size: var(--font-size-current-plus-plus);
+  font-variant: small-caps;
+}
+
+.adminNav a:hover,
+.active {
+  font-weight: bold;
+  color: var(--color-xdark);
+}
+

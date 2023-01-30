@@ -52,7 +52,6 @@
     "react-icons": "^4.6.0",
     "react-markdown": "^8.0.0",
     "react-popper": "^2.3.0",
-    "react-tabs": "^4.2.1",
     "sequelize": "^6.0.0",
     "swr": "^1.0.0"
   },

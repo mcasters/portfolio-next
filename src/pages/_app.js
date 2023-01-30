@@ -4,15 +4,12 @@ import { useRouter } from 'next/router';
 import { AlertProvider, useAlert } from '../components/alert/Alert';
 import './styles/styles.css';
 import './styles/style-lightbox.css';
-import './styles/style-reactTab.css';
-
 
 import { ROUTES } from '../constants/routes';
 import { DESCRIPTION, KEYWORDS } from '../constants/metaHtml';
 import TITLE from '../constants/pageTitle';
 import ItemConstant from '../constants/itemConstant';
 
-// eslint-disable-next-line react/prop-types
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const alert = useAlert();

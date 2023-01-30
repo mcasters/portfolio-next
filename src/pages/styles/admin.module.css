@@ -1,6 +1,6 @@
 .container {
-  margin: 0 auto;
   max-width: var(--max-content-width);
+  margin: 0 auto;
 }
 
 .title {
@@ -9,14 +9,4 @@
 
 .tabs {
   padding-top: 1em;
-}
-
-.tabContainer {
-  padding: 0 4em;
-}
-
-@media (--lg) {
-  .tabContainer {
-    padding: 0 7em;
-  }
 }

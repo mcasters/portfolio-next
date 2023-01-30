@@ -55,7 +55,8 @@
   padding: 5em 0;
   display: inline-block;
   vertical-align: baseline;
-  max-width: 490px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .introSticky {
