@@ -20,17 +20,17 @@ function UpdateButton({ item, type }) {
     buttonRef?.current?.focus();
   };
 
-  const handleButtonClick = () => {
-    setIsPopperOpen(true);
-  };
-
   return (
     <>
       <div key={item.id} ref={popperRef}>
         <button
           ref={buttonRef}
           type="button"
-          onClick={handleButtonClick}
+          onClick={e => {
+            e.preventDefault();
+            setIsPopperOpen(true);
+          }
+          }
           className={`${s.command} button`}
         >
           <FaPen />

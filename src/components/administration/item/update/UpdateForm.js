@@ -1,28 +1,30 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
-import s from './UpdateForm.module.css';
 import { useAlert } from '../../../alert/Alert';
-import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import { allItemsRequest } from '../../../../data/request/request';
 import { canSubmitData, submitUpdateItem } from '../../../utils/formUtils';
 import ImagePart from '../ImagePart';
 import OldImagePart from './OldImagePart';
 import DataPart from '../DataPart';
 import { getItemToUpdate } from '../../../utils/itemUtils';
+import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import CONSTANT from '../../../../constants/itemConstant';
-import useOnClickOutside from "../../../hooks/useOnClickOutside";
+import ButtonsForm from "./ButtonsForm";
+import s from './UpdateForm.module.css';
 
 function UpdateForm({ item, type, close }) {
   const [itemToUpdate, setItemToUpdate] = useState(getItemToUpdate(item, type));
-  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
   const triggerAlert = useAlert();
   const dialogRef = useRef();
   useOnClickOutside(dialogRef, close);
+
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const canSubmit = canSubmitData(itemToUpdate, isSculpture, true);
 
+  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
 
   const handleDataChange = (e) => {
     e.preventDefault();
@@ -62,34 +64,19 @@ function UpdateForm({ item, type, close }) {
   };
 
   return (
-    <>
-      <form ref={dialogRef} onSubmit={handleSubmit}>
-        <h1>Modification</h1>
-        <div title="Close" className={s.closeButton} onClick={close} />
-        <DataPart
-          item={itemToUpdate}
-          handleDataChange={handleDataChange}
-          handleDayChange={handleDayChange}
-          isSculpture={isSculpture}
-        />
-        <OldImagePart item={item} type={type} />
-        <ImagePart isSculpture={isSculpture} onChange={handleImageChange} />
-        <div>
-          {canSubmit && (
-            <button className={`${s.updateButton} button`} type="submit">
-              OK
-            </button>
-          )}
-          <button
-            type="button"
-            className={`${s.updateButton} button`}
-            onClick={close}
-          >
-            Annuler
-          </button>
-        </div>
-      </form>
-    </>
+    <form ref={dialogRef} onSubmit={handleSubmit}>
+      <h1>Modification</h1>
+      <div title="Close" className={s.closeButton} onClick={close} />
+      <DataPart
+        item={itemToUpdate}
+        handleDataChange={handleDataChange}
+        handleDayChange={handleDayChange}
+        isSculpture={isSculpture}
+      />
+      <OldImagePart item={item} type={type} />
+      <ImagePart isSculpture={isSculpture} onChange={handleImageChange} />
+      <ButtonsForm canSubmit={canSubmit} onCancelClick={close} />
+    </form>
   );
 }
 

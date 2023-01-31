@@ -10,7 +10,8 @@ import { allItemsRequest } from '../../../../data/request/request';
 import { canSubmitData, submitAddItem } from '../../../utils/formUtils';
 import DataPart from '../DataPart';
 import ImagePart from '../ImagePart';
-import {getEmptyItem} from "../../../utils/itemUtils";
+import { getEmptyItem } from '../../../utils/itemUtils';
+import ButtonsForm from '../update/ButtonsForm';
 
 function AddForm({ type }) {
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
@@ -99,20 +100,7 @@ function AddForm({ type }) {
           onChange={handleImageChange}
           onClear={onClear}
         />
-        <div>
-          {canSubmit && (
-            <button className={`${s.adminButton} button`} type="submit">
-              OK
-            </button>
-          )}
-          <button
-            type="button"
-            className={`${s.adminButton} button`}
-            onClick={cancel}
-          >
-            Annuler
-          </button>
-        </div>
+        <ButtonsForm canSubmit={canSubmit} onCancelClick={cancel} />
       </form>
     </div>
   );

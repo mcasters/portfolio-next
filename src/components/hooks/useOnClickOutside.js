@@ -1,33 +1,21 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect } from 'react';
 
-function useOnClickOutside(element, handler) {
-  const [ isClickOutside, setIsClickOutside] = useState(false);
-
-  const savedHandler = useRef();
-  useEffect(() => {
-    savedHandler.current = handler;
-  }, [handler]);
-
+function useOnClickOutside(ref, handler) {
   useEffect(() => {
     const listener = (e) => {
-      console.log(element);
-      if (element.current && !element.current.contains(e.target)) {
-        console.log(e.target);
-        console.log('//// VFGEFE');
-        e.preventDefault();
-        setIsClickOutside(true);
+      if (ref.current && !ref.current.contains(e.target)) {
         handler();
       }
       return undefined;
     };
 
     if (typeof document === 'undefined') return;
-    document.addEventListener('click', listener);
+    document.addEventListener('mousedown', listener);
 
     return function cleanup() {
-      document.removeEventListener('click', listener);
+      document.removeEventListener('mousedown', listener);
     };
-  }, [isClickOutside]);
+  }, [ref]);
 }
 
 export default useOnClickOutside;
