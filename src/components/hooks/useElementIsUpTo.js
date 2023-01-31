@@ -1,33 +1,22 @@
-import {useState, useEffect, useCallback} from 'react';
-import throttle from 'lodash/throttle';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
-import { getScrollY } from '../../tools/windowUtils';
-
-function useElementIsUpTo(ref, yLimit) {
-  const [scrollY, setScrollY] = useState(0);
+function useElementIsUpTo(yLimit) {
   const [isUpTo, setIsUpTo] = useState(false);
+  const ref = useRef();
 
-  const handleScroll = useCallback(
-    throttle(() => {
-      setScrollY(getScrollY());
-      setIsUpTo(ref.current?.getBoundingClientRect().bottom < yLimit);
-    }, 500),
-    [],
-  );
+  const handleScroll = useCallback(() => {
+    setIsUpTo(ref.current?.getBoundingClientRect().bottom < yLimit);
+  }, [ref, yLimit]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, {
-      passive: true,
-
-    });
+    window.addEventListener('scroll', handleScroll, true);
 
     return () => {
-      handleScroll.cancel();
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll, true);
     };
-  }, [scrollY]);
+  }, [handleScroll]);
 
-  return isUpTo;
+  return [isUpTo, ref];
 }
 
 export default useElementIsUpTo;

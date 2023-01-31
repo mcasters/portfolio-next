@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { AlertProvider, useAlert } from '../components/alert/Alert';
+import { AlertProvider } from '../components/alert/Alert';
 import './styles/styles.css';
 import './styles/style-lightbox.css';
 
@@ -12,7 +12,6 @@ import ItemConstant from '../constants/itemConstant';
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const alert = useAlert();
 
   const getTitle = () => {
     let title = '';
