@@ -56,20 +56,12 @@
   width: 50%;
 }
 
-.secondaryNav .link {
-  display: inline-block;
-}
-
-.secondaryNav .link:hover {
-  color: var(--color-xdark);
-}
-
 .secondaryNav li:first-child .link {
   margin-right: 40px;
 }
 
 .secondaryNav li:last-child .link {
-  margin-left: 47px;
+  margin-left: 43px;
 }
 
 .shadow {

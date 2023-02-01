@@ -9,8 +9,4 @@
     display: inline;
     padding: 2px 5px;
   }
-
-  .link:hover {
-    color: var(--color-xdark);
-  }
 }

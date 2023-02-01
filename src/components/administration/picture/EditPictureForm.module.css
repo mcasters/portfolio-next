@@ -4,24 +4,15 @@
   text-align: center;
 }
 
-@media (--lg) {
-  .addContainer {
-    padding-left: 2em;
-    padding-right: 2em;
-  }
-}
-
-.title {
-  font-size: var(--font-size-nav)
-}
-
 .image {
-  max-width: 52vw;
-  max-height: 52vh;
+  display: block;
+  max-width: var(--max-content-width);
+  max-height: 60vh;
+  margin: auto;
 }
 
 .fileLabel:hover {
-  color: var(--link-color-xdark);
+  color: var(--link-color-dark);
 }
 
 .fileButton {
@@ -33,6 +24,7 @@
 }
 
 .imagePreview {
-  width: 100%;
-  margin-bottom: 1em;
+  max-width: var(--max-content-width);
+  max-height: 60vh;
+  margin: auto;
 }

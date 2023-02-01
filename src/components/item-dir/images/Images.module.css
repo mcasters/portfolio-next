@@ -14,7 +14,6 @@
 
 @media (--sm) {
   .image {
-    max-width: 70%;
     max-height: 65vh;
   }
 
@@ -37,7 +36,6 @@
 
 @media (--lg) {
   .image {
-    max-width: 35vw;
     max-height: 55vh;
   }
 
@@ -48,11 +46,9 @@
 
 @media (--xlg) {
   .image {
-    max-width: 32vw;
   }
 
   .sculptureButton .image {
-    max-width: 25vw;
     max-height: 45vh;
   }
 }

@@ -1,22 +1,10 @@
 .main {
   text-align: center;
-  padding: 140px 4em 3em;
+  padding: 140px 0 3em;
   max-width: var(--max-content-width);
   margin: auto;
 }
 
 .mainHome {
   text-align: center;
-}
-
-@media (--sm) {
-
-}
-
-@media (--md) {
-
-}
-
-@media (--xlg) {
-
 }

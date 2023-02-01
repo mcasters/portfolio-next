@@ -3,12 +3,12 @@
 }
 
 .container {
-  color: var(--color-xxdark);
+  color: var(--color-xdark);
+  border-top: 1px solid var(--color-light);
   padding: 1em 0 0.4em;
   text-align: center;
   max-width: var(--max-content-width);
   margin: auto;
-  border-top: 1px solid var(--color-light);
 }
 
 .text {
@@ -24,11 +24,6 @@
   display: block;
   font-size: var(--font-size-current-plus);
   padding: 1.2em 0;
-}
-
-.link:hover,
-.homeLink:hover {
-  color: var(--color-xdark);
 }
 
 .dot {

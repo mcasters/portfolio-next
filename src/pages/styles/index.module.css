@@ -12,9 +12,3 @@
   font-size: var(--font-size-current-plus);
   letter-spacing: 0.25em;
 }
-
-@media (--md) {
-  .content {
-    color: var(--color-medium);
-  }
-}

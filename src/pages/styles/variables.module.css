@@ -5,28 +5,12 @@
 
   --font-family-base: Georgia;
   --font-family-sans: Tahoma;
-  --font-weight: 100;
 
   /*
    * Layout
    * ======================================================================== */
 
   --max-content-width: 540px;
-  --max-content-form: 25em;
-
-  /*
-   * Padding
-   * ======================================================================== */
-
-  --side-padding: 4em;
-  --main-top-padding-mobile: 3em;
-  --main-top-padding: 12em;
-  --main-bottom-padding: 6em;
-  --main-side-padding-mobile: 1em;
-  --main-side-padding: 5em;
-  --main-side-padding-large: 6em;
-  --mainHome-side-padding: 3em;
-  --mainHome-bottom-padding: 2em;
 
   /*
    * Colors
@@ -35,26 +19,12 @@
   --color-xxlight: #fafafa;
   --color-xlight: #f5f5f5;
   --color-light: #e7e4d7;
-  --color-medium: #cecece;
-  --color-dark: #776e65;
-  --color-xdark: #555;
-  --color-xxdark: #333;
+  --color-xdark: #333;
 
-  --color-light-brown: #cabeaf;
-  --color-medium-brown: #7b6a58;
-  --color-dark-brown: #574530;
-  --color-xdark-brown: #453322;
-
-  --link-color-light: #f63e00;
-  --link-color: #e03902;
   --link-color-dark: #be2d01;
-  --link-color-xdark: #a22800;
   /*
    * Font size
    * ======================================================================== */
-  --font-size-header-sm-mobile: 1.2em;
-  --font-size-header-md-mobile: 1.7em;
-  --font-size-header: 1.9em;
   --font-size-tab: 20px;
   --font-size-nav: 17px;
   --font-size-current-title: 15px;

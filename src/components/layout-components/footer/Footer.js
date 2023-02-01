@@ -21,6 +21,7 @@ export default function Footer() {
           <a className={s.link}>{NAMES.PRIVACY}</a>
         </Link>
         <div className={s.text}>
+          ***
           <span>{GLOBAL_CONSTANTS.CONTENT}</span>
           <span>{GLOBAL_CONSTANTS.COPYRIGHT}</span>
         </div>
