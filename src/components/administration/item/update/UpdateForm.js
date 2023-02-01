@@ -12,14 +12,14 @@ import { getItemToUpdate } from '../../../utils/itemUtils';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import CONSTANT from '../../../../constants/itemConstant';
-import ButtonsForm from "./ButtonsForm";
+import ButtonsPart from "../ButtonsPart";
 import s from './UpdateForm.module.css';
 
 function UpdateForm({ item, type, close }) {
   const [itemToUpdate, setItemToUpdate] = useState(getItemToUpdate(item, type));
   const triggerAlert = useAlert();
   const dialogRef = useRef();
-  useOnClickOutside(dialogRef, close);
+  useOnClickOutside(dialogRef.current, close);
 
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const canSubmit = canSubmitData(itemToUpdate, isSculpture, true);
@@ -75,7 +75,7 @@ function UpdateForm({ item, type, close }) {
       />
       <OldImagePart item={item} type={type} />
       <ImagePart isSculpture={isSculpture} onChange={handleImageChange} />
-      <ButtonsForm canSubmit={canSubmit} onCancelClick={close} />
+      <ButtonsPart canSubmit={canSubmit} onCancelClick={close} />
     </form>
   );
 }

@@ -1,7 +1,7 @@
-import s from './ButtonsForm.module.css';
+import s from './ButtonsPart.module.css';
 import PropTypes from 'prop-types';
 
-function ButtonsForm({ canSubmit, onCancelClick }) {
+function ButtonsPart({ canSubmit, onCancelClick }) {
   return (
     <div>
       {canSubmit && (
@@ -20,9 +20,9 @@ function ButtonsForm({ canSubmit, onCancelClick }) {
   );
 }
 
-ButtonsForm.propTypes = {
+ButtonsPart.propTypes = {
   canSubmit: PropTypes.bool.isRequired,
   onCancelClick: PropTypes.func.isRequired,
 };
 
-export default ButtonsForm;
+export default ButtonsPart;

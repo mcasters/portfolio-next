@@ -11,7 +11,7 @@ import { canSubmitData, submitAddItem } from '../../../utils/formUtils';
 import DataPart from '../DataPart';
 import ImagePart from '../ImagePart';
 import { getEmptyItem } from '../../../utils/itemUtils';
-import ButtonsForm from '../update/ButtonsForm';
+import ButtonsPart from '../ButtonsPart';
 
 function AddForm({ type }) {
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
@@ -100,7 +100,7 @@ function AddForm({ type }) {
           onChange={handleImageChange}
           onClear={onClear}
         />
-        <ButtonsForm canSubmit={canSubmit} onCancelClick={cancel} />
+        <ButtonsPart canSubmit={canSubmit} onCancelClick={cancel} />
       </form>
     </div>
   );

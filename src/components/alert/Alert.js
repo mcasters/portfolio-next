@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
-import FocusTrap from 'focus-trap-react';
 
 import AlertMessage from './AlertMessage';
 import s from './alert.module.css';
+import useOnClickOutside from '../hooks/useOnClickOutside';
 
 const Alert = React.createContext({});
 
@@ -22,6 +22,8 @@ export const AlertProvider = ({ children }) => {
     setIsPopperOpen(false);
   };
 
+  useOnClickOutside(popperElement, closePopper);
+
   const triggerAlert = (message, isError) => {
     setMessage(message);
     setIsError(isError);
@@ -33,26 +35,19 @@ export const AlertProvider = ({ children }) => {
       <div ref={popperRef}>
         {children}
         {isPopperOpen && (
-          <FocusTrap
-            active
-            focusTrapOptions={{
-              initialFocus: false,
-              allowOutsideClick: true,
-              clickOutsideDeactivates: true,
-              onDeactivate: closePopper,
-              fallbackFocus: popperRef.current,
-            }}
+          <div
+            tabIndex={-1}
+            className={s.popperContainer}
+            {...popper.attributes.popper}
+            ref={setPopperElement}
+            role="dialog"
           >
-            <div
-              tabIndex={-1}
-              className={s.popperContainer}
-              {...popper.attributes.popper}
-              ref={setPopperElement}
-              role="dialog"
-            >
-              <AlertMessage message={message} isError={isError} close={closePopper} />
-            </div>
-          </FocusTrap>
+            <AlertMessage
+              message={message}
+              isError={isError}
+              close={closePopper}
+            />
+          </div>
         )}
       </div>
     </Alert.Provider>
