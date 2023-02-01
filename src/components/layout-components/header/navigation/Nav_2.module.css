@@ -11,21 +11,14 @@
 
 .secondaryNav.sticky {
   position: fixed;
-  top: 38px;
+  top: 36px;
 }
 
 .secondaryNav ul {
   position: relative;
-  width: 540px;
-  height: 54px;
+  width: var(--max-content-width);
+  height: 55px;
   margin: 0 auto;
-  border-color: var(--color-light);
-  border-bottom: 1px solid transparent;
-  transition: border-bottom ease-in-out .35s;
-}
-
-.secondaryNav.sticky ul {
-  border-color: var(--color-light);
 }
 
 .secondaryNav li {
@@ -61,7 +54,7 @@
 }
 
 .secondaryNav li:last-child .link {
-  margin-left: 43px;
+margin-left: 43px;
 }
 
 .shadow {
@@ -71,7 +64,7 @@
   left: 50%;
   margin-left: -270px;
   height: 10px;
-  width: 540px;
+  width: var(--max-content-width);
   z-index: 0;
   transition: top ease-in-out .35s;
 }

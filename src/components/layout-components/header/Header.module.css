@@ -1,6 +1,6 @@
 .container {
   text-align: center;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .title {
@@ -20,6 +20,6 @@
   margin: 0 auto;
 }
 
-.introSticky {
+.intro.withMargin {
   margin-top: 30px;
 }

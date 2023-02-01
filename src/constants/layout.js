@@ -6,7 +6,9 @@ const LAYOUT_CONST = {
     XLG: 1600,
   },
 
-  MOBILE_HEADER_HEIGHT: 50,
+  RED_LINE_HEIGHT: 6,
+  NAV_1_HEIGHT: 30,
+  NAV_2_HEIGHT: 55,
 
   BACKGROUND_IMAGE_MOBILE: "url('/images/miscellaneous/home-portrait.jpg')",
   BACKGROUND_IMAGE_DESKTOP: "url('/images/miscellaneous/home-landscape.jpg')",

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import s from './Feedback.module.css';
-import GLOBAL_CONSTANTS from "../../../constants/globalConstants";
+import GLOBAL_CONSTANTS from "../../../../constants/globalConstants";
 
 function Feedback() {
   return (

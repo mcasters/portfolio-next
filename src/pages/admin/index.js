@@ -5,7 +5,7 @@ import TITLE from '../../constants/pageTitle';
 import { queryGraphql } from '../../data/request/request-ssr';
 import { ISAUTHENTICATED } from '../../data/graphql/queries';
 import { ROUTES } from '../../constants/routes';
-import AdminNav from '../../components/layout-components/navigation/admin-nav/AdminNav';
+import AdminNav from '../../components/layout-components/header/navigation/admin-nav/AdminNav';
 
 const Admin = ({ isAuthenticated }) => {
   const router = useRouter();

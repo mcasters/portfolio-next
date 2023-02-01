@@ -24,11 +24,11 @@ export function canUseDom() {
 }
 
 export function getWindowWidth() {
-  return canUseDOM ? window.innerWidth : 370; // 1366; // Default size for server-side rendering
+  return canUseDOM ? window.innerWidth : 540; // Default size for server-side rendering
 }
 
 export function getWindowHeight() {
-  return canUseDOM ? window.innerHeight : 640; // Default size for server-side rendering
+  return canUseDOM ? window.innerHeight : 800; // Default size for server-side rendering
 }
 
 export function getScrollY() {

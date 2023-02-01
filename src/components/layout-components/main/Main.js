@@ -2,27 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import s from './Main.module.css';
-import LAYOUT_CONST from '../../../constants/layout';
+import LAYOUT from '../../../constants/layout';
 
-function Main({ isHome, height, isLessThanMD, children }) {
-  const commonStyle = {
+function Main({ isHome, height, isLessThanMD, headerIsFix, children }) {
+  const style = {
     height,
     backgroundPosition: 'center top',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
+    backgroundImage: isLessThanMD ? LAYOUT.BACKGROUND_IMAGE_MOBILE : LAYOUT.BACKGROUND_IMAGE_DESKTOP,
   };
-  const homeStyle = isLessThanMD
-    ? {
-        ...commonStyle,
-        backgroundImage: LAYOUT_CONST.BACKGROUND_IMAGE_MOBILE,
-      }
-    : {
-        ...commonStyle,
-        backgroundImage: LAYOUT_CONST.BACKGROUND_IMAGE_DESKTOP,
-      };
 
   return isHome ? (
-    <main className={s.mainHome} style={homeStyle}>
+    <main className={headerIsFix ? `${s.mainHome} ${s.sticky}` : `${s.mainHome}`} style={style}>
       {children}
     </main>
   ) : (

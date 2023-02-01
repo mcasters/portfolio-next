@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { MENU_1 } from '../../../constants/routes';
+import { MENU_1 } from '../../../../constants/routes';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import s from './Nav_1.module.css';

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ROUTES, NAMES } from '../../../../constants/routes';
+import { ROUTES, NAMES } from '../../../../../constants/routes';
 
 import s from './AdminNav.module.css';
 
