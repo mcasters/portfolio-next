@@ -151,7 +151,4 @@
   .lb-hide-mobile {
     display: none !important;
   }
-  .lb-canvas .lb-img {
-    max-height: 60vh;
-  }
 }

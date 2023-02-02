@@ -11,6 +11,11 @@
    * ======================================================================== */
 
   --max-content-width: 540px;
+  --red-line-height: 6px;
+  --nav-1-height: 30px;
+  --nav-1-height-without-border: 29px;
+  --nav-2-height: 55px;
+  --red-line-nav-1-height: 36px;
 
   /*
    * Colors

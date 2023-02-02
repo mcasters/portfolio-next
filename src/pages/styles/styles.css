@@ -418,6 +418,7 @@ a,
 .buttonLink {
   font-family: var(--font-family-base) !important;
   font-size: var(--font-size-current-plus-plus);
+  color: var(--link-color-dark);
   padding: 2px 5px;
   display: inline;
   margin: 0;
@@ -433,12 +434,6 @@ a:hover,
 a:focus,
 .buttonLink:focus {
   color: var(--color-xdark);
-  transition: color 0.4s;
-}
-
-.buttonLink:hover,
-.buttonLink:focus {
-  letter-spacing: 0.42em;
   transition: color 0.4s;
 }
 
