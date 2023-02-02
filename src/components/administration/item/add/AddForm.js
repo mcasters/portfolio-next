@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
@@ -22,7 +22,7 @@ function AddForm({ type }) {
   const [item, setItem] = useState(getEmptyItem(isSculpture));
   const [canSubmit, setCanSubmit] = useState(false);
   const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
-  const formRef = React.useRef(null);
+  const formRef = useRef(null);
 
   useEffect(() => {
     setCanSubmit(canSubmitData(item, isSculpture, false));

@@ -1,5 +1,6 @@
-import s from './ButtonsPart.module.css';
 import PropTypes from 'prop-types';
+
+import s from './ButtonsPart.module.css';
 
 function ButtonsPart({ canSubmit, onCancelClick }) {
   return (
@@ -9,20 +10,22 @@ function ButtonsPart({ canSubmit, onCancelClick }) {
           OK
         </button>
       )}
-      <button
-        type="button"
-        className={`${s.formButton} button`}
-        onClick={onCancelClick}
-      >
-        Annuler
-      </button>
+      {onCancelClick !== undefined && (
+        <button
+          type="button"
+          className={`${s.formButton} button`}
+          onClick={onCancelClick}
+        >
+          Annuler
+        </button>
+      )}
     </div>
   );
 }
 
 ButtonsPart.propTypes = {
   canSubmit: PropTypes.bool.isRequired,
-  onCancelClick: PropTypes.func.isRequired,
+  onCancelClick: PropTypes.func,
 };
 
 export default ButtonsPart;

@@ -1,5 +1,5 @@
 import {
-  addItemRequest,
+  addItemRequest, addPictureRequest,
   updateItemRequest,
 } from '../../data/request/request';
 import CONSTANT from '../../constants/itemConstant';
@@ -29,7 +29,7 @@ export const canSubmitData = (item, isSculpture, isUpdate) => {
   );
 };
 
-const uploadImage = async (filenames, pictures) => {
+const uploadImageInTemp = async (filenames, pictures) => {
   try {
     let formData = new FormData();
     pictures.forEach((file, index) => {
@@ -54,7 +54,7 @@ export const submitUpdateItem = async (item, type) => {
 
   let hasImages = false;
   if (picturesIsFull(item)) {
-    const resultUpload = await uploadImage(
+    const resultUpload = await uploadImageInTemp(
       getFilenamesTab(item, type),
       item.pictures,
     );
@@ -68,7 +68,7 @@ export const submitAddItem = async (item, type) => {
   if (!canSubmitData(item, type === CONSTANT.SCULPTURE.TYPE, false))
     return Object.assign({}, { error: 'Donnée(s) manquante(s)' });
 
-  const resultUpload = await uploadImage(
+  const resultUpload = await uploadImageInTemp(
     getFilenamesTab(item, type),
     item.pictures,
   );
@@ -76,3 +76,11 @@ export const submitAddItem = async (item, type) => {
 
   return await addItemRequest(getItemInputGraphql(item, type, true));
 };
+
+export const submitImageContent = async (title, file) => {
+  const filename = `${title}.jpg`;
+  const resultUpload = await uploadImageInTemp([filename], [file]);
+  if (resultUpload.error) return resultUpload;
+
+  return await addPictureRequest(title);
+}

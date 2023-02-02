@@ -1,11 +1,11 @@
-import EditPictureForm from './picture/EditPictureForm';
 import EditContent from './content/EditContent';
 import CONTENT from '../../constants/content';
+import EditPictureContent from "./content/EditPictureContent";
 
 export default function AdminPresentation() {
   return (
     <div>
-      <EditPictureForm pictureTitle={CONTENT.PRESENTATION_IMAGE_TITLE} />
+      <EditPictureContent pictureTitle={CONTENT.PRESENTATION_IMAGE_TITLE} />
       <EditContent keyContent={CONTENT.KEY.PRESENTATION} isTextArea />
     </div>
   );

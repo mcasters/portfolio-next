@@ -1,4 +1,4 @@
-import s from './imagePart.module.css';
+import s from './Preview.module.css';
 import PropTypes from 'prop-types';
 
 export default function Preview({ previewUrls, onDelete }) {
@@ -19,7 +19,7 @@ export default function Preview({ previewUrls, onDelete }) {
                 className="button"
                 onClick={onDelete(index)}
               >
-                Supprimer
+                Supprimer l'image
               </button>
             </div>
           );
