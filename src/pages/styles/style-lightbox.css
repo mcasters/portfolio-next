@@ -88,8 +88,8 @@
   position: relative;
 }
 .lb-canvas .lb-img {
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 93vw;
+  max-height: 93vh;
   min-width: 100px;
   min-height: 100px;
   /* transition: all 0.1s; */

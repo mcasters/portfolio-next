@@ -8,7 +8,7 @@ import LAYOUT from '../../../constants/layout';
 import Main from '../main/Main';
 import useViewport from '../../hooks/useViewport';
 import { ROUTES } from '../../../constants/routes';
-import s from '../Layout/Layout.module.css';
+import s from './Layout.module.css';
 import useElementIsUpTo from '../../hooks/useElementIsUpTo';
 
 const Layout = ({ router, children, introduction }) => {
