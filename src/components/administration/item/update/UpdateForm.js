@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
@@ -12,7 +12,7 @@ import { getItemToUpdate } from '../../../utils/itemUtils';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import CONSTANT from '../../../../constants/itemConstant';
-import ButtonsPart from "../ButtonsPart";
+import ButtonsPart from '../ButtonsPart';
 import s from './UpdateForm.module.css';
 
 function UpdateForm({ item, type, close }) {

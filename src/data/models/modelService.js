@@ -16,7 +16,6 @@ class ModelService {
       this.model = Drawing;
     } else if (type === ITEM.SCULPTURE.TYPE) {
       this.model = Sculpture;
-      this.isSculpture = true;
     } else throw new Error(`Type ${type} inexistant`);
   }
 

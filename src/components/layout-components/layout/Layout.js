@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'next/router';
+import { useRouter, withRouter } from 'next/router';
 
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
@@ -11,10 +11,11 @@ import { ROUTES } from '../../../constants/routes';
 import s from './Layout.module.css';
 import useElementIsUpTo from '../../hooks/useElementIsUpTo';
 
-const Layout = ({ router, children, introduction }) => {
+const Layout = ({ children, introduction }) => {
   const { windowWidth, windowHeight } = useViewport();
   const [isLessThanMD, setIsLessThanMD] = useState(true);
   const [headerIsFix, headerRef] = useElementIsUpTo(91);
+  const router = useRouter();
   const isHome = router.pathname === ROUTES.HOME;
 
   useEffect(() => {
@@ -23,9 +24,7 @@ const Layout = ({ router, children, introduction }) => {
 
   return (
     <>
-      <div
-        className={s.line}
-      ></div>
+      <div className={s.line}></div>
       <Header
         headerRef={headerRef}
         isHome={isHome}

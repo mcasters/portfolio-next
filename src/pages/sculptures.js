@@ -5,6 +5,7 @@ import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
 import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
 import s from './styles/item.module.css';
+import PropTypes from 'prop-types';
 
 const Sculptures = ({ data }) => {
   return (
@@ -35,5 +36,9 @@ export async function getServerSideProps() {
     },
   };
 }
+
+Sculptures.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export default Sculptures;

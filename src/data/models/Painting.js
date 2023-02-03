@@ -1,6 +1,6 @@
 import DataType from 'sequelize';
 import Model from './sequelize';
-import { parse, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import ITEM_CONSTANT from '../../constants/itemConstant';
 
 const Painting = Model.define(

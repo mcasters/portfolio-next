@@ -1,4 +1,4 @@
-import { gql } from 'graphql-request'
+import { gql } from 'graphql-request';
 
 export const ISAUTHENTICATED = gql`
   query IsAuthenticated {
@@ -43,31 +43,31 @@ export const CONTENT = gql`
 
 export const ALL_ITEMS = gql`
   query allItems($type: String!) {
-  allItems(type: $type) {
-    title
-    date
-    technique
-    description
-    height
-    width
-    length
+    allItems(type: $type) {
+      title
+      date
+      technique
+      description
+      height
+      width
+      length
+    }
   }
-}
 `;
 
 export const ALL_ITEMS_ADMIN = gql`
   query allItems($type: String!) {
-  allItems(type: $type) {
-    id
-    title
-    date
-    technique
-    description
-    height
-    width
-    length
+    allItems(type: $type) {
+      id
+      title
+      date
+      technique
+      description
+      height
+      width
+      length
+    }
   }
-}
 `;
 
 export const ITEMS_BY_YEAR = gql`
@@ -132,6 +132,6 @@ export const ADD_CONTENT = gql`
 
 export const ADD_PICTURE = gql`
   mutation AddPicture($title: String!) {
-  addPicture(title: $title)
-}
+    addPicture(title: $title)
+  }
 `;

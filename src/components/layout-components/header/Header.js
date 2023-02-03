@@ -10,7 +10,9 @@ import LAYOUT from '../../../constants/layout';
 
 function Header({ isHome, introduction, headerRef }) {
   const [titleDisappear, titleRef] = useElementIsUpTo(LAYOUT.RED_LINE_HEIGHT);
-  const [introDisappear, introRef] = useElementIsUpTo(LAYOUT.NAV_1_HEIGHT + LAYOUT.RED_LINE_HEIGHT);
+  const [introDisappear, introRef] = useElementIsUpTo(
+    LAYOUT.NAV_1_HEIGHT + LAYOUT.RED_LINE_HEIGHT,
+  );
 
   return (
     <header className={s.container} ref={headerRef}>
@@ -36,5 +38,6 @@ function Header({ isHome, introduction, headerRef }) {
 Header.propTypes = {
   isHome: PropTypes.bool.isRequired,
   introduction: PropTypes.string,
+  headerRef: PropTypes.object.isRequired,
 };
 export default Header;

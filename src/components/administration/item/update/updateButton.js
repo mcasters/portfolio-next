@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaPen } from 'react-icons/fa';
 import { usePopper } from 'react-popper';
@@ -26,11 +26,10 @@ function UpdateButton({ item, type }) {
         <button
           ref={buttonRef}
           type="button"
-          onClick={e => {
+          onClick={(e) => {
             e.preventDefault();
             setIsPopperOpen(true);
-          }
-          }
+          }}
           className={`${s.command} button`}
         >
           <FaPen />

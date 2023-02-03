@@ -19,6 +19,7 @@ export default function Preview({ previewUrls, onDelete }) {
                 className="button"
                 onClick={onDelete(index)}
               >
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 Supprimer l'image
               </button>
             </div>

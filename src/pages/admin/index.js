@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 
 import Layout from '../../components/layout-components/layout/Layout';
 import TITLE from '../../constants/pageTitle';
@@ -36,5 +37,9 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+Admin.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+};
 
 export default Admin;

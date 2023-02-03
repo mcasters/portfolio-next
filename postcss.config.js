@@ -18,7 +18,7 @@ module.exports = {
     // W3C CSS Custom Media Queries, e.g. @custom-media --small-viewport (max-width: 30em);
     // https://github.com/postcss/postcss-custom-media
     'postcss-custom-media': {
-      "importFrom": "src/pages/styles/media.module.css"
+      importFrom: 'src/pages/styles/media.module.css',
     },
     // W3C CSS Custom Selectors, e.g. @custom-selector :--heading h1, h2, h3, h4, h5, h6;
     // https://github.com/postcss/postcss-custom-selectors

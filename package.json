@@ -15,6 +15,7 @@
     "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "@babel/eslint-parser": "^7.19.1",
     "@graphql-tools/schema": "^9.0.4",
     "apollo-server-micro": "^3.10.3",
     "bcryptjs": "^2.4.3",
@@ -68,5 +69,8 @@
       "stylelint --fix",
       "git add --force"
     ]
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^13.1.6"
   }
 }

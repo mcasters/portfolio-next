@@ -5,6 +5,7 @@ import s from './styles/contact.module.css';
 import Layout from '../components/layout-components/layout/Layout';
 import { CONTENT } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
+import PropTypes from 'prop-types';
 
 const contact = ({ dataAddress, dataPhone, dataEmail }) => {
   return (
@@ -47,5 +48,11 @@ export async function getServerSideProps() {
     },
   };
 }
+
+contact.propTypes = {
+  dataAddress: PropTypes.object.isRequired,
+  dataPhone: PropTypes.object.isRequired,
+  dataEmail: PropTypes.object.isRequired,
+};
 
 export default contact;

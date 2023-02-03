@@ -9,12 +9,14 @@ import {
 
 export default {
   Query: {
+    // eslint-disable-next-line no-unused-vars
     async isAuthenticated(_parent, _args, context, _info) {
       return await isAuth(context.req);
     },
   },
 
   Mutation: {
+    // eslint-disable-next-line no-unused-vars
     async signUp(_parent, { signUpInput }, _context, _info) {
       const lookupUser = await User.findOne({
         where: { username: signUpInput.username },
@@ -27,6 +29,7 @@ export default {
       return { user };
     },
 
+    // eslint-disable-next-line no-unused-vars
     async signIn(_parent, { signInInput }, context, _info) {
       const user = await User.findOne({
         where: { username: signInInput.username },
@@ -39,6 +42,7 @@ export default {
       throw new Error('Authentification incorrecte');
     },
 
+    // eslint-disable-next-line no-unused-vars
     async signOut(_parent, _args, context, _info) {
       try {
         await deleteCookie(context.res);

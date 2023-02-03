@@ -52,7 +52,7 @@ export default {
         newItem = await service.add(data, type);
       } catch (e) {
         await deleteItemImages(title, type);
-        throw new Error("Erreur à l'enregistrement en base de donnée : " + e);
+        throw new Error(`Erreur à l'enregistrement en base de donnée : ${e}`);
       }
       return newItem;
     },
@@ -98,9 +98,7 @@ export default {
         res = await modelService.update(id, data);
       } catch (e) {
         if (oldTitle !== title) await renameItemImages(title, oldTitle, type);
-        throw new Error(
-          "Erreur à l'enregistrement en base de donnée : " + e,
-        );
+        throw new Error(`Erreur à l'enregistrement en base de donnée : ${e}`);
       }
 
       return res;

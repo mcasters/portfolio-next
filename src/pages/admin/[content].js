@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import AdminHome from '../../components/administration/AdminHome';
 import AdminItem from '../../components/administration/AdminItem';
 import AdminPresentation from '../../components/administration/AdminPresentation';
@@ -22,8 +24,12 @@ export default function ContentPage({ content }) {
   );
 }
 
+ContentPage.propTypes = {
+  content: PropTypes.string.isRequired,
+};
+
 export async function getServerSideProps(context) {
-  const content = context.params.content;
+  const { content } = context.params;
   return {
     props: {
       content,

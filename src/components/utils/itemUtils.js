@@ -123,4 +123,4 @@ export const getAltImage = (type) => {
 
 export const getLightboxTitle = (item) => {
   return `Marion Casters | ${item.title}`;
-}
+};

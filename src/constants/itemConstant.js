@@ -1,5 +1,4 @@
 const ITEM_CONSTANT = {
-
   PAINTING: {
     TYPE: 'painting',
     IMAGE: {

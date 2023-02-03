@@ -9,7 +9,7 @@ function useEventListener(e, handler, cleanup, passive = false) {
 
       window.removeEventListener(e, handler);
     };
-  }, [e, handler, passive]);
+  }, [cleanup, e, handler, passive]);
 }
 
 export default useEventListener;

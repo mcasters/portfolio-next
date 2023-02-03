@@ -1,3 +1,4 @@
+/*eslint-disable no-undef*/
 import fs from 'fs';
 import Jimp from 'jimp';
 
@@ -42,13 +43,13 @@ export const deleteItemImages = async (title, type) => {
   return deleteAllSizeImages(title, type);
 };
 
-const getTempPath = title => {
+const getTempPath = (title) => {
   const libraryPath = process.env.PHOTOS_PATH;
   const file = `${title}.jpg`;
   return `${libraryPath}${IMAGE.TEMP.PATH}/${file}`;
 };
 
-const getSculpturePaths = title => {
+const getSculpturePaths = (title) => {
   const libraryPath = process.env.PHOTOS_PATH;
   const file = `${title}.jpg`;
   return [
@@ -58,7 +59,7 @@ const getSculpturePaths = title => {
   ];
 };
 
-const getPaintingPaths = title => {
+const getPaintingPaths = (title) => {
   const libraryPath = process.env.PHOTOS_PATH;
   const file = `${title}.jpg`;
   return [
@@ -68,7 +69,7 @@ const getPaintingPaths = title => {
   ];
 };
 
-const getDrawingPaths = title => {
+const getDrawingPaths = (title) => {
   const libraryPath = process.env.PHOTOS_PATH;
   const file = `${title}.jpg`;
   return [
@@ -95,12 +96,12 @@ const getItemPaths = (title, type) => {
   }
 };
 
-const getMiscellaneousPath = title => {
+const getMiscellaneousPath = (title) => {
   const libraryPath = process.env.PHOTOS_PATH;
   return `${libraryPath}${IMAGE.MISCELLANEOUS.PATH}/${title}.jpg`;
 };
 
-const getSculptureTitlesWithIndex = title => {
+const getSculptureTitlesWithIndex = (title) => {
   const tab = [];
   let i;
   for (i = 1; i < 5; i++) {
@@ -129,10 +130,7 @@ const storeImageWithResize = (originalPath, targetPath, px) => {
     const width = isLandscape ? px : Jimp.AUTO;
     const height = isLandscape ? Jimp.AUTO : px;
 
-    img
-      .resize(width, height)
-      .quality(75)
-      .write(`${targetPath}`);
+    img.resize(width, height).quality(75).write(`${targetPath}`);
   });
   return true;
 };
@@ -162,12 +160,10 @@ const storeAllSizeImages = (title, type) => {
 
 const storeItemImages = async (title, type) => {
   const tabTitles =
-    type === ITEM.SCULPTURE.TYPE
-      ? getSculptureTitlesWithIndex(title)
-      : [title];
+    type === ITEM.SCULPTURE.TYPE ? getSculptureTitlesWithIndex(title) : [title];
   let res = true;
 
-  tabTitles.forEach(t => {
+  tabTitles.forEach((t) => {
     if (res) {
       res = storeAllSizeImages(t, type);
     } else {
@@ -176,12 +172,12 @@ const storeItemImages = async (title, type) => {
   });
 
   if (!res) {
-    tabTitles.forEach(t => {
+    tabTitles.forEach((t) => {
       deleteAllSizeImages(t, type);
     });
   }
 
-  tabTitles.forEach(t => {
+  tabTitles.forEach((t) => {
     const tempFile = getTempPath(t);
     deleteImage(tempFile);
   });
@@ -189,7 +185,7 @@ const storeItemImages = async (title, type) => {
   return res;
 };
 
-const storeContentImage = async title => {
+const storeContentImage = async (title) => {
   const targetPath = getMiscellaneousPath(title);
   const tempPath = getTempPath(title);
 
@@ -211,7 +207,7 @@ const renameItemImage = async (oldTitle, newTitle, type) => {
   return Promise.all(
     oldPaths.map((oldPath, index) => {
       if (fs.existsSync(oldPath)) {
-        fs.rename(oldPath, newPaths[index], err => {
+        fs.rename(oldPath, newPaths[index], (err) => {
           return !err;
         });
       }
@@ -224,9 +220,9 @@ const deleteAllSizeImages = (title, type) => {
   let paths = [];
   if (type === ITEM.SCULPTURE.TYPE) {
     const titlesIndex = getSculptureTitlesWithIndex(title);
-    titlesIndex.forEach(titleIndex => {
+    titlesIndex.forEach((titleIndex) => {
       const pathsIndex = getItemPaths(titleIndex, type);
-      pathsIndex.forEach(pathIndex => {
+      pathsIndex.forEach((pathIndex) => {
         paths.push(pathIndex);
       });
     });
@@ -236,7 +232,7 @@ const deleteAllSizeImages = (title, type) => {
   return paths.every(deleteImage);
 };
 
-const deleteImage = path => {
+const deleteImage = (path) => {
   if (fs.existsSync(path)) {
     fs.unlinkSync(`${path}`);
   }

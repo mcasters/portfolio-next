@@ -26,7 +26,7 @@ function AddForm({ type }) {
 
   useEffect(() => {
     setCanSubmit(canSubmitData(item, isSculpture, false));
-  }, [item]);
+  }, [isSculpture, item]);
 
   const initItem = () => {
     setItem(getEmptyItem(isSculpture));

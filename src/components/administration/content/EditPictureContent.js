@@ -55,7 +55,7 @@ function EditPictureForm({ pictureTitle }) {
 
     if (error || !data) {
       triggerAlert(
-        error.message ? error.message : "Echec de l'ajout de l'image",
+        error.message ? error.message : "Échec de l'ajout de l'image",
         true,
       );
     } else {

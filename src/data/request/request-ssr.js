@@ -8,9 +8,9 @@ import { schema } from '../graphql/schema';
  */
 
 export async function queryGraphql(
-    query,
-    variableValues = {},
-    contextValue = {},
+  query,
+  variableValues = {},
+  contextValue = {},
 ) {
   const { data } = await graphql({
     schema,

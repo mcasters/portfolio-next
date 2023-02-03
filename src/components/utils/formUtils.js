@@ -1,5 +1,6 @@
 import {
-  addItemRequest, addPictureRequest,
+  addItemRequest,
+  addPictureRequest,
   updateItemRequest,
 } from '../../data/request/request';
 import CONSTANT from '../../constants/itemConstant';
@@ -48,7 +49,6 @@ const uploadImageInTemp = async (filenames, pictures) => {
 };
 
 export const submitUpdateItem = async (item, type) => {
-
   if (!canSubmitData(item, type === CONSTANT.SCULPTURE.TYPE, true))
     return Object.assign({}, { error: 'Donnée(s) manquante(s)' });
 
@@ -83,4 +83,4 @@ export const submitImageContent = async (title, file) => {
   if (resultUpload.error) return resultUpload;
 
   return await addPictureRequest(title);
-}
+};

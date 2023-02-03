@@ -6,6 +6,7 @@ import CONTENT from '../../../constants/content';
 export default {
   Query: {
     allContent: async () => await Content.findAll(),
+    // eslint-disable-next-line no-unused-vars
     content: async (parent, { key }, _context, _info) =>
       await Content.findOne({
         where: { key },
@@ -13,9 +14,9 @@ export default {
   },
 
   Mutation: {
+    // eslint-disable-next-line no-unused-vars
     addContent: async (parent, { contentInput }, { req }, _info) => {
-      if (!(await isAuth(req)))
-        throw new Error("Erreur d'authentification");
+      if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
 
       const { key, text } = contentInput;
 
@@ -36,9 +37,9 @@ export default {
       return content;
     },
 
+    // eslint-disable-next-line no-unused-vars
     addPicture: async (root, { title }, { req }, _info) => {
-      if (!(await isAuth(req)))
-        throw new Error("Erreur d'authentification");
+      if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
 
       const res = await addImages(title, CONTENT.TYPE);
 

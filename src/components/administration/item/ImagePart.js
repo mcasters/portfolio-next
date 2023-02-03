@@ -15,6 +15,7 @@ export default function ImagePart({ isSculpture, onChange, onClear }) {
   const ref_3 = createRef();
   const inputRefs = isSculpture ? [ref_0, ref_1, ref_2, ref_3] : [ref_0];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     clear();
   }, [onClear]);

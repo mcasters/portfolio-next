@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // From react-awesome-lightbox
 
 import React from 'react';
@@ -94,13 +95,14 @@ export default class LightboxComponent extends React.Component {
       y: xy.y - this.initY,
     });
   };
-  endMove = (e) => this.setState({ moving: false });
+  endMove = () => this.setState({ moving: false });
   applyZoom = (type) => {
     switch (type) {
       case 'in':
         this.setState({ zoom: this.state.zoom + ZOOM_STEP });
         break;
       case 'out':
+        // eslint-disable-next-line no-case-declarations
         let newZoom = this.state.zoom - ZOOM_STEP;
         if (newZoom < 1) break;
         else if (newZoom === 1) this.setState({ x: 0, y: 0, zoom: 1 });
@@ -244,7 +246,7 @@ export default class LightboxComponent extends React.Component {
             onTouchEnd={(e) => this.endMove(e)}
             onClick={(e) => this.stopSideEffect(e)}
             onDoubleClick={(e) => this.shockZoom(e)}
-            onLoad={(e) => this.setState({ loading: false })}
+            onLoad={() => this.setState({ loading: false })}
             className={`lb-img${loading ? ' lb-loading' : ''}`}
             title={title}
             src={image}

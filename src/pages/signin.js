@@ -26,8 +26,7 @@ const SignIn = () => {
     e.preventDefault();
     setUserData(Object.assign({}, userData, { message: '' }));
 
-    const username = userData.username;
-    const password = userData.password;
+    const { username, password } = userData;
 
     const { data, error } = await signInRequest(username, password);
 

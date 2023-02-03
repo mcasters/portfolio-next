@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
 import { CONTENT } from '../../../data/graphql/queries';
 import {
@@ -15,11 +15,12 @@ function EditContent({ keyContent, isTextArea }) {
   const triggerAlert = useAlert();
 
   const { data, mutate } = useSWR([CONTENT, keyContent], contentRequest);
-  const [text, setText] = useState(data && data.content ? data.content.text : '');
+  const [text, setText] = useState(
+    data && data.content ? data.content.text : '',
+  );
 
   useEffect(() => {
-    if (data && data.content)
-    setText(data.content.text);
+    if (data && data.content) setText(data.content.text);
   }, [data]);
 
   const handleChange = (e) => {
@@ -36,11 +37,11 @@ function EditContent({ keyContent, isTextArea }) {
           const { data, error } = await addContentRequest(keyContent, text);
           if (data) {
             setIsChanged(false);
-            mutate();
+            await mutate();
             triggerAlert('Contenu ajouté', false);
           } else {
             triggerAlert(
-              error ? error.message : 'Echec de modification du contenu',
+              error ? error.message : 'Échec de modification du contenu',
               true,
             );
           }

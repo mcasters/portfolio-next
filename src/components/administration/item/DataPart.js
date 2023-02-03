@@ -2,12 +2,7 @@ import s from './DataPart.module.css';
 import DayPickerComponent from './daypicker/DayPickerComponent';
 import PropTypes from 'prop-types';
 
-function DataPart({
-  item,
-  handleDataChange,
-  handleDayChange,
-  isSculpture,
-}) {
+function DataPart({ item, handleDataChange, handleDayChange, isSculpture }) {
   return (
     <>
       <input
@@ -19,7 +14,10 @@ function DataPart({
         onChange={handleDataChange}
       />
       <div className={s.DayInputContainer}>
-        <DayPickerComponent handleDayChange={handleDayChange} alreadyDay={item.date} />
+        <DayPickerComponent
+          handleDayChange={handleDayChange}
+          alreadyDay={item.date}
+        />
       </div>
       <input
         className={s.inputL}

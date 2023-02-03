@@ -1,10 +1,7 @@
 /* eslint-disable no-undef */
 
 module.exports = (phase, { defaultConfig }) => {
-  /**
-   * @type {import('next').NextConfig}
-   */
-  const nextConfig = {
+  return {
     /* config options here */
     // Only be available on the server side
     serverRuntimeConfig: {},
@@ -15,5 +12,4 @@ module.exports = (phase, { defaultConfig }) => {
       ls_value: 'key',
     },
   };
-  return nextConfig;
 };

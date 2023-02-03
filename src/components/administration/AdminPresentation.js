@@ -1,6 +1,6 @@
 import EditContent from './content/EditContent';
 import CONTENT from '../../constants/content';
-import EditPictureContent from "./content/EditPictureContent";
+import EditPictureContent from './content/EditPictureContent';
 
 export default function AdminPresentation() {
   return (

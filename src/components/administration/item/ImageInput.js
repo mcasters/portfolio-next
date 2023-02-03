@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
+// eslint-disable-next-line react/display-name
 export const ImageInput = forwardRef(({ onChange, index }, ref) => {
   const onChangeHandler = (e) => {
     if (!e.target.files?.length) return;

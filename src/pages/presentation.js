@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import s from './styles/presentation.module.css';
 import Content from '../components/content/Content';
 import CONST from '../constants/content';
@@ -31,5 +33,9 @@ export async function getServerSideProps() {
     },
   };
 }
+
+Presentation.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export default Presentation;

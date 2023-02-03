@@ -20,6 +20,7 @@ export default async function handler(req, res) {
     });
   }
 
+  // eslint-disable-next-line no-undef
   const uploadDir = `${process.env.PHOTOS_PATH}/tmp`;
 
   try {
@@ -39,12 +40,12 @@ export default async function handler(req, res) {
   });
 
   form.on('file', function (field, file) {
-    rename(file.filepath, uploadDir + '/' + field, (err) => {
+    rename(file.filepath, `${uploadDir}/${field}`, (err) => {
       if (err) throw err;
     });
   });
 
-  const FormidableError = formidable.errors.FormidableError;
+  const { FormidableError } = formidable.errors;
 
   form.parse(req, async (err, fields, files) => {
     if (err) {

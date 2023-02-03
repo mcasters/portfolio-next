@@ -1,11 +1,12 @@
-import React, { useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState, createContext } from 'react';
+import PropTypes from 'prop-types';
 import { usePopper } from 'react-popper';
 
 import AlertMessage from './AlertMessage';
 import s from './alert.module.css';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 
-const Alert = React.createContext({});
+const Alert = createContext({});
 
 export const AlertProvider = ({ children }) => {
   const [message, setMessage] = useState('');
@@ -52,6 +53,10 @@ export const AlertProvider = ({ children }) => {
       </div>
     </Alert.Provider>
   );
+};
+
+AlertProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useAlert = () => useContext(Alert);

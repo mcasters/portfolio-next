@@ -1,10 +1,11 @@
+/*eslint-disable no-undef*/
 import { serialize, parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 import { User } from '../../data/models';
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const { JWT_SECRET } = process.env;
 
 export const isAuth = async (req) => {
   const { token } = parse(req.headers.cookie ?? '');

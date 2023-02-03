@@ -1,14 +1,12 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ROUTES, NAMES } from '../../../../../constants/routes';
 
+import { ROUTES, NAMES } from '../../../../../constants/routes';
 import s from './AdminNav.module.css';
 
 export default function AdminNav() {
   const router = useRouter();
-
-  console.log(router.pathname);
 
   return (
     <nav className={s.adminNav}>

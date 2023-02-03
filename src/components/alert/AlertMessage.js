@@ -12,10 +12,8 @@ const validStyles = {
 };
 
 export default function AlertMessage({ message, isError, close }) {
-  let timeout = null;
-
   useEffect(() => {
-    timeout = setTimeout(() => {
+    setTimeout(() => {
       close();
     }, 5000);
   });

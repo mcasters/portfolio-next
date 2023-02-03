@@ -4,11 +4,20 @@ module.exports = {
     es6: true,
   },
 
+  parser: '@babel/eslint-parser',
+
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:@next/next/recommended',
     'prettier',
-    'prettier/react',
   ],
 
   globals: {
@@ -80,11 +89,11 @@ module.exports = {
 
     // ESLint plugin for prettier formatting
     // https://github.com/prettier/eslint-plugin-prettier
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'warn',
 
     'react/forbid-prop-types': 'off',
     'react/destructuring-assignment': 'off',
-    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/rules-of-hooks': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
     'react/react-in-jsx-scope': 'off',
   },

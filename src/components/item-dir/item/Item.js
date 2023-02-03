@@ -7,7 +7,6 @@ import s from './Item.module.css';
 import Images from '../images/Images';
 
 function Item({ item, type }) {
-
   return (
     <article className={s.itemContainer}>
       <h2 className={s.itemTitle}>

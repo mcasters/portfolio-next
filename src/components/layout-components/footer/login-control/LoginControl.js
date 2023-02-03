@@ -14,7 +14,7 @@ const LoginControl = () => {
   useEffect(() => {
     if (typeof window !== 'undefined')
       setIsConnected(window.localStorage[ls_key] === ls_value);
-  }, [isConnected]);
+  }, [isConnected, ls_key, ls_value]);
 
   if (isConnected) {
     return (

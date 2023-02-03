@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+
 import Item from '../../components/item-dir/item/Item';
 import ScrollTop from '../../components/item-dir/ScrollTop/ScrollTop';
 import ITEM from '../../constants/itemConstant';
@@ -9,7 +11,7 @@ import s from '../styles/item.module.css';
 
 export default function YearPage({ data }) {
   const router = useRouter();
-  const year = router.query.year;
+  const { year } = router.query;
 
   return (
     <Layout>
@@ -27,6 +29,10 @@ export default function YearPage({ data }) {
     </Layout>
   );
 }
+
+YearPage.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export async function getServerSideProps(context) {
   const type = ITEM.PAINTING.TYPE;

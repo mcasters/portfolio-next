@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import s from './Main.module.css';
@@ -10,11 +9,16 @@ function Main({ isHome, height, isLessThanMD, headerIsFix, children }) {
     backgroundPosition: 'center top',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    backgroundImage: isLessThanMD ? LAYOUT.BACKGROUND_IMAGE_MOBILE : LAYOUT.BACKGROUND_IMAGE_DESKTOP,
+    backgroundImage: isLessThanMD
+      ? LAYOUT.BACKGROUND_IMAGE_MOBILE
+      : LAYOUT.BACKGROUND_IMAGE_DESKTOP,
   };
 
   return isHome ? (
-    <main className={headerIsFix ? `${s.mainHome} ${s.sticky}` : `${s.mainHome}`} style={style}>
+    <main
+      className={headerIsFix ? `${s.mainHome} ${s.sticky}` : `${s.mainHome}`}
+      style={style}
+    >
       {children}
     </main>
   ) : (
@@ -27,6 +31,7 @@ Main.propTypes = {
   height: PropTypes.number.isRequired,
   isLessThanMD: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  headerIsFix: PropTypes.bool.isRequired,
 };
 
 export default Main;
