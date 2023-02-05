@@ -1,4 +1,4 @@
-const LAYOUT_CONST = {
+const LAYOUT = {
   BREAKPOINT: {
     SM: 765,
     MD: 992,
@@ -12,6 +12,9 @@ const LAYOUT_CONST = {
 
   BACKGROUND_IMAGE_MOBILE: "url('/images/miscellaneous/home-portrait.jpg')",
   BACKGROUND_IMAGE_DESKTOP: "url('/images/miscellaneous/home-landscape.jpg')",
+
+  DEFAULT_WINDOW_WIDTH: 540,
+  DEFAULT_WINDOW_HEIGHT: 800,
 };
 
-export default LAYOUT_CONST;
+export default LAYOUT;

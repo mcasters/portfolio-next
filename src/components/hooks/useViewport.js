@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react';
 
-import { getWindowWidth, getWindowHeight } from '../../tools/windowUtils';
+import LAYOUT from '../../constants/layout';
 
 function useViewport() {
-  const [windowWidth, setWindowWidth] = useState(getWindowWidth());
-  const [windowHeight, setWindowHeight] = useState(getWindowHeight());
+  const [windowWidth, setWindowWidth] = useState(LAYOUT.DEFAULT_WINDOW_WIDTH);
+  const [windowHeight, setWindowHeight] = useState(
+    LAYOUT.DEFAULT_WINDOW_HEIGHT,
+  );
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
+  }, []);
 
   useEffect(() => {
     function handleResize() {
-      setWindowWidth(() => getWindowWidth());
-      setWindowHeight(() => getWindowHeight());
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
     }
 
     window.addEventListener('resize', handleResize);
@@ -18,7 +25,7 @@ function useViewport() {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('orientationchange', handleResize);
     };
-  }, []);
+  }, [windowWidth, windowHeight]);
 
   return { windowWidth, windowHeight };
 }

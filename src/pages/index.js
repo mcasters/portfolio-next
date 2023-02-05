@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 function Home({ data }) {
   return (
     <Layout introduction={data.content ? data.content.text : ''}>
-      <div className={s.container}>
+      <div>
         <h1 className="hidden">{TITLE.HOME}</h1>
         <div className={s.content}></div>
       </div>
