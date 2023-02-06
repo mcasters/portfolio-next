@@ -8,11 +8,13 @@ import AdminNav from '../../components/layout-components/header/navigation/admin
 import Layout from '../../components/layout-components/layout/Layout';
 import TITLE from '../../constants/pageTitle';
 import ITEM from '../../constants/itemConstant';
+import LogoutButton from "../../components/administration/LogoutButton";
 
 export default function ContentPage({ content }) {
   return (
     <Layout>
       <h1>{TITLE.ADMINISTRATION}</h1>
+      <LogoutButton />
       <AdminNav />
       {content === 'accueil' && <AdminHome />}
       {content === 'presentation' && <AdminPresentation />}

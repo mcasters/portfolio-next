@@ -12,7 +12,6 @@ const LoginControl = () => {
   const { ls_key, ls_value } = publicRuntimeConfig;
 
   useEffect(() => {
-    if (typeof window !== 'undefined')
       setIsConnected(window.localStorage[ls_key] === ls_value);
   }, [isConnected, ls_key, ls_value]);
 

@@ -7,6 +7,7 @@ import { queryGraphql } from '../../data/request/request-ssr';
 import { ISAUTHENTICATED } from '../../data/graphql/queries';
 import { ROUTES } from '../../constants/routes';
 import AdminNav from '../../components/layout-components/header/navigation/admin-nav/AdminNav';
+import LogoutButton from "../../components/administration/LogoutButton";
 
 const Admin = ({ isAuthenticated }) => {
   const router = useRouter();
@@ -15,6 +16,7 @@ const Admin = ({ isAuthenticated }) => {
   return (
     <Layout>
       <h1>{TITLE.ADMINISTRATION}</h1>
+      <LogoutButton />
       <AdminNav />
     </Layout>
   );
@@ -22,7 +24,6 @@ const Admin = ({ isAuthenticated }) => {
 
 export async function getServerSideProps(context) {
   const data = await queryGraphql(ISAUTHENTICATED, {}, context);
-
   if (typeof window === 'undefined' && !data.isAuthenticated)
     return {
       redirect: {

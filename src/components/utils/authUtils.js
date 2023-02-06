@@ -1,51 +1,9 @@
 /*eslint-disable no-undef*/
-import { serialize, parse } from 'cookie';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-import { User } from '../../data/models';
-
-const { JWT_SECRET } = process.env;
-
 export const isAuth = async (req) => {
-  const { token } = parse(req.headers.cookie ?? '');
-  if (token) {
-    const { username } = await jwt.verify(token, JWT_SECRET);
-    return !!(await User.findOne({ where: { username: username } }));
-  }
-  return false;
+  return !!req.session.user;
 };
-
-export const setCookie = async (res, user) => {
-  const token = jwt.sign(
-    { username: user.username, id: user.id, time: new Date() },
-    JWT_SECRET,
-    {
-      expiresIn: '6h',
-    },
-  );
-
-  res.setHeader(
-    'Set-Cookie',
-    serialize('token', token, {
-      httpOnly: true,
-      path: '/',
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-    }),
-  );
-};
-
-export const deleteCookie = async (res) =>
-  res.setHeader(
-    'Set-Cookie',
-    serialize('token', '', {
-      httpOnly: true,
-      path: '/',
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-    }),
-  );
 
 export const createUser = (data) => {
   const salt = bcrypt.genSaltSync();
@@ -57,6 +15,6 @@ export const createUser = (data) => {
   };
 };
 
-export const validPassword = (user, password) => {
+export const isValidPassword = (user, password) => {
   return bcrypt.compareSync(password, user.password);
 };

@@ -113,11 +113,11 @@ const itemResolvers = {
 
       const isDeleted = await deleteItemImages(item.title, type);
 
-      if (!isDeleted) throw new Error(`Echec de la suppression des images`);
+      if (!isDeleted) throw new Error(`Échec de la suppression des images`);
       else {
         const res = await itemService.delete(id);
         if (res) return true;
-        else throw new Error('Echec de la suppression en Bdd');
+        else throw new Error('Échec de la suppression en Bdd');
       }
     },
   },

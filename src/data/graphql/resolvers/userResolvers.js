@@ -2,16 +2,15 @@ import { User } from '../../models/index';
 import {
   isAuth,
   createUser,
-  validPassword,
-  setCookie,
-  deleteCookie,
+  isValidPassword,
 } from '../../../components/utils/authUtils';
 
 const userResolvers = {
   Query: {
     // eslint-disable-next-line no-unused-vars
     async isAuthenticated(_parent, _args, context, _info) {
-      return await isAuth(context.req);
+      const { req } = context;
+      return isAuth(req);
     },
   },
 
@@ -34,22 +33,21 @@ const userResolvers = {
       const user = await User.findOne({
         where: { username: signInInput.username },
       });
+      const { req } = context;
 
-      if (user && validPassword(user, signInInput.password)) {
-        await setCookie(context.res, user);
+      if (user && isValidPassword(user, signInInput.password)) {
+        req.session.user = user;
+        req.session.save();
         return { user };
+      } else {
+        throw new Error('Authentification incorrecte');
       }
-      throw new Error('Authentification incorrecte');
     },
 
     // eslint-disable-next-line no-unused-vars
     async signOut(_parent, _args, context, _info) {
-      try {
-        await deleteCookie(context.res);
-        return true;
-      } catch (e) {
-        return false;
-      }
+      context.req.user = null;
+      return true;
     },
   },
 };

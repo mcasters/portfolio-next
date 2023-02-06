@@ -51,10 +51,11 @@ app
     const server = express();
 
     const sess = {
-      secret: 'keyboard cat',
+      name: 'token_admin',
+      secret: process.env.JWT_SECRET,
       resave: false,
-      saveUninitialized: true,
-      cookie: { maxAge: 60000 }
+      saveUninitialized: false,
+      cookie: { maxAge: 3600000, sameSite: 'lax' }
     };
 
     if (server.get('env') === 'production') {
