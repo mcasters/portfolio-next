@@ -12,7 +12,6 @@ const sequelize = new Sequelize(
       freezeTableName: true,
       timestamps: false,
     },
-    port: process.env.DATABASE_PORT1 || process.env.DATABASE_PORT2,
   },
 );
 
