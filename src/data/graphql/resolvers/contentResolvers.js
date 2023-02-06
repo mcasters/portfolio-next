@@ -3,7 +3,7 @@ import { addImages } from '../../../components/utils/imageUtils';
 import { Content } from '../../models';
 import CONTENT from '../../../constants/content';
 
-export default {
+const contentResolvers = {
   Query: {
     allContent: async () => await Content.findAll(),
     // eslint-disable-next-line no-unused-vars
@@ -49,3 +49,5 @@ export default {
     },
   },
 };
+
+export default contentResolvers;

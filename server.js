@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/*
 const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
@@ -10,9 +10,6 @@ const port = 3000;
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
-if (typeof PhusionPassenger !== 'undefined') {
-  PhusionPassenger.configure({ autoInstall: false });
-}
 app.prepare().then(() => {
   const server = createServer(async (req, res) => {
     try {
@@ -29,19 +26,17 @@ app.prepare().then(() => {
     }
   });
 
-  if (typeof PhusionPassenger !== 'undefined') {
-    server.listen('passenger');
-  } else {
-    server.listen(port, (err) => {
-      if (err) throw err;
-      console.log(`> Ready on http://${hostname}:${port}`);
-    });
-  }
+  server.listen(port, (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://${hostname}:${port}`);
+  });
 });
 
-/*
+*/
+
 const express = require('express');
 const next = require('next');
+const session = require('express-session')
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
@@ -55,7 +50,21 @@ app
   .then(() => {
     const server = express();
 
-    server.get('*', (req, res) => {
+    const sess = {
+      secret: 'keyboard cat',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { maxAge: 60000 }
+    };
+
+    if (server.get('env') === 'production') {
+      server.set('trust proxy', 1)
+      sess.cookie.secure = true
+    }
+
+    server.use(session(sess));
+
+    server.all("*", (req, res) => {
       return handle(req, res);
     });
 
@@ -68,31 +77,3 @@ app
     console.error(ex.stack);
     process.exit(1);
   });
-
-
-
-
-  const express = require('express')
-const next = require('next')
-const { createProxyMiddleware } = require('http-proxy-middleware')
-
-const port = 3001
-const app = next({ dev: true })
-const handle = app.getRequestHandler()
-
-app.prepare().then(() => {
-    const server = express()
-
-    server.use('/api', createProxyMiddleware({ target: 'http://localhost:3000', ws: true }))
-
-    server.all('*', (req, res) => {
-        return handle(req, res)
-    })
-
-    server.listen(port, (err) => {
-        if (err) throw err
-        console.log(`> Ready on http://localhost:${port}`)
-    })
-})
-
-*/

@@ -7,7 +7,7 @@ import {
   deleteCookie,
 } from '../../../components/utils/authUtils';
 
-export default {
+const userResolvers = {
   Query: {
     // eslint-disable-next-line no-unused-vars
     async isAuthenticated(_parent, _args, context, _info) {
@@ -53,3 +53,5 @@ export default {
     },
   },
 };
+
+export default userResolvers;

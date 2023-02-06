@@ -5,9 +5,10 @@ import Sculpture from './Sculpture';
 import Drawing from './Drawing';
 import Content from './Content';
 
-function sync(...args) {
+const sync = (...args) => {
   return sequelize.sync(...args);
 }
 
-export default { sync };
+export default sync;
+
 export { User, Painting, Sculpture, Drawing, Content };

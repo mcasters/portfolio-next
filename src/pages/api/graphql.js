@@ -1,32 +1,20 @@
-import { ApolloServer } from 'apollo-server-micro';
+import { createYoga, createSchema } from 'graphql-yoga';
 
 import { resolvers } from '../../data/graphql/schema';
 import typeDefs from '../../data/graphql/typeDefs';
 
-// eslint-disable-next-line no-undef
-const dev = process.env.NODE_ENV !== 'production';
-
-const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: ({ req, res }) => ({ req, res }),
-  introspection: dev,
-  playground: dev,
-  debug: dev,
-  pretty: dev,
-});
-
-const startServer = apolloServer.start();
-
-export default async function handler(req, res) {
-  await startServer;
-  await apolloServer.createHandler({
-    path: '/api/graphql',
-  })(req, res);
-}
-
 export const config = {
   api: {
+    // Disable body parsing (required for file uploads)
     bodyParser: false,
   },
 };
+
+export default createYoga({
+  graphqlEndpoint: '/api/graphql',
+  schema: createSchema({
+    typeDefs,
+    resolvers,
+    // context: ({req, res}) => ({req, res}),
+  }),
+});

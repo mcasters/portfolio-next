@@ -9,28 +9,24 @@
   "license": "ISC",
   "main": "server.js",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "cross-env NODE_ENV=development node server.js",
     "build": "next build",
-    "startdev": "cross-env node server.js",
-    "start": "NODE_ENV=production node server.js"
+    "start": "cross-env NODE_ENV=production node server.js",
+    "info": "next info",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@babel/eslint-parser": "^7.19.1",
     "@graphql-tools/schema": "^9.0.4",
-    "apollo-server-micro": "^3.10.3",
     "bcryptjs": "^2.4.3",
     "cookie": "^0.0.0",
+    "cross-env": "^7.0.3",
     "date-fns": "^2.0.0",
-    "eslint": "^8.22.0",
-    "eslint-config-prettier": "^8.0.0",
-    "eslint-plugin-import": "^2.0.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.31.10",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "formidable": "^2.0.1",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
+    "graphql-yoga": "^3.5.1",
     "jimp": "^0.16.2",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
@@ -44,7 +40,6 @@
     "postcss-nested": "^6.0.0",
     "postcss-nesting": "^10.0.0",
     "postcss-preset-env": "^7.0.0",
-    "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.0",
     "react-day-picker": "^8.0.0",
@@ -71,6 +66,9 @@
     ]
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^13.1.6"
+    "eslint": "^8.33.0",
+    "eslint-config-next": "^13.1.6",
+    "eslint-config-prettier": "^8.6.0",
+    "prettier": "^2.8.3"
   }
 }

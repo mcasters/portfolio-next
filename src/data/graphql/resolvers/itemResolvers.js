@@ -24,7 +24,7 @@ const dateScalar = new GraphQLScalarType({
   },
 });
 
-export default {
+const itemResolvers = {
   Date: dateScalar,
 
   Query: {
@@ -122,3 +122,5 @@ export default {
     },
   },
 };
+
+export default itemResolvers;
