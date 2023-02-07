@@ -12,7 +12,7 @@ function UpdateButton({ item, type }) {
   const popperRef = useRef(null);
   const buttonRef = useRef(null);
   const popper = usePopper(popperRef.current, popperElement, {
-    placement: 'auto',
+    placement: 'left-start',
   });
 
   const closePopper = () => {
