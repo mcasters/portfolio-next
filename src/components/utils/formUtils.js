@@ -1,6 +1,7 @@
 import {
   addItemRequest,
   addPictureRequest,
+  saveFilesInTempRequest,
   updateItemRequest,
 } from '../../data/request/request';
 import CONSTANT from '../../constants/itemConstant';
@@ -30,57 +31,42 @@ export const canSubmitData = (item, isSculpture, isUpdate) => {
   );
 };
 
-const uploadImageInTemp = async (filenames, pictures) => {
-  try {
-    let formData = new FormData();
-    pictures.forEach((file, index) => {
-      formData.append(filenames[index], file);
-    });
-
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    return await res.json();
-  } catch (e) {
-    return Object.assign({}, { error: 'Error uploading files' });
-  }
-};
-
 export const submitUpdateItem = async (item, type) => {
   if (!canSubmitData(item, type === CONSTANT.SCULPTURE.TYPE, true))
-    return Object.assign({}, { error: 'Donnée(s) manquante(s)' });
+    return { error: 'Donnée(s) manquante(s)' };
 
-  let hasImages = false;
+  let hasImage = false;
   if (picturesIsFull(item)) {
-    const resultUpload = await uploadImageInTemp(
-      getFilenamesTab(item, type),
+    const { data, error } = await saveFilesInTempRequest(
       item.pictures,
+      getFilenamesTab(item, type),
     );
-    if (resultUpload.error) return resultUpload;
-    hasImages = true;
+    if (!data || error)
+      return { error } || { error: "Erreur à l'upload du(des) fichier(s)" };
+    hasImage = true;
   }
-  return await updateItemRequest(getItemInputGraphql(item, type, hasImages));
+  return await updateItemRequest(getItemInputGraphql(item, type, hasImage));
 };
 
 export const submitAddItem = async (item, type) => {
   if (!canSubmitData(item, type === CONSTANT.SCULPTURE.TYPE, false))
-    return Object.assign({}, { error: 'Donnée(s) manquante(s)' });
-
-  const resultUpload = await uploadImageInTemp(
-    getFilenamesTab(item, type),
+    return { error: 'Donnée(s) manquante(s)' };
+  const { data, error } = await saveFilesInTempRequest(
     item.pictures,
+    getFilenamesTab(item, type),
   );
-  if (resultUpload.error) return resultUpload;
+  if (!data || error)
+    return { error } || { error: "Erreur à l'upload du(des) fichier(s)" };
 
   return await addItemRequest(getItemInputGraphql(item, type, true));
 };
 
 export const submitImageContent = async (title, file) => {
   const filename = `${title}.jpg`;
-  const resultUpload = await uploadImageInTemp([filename], [file]);
-  if (resultUpload.error) return resultUpload;
+
+  const { data, error } = await saveFilesInTempRequest([file], [filename]);
+  if (!data || error)
+    return { error } || { error: "Erreur à l'upload du fichier" };
 
   return await addPictureRequest(title);
 };

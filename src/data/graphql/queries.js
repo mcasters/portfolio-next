@@ -135,3 +135,9 @@ export const ADD_PICTURE = gql`
     addPicture(title: $title)
   }
 `;
+
+export const SAVE_FILE_IN_TEMP = gql`
+  mutation SaveFilesInTemp($files: [File]!, $filenames: [String]!) {
+    saveFilesInTemp(files: $files, filenames: $filenames)
+  }
+`;

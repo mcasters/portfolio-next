@@ -1,6 +1,10 @@
 import { gql } from 'graphql-request';
 
 const typeDefs = gql`
+  scalar Date
+
+  scalar File
+
   input ItemInput {
     id: ID
     type: String!
@@ -23,12 +27,6 @@ const typeDefs = gql`
     length: Int
     height: Int!
     width: Int!
-  }
-
-  type File {
-    filename: String!
-    mimetype: String!
-    encoding: String!
   }
 
   type User {
@@ -77,17 +75,16 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addContent(contentInput: ContentInput!): Content!
-    addPicture(title: String!): Boolean!
     addItem(item: ItemInput!): Item!
+    addContent(contentInput: ContentInput!): Content!
+    saveFilesInTemp(files: [File], filenames: [String]): Boolean!
+    addPicture(title: String!): Boolean!
     updateItem(item: ItemInput!): Item!
     deleteItem(id: ID!, type: String!): Boolean!
     signUp(signUpInput: SignUpInput!): SignUpPayload!
     signIn(signInInput: SignInInput!): SignInPayload!
     signOut: Boolean!
   }
-
-  scalar Date
 
   schema {
     query: Query

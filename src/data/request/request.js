@@ -9,7 +9,7 @@ import {
   SIGNOUT,
   SIGNUP,
   UPDATE_ITEM,
-  ISAUTHENTICATED,
+  ISAUTHENTICATED, SAVE_FILE_IN_TEMP,
 } from '../graphql/queries';
 
 /*
@@ -24,11 +24,11 @@ const api = '/api/graphql';
 Error handling for post methods
  */
 
-const postErrorHandler = async (query, variables) => {
+const errorHandler = async (query, variables) => {
   try {
-    return Object.assign({}, { data: await request(api, query, variables) });
+    return { data: await request(api, query, variables) };
   } catch (e) {
-    return Object.assign({}, { error: e.response.errors[0] });
+    return { error: e.response.errors[0].extensions.originalError.message || e.response.errors[0] };
   }
 };
 
@@ -42,10 +42,10 @@ export const signOutRequest = () => request(api, SIGNOUT);
 
 // POST
 export const signInRequest = (username, password) =>
-  postErrorHandler(SIGNIN, { signInInput: { username, password } });
+  errorHandler(SIGNIN, { signInInput: { username, password } });
 
 export const signUpRequest = (username, email, password) =>
-  postErrorHandler(SIGNUP, { signUpInput: { username, email, password } });
+  errorHandler(SIGNUP, { signUpInput: { username, email, password } });
 
 /*
  * Content
@@ -56,7 +56,7 @@ export const contentRequest = (query, key) => request(api, query, { key });
 
 // POST
 export const addContentRequest = (key, text) =>
-  postErrorHandler(ADD_CONTENT, { contentInput: { key, text } });
+  errorHandler(ADD_CONTENT, { contentInput: { key, text } });
 
 /*
  * Items
@@ -66,11 +66,11 @@ export const addContentRequest = (key, text) =>
 export const allItemsRequest = (query, type) => request(api, query, { type });
 
 // POST
-export const addItemRequest = (item) => postErrorHandler(ADD_ITEM, { item });
+export const addItemRequest = (item) => errorHandler(ADD_ITEM, { item });
 export const updateItemRequest = (item) =>
-  postErrorHandler(UPDATE_ITEM, { item });
+  errorHandler(UPDATE_ITEM, { item });
 export const deleteItemRequest = (id, type) =>
-  postErrorHandler(DELETE_ITEM, { id, type });
+  errorHandler(DELETE_ITEM, { id, type });
 
 /*
  * Images
@@ -78,4 +78,7 @@ export const deleteItemRequest = (id, type) =>
 
 // POST
 export const addPictureRequest = (title) =>
-  postErrorHandler(ADD_PICTURE, { title });
+  errorHandler(ADD_PICTURE, { title });
+
+export const saveFilesInTempRequest = (files, filenames) =>
+  errorHandler(SAVE_FILE_IN_TEMP, { files, filenames });

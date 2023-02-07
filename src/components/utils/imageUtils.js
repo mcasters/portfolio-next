@@ -44,9 +44,9 @@ export const deleteItemImages = async (title, type) => {
 };
 
 const getTempPath = (title) => {
-  const libraryPath = process.env.PHOTOS_PATH;
+  const tempPath = `${process.env.PHOTOS_PATH}${IMAGE.TEMP.PATH}`
   const file = `${title}.jpg`;
-  return `${libraryPath}${IMAGE.TEMP.PATH}/${file}`;
+  return `${tempPath}/${file}`;
 };
 
 const getSculpturePaths = (title) => {
