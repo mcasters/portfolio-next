@@ -1,9 +1,10 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { MENU_2 } from '../../../../constants/routes';
 import s from './Nav_2.module.css';
+import logo from '../../../../../public/logo-100.png';
 
 function Nav_2({ introDisappear }) {
   const style = {
@@ -21,21 +22,29 @@ function Nav_2({ introDisappear }) {
           if (menuItem.NAME === 'Home')
             return (
               <li key={menuItem.NAME} className={s.liHome}>
-                <Link href={menuItem.PATH} key={menuItem.NAME}>
-                  <a>
-                    <img
-                      src="/logo-45.png"
-                      alt="Signature de Marion Casters"
-                      style={{ width: '35px' }}
-                    />
-                  </a>
+                <Link
+                  href={menuItem.PATH}
+                  key={menuItem.NAME}
+                  legacyBehavior={false}
+                >
+                  <Image
+                    src={logo}
+                    alt="Signature de Marion Casters"
+                    width={40}
+                    height={40}
+                  />
                 </Link>
               </li>
             );
           return (
             <li key={menuItem.NAME}>
-              <Link href={menuItem.PATH} key={menuItem.NAME}>
-                <a className={s.link}>{menuItem.NAME}</a>
+              <Link
+                href={menuItem.PATH}
+                key={menuItem.NAME}
+                legacyBehavior={false}
+                className={s.link}
+              >
+                {menuItem.NAME}
               </Link>
             </li>
           );

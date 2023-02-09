@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import PropTypes from 'prop-types';
 
 import { MENU_1 } from '../../../../constants/routes';
@@ -22,10 +21,13 @@ function Nav_1({ titleDisappear }) {
 
           return (
             <li key={menuItem.NAME}>
-              <Link href={menuItem.PATH} key={menuItem.NAME}>
-                <a className={isActive ? `${s.link} ${s.active}` : `${s.link}`}>
-                  {menuItem.NAME}
-                </a>
+              <Link
+                href={menuItem.PATH}
+                key={menuItem.NAME}
+                className={isActive ? `${s.link} ${s.active}` : `${s.link}`}
+                legacyBehavior={false}
+              >
+                {menuItem.NAME}
               </Link>
             </li>
           );

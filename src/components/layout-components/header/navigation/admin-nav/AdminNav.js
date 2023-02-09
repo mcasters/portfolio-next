@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -12,65 +11,57 @@ export default function AdminNav() {
     <nav className={s.adminNav}>
       <ul>
         <li>
-          <Link href={ROUTES.A_HOME}>
-            <a className={router.asPath === ROUTES.A_HOME ? `${s.active}` : ''}>
-              {NAMES.HOME}
-            </a>
+          <Link
+            href={ROUTES.A_HOME}
+            className={router.asPath === ROUTES.A_HOME && `${s.active}`}
+            legacyBehavior={false}
+          >
+            {NAMES.HOME}
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.A_PRESENTATION}>
-            <a
-              className={
-                router.asPath === ROUTES.A_PRESENTATION ? `${s.active}` : ''
-              }
-            >
-              {NAMES.PRESENTATION}
-            </a>
+          <Link
+            href={ROUTES.A_PRESENTATION}
+            className={router.asPath === ROUTES.A_PRESENTATION && `${s.active}`}
+            legacyBehavior={false}
+          >
+            {NAMES.PRESENTATION}
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.A_PAINTING}>
-            <a
-              className={
-                router.asPath === ROUTES.A_PAINTING ? `${s.active}` : ''
-              }
-            >
-              {NAMES.PAINTING}
-            </a>
+          <Link
+            href={ROUTES.A_PAINTING}
+            className={router.asPath === ROUTES.A_PAINTING && `${s.active}`}
+            legacyBehavior={false}
+          >
+            {NAMES.PAINTING}
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.A_SCULPTURE}>
-            <a
-              className={
-                router.asPath === ROUTES.A_SCULPTURE ? `${s.active}` : ''
-              }
-            >
-              {NAMES.SCULPTURE}
-            </a>
+          <Link
+            href={ROUTES.A_SCULPTURE}
+            className={router.asPath === ROUTES.A_SCULPTURE && `${s.active}`}
+            legacyBehavior={false}
+          >
+            {NAMES.SCULPTURE}
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.A_DRAWING}>
-            <a
-              className={
-                router.asPath === ROUTES.A_DRAWING ? `${s.active}` : ''
-              }
-            >
-              {NAMES.DRAWING}
-            </a>
+          <Link
+            href={ROUTES.A_DRAWING}
+            className={router.asPath === ROUTES.A_DRAWING && `${s.active}`}
+            legacyBehavior={false}
+          >
+            {NAMES.DRAWING}
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.A_CONTACT}>
-            <a
-              className={
-                router.asPath === ROUTES.A_CONTACT ? `${s.active}` : ''
-              }
-            >
-              {NAMES.CONTACT}
-            </a>
+          <Link
+            href={ROUTES.A_CONTACT}
+            className={router.asPath === ROUTES.A_CONTACT && `${s.active}`}
+            legacyBehavior={false}
+          >
+            {NAMES.CONTACT}
           </Link>
         </li>
       </ul>

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -12,21 +11,21 @@ const LoginControl = () => {
   const { ls_key, ls_value } = publicRuntimeConfig;
 
   useEffect(() => {
-      setIsConnected(window.localStorage[ls_key] === ls_value);
+    setIsConnected(window.localStorage[ls_key] === ls_value);
   }, [isConnected, ls_key, ls_value]);
 
   if (isConnected) {
     return (
-      <Link href={ROUTES.ADMIN}>
-        <a className={s.link}>{NAMES.ADMIN}</a>
+      <Link href={ROUTES.ADMIN} className={s.link} legacyBehavior={false}>
+        {NAMES.ADMIN}
       </Link>
     );
   }
 
   return (
     <>
-      <Link href={ROUTES.SIGNIN}>
-        <a className={s.link}>{NAMES.SIGNIN}</a>
+      <Link href={ROUTES.SIGNIN} className={s.link} legacyBehavior={false}>
+        {NAMES.SIGNIN}
       </Link>
     </>
   );

@@ -1,12 +1,5 @@
 .link {
-  display: block;
+  display: inline;
+  padding: 4px 8px;
   font-size: var(--font-size-current-plus);
-  padding: 1.2em 0;
-}
-
-@media (--sm) {
-  .link {
-    display: inline;
-    padding: 2px 5px;
-  }
 }

@@ -6,6 +6,7 @@ import Layout from '../components/layout-components/layout/Layout';
 import { CONTENT } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
 import PropTypes from 'prop-types';
+import Link from "next/link";
 
 const contact = ({ dataAddress, dataPhone, dataEmail }) => {
   return (
@@ -20,9 +21,9 @@ const contact = ({ dataAddress, dataPhone, dataEmail }) => {
         </div>
         <div className={s.contactContent}>
           {dataEmail.content && (
-            <a href={`mailto:${dataEmail.content.text}`}>
+            <Link href={`mailto:${dataEmail.content.text}`}>
               {dataEmail.content.text}
-            </a>
+            </Link>
           )}
         </div>
       </address>

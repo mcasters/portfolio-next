@@ -76,7 +76,6 @@ const SignIn = () => {
         <button className="button" type="submit">
           Sign in
         </button>{' '}
-        {/*<a href="signup">Sign up</a>*/}
         {userData.message && <p className="error">Error: {userData.message}</p>}
       </form>
     </Layout>

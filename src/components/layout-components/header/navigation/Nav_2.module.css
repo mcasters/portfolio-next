@@ -28,7 +28,6 @@
   }
 }
 
-
 .secondaryNav li {
   left: 50%;
   position: absolute;
@@ -42,14 +41,10 @@
 }
 
 .liHome {
+  padding-top: 7px;
   z-index: 1005;
   margin-left: -20px;
   width: 40px;
-}
-
-.liHome a {
-  width: 40px;
-  display: block;
 }
 
 .secondaryNav li:last-child {
@@ -62,7 +57,7 @@
 }
 
 .secondaryNav li:last-child .link {
-  margin-left: 43px;
+  margin-left: 42px;
 }
 
 .shadow {

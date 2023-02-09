@@ -12,10 +12,10 @@
 
   --max-content-width: 540px;
   --red-line-height: 6px;
-  --nav-1-height: 30px;
-  --nav-1-height-without-border: 29px;
+  --nav-1-height: 32px;
+  --nav-1-height-without-border: 31px;
   --nav-2-height: 55px;
-  --red-line-nav-1-height: 36px;
+  --red-line-nav-1-height: 38px;
 
   /*
    * Colors
@@ -37,7 +37,6 @@
   --font-size-current-plus-plus: 14px;
   --font-size-current-plus: 13px;
   --font-size-current: 12px;
-  --font-size-minus: 11px;
 
   /*
    * Form

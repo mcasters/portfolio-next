@@ -1,5 +1,5 @@
 .container {
-  font-size: var(--font-size-minus);
+  font-size: var(--font-size-current);
 }
 
 .nodejsLogo {

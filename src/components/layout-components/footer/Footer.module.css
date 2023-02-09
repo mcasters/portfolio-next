@@ -5,7 +5,7 @@
 .container {
   color: var(--color-xdark);
   border-top: 1px solid var(--color-light);
-  padding: 1em 0 0.4em;
+  padding: 1.5em 0;
   text-align: center;
   max-width: var(--max-content-width);
   margin: auto;
@@ -17,30 +17,15 @@
 
 .text span {
   display: block;
-  font-size: var(--font-size-minus);
+  font-size: var(--font-size-current);
 }
 
 .link {
-  display: block;
+  display: inline;
+  padding: 4px 8px;
   font-size: var(--font-size-current-plus);
-  padding: 1.2em 0;
 }
 
 .dot {
-  display: none;
-}
-
-@media (--sm) {
-  .container {
-    padding: 1.5em 0;
-  }
-
-  .link {
-    display: inline;
-    padding: 2px 5px;
-  }
-
-  .dot {
-    display: initial;
-  }
+  display: initial;
 }

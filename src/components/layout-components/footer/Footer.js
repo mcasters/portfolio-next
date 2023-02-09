@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
 
 import s from './Footer.module.css';
@@ -11,14 +10,14 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className={s.container}>
-        <Link href={ROUTES.HOME}>
-          <a className={s.link}>{NAMES.HOME}</a>
+        <Link href={ROUTES.HOME} className={s.link} legacyBehavior={false}>
+         {NAMES.HOME}
         </Link>
         <span className={s.dot}>·</span>
         <LoginControl />
         <span className={s.dot}>·</span>
-        <Link href={ROUTES.PRIVACY} as={NAMES.PRIVACY}>
-          <a className={s.link}>{NAMES.PRIVACY}</a>
+        <Link href={ROUTES.PRIVACY} as={NAMES.PRIVACY} className={s.link} legacyBehavior={false}>
+          {NAMES.PRIVACY}
         </Link>
         <div className={s.text}>
           ***
