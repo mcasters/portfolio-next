@@ -16,11 +16,18 @@
 
 .secondaryNav ul {
   position: relative;
-  width: var(--max-content-width);
+  width: 100%;
   height: var(--nav-2-height);
   margin: 0 auto;
   border-bottom: 1px solid var(--color-light);
 }
+
+@media (--sm) {
+  .secondaryNav ul {
+    width: var(--max-content-width);
+  }
+}
+
 
 .secondaryNav li {
   left: 50%;
@@ -55,7 +62,7 @@
 }
 
 .secondaryNav li:last-child .link {
-margin-left: 43px;
+  margin-left: 43px;
 }
 
 .shadow {
@@ -67,9 +74,9 @@ margin-left: 43px;
   height: 10px;
   width: var(--max-content-width);
   z-index: 0;
-  transition: top ease-in-out .35s;
+  transition: top ease-in-out 0.35s;
 }
 
-.secondaryNav.sticky .shadow{
+.secondaryNav.sticky .shadow {
   display: block;
 }

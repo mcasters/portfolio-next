@@ -1,23 +1,33 @@
-.yearTitle {
+.title {
   display: none;
 }
 
-@media (--md) {
-  .title {
-    display: none;
-  }
-
-  .yearTitle {
-    display: block;
-    font-weight: lighter;
-    letter-spacing: 0.4em;
-    font-size: 2em;
-    margin-bottom: 2em;
-  }
+.yearTitle {
+  display: block;
+  font-weight: lighter;
+  letter-spacing: 0.4em;
+  font-size: 2em;
+  margin-bottom: 2em;
 }
 
 .year {
+  box-sizing: border-box;
+  border: solid 1px var(--color-dark);
+  display: inline-block;
+  width: 40%;
+  margin: 8px;
+}
+
+.year a {
   display: block;
-  padding: 1em 0;
-  margin: 1em 0;
+  box-sizing: border-box;
+  height: 270px;
+  line-height: 270px;
+  margin: 2px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--color-xxlight);
 }

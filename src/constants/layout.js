@@ -15,6 +15,13 @@ const LAYOUT = {
 
   DEFAULT_WINDOW_WIDTH: 540,
   DEFAULT_WINDOW_HEIGHT: 800,
+
+  BACKGROUND_PAINTING_2017: "url('/images/paintings/sm/2017-111.jpg')",
+  BACKGROUND_PAINTING_2018: "url('/images/paintings/sm/2018-10.jpg')",
+  BACKGROUND_PAINTING_2019: "url('/images/paintings/sm/2019-13.jpg')",
+  BACKGROUND_PAINTING_2021: "url('/images/paintings/sm/2021-910.jpg')",
+  BACKGROUND_PAINTING_2022: "url('/images/paintings/sm/2022-112.jpg')",
+  BACKGROUND_PAINTING_2023: "url('/images/paintings/sm/2023-117.jpg')",
 };
 
 export default LAYOUT;
