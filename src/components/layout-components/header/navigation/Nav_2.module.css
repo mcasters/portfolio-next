@@ -41,10 +41,13 @@
 }
 
 .liHome {
-  padding-top: 7px;
   z-index: 1005;
   margin-left: -20px;
+}
+
+.logo {
   width: 40px;
+  height: auto;
 }
 
 .secondaryNav li:last-child {

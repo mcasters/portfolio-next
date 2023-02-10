@@ -20,14 +20,5 @@ module.exports = {
     'postcss-custom-media': {
       importFrom: 'src/pages/styles/media.module.css',
     },
-    // W3C CSS Custom Selectors, e.g. @custom-selector :--heading h1, h2, h3, h4, h5, h6;
-    // https://github.com/postcss/postcss-custom-selectors
-    'postcss-custom-selectors': {},
-    // Allows you to nest one style rule inside another
-    // https://github.com/jonathantneal/postcss-nesting
-    'postcss-nesting': {},
-    // Unwraps nested rules like how Sass does it
-    // https://github.com/postcss/postcss-nested
-    'postcss-nested': {},
   },
 };

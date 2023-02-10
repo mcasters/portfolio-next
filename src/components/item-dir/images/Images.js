@@ -44,7 +44,7 @@ function Images({ item, type }) {
   return (
     <>
       <figure>
-        {getCurrentPaths().map((src, i) => {
+        {getMainPaths(item, type).map((src, i) => {
           return (
             <ImageButton
               key={src}

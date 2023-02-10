@@ -30,8 +30,11 @@ function Nav_2({ introDisappear }) {
                   <Image
                     src={logo}
                     alt="Signature de Marion Casters"
-                    width={40}
-                    height={40}
+                    width="70px"
+                    height="70px"
+                    quality={100}
+                    unoptimized={true}
+                    className={s.logo}
                   />
                 </Link>
               </li>

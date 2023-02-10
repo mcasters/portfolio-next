@@ -9,6 +9,7 @@
 
 .noWrap {
   display: block;
+  margin: 0;
 }
 
 .spacer {

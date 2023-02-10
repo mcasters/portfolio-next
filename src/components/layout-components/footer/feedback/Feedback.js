@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 import s from './Feedback.module.css';
 import GLOBAL_CONSTANTS from '../../../../constants/globalConstants';
@@ -13,10 +14,14 @@ function Feedback() {
         rel="noreferrer"
         legacyBehavior={false}
       >
-        <img
+        <Image
           src="/assets/nodeJSTransparent.png"
           className={s.nodejsLogo}
           alt="NodeJS"
+          width="50"
+          height="50"
+          quality={100}
+          unoptimized={true}
         />
       </Link>
       <Link
@@ -25,10 +30,14 @@ function Feedback() {
         rel="noreferrer"
         legacyBehavior={false}
       >
-        <img
+        <Image
           src="/assets/reactTransparent.png"
           className={s.reactLogo}
           alt="React"
+          width="50"
+          height="50"
+          quality={100}
+          unoptimized={true}
         />
       </Link>
 
@@ -38,10 +47,14 @@ function Feedback() {
         rel="noreferrer"
         legacyBehavior={false}
       >
-        <img
+        <Image
           src="/assets/graphqlTransparent.png"
           className={s.graphqlLogo}
           alt="GraphQL"
+          width="50"
+          height="50"
+          quality={100}
+          unoptimized={true}
         />
       </Link>
       <Link
@@ -50,10 +63,14 @@ function Feedback() {
         rel="noreferrer"
         legacyBehavior={false}
       >
-        <img
+        <Image
           src="/assets/appleTransparent.png"
           className={s.appleLogo}
           alt="Apple"
+          width="50"
+          height="50"
+          quality={100}
+          unoptimized={true}
         />
       </Link>
     </div>
