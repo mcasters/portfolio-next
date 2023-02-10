@@ -46,7 +46,8 @@ export default function MyApp({ Component, pageProps }) {
   };
 
   const getDescription = () => {
-    switch (router.pathname) {
+    const { year } = router.query;
+    switch (router.asPath) {
       case ROUTES.HOME:
         return DESCRIPTION.HOME;
       case ROUTES.ADMIN:
@@ -58,8 +59,10 @@ export default function MyApp({ Component, pageProps }) {
       case ROUTES.DRAWING:
         return DESCRIPTION.DRAWING;
       case ROUTES.PAINTING:
-        return DESCRIPTION.PAINTING;
-      case ROUTES.PRESENTATION:
+        return DESCRIPTION.PAINTING._;
+      case `${ROUTES.PAINTING}/${year}`:
+        return DESCRIPTION.PAINTING[year];
+            case ROUTES.PRESENTATION:
         return DESCRIPTION.PRESENTATION;
       case ROUTES.SCULPTURE:
         return DESCRIPTION.SCULPTURE;
