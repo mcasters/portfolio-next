@@ -11,7 +11,11 @@ const LoginControl = () => {
   const { ls_key, ls_value } = publicRuntimeConfig;
 
   useEffect(() => {
-    setIsConnected(window.localStorage[ls_key] === ls_value);
+    const stored = window.localStorage[ls_key];
+    if (stored) {
+      const { data } = JSON.parse(stored);
+      setIsConnected(data === ls_value);
+    }
   }, [isConnected, ls_key, ls_value]);
 
   if (isConnected) {

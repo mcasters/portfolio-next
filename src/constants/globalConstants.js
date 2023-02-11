@@ -5,6 +5,7 @@ const GLOBAL_CONSTANTS = {
   HANDCRAFTED: 'Proudly handcrafted with : ',
   NOT_FOUND: "La page demandée n'existe pas.",
   EMAIL: 'contact@marioncasters.fr',
+  EXPIRE_TIME: 60*60*2000, // 1 hour
 };
 
 export default GLOBAL_CONSTANTS;

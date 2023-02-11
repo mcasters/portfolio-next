@@ -2,11 +2,9 @@ import useSWR from 'swr';
 import getConfig from 'next/config';
 import Router from 'next/router';
 
-import {
-  signOutRequest, fetcher,
-} from '../../data/request/request';
+import { signOutRequest, fetcher } from '../../data/request/request';
 import { ROUTES } from '../../constants/routes';
-import { ISAUTHENTICATED} from '../../data/graphql/queries';
+import { ISAUTHENTICATED } from '../../data/graphql/queries';
 import { useAlert } from '../alert/Alert';
 
 const LogoutButton = () => {
@@ -21,8 +19,9 @@ const LogoutButton = () => {
       className="button"
       onClick={() => {
         localStorage.removeItem(ls_key);
+
         signOutRequest().then((res) => {
-          if (res.signOut) {
+          if (res.data.signOut) {
             mutate().then(() => {
               triggerAlert('Déconnecté', false);
               Router.replace(ROUTES.HOME);

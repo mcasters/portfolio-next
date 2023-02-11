@@ -6,9 +6,9 @@ import useSWR from 'swr';
 import Layout from '../components/layout-components/layout/Layout';
 import { ROUTES } from '../constants/routes';
 import { useAlert } from '../components/alert/Alert';
-
-import { signInRequest, isAuthenticatedRequest } from '../data/request/request';
+import { signInRequest, fetcher } from '../data/request/request';
 import { ISAUTHENTICATED } from '../data/graphql/queries';
+import GLOBAL_CONSTANTS from "../constants/globalConstants";
 
 const SignIn = () => {
   const { publicRuntimeConfig } = getConfig();
@@ -20,7 +20,8 @@ const SignIn = () => {
   });
   const triggerAlert = useAlert();
   const router = useRouter();
-  const { mutate } = useSWR(ISAUTHENTICATED, isAuthenticatedRequest);
+
+  const { mutate } = useSWR(ISAUTHENTICATED, fetcher);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +40,12 @@ const SignIn = () => {
       triggerAlert('Connexion refusée', true);
     }
     if (data) {
-      localStorage.setItem(ls_key, ls_value);
+      localStorage.setItem(ls_key, JSON.stringify({
+        time: new Date(),
+        data: ls_value,
+      }));
+      setTimeout(() => {localStorage.clear();
+      }, GLOBAL_CONSTANTS.EXPIRE_TIME);
       await mutate();
       await router.push(ROUTES.ADMIN);
     }
