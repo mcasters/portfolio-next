@@ -6,7 +6,7 @@ import s from './AddForm.module.css';
 import CONSTANT from '../../../../constants/itemConstant';
 import { useAlert } from '../../../alert/Alert';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
-import { allItemsRequest } from '../../../../data/request/request';
+import { fetcher } from '../../../../data/request/request';
 import { canSubmitData, submitAddItem } from '../../../utils/formUtils';
 import DataPart from '../DataPart';
 import ImagePart from '../ImagePart';
@@ -17,11 +17,14 @@ function AddForm({ type }) {
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const titleForm = 'Ajout';
 
-  const triggerAlert = useAlert();
   const [onClear, setOnClear] = useState(0);
   const [item, setItem] = useState(getEmptyItem(isSculpture));
   const [canSubmit, setCanSubmit] = useState(false);
-  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
+
+  const triggerAlert = useAlert();
+  const { mutate } = useSWR([ALL_ITEMS_ADMIN, { type }], ([query, variables]) =>
+    fetcher(query, variables),
+  );
   const formRef = useRef(null);
 
   useEffect(() => {

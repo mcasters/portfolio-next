@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
 import { useAlert } from '../../../alert/Alert';
-import { allItemsRequest } from '../../../../data/request/request';
+import { fetcher } from '../../../../data/request/request';
 import { canSubmitData, submitUpdateItem } from '../../../utils/formUtils';
 import ImagePart from '../ImagePart';
 import OldImagePart from './OldImagePart';
@@ -24,7 +24,9 @@ function UpdateForm({ item, type, close }) {
   const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
   const canSubmit = canSubmitData(itemToUpdate, isSculpture, true);
 
-  const { mutate } = useSWR([ALL_ITEMS_ADMIN, type], allItemsRequest);
+  const { mutate } = useSWR([ALL_ITEMS_ADMIN, { type }], ([query, variables]) =>
+    fetcher(query, variables),
+  );
 
   const handleDataChange = (e) => {
     e.preventDefault();

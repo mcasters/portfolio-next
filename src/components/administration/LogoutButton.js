@@ -3,18 +3,17 @@ import getConfig from 'next/config';
 import Router from 'next/router';
 
 import {
-  signOutRequest,
-  isAuthenticatedRequest,
+  signOutRequest, fetcher,
 } from '../../data/request/request';
 import { ROUTES } from '../../constants/routes';
-import { ISAUTHENTICATED } from '../../data/graphql/queries';
+import { ISAUTHENTICATED} from '../../data/graphql/queries';
 import { useAlert } from '../alert/Alert';
 
 const LogoutButton = () => {
   const { publicRuntimeConfig } = getConfig();
   const { ls_key } = publicRuntimeConfig;
-  const { mutate } = useSWR(ISAUTHENTICATED, isAuthenticatedRequest);
   const triggerAlert = useAlert();
+  const { mutate } = useSWR(ISAUTHENTICATED, fetcher);
 
   return (
     <button

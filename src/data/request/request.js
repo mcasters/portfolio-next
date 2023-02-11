@@ -20,6 +20,10 @@ import {
 
 const api = '/api/graphql';
 
+export const fetcher = (query, variables) => {
+  return request(api, query, variables);
+}
+
 /*
 Error handling for post methods
  */
@@ -36,23 +40,17 @@ const errorHandler = async (query, variables) => {
  * Authentication
  */
 
-// GET
-export const isAuthenticatedRequest = () => request(api, ISAUTHENTICATED);
-export const signOutRequest = () => request(api, SIGNOUT);
-
 // POST
 export const signInRequest = (username, password) =>
   errorHandler(SIGNIN, { signInInput: { username, password } });
 
 export const signUpRequest = (username, email, password) =>
   errorHandler(SIGNUP, { signUpInput: { username, email, password } });
+export const signOutRequest = () => errorHandler(SIGNOUT);
 
 /*
  * Content
  */
-
-// GET
-export const contentRequest = (query, key) => request(api, query, { key });
 
 // POST
 export const addContentRequest = (key, text) =>
@@ -61,9 +59,6 @@ export const addContentRequest = (key, text) =>
 /*
  * Items
  */
-
-// GET
-export const allItemsRequest = (query, type) => request(api, query, { type });
 
 // POST
 export const addItemRequest = (item) => errorHandler(ADD_ITEM, { item });

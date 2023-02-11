@@ -19,8 +19,6 @@ export default function ContentPage({ pageCalled }) {
   const isContact = pageCalled === 'contact';
   const title = TITLE[`${pageCalled}`];
 
-  console.log(title);
-
   return (
     <Layout>
       <h1>{title}</h1>

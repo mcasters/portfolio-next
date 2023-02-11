@@ -3,18 +3,18 @@ import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 
 import { CONTENT } from '../../../data/graphql/queries';
-import {
-  addContentRequest,
-  contentRequest,
-} from '../../../data/request/request';
+import { addContentRequest, fetcher } from '../../../data/request/request';
 import { useAlert } from '../../alert/Alert';
 import s from './EditContent.module.css';
 
 function EditContent({ keyContent, isTextArea }) {
-  const [isChanged, setIsChanged] = useState(false);
   const triggerAlert = useAlert();
+  const { data, mutate } = useSWR(
+    [CONTENT, { key: keyContent }],
+    ([query, variables]) => fetcher(query, variables),
+  );
 
-  const { data, mutate } = useSWR([CONTENT, keyContent], contentRequest);
+  const [isChanged, setIsChanged] = useState(false);
   const [text, setText] = useState(
     data && data.content ? data.content.text : '',
   );

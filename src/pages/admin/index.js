@@ -7,7 +7,7 @@ import { queryGraphql } from '../../data/request/request-ssr';
 import { ISAUTHENTICATED } from '../../data/graphql/queries';
 import { ROUTES } from '../../constants/routes';
 import AdminNav from '../../components/layout-components/header/navigation/admin-nav/AdminNav';
-import LogoutButton from "../../components/administration/LogoutButton";
+import LogoutButton from '../../components/administration/LogoutButton';
 
 const Admin = ({ isAuthenticated }) => {
   const router = useRouter();
