@@ -13,16 +13,14 @@ function ItemList({ type, items }) {
       <table className={s.adminList}>
         <thead>
           <tr>
-            <th className={s.headings}>Titre</th>
-            <th className={s.headings}>Date</th>
-            <th className={s.headings}>Technique</th>
-            <th className={s.headings}>Description</th>
-            <th className={s.headings}>Hauteur</th>
-            <th className={s.headings}>Largeur</th>
-            {type === CONSTANT.SCULPTURE.TYPE && (
-              <th className={s.headings}>Longueur</th>
-            )}
-            <th className={s.headings}>Image</th>
+            <th>Titre</th>
+            <th>Date</th>
+            <th>Technique</th>
+            <th>Description</th>
+            <th>Hauteur</th>
+            <th>Largeur</th>
+            {type === CONSTANT.SCULPTURE.TYPE && <th>Longueur</th>}
+            <th>Image</th>
             <th> </th>
             <th> </th>
           </tr>

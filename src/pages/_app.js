@@ -62,7 +62,7 @@ export default function MyApp({ Component, pageProps }) {
         return DESCRIPTION.PAINTING._;
       case `${ROUTES.PAINTING}/${year}`:
         return DESCRIPTION.PAINTING[year];
-            case ROUTES.PRESENTATION:
+      case ROUTES.PRESENTATION:
         return DESCRIPTION.PRESENTATION;
       case ROUTES.SCULPTURE:
         return DESCRIPTION.SCULPTURE;
@@ -71,20 +71,20 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+        <title>{getTitle()}</title>
+        <meta name="description" content={getDescription()} />
+        <meta name="keywords" content={KEYWORDS} />
+        <meta name="theme-color" content="#555555" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="author" href="/humans.txt" type="text/plain" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+        <link rel="icon" sizes="192x192" href="/icon-192.png" />
+        <link rel="icon" sizes="512x512" href="/icon-512.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
       <AlertProvider>
-        <Head>
-          <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-          <title>{getTitle()}</title>
-          <meta name="description" content={getDescription()} />
-          <meta name="keywords" content={KEYWORDS} />
-          <meta name="theme-color" content="#555555" />
-          <link rel="manifest" href="/site.webmanifest" />
-          <link rel="author" href="/humans.txt" type="text/plain" />
-          <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
-          <link rel="icon" sizes="192x192" href="/icon-192.png" />
-          <link rel="icon" sizes="512x512" href="/icon-512.png" />
-          <link rel="shortcut icon" href="/favicon.ico" />
-        </Head>
         <Component {...pageProps} />
       </AlertProvider>
     </>
