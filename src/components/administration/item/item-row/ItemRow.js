@@ -7,7 +7,7 @@ import UpdateButton from '../update/updateButton';
 import CONSTANT from '../../../../constants/itemConstant';
 import { getSMPaths } from '../../../utils/itemUtils';
 
-function ItemRow({ item, type }) {
+function ItemRow({ item }) {
   const FORMAT = CONSTANT.FORMAT_DATE;
   return (
     <tr className={s.row}>
@@ -17,19 +17,19 @@ function ItemRow({ item, type }) {
       <td>{item.description}</td>
       <td>{item.height}</td>
       <td>{item.width}</td>
-      {type === CONSTANT.SCULPTURE.TYPE && <td>{item.length}</td>}
+      {item.type === CONSTANT.SCULPTURE.TYPE && <td>{item.length}</td>}
       <td>
         <img
-          src={`${getSMPaths(item, type)[0]}`}
+          src={`${getSMPaths(item)[0]}`}
           alt="image admin"
           className={s.thumbnail}
         />
       </td>
       <td>
-        <ItemDeleteButton id={item.id} type={type} />
+        <ItemDeleteButton id={item.id} type={item.type} />
       </td>
       <td>
-        <UpdateButton id={item.id} item={item} type={type} />
+        <UpdateButton id={item.id} item={item} />
       </td>
     </tr>
   );
@@ -37,7 +37,6 @@ function ItemRow({ item, type }) {
 
 ItemRow.propTypes = {
   item: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default ItemRow;

@@ -1,7 +1,7 @@
 import DataType from 'sequelize';
 import Model from './sequelize';
 import { parseISO } from 'date-fns';
-import ITEM_CONSTANT from '../../constants/itemConstant';
+import ITEM from '../../constants/itemConstant';
 
 const Drawing = Model.define(
   'Drawing',
@@ -32,7 +32,7 @@ const Drawing = Model.define(
       get() {
         return parseISO(
           this.getDataValue('date'),
-          ITEM_CONSTANT.FORMAT_DATE,
+          ITEM.FORMAT_DATE,
           new Date(),
         );
       },

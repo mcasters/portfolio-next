@@ -6,7 +6,7 @@ import { usePopper } from 'react-popper';
 import UpdateForm from './UpdateForm';
 import s from './updateButton.module.css';
 
-function UpdateButton({ item, type }) {
+function UpdateButton({ item }) {
   const [isPopperOpen, setIsPopperOpen] = useState(false);
   const [popperElement, setPopperElement] = useState(null);
   const popperRef = useRef(null);
@@ -44,7 +44,7 @@ function UpdateButton({ item, type }) {
           ref={setPopperElement}
           role="dialog"
         >
-          <UpdateForm item={item} type={type} close={closePopper} />
+          <UpdateForm item={item} close={closePopper} />
         </div>
       )}
     </>
@@ -53,7 +53,6 @@ function UpdateButton({ item, type }) {
 
 UpdateButton.propTypes = {
   item: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default UpdateButton;

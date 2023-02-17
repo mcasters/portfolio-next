@@ -8,24 +8,25 @@ import { canSubmitData, submitUpdateItem } from '../../../utils/formUtils';
 import ImagePart from '../ImagePart';
 import OldImagePart from './OldImagePart';
 import DataPart from '../DataPart';
-import { getItemToUpdate } from '../../../utils/itemUtils';
+import { getItemInputToUpdate } from '../../../utils/itemUtils';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import CONSTANT from '../../../../constants/itemConstant';
 import ButtonsPart from '../ButtonsPart';
 import s from './UpdateForm.module.css';
 
-function UpdateForm({ item, type, close }) {
-  const [itemToUpdate, setItemToUpdate] = useState(getItemToUpdate(item, type));
+function UpdateForm({ item, close }) {
+  const [itemToUpdate, setItemToUpdate] = useState(getItemInputToUpdate(item));
   const triggerAlert = useAlert();
   const dialogRef = useRef();
   useOnClickOutside(dialogRef.current, close);
 
-  const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
+  const isSculpture = item.type === CONSTANT.SCULPTURE.TYPE;
   const canSubmit = canSubmitData(itemToUpdate, isSculpture, true);
 
-  const { mutate } = useSWR([ALL_ITEMS_ADMIN, { type }], ([query, variables]) =>
-    fetcher(query, variables),
+  const { mutate } = useSWR(
+    [ALL_ITEMS_ADMIN, { type: item.type }],
+    ([query, variables]) => fetcher(query, variables),
   );
 
   const handleDataChange = (e) => {
@@ -51,7 +52,7 @@ function UpdateForm({ item, type, close }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data, error } = await submitUpdateItem(itemToUpdate, type);
+    const { data, error } = await submitUpdateItem(itemToUpdate, item.type);
 
     if (error || !data) {
       triggerAlert(
@@ -75,7 +76,7 @@ function UpdateForm({ item, type, close }) {
         handleDayChange={handleDayChange}
         isSculpture={isSculpture}
       />
-      <OldImagePart item={item} type={type} />
+      <OldImagePart item={item} />
       <ImagePart isSculpture={isSculpture} onChange={handleImageChange} />
       <ButtonsPart canSubmit={canSubmit} onCancelClick={close} />
     </form>
@@ -84,7 +85,6 @@ function UpdateForm({ item, type, close }) {
 
 UpdateForm.propTypes = {
   item: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,
 };
 

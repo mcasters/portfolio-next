@@ -10,7 +10,7 @@ import { fetcher } from '../../../../data/request/request';
 import { canSubmitData, submitAddItem } from '../../../utils/formUtils';
 import DataPart from '../DataPart';
 import ImagePart from '../ImagePart';
-import { getEmptyItem } from '../../../utils/itemUtils';
+import { getEmptyItemInput } from '../../../utils/itemUtils';
 import ButtonsPart from '../ButtonsPart';
 
 function AddForm({ type }) {
@@ -18,7 +18,7 @@ function AddForm({ type }) {
   const titleForm = 'Ajout';
 
   const [onClear, setOnClear] = useState(0);
-  const [item, setItem] = useState(getEmptyItem(isSculpture));
+  const [item, setItem] = useState(getEmptyItemInput(isSculpture));
   const [canSubmit, setCanSubmit] = useState(false);
 
   const triggerAlert = useAlert();
@@ -32,7 +32,7 @@ function AddForm({ type }) {
   }, [isSculpture, item]);
 
   const initItem = () => {
-    setItem(getEmptyItem(isSculpture));
+    setItem(getEmptyItemInput(isSculpture));
   };
   const handleDataChange = (e) => {
     e.preventDefault();

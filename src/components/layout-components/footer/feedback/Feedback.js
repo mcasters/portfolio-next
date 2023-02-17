@@ -13,6 +13,7 @@ function Feedback() {
         target="_blank"
         rel="noreferrer"
         legacyBehavior={false}
+        className={s.link}
       >
         <Image
           src="/assets/nodeJSTransparent.png"
@@ -29,6 +30,7 @@ function Feedback() {
         target="_blank"
         rel="noreferrer"
         legacyBehavior={false}
+        className={s.link}
       >
         <Image
           src="/assets/reactTransparent.png"
@@ -46,6 +48,7 @@ function Feedback() {
         target="_blank"
         rel="noreferrer"
         legacyBehavior={false}
+        className={s.link}
       >
         <Image
           src="/assets/graphqlTransparent.png"
@@ -62,15 +65,17 @@ function Feedback() {
         target="_blank"
         rel="noreferrer"
         legacyBehavior={false}
+        className={s.link}
       >
         <Image
           src="/assets/appleTransparent.png"
-          className={s.appleLogo}
+
           alt="Apple"
-          width="50"
-          height="50"
+          width="0"
+          height="0"
           quality={100}
           unoptimized={true}
+          className={s.appleLogo}
         />
       </Link>
     </div>

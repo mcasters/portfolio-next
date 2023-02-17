@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import Item from '../components/item-dir/item/Item';
 import ITEM from '../constants/itemConstant';
 import Layout from '../components/layout-components/layout/Layout';
@@ -5,7 +7,7 @@ import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
 import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
 import s from './styles/item.module.css';
-import PropTypes from 'prop-types';
+import { getEnhancedItem } from '../components/utils/itemUtils';
 
 const Dessins = ({ data }) => {
   return (
@@ -13,15 +15,14 @@ const Dessins = ({ data }) => {
       <section>
         <h1 className={s.title}>{ITEM.DRAWING.TITLE}</h1>
         {data.allItems &&
-          data.allItems.map((drawing) =>
-            drawing != null ? (
+          data.allItems.map((drawing) => {
+            return drawing !== null ? (
               <Item
                 key={drawing.title}
-                item={drawing}
-                type={ITEM.DRAWING.TYPE}
+                item={getEnhancedItem(drawing, ITEM.DRAWING.TYPE)}
               />
-            ) : null,
-          )}
+            ) : null;
+          })}
       </section>
       <ScrollTop />
     </Layout>

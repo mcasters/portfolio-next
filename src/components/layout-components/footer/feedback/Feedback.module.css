@@ -2,20 +2,23 @@
   font-size: var(--font-size-current);
 }
 
+.link {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  min-width: 40px;
+}
+
 .nodejsLogo {
-  height: 25px;
+  height: 22px;
   width: auto;
-  padding: 0 0.5em;
+  padding: 0 0.8em;
 }
 
 .reactLogo,
 .graphqlLogo,
 .appleLogo {
-  height: 18px;
+  height: 17px;
   width: auto;
   padding: 0 0.5em;
-}
-
-.appleLogo {
-  padding-bottom: 4px;
 }

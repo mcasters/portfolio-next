@@ -18,7 +18,7 @@ export const getItemInputGraphql = (item, type, hasImages) => {
   };
 };
 
-export const getEmptyItem = (isSculpture) => {
+export const getEmptyItemInput = (isSculpture) => {
   return {
     id: '',
     title: '',
@@ -32,8 +32,8 @@ export const getEmptyItem = (isSculpture) => {
   };
 };
 
-export const getItemToUpdate = (item, type) => {
-  const isSculpture = type === CONSTANT.SCULPTURE.TYPE;
+export const getItemInputToUpdate = (item) => {
+  const isSculpture = item.type === CONSTANT.SCULPTURE.TYPE;
   return {
     id: item.id,
     title: item.title,
@@ -61,9 +61,9 @@ export const picturesIsFullOrEmpty = (item) => {
   return picturesIsFull(item) || picturesIsEmpty(item);
 };
 
-export const getFilenamesTab = (item, type) => {
+export const getFilenamesTab = (item) => {
   let tab = [];
-  if (type === CONSTANT.SCULPTURE.TYPE) {
+  if (item.type === CONSTANT.SCULPTURE.TYPE) {
     let i;
     for (i = 1; i < 5; i++) {
       tab[i - 1] = `${item.title}_${i}.jpg`;
@@ -74,25 +74,36 @@ export const getFilenamesTab = (item, type) => {
   return tab;
 };
 
-export const getMainPaths = (item, type) => {
-  const filenames = getFilenamesTab(item, type);
-  const path = `${libraryPath}${getConst(type).IMAGE.PATH}`;
+export const getMainPaths = (item) => {
+  const filenames = getFilenamesTab(item);
+  const path = `${libraryPath}${getConst(item.type).IMAGE.PATH}`;
 
   return filenames.map((filename) => `${path}/${filename}`);
 };
 
-export const getMDPaths = (item, type) => {
-  const filenames = getFilenamesTab(item, type);
-  const path = `${libraryPath}${getConst(type).IMAGE.PATH_MD}`;
+export const getMDPaths = (item) => {
+  const filenames = getFilenamesTab(item);
+  const path = `${libraryPath}${getConst(item.type).IMAGE.PATH_MD}`;
 
   return filenames.map((filename) => `${path}/${filename}`);
 };
 
-export const getSMPaths = (item, type) => {
-  const filenames = getFilenamesTab(item, type);
-  const path = `${libraryPath}${getConst(type).IMAGE.PATH_SM}`;
+export const getSMPaths = (item) => {
+  const filenames = getFilenamesTab(item);
+  const path = `${libraryPath}${getConst(item.type).IMAGE.PATH_SM}`;
 
   return filenames.map((filename) => `${path}/${filename}`);
+};
+
+export const getEnhancedItem = (item, type) => {
+  const prov = {...item, type};
+  return {
+    ...prov,
+    alt: getAltImage(prov),
+    SMPaths: getSMPaths(prov),
+    MDPaths: getMDPaths(prov),
+    LGPaths: getMainPaths(prov),
+  };
 };
 
 const getConst = (type) => {
@@ -108,19 +119,15 @@ const getConst = (type) => {
   }
 };
 
-export const getAltImage = (type) => {
-  switch (type) {
+export const getAltImage = (item) => {
+  switch (item.type) {
     case ITEM.PAINTING.TYPE:
       return ITEM.PAINTING.IMAGE.ALT_IMAGE;
     case ITEM.DRAWING.TYPE:
       return ITEM.DRAWING.IMAGE.ALT_IMAGE;
-    case ITEM.SCULPTURE.IMAGE.ALT_IMAGE:
+    case ITEM.SCULPTURE.TYPE:
       return ITEM.SCULPTURE.IMAGE.ALT_IMAGE;
     default:
       return;
   }
-};
-
-export const getLightboxTitle = (item) => {
-  return `Marion Casters | ${item.title}`;
 };
