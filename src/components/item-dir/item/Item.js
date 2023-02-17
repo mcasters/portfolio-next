@@ -6,13 +6,13 @@ import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import s from './Item.module.css';
 import Images from '../images/Images';
 
-function Item({ item }) {
+function Item({ item, first }) {
   return (
     <article className={s.itemContainer}>
       <h2 className={s.itemTitle}>
         <cite>{item.title}</cite>
       </h2>
-      <Images item={item} />
+      <Images item={item} first={first} />
       <figcaption>
         <time dateTime={item.date} className={s.noWrap}>
           {format(item.date, ITEM.FORMAT_DATE)}
@@ -32,6 +32,7 @@ function Item({ item }) {
 
 Item.propTypes = {
   item: PropTypes.object.isRequired,
+  first: PropTypes.bool.isRequired,
 };
 
 export default Item;

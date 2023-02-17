@@ -15,11 +15,12 @@ const Dessins = ({ data }) => {
       <section>
         <h1 className={s.title}>{ITEM.DRAWING.TITLE}</h1>
         {data.allItems &&
-          data.allItems.map((drawing) => {
+          data.allItems.map((drawing, i) => {
             return drawing !== null ? (
               <Item
                 key={drawing.title}
                 item={getEnhancedItem(drawing, ITEM.DRAWING.TYPE)}
+                first={i < 2}
               />
             ) : null;
           })}

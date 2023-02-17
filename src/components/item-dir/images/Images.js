@@ -2,16 +2,14 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import LAYOUT from '../../../constants/layout';
-import ITEM from '../../../constants/itemConstant';
 import LightBox from '../../lightbox/Lightbox';
 import useViewport from '../../hooks/useViewport';
 import ImageButton from './ImageButton';
 
-function Images({ item }) {
+function Images({ item, first }) {
   const { windowWidth } = useViewport();
   const [imageIndex, setImageIndex] = useState(null);
 
-  const isSculpture = item.type === ITEM.SCULPTURE.TYPE;
   const isLessThanSM = windowWidth < LAYOUT.BREAKPOINT.SM;
   const currentPaths = isLessThanSM ? item.SMPaths : item.MDPaths;
   const lightboxPaths = isLessThanSM ? item.MDPaths : item.LGPaths;
@@ -33,13 +31,14 @@ function Images({ item }) {
   return (
     <>
       <figure>
-        {item.LGPaths.map((src, i) => (
+        {currentPaths.map((src, i) => (
           <ImageButton
             key={src}
             item={item}
             src={src}
             index={i}
             handleLightbox={openLightbox}
+            first={first}
           />
         ))}
       </figure>
@@ -56,6 +55,7 @@ function Images({ item }) {
 
 Images.propTypes = {
   item: PropTypes.object.isRequired,
+  first: PropTypes.bool.isRequired,
 };
 
 export default Images;

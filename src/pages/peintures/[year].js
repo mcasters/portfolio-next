@@ -20,11 +20,12 @@ export default function YearPage({ data }) {
         <h1 className={s.title}>{`${ITEM.PAINTING.TITLE} ${year}`}</h1>
         <p className={s.yearTitle}>{year}</p>
         {data.itemsByYear &&
-          data.itemsByYear.map((painting) => {
+          data.itemsByYear.map((painting, i) => {
             return painting !== null ? (
               <Item
                 key={painting.title}
                 item={getEnhancedItem(painting, ITEM.PAINTING.TYPE)}
+                first={i < 2}
               />
             ) : null;
           })}

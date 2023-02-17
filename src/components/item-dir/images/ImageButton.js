@@ -7,7 +7,7 @@ import useViewport from '../../hooks/useViewport';
 import LAYOUT from '../../../constants/layout';
 import ITEM from '../../../constants/itemConstant';
 
-function ImageButton({ item, src, index, handleLightbox }) {
+function ImageButton({ item, src, index, handleLightbox, first }) {
   const [height, setHeight] = useState(undefined);
   const { windowWidth } = useViewport();
 
@@ -48,6 +48,7 @@ function ImageButton({ item, src, index, handleLightbox }) {
         alt={item.alt}
         src={`${src}`}
         quality={100}
+        priority={first}
         fill
         onLoadingComplete={({ naturalWidth, naturalHeight }) => {
           if (naturalWidth / naturalHeight > 1)
@@ -64,6 +65,7 @@ ImageButton.propTypes = {
   src: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   handleLightbox: PropTypes.func.isRequired,
+  first: PropTypes.bool.isRequired,
 };
 
 export default ImageButton;

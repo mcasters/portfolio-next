@@ -15,11 +15,12 @@ const Sculptures = ({ data }) => {
       <section>
         <h1 className={s.title}>{ITEM.SCULPTURE.TITLE}</h1>
         {data.allItems &&
-          data.allItems.map((sculpture) => {
+          data.allItems.map((sculpture, i) => {
             return sculpture !== null ? (
               <Item
                 key={sculpture.title}
                 item={getEnhancedItem(sculpture, ITEM.SCULPTURE.TYPE)}
+                first={i < 2}
               />
             ) : null;
           })}
