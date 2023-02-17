@@ -2,34 +2,23 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import LAYOUT from '../../../constants/layout';
+import ITEM from '../../../constants/itemConstant';
 import LightBox from '../../lightbox/Lightbox';
 import useViewport from '../../hooks/useViewport';
-import {
-  getLightboxTitle,
-  getMainPaths,
-  getMDPaths,
-  getSMPaths,
-} from '../../utils/itemUtils';
 import ImageButton from './ImageButton';
 
-function Images({ item, type }) {
+function Images({ item }) {
   const { windowWidth } = useViewport();
   const [imageIndex, setImageIndex] = useState(null);
 
+  const isSculpture = item.type === ITEM.SCULPTURE.TYPE;
   const isLessThanSM = windowWidth < LAYOUT.BREAKPOINT.SM;
-
-  const getCurrentPaths = () =>
-    isLessThanSM ? getSMPaths(item, type) : getMDPaths(item, type);
+  const currentPaths = isLessThanSM ? item.SMPaths : item.MDPaths;
+  const lightboxPaths = isLessThanSM ? item.MDPaths : item.LGPaths;
 
   const getLightboxImages = () => {
-    const urls = isLessThanSM
-      ? getMDPaths(item, type)
-      : getMainPaths(item, type);
-    return urls.map((image) => {
-      let obj = {};
-      obj['url'] = image;
-      obj['title'] = getLightboxTitle(item);
-      return obj;
+    return lightboxPaths.map((path) => {
+      return { url: path, title: `Marion Casters | ${item.title}` };
     });
   };
 
@@ -44,17 +33,15 @@ function Images({ item, type }) {
   return (
     <>
       <figure>
-        {getMainPaths(item, type).map((src, i) => {
-          return (
-            <ImageButton
-              key={src}
-              type={type}
-              src={src}
-              index={i}
-              handleLightbox={openLightbox}
-            />
-          );
-        })}
+        {item.LGPaths.map((src, i) => (
+          <ImageButton
+            key={src}
+            item={item}
+            src={src}
+            index={i}
+            handleLightbox={openLightbox}
+          />
+        ))}
       </figure>
       {imageIndex !== null && (
         <LightBox
@@ -69,7 +56,6 @@ function Images({ item, type }) {
 
 Images.propTypes = {
   item: PropTypes.object.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 export default Images;

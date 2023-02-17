@@ -11,6 +11,7 @@
    * ======================================================================== */
 
   --max-content-width: 540px;
+  --max-content-half-width: 270px;
   --red-line-height: 6px;
   --nav-1-height: 32px;
   --nav-1-height-without-border: 31px;

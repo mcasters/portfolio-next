@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ItemRow from '../item-row/ItemRow';
 import s from './ItemList.module.css';
 import CONSTANT from '../../../../constants/itemConstant';
+import {getEnhancedItem} from "../../../utils/itemUtils";
 
 function ItemList({ type, items }) {
   const title = 'Modification - Suppression';
@@ -28,7 +29,8 @@ function ItemList({ type, items }) {
         <tbody>
           {items &&
             items.map((item) => {
-              return <ItemRow key={item.id} item={item} type={type} />;
+              const enhancedItem = getEnhancedItem(item, type);
+              return <ItemRow key={item.id} item={enhancedItem} />;
             })}
         </tbody>
       </table>

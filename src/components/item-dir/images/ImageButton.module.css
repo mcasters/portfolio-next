@@ -1,0 +1,52 @@
+.noSculptureButton,
+.sculptureButton {
+  position: relative;
+  display: block;
+  width: 75vw;
+  height: 35vh;
+  margin: 0 auto;
+  background-color: unset;
+  border: none;
+  cursor: pointer;
+}
+
+.image,
+.imageTopLeft,
+.imageTopRight,
+.imageBottomLeft,
+.imageBottomRight {
+  object-fit: contain;
+  object-position: center;
+  box-sizing: border-box;
+  padding: 2px;
+}
+
+@media (--sm) {
+  .noSculptureButton {
+    width: var(--max-content-width);
+    height: 55vh;
+  }
+
+  .sculptureButton {
+    display: inline-block;
+    width: var(--max-content-half-width);
+    height: 40vh;
+    max-width: 50%;
+  }
+
+  .imageTopLeft {
+    object-position: right bottom;
+  }
+
+  .imageTopRight {
+    object-position: left bottom;
+  }
+
+  .imageBottomLeft {
+    object-position: top right;
+  }
+
+  .imageBottomRight {
+    object-position: top left;
+  }
+}

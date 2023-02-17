@@ -1,9 +1,9 @@
 .itemContainer {
-  padding-bottom: 4em;
+  padding: 4em 0;
 }
 
 .itemTitle {
-  font-size: var(--font-size-current-title);
+  font-size: var(--font-size-nav);
   margin: 0 0 0.1em;
 }
 
