@@ -13,7 +13,7 @@ const Dessins = ({ data }) => {
   return (
     <Layout>
       <section>
-        <h1 className={s.title}>{ITEM.DRAWING.TITLE}</h1>
+        <h1 className={s.title}>{ITEM.DRAWING.PAGE_TITLE}</h1>
         {data.allItems &&
           data.allItems.map((drawing, i) => {
             return drawing !== null ? (

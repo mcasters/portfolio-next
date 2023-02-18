@@ -7,7 +7,7 @@ const ITEM = {
       PATH: '/paintings',
       ALT_IMAGE: 'Peinture de Marion Casters',
     },
-    TITLE: 'Peintures',
+    PAGE_TITLE: 'Peintures',
     YEAR2017: 2017,
     YEAR2018: 2018,
     YEAR2019: 2019,
@@ -23,7 +23,7 @@ const ITEM = {
       PATH: '/drawings',
       ALT_IMAGE: 'Dessin de Marion Casters',
     },
-    TITLE: 'Dessins',
+    PAGE_TITLE: 'Dessins',
   },
 
   SCULPTURE: {
@@ -34,7 +34,7 @@ const ITEM = {
       PATH: '/sculptures',
       ALT_IMAGE: 'Sculpture de Marion Casters',
     },
-    TITLE: 'Sculptures',
+    PAGE_TITLE: 'Sculptures',
   },
 
   LG_SIZE: 'lg',

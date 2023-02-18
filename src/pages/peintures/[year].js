@@ -17,7 +17,7 @@ export default function YearPage({ data }) {
   return (
     <Layout>
       <section>
-        <h1 className={s.title}>{`${ITEM.PAINTING.TITLE} ${year}`}</h1>
+        <h1 className={s.title}>{`${ITEM.PAINTING.PAGE_TITLE} ${year}`}</h1>
         <p className={s.yearTitle}>{year}</p>
         {data.itemsByYear &&
           data.itemsByYear.map((painting, i) => {

@@ -4,77 +4,71 @@ import { useRouter } from 'next/router';
 import { AlertProvider } from '../components/alert/Alert';
 import './styles/styles.css';
 import './styles/style-lightbox.css';
-
 import { ROUTES } from '../constants/routes';
-import { DESCRIPTION, KEYWORDS } from '../constants/metaHtml';
-import TITLE from '../constants/pageTitle';
-import ItemConstant from '../constants/itemConstant';
+import { DESCRIPTION, KEYWORDS, DOCUMENT_TITLE } from '../constants/metaHtml';
 
 // eslint-disable-next-line react/prop-types
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
-  const getTitle = () => {
-    let title = '';
-    switch (router.pathname) {
-      case ROUTES.HOME:
-        title = TITLE.HOME;
-        break;
-      case ROUTES.CONTACT:
-        title = TITLE.CONTACT;
-        break;
-      case ROUTES.DRAWING:
-        title = ItemConstant.DRAWING.TITLE;
-        break;
-      case ROUTES.PAINTING:
-        title = ItemConstant.PAINTING.TITLE;
-        break;
-      case ROUTES.SCULPTURE:
-        title = ItemConstant.SCULPTURE.TITLE;
-        break;
-      case ROUTES.PRESENTATION:
-        title = TITLE.PRESENTATION;
-        break;
-      case ROUTES.PRIVACY:
-        title = TITLE.PRIVACY;
-        break;
-      case ROUTES.ADMIN:
-        title = TITLE.ADMINISTRATION;
-        break;
-    }
-    return `${title} - Marion Casters`;
-  };
-
-  const getDescription = () => {
+  const getInfos = () => {
     const { year } = router.query;
+    let title = '';
+    let description = '';
+
     switch (router.asPath) {
-      case ROUTES.HOME:
-        return DESCRIPTION.HOME;
-      case ROUTES.ADMIN:
-        return DESCRIPTION.ADMIN;
+      case ROUTES.HOME: {
+        description = DESCRIPTION.HOME;
+        title = DOCUMENT_TITLE.HOME;
+        break;
+      }
+      case ROUTES.ADMIN: {
+        description = DESCRIPTION.ADMIN;
+        title = DOCUMENT_TITLE.ADMIN;
+        break;
+      }
       case ROUTES.PRIVACY:
         return DESCRIPTION.PRIVACY;
-      case ROUTES.CONTACT:
-        return DESCRIPTION.CONTACT;
-      case ROUTES.DRAWING:
-        return DESCRIPTION.DRAWING;
-      case ROUTES.PAINTING:
-        return DESCRIPTION.PAINTING._;
-      case `${ROUTES.PAINTING}/${year}`:
-        return DESCRIPTION.PAINTING[year];
-      case ROUTES.PRESENTATION:
-        return DESCRIPTION.PRESENTATION;
-      case ROUTES.SCULPTURE:
-        return DESCRIPTION.SCULPTURE;
+      case ROUTES.CONTACT: {
+        description = DESCRIPTION.CONTACT;
+        title = DOCUMENT_TITLE.CONTACT;
+        break;
+      }
+      case ROUTES.DRAWING: {
+        description = DESCRIPTION.DRAWING;
+        title = DOCUMENT_TITLE.DRAWING;
+        break;
+      }
+      case ROUTES.PAINTING: {
+        description = DESCRIPTION.PAINTING._;
+        title = DOCUMENT_TITLE.PAINTING._;
+        break;
+      }
+      case `${ROUTES.PAINTING}/${year}`: {
+        description = DESCRIPTION.PAINTING[year];
+        title = DOCUMENT_TITLE.PAINTING[year];
+        break;
+      }
+      case ROUTES.PRESENTATION: {
+        description = DESCRIPTION.PRESENTATION;
+        title = DOCUMENT_TITLE.PRESENTATION;
+        break;
+      }
+      case ROUTES.SCULPTURE: {
+        description = DESCRIPTION.SCULPTURE;
+        title = DOCUMENT_TITLE.SCULPTURE;
+        break;
+      }
     }
+    return { title, description };
   };
 
   return (
     <>
       <Head>
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <title>{getTitle()}</title>
-        <meta name="description" content={getDescription()} />
+        <title>{getInfos().title}</title>
+        <meta name="description" content={getInfos().description} />
         <meta name="keywords" content={KEYWORDS} />
         <meta name="theme-color" content="#555555" />
         <link rel="manifest" href="/site.webmanifest" />

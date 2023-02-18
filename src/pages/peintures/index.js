@@ -8,7 +8,7 @@ import LAYOUT from '../../constants/layout';
 export default function Peintures() {
   return (
     <Layout>
-      <h1 className={s.title}>{ITEM.PAINTING.TITLE}</h1>
+      <h1 className={s.title}>{ITEM.PAINTING.PAGE_TITLE}</h1>
       <ul>
         <li className={s.year}>
           <Link
