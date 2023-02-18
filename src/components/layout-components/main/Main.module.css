@@ -1,12 +1,15 @@
 .main {
   text-align: center;
-  padding: 140px 1em 3em;
-  max-width: var(--max-content-width);
+  padding-top: 140px;
+  padding-bottom: 3em;
   margin: auto;
 }
 
 .mainHome {
   text-align: center;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .sticky {

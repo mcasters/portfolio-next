@@ -6,27 +6,30 @@ import { useEffect, useRef, useState } from 'react';
 import useViewport from '../../hooks/useViewport';
 import LAYOUT from '../../../constants/layout';
 import ITEM from '../../../constants/itemConstant';
-import useClientRect from '../../hooks/useClientRect';
 
 function ImageButton({ item, src, index, handleLightbox, first }) {
+  const buttonRef = useRef(null);
   const [offset, setOffset] = useState(0);
-  const { windowWidth } = useViewport();
-  const [rect, buttonRef] = useClientRect();
+  const [ratioLandscape, setRatioLandscape] = useState(0);
+  const windowRect = useViewport();
 
-  const isSM = windowWidth < LAYOUT.BREAKPOINT.SM;
   const isSculpture = item.type === ITEM.SCULPTURE.TYPE;
 
-  const getOffset = (naturalWidth, naturalHeight) => {
-    const buttonHeight = rect.height;
-    const imageHeight = isSM
-      ? (0.75 * windowWidth * naturalHeight) / naturalWidth
-      : ((LAYOUT.MAIN_WIDTH / 2) * naturalHeight) / naturalWidth;
+  useEffect(() => {
+    if (isSculpture && ratioLandscape !== 0) {
+      const buttonHeight = buttonRef.current.getBoundingClientRect().height;
 
-    let offset;
-    if (isSM) offset = (buttonHeight - imageHeight) * 0.95 * index;
-    else if (index === 2 || index === 3) offset = buttonHeight - imageHeight;
-    setOffset(offset);
-  };
+      if (windowRect.innerWidth < LAYOUT.BREAKPOINT.SM) {
+        const imageHeight =
+          (0.8 * windowRect.innerWidth) /
+          ratioLandscape;
+        setOffset((buttonHeight - imageHeight) * index);
+      } else if (index === 2 || index === 3) {
+        const imageHeight = LAYOUT.MAIN_WIDTH_PX / 2 / ratioLandscape;
+        setOffset(buttonHeight - imageHeight * 1.1);
+      }
+    }
+  }, [ratioLandscape, windowRect]);
 
   const triggerLightbox = () => {
     handleLightbox(index);
@@ -50,8 +53,8 @@ function ImageButton({ item, src, index, handleLightbox, first }) {
           priority={first}
           fill
           onLoadingComplete={({ naturalWidth, naturalHeight }) => {
-            if (naturalWidth / naturalHeight > 1)
-              getOffset(naturalWidth, naturalHeight);
+            const ratio = naturalWidth / naturalHeight;
+            if (ratio > 1) setRatioLandscape(ratio);
           }}
           className={s.image}
           style={offset !== 0 ? { top: `-${offset}px` } : undefined}

@@ -9,7 +9,9 @@ const LAYOUT = {
   RED_LINE_HEIGHT: 6,
   NAV_1_HEIGHT: 30,
   NAV_2_HEIGHT: 55,
-  MAIN_WIDTH: 540,
+
+  MAIN_WIDTH_MOBILE_VW: 90,
+  MAIN_WIDTH_PX: 540,
 
   BACKGROUND_IMAGE_MOBILE: "url('/images/miscellaneous/home-portrait.jpg')",
   BACKGROUND_IMAGE_DESKTOP: "url('/images/miscellaneous/home-landscape.jpg')",

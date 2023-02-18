@@ -1,26 +1,20 @@
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter, withRouter } from 'next/router';
 
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import LAYOUT from '../../../constants/layout';
 import Main from '../main/Main';
-import useViewport from '../../hooks/useViewport';
 import { ROUTES } from '../../../constants/routes';
 import s from './Layout.module.css';
 import useElementIsUpTo from '../../hooks/useElementIsUpTo';
+import LAYOUT from '../../../constants/layout';
 
 const Layout = ({ children, introduction }) => {
-  const { windowWidth, windowHeight } = useViewport();
-  const [isLessThanMD, setIsLessThanMD] = useState(true);
-  const [headerIsFix, headerRef] = useElementIsUpTo(91);
+  const [headerIsFix, headerRef] = useElementIsUpTo(
+    LAYOUT.RED_LINE_HEIGHT + LAYOUT.NAV_1_HEIGHT + LAYOUT.NAV_2_HEIGHT,
+  );
   const router = useRouter();
   const isHome = router.pathname === ROUTES.HOME;
-
-  useEffect(() => {
-    setIsLessThanMD(windowWidth < LAYOUT.BREAKPOINT.MD);
-  }, [windowWidth]);
 
   return (
     <>
@@ -30,12 +24,7 @@ const Layout = ({ children, introduction }) => {
         isHome={isHome}
         introduction={introduction}
       />
-      <Main
-        isHome={isHome}
-        height={windowHeight}
-        isLessThanMD={isLessThanMD}
-        headerIsFix={headerIsFix}
-      >
+      <Main isHome={isHome} headerIsFix={headerIsFix}>
         {children}
       </Main>
       <Footer />

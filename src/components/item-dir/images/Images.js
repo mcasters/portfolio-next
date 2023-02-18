@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import LAYOUT from '../../../constants/layout';
@@ -7,12 +7,16 @@ import useViewport from '../../hooks/useViewport';
 import ImageButton from './ImageButton';
 
 function Images({ item, first }) {
-  const { windowWidth } = useViewport();
+  const windowRect = useViewport();
   const [imageIndex, setImageIndex] = useState(null);
+  const [isSM, setIsSM] = useState(windowRect.innerWidth < LAYOUT.BREAKPOINT.SM)
 
-  const isLessThanSM = windowWidth < LAYOUT.BREAKPOINT.SM;
-  const currentPaths = isLessThanSM ? item.SMPaths : item.MDPaths;
-  const lightboxPaths = isLessThanSM ? item.MDPaths : item.LGPaths;
+  const currentPaths = isSM ? item.SMPaths : item.MDPaths;
+  const lightboxPaths = isSM ? item.MDPaths : item.LGPaths;
+
+  useEffect(() => {
+    setIsSM(windowRect.innerWidth < LAYOUT.BREAKPOINT.SM);
+  }, [windowRect]);
 
   const getLightboxImages = () => {
     return lightboxPaths.map((path) => {

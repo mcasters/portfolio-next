@@ -14,8 +14,8 @@
   box-sizing: border-box;
   border: solid 1px var(--color-dark);
   display: inline-block;
-  width: 40%;
-  margin: 8px;
+  width: 44%;
+  margin: 5px;
 }
 
 .year a {
