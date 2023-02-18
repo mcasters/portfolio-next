@@ -20,7 +20,7 @@ const Sculptures = ({ data }) => {
               <Item
                 key={sculpture.title}
                 item={getEnhancedItem(sculpture, ITEM.SCULPTURE.TYPE)}
-                first={i < 2}
+                first={i < 4}
               />
             ) : null;
           })}

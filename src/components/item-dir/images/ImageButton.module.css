@@ -10,13 +10,9 @@
   cursor: pointer;
 }
 
-.image,
-.imageTopLeft,
-.imageTopRight,
-.imageBottomLeft,
-.imageBottomRight {
+.image {
   object-fit: contain;
-  object-position: center;
+  object-position: top;
   box-sizing: border-box;
   padding: 2px;
 }
@@ -32,21 +28,5 @@
     width: var(--max-content-half-width);
     height: 40vh;
     max-width: 50%;
-  }
-
-  .imageTopLeft {
-    object-position: right bottom;
-  }
-
-  .imageTopRight {
-    object-position: left bottom;
-  }
-
-  .imageBottomLeft {
-    object-position: top right;
-  }
-
-  .imageBottomRight {
-    object-position: top left;
   }
 }

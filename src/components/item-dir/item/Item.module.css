@@ -7,20 +7,10 @@
   margin: 0 0 0.1em;
 }
 
-.noWrap {
-  display: block;
-  margin: 0;
-}
-
-.spacer {
-  display: none;
-}
-
 .email {
   display: none;
 }
 
-@media (--sm) {
   .noWrap {
     display: inline;
     white-space: pre;
@@ -30,4 +20,3 @@
     display: inline;
     padding: 0 15px;
   }
-}

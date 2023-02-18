@@ -2,32 +2,30 @@ import PropTypes from 'prop-types';
 import Image from 'next/image';
 
 import s from './ImageButton.module.css';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useViewport from '../../hooks/useViewport';
 import LAYOUT from '../../../constants/layout';
 import ITEM from '../../../constants/itemConstant';
+import useClientRect from '../../hooks/useClientRect';
 
 function ImageButton({ item, src, index, handleLightbox, first }) {
-  const [height, setHeight] = useState(undefined);
+  const [offset, setOffset] = useState(0);
   const { windowWidth } = useViewport();
+  const [rect, buttonRef] = useClientRect();
 
+  const isSM = windowWidth < LAYOUT.BREAKPOINT.SM;
   const isSculpture = item.type === ITEM.SCULPTURE.TYPE;
 
-  const getClassName = () => {
-    if (index === 0) return 'imageTopLeft';
-    if (index === 1) return 'imageTopRight';
-    if (index === 2) return 'imageBottomLeft';
-    if (index === 3) return 'imageBottomRight';
-  };
+  const getOffset = (naturalWidth, naturalHeight) => {
+    const buttonHeight = rect.height;
+    const imageHeight = isSM
+      ? (0.75 * windowWidth * naturalHeight) / naturalWidth
+      : ((LAYOUT.MAIN_WIDTH / 2) * naturalHeight) / naturalWidth;
 
-  const getHeightForLandscape = (naturalWidth, naturalHeight) => {
-    if (windowWidth < LAYOUT.BREAKPOINT.SM)
-      setHeight((0.75 * windowWidth * naturalHeight) / naturalWidth);
-    else {
-      if (isSculpture)
-        setHeight(((LAYOUT.MAIN_WIDTH / 2) * naturalHeight) / naturalWidth);
-      else setHeight((LAYOUT.MAIN_WIDTH * naturalHeight) / naturalWidth);
-    }
+    let offset;
+    if (isSM) offset = (buttonHeight - imageHeight) * 0.95 * index;
+    else if (index === 2 || index === 3) offset = buttonHeight - imageHeight;
+    setOffset(offset);
   };
 
   const triggerLightbox = () => {
@@ -36,26 +34,38 @@ function ImageButton({ item, src, index, handleLightbox, first }) {
 
   return (
     <button
+      ref={buttonRef}
       role="button"
       aria-label="Lightbox"
       type="button"
       onClick={triggerLightbox}
       key={src}
       className={isSculpture ? s.sculptureButton : s.noSculptureButton}
-      style={{ height }}
     >
-      <Image
-        alt={item.alt}
-        src={`${src}`}
-        quality={100}
-        priority={first}
-        fill
-        onLoadingComplete={({ naturalWidth, naturalHeight }) => {
-          if (naturalWidth / naturalHeight > 1)
-            getHeightForLandscape(naturalWidth, naturalHeight);
-        }}
-        className={isSculpture ? s[getClassName()] : s.image}
-      />
+      {isSculpture ? (
+        <Image
+          alt={item.alt}
+          src={`${src}`}
+          quality={100}
+          priority={first}
+          fill
+          onLoadingComplete={({ naturalWidth, naturalHeight }) => {
+            if (naturalWidth / naturalHeight > 1)
+              getOffset(naturalWidth, naturalHeight);
+          }}
+          className={s.image}
+          style={offset !== 0 ? { top: `-${offset}px` } : undefined}
+        />
+      ) : (
+        <Image
+          alt={item.alt}
+          src={`${src}`}
+          quality={100}
+          priority={first}
+          fill
+          className={s.image}
+        />
+      )}
     </button>
   );
 }

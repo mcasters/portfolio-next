@@ -14,7 +14,7 @@ const LAYOUT = {
   BACKGROUND_IMAGE_MOBILE: "url('/images/miscellaneous/home-portrait.jpg')",
   BACKGROUND_IMAGE_DESKTOP: "url('/images/miscellaneous/home-landscape.jpg')",
 
-  DEFAULT_WINDOW_WIDTH: 540,
+  DEFAULT_WINDOW_WIDTH: 400,
   DEFAULT_WINDOW_HEIGHT: 800,
 
   BACKGROUND_PAINTING_2017: "url('/images/paintings/sm/2017-111.jpg')",

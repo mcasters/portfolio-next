@@ -12,7 +12,6 @@ function Item({ item, first }) {
       <h2 className={s.itemTitle}>
         <cite>{item.title}</cite>
       </h2>
-      <Images item={item} first={first} />
       <figcaption>
         <time dateTime={item.date} className={s.noWrap}>
           {format(item.date, ITEM.FORMAT_DATE)}
@@ -25,6 +24,7 @@ function Item({ item, first }) {
           {item.type === ITEM.SCULPTURE.TYPE && ` x ${item.length}`} cm
         </p>
       </figcaption>
+      <Images item={item} first={first} />
       <address className={s.email}>{GLOBAL_CONSTANTS.EMAIL}</address>
     </article>
   );
