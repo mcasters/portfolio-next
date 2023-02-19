@@ -14,16 +14,20 @@
   top: var(--red-line-nav-1-height);
 }
 
-.secondaryNav ul {
+.menu {
   position: relative;
   width: 100%;
   height: var(--nav-2-height);
   margin: 0 auto;
-  border-bottom: 1px solid var(--color-light);
+  border-bottom: 1px solid var(--color-xlight);
+}
+
+.menu.home {
+  border-bottom: none;
 }
 
 @media (--sm) {
-  .secondaryNav ul {
+  .menu {
     width: var(--max-content-width);
   }
 }

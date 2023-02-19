@@ -14,8 +14,8 @@
   --max-content-half-width: 270px;
   --red-line-height: 6px;
   --nav-1-height: 32px;
-  --nav-1-height-without-border: 31px;
   --nav-2-height: 55px;
+  --nav-1-height-without-border: 31px;
   --red-line-nav-1-height: 38px;
 
   /*
@@ -23,8 +23,8 @@
    * ======================================================================== */
 
   --color-xxlight: #fafafa;
-  --color-xlight: #f5f5f5;
-  --color-light: #e7e4d7;
+  --color-xlight: #f3f3f3;
+  --color-light: #d0d0d0;
   --color-dark: #a1a1a1;
   --color-xdark: #333;
 

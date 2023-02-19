@@ -6,7 +6,7 @@ import { MENU_2 } from '../../../../constants/routes';
 import s from './Nav_2.module.css';
 import logo from '../../../../../public/logo-100.png';
 
-function Nav_2({ introDisappear }) {
+function Nav_2({ isHome, introDisappear }) {
   const style = {
     backgroundImage: "url('/assets/shadow.png')",
   };
@@ -17,7 +17,7 @@ function Nav_2({ introDisappear }) {
         introDisappear ? `${s.secondaryNav} ${s.sticky}` : `${s.secondaryNav}`
       }
     >
-      <ul>
+      <ul className={isHome ? `${s.menu} ${s.home}` : `${s.menu}`}>
         {MENU_2.map((menuItem) => {
           if (menuItem.NAME === 'Home')
             return (
@@ -53,12 +53,13 @@ function Nav_2({ introDisappear }) {
           );
         })}
       </ul>
-      <div className={s.shadow} style={style} />
+      {!isHome && <div className={s.shadow} style={style} />}
     </nav>
   );
 }
 
 Nav_2.propTypes = {
+  isHome: PropTypes.bool.isRequired,
   introDisappear: PropTypes.bool.isRequired,
 };
 

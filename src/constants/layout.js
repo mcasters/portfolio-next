@@ -7,7 +7,7 @@ const LAYOUT = {
   },
 
   RED_LINE_HEIGHT: 6,
-  NAV_1_HEIGHT: 30,
+  NAV_1_HEIGHT: 32,
   NAV_2_HEIGHT: 55,
 
   MAIN_WIDTH_MOBILE_VW: 90,

@@ -20,6 +20,3 @@
   margin: 0 auto;
 }
 
-.intro.withMargin {
-  margin-top: var(--red-line-nav-1-height);
-}
