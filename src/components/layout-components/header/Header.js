@@ -17,7 +17,7 @@ function Header({ isHome, introduction, handler }) {
 
   useEffect(() => {
     handler(introDisappear);
-  }, [introDisappear]);
+  }, [introDisappear, handler]);
 
   return (
     <header className={s.container}>
