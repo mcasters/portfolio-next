@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import s from './ImageButton.module.css';
 import { useEffect, useRef, useState } from 'react';
-import useViewport from '../../hooks/useViewport';
+import useViewport from '../../hooks/useWindowSize';
 import LAYOUT from '../../../constants/layout';
 import ITEM from '../../../constants/itemConstant';
 

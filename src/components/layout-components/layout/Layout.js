@@ -8,19 +8,20 @@ import { ROUTES } from '../../../constants/routes';
 import s from './Layout.module.css';
 import useElementIsUpTo from '../../hooks/useElementIsUpTo';
 import LAYOUT from '../../../constants/layout';
+import { useCallback, useState } from 'react';
 
 const Layout = ({ children, introduction }) => {
-  const [headerIsFix, headerRef] = useElementIsUpTo(
-    LAYOUT.RED_LINE_HEIGHT + LAYOUT.NAV_1_HEIGHT + LAYOUT.NAV_2_HEIGHT,
-  );
+  const [headerIsFix, setHeaderIsFix] = useState(false);
   const router = useRouter();
   const isHome = router.pathname === ROUTES.HOME;
+
+  const handler = (isFix) => setHeaderIsFix(isFix);
 
   return (
     <>
       <div className={s.line}></div>
       <Header
-        headerRef={headerRef}
+        handler={handler}
         isHome={isHome}
         introduction={introduction}
       />

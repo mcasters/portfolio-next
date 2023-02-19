@@ -5,8 +5,12 @@ function useElementIsUpTo(yLimit) {
   const ref = useRef();
 
   const handleScroll = useCallback(() => {
-    setIsUpTo(ref.current?.getBoundingClientRect().bottom < yLimit);
-  }, [ref, yLimit]);
+    const currentIsUpTo = ref.current?.getBoundingClientRect().bottom <= yLimit;
+
+    if (currentIsUpTo !== isUpTo) {
+      setIsUpTo(currentIsUpTo);
+    }
+  }, [isUpTo, ref, yLimit]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, true);

@@ -1,33 +1,20 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 
 import s from './Main.module.css';
 import LAYOUT from '../../../constants/layout';
-import useViewport from '../../hooks/useViewport';
+import useViewport from '../../hooks/useWindowSize';
 
 function Main({ isHome, headerIsFix, children }) {
   const { innerWidth, innerHeight } = useViewport();
-  const getHomeStyle = () => {
-    return {
-      height: innerHeight,
-      backgroundImage:
-        innerWidth / innerHeight < 1
-          ? LAYOUT.BACKGROUND_IMAGE_MOBILE
-          : LAYOUT.BACKGROUND_IMAGE_DESKTOP,
-    };
-  };
-  const [homeStyle, setHomeStyle] = useState(getHomeStyle);
-
-  useEffect(() => {
-    setHomeStyle(getHomeStyle());
-  }, [innerWidth, innerHeight]);
 
   return isHome ? (
     <main
       className={s.mainHome}
       style={{
-        ...homeStyle,
-        marginTop: headerIsFix ? `${LAYOUT.NAV_2_HEIGHT}px` : undefined,
+        backgroundImage:
+          innerWidth / innerHeight < 1
+            ? LAYOUT.BACKGROUND_IMAGE_MOBILE
+            : LAYOUT.BACKGROUND_IMAGE_DESKTOP,
       }}
     >
       {children}

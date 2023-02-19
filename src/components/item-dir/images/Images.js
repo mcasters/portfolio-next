@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import LAYOUT from '../../../constants/layout';
 import LightBox from '../../lightbox/Lightbox';
-import useViewport from '../../hooks/useViewport';
+import useViewport from '../../hooks/useWindowSize';
 import ImageButton from './ImageButton';
 
 function Images({ item, first }) {
