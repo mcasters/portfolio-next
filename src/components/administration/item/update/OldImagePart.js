@@ -1,13 +1,11 @@
 import s from './OldImagePart.module.css';
 import PropTypes from 'prop-types';
 
-import { getSMPaths } from '../../../utils/itemUtils';
-
 function OldImagePart({ item }) {
   return (
     <>
       <div className={s.oldImageContainer}>
-        {getSMPaths(item, item.type).map(
+        {item.SMPaths.map(
           (url) =>
             url !== '' && (
               <img

@@ -63,7 +63,8 @@ class ModelService {
     });
   };
 
-  add = async (data) => {
+  add = async (item) => {
+    const { type, ...data } = item;
     return this.model.create(data);
   };
 

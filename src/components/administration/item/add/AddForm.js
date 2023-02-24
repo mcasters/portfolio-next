@@ -10,7 +10,7 @@ import { fetcher } from '../../../../data/request/request';
 import { canSubmitData, submitAddItem } from '../../../utils/formUtils';
 import DataPart from '../DataPart';
 import ImagePart from '../ImagePart';
-import { getEmptyItemInput } from '../../../utils/itemUtils';
+import { getEmptyItemObject } from '../../../utils/itemUtils';
 import ButtonsPart from '../ButtonsPart';
 
 function AddForm({ type }) {
@@ -18,7 +18,7 @@ function AddForm({ type }) {
   const titleForm = 'Ajout';
 
   const [onClear, setOnClear] = useState(0);
-  const [item, setItem] = useState(getEmptyItemInput(isSculpture));
+  const [item, setItem] = useState(getEmptyItemObject(type));
   const [canSubmit, setCanSubmit] = useState(false);
 
   const triggerAlert = useAlert();
@@ -28,11 +28,11 @@ function AddForm({ type }) {
   const formRef = useRef(null);
 
   useEffect(() => {
-    setCanSubmit(canSubmitData(item, isSculpture, false));
+    setCanSubmit(canSubmitData(item, false));
   }, [isSculpture, item]);
 
   const initItem = () => {
-    setItem(getEmptyItemInput(isSculpture));
+    setItem(getEmptyItemObject(type));
   };
   const handleDataChange = (e) => {
     e.preventDefault();
@@ -69,13 +69,10 @@ function AddForm({ type }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data, error } = await submitAddItem(item, type);
+    const { data, error } = await submitAddItem(item);
 
     if (error || !data) {
-      triggerAlert(
-        error.message ? error.message : 'Sorry! something went wrong.',
-        true,
-      );
+      triggerAlert(error ? error : 'Sorry! something went wrong.', true);
     } else {
       triggerAlert('Item ajouté', false);
       await mutate();

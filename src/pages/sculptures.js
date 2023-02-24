@@ -7,7 +7,7 @@ import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
 import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
 import s from './styles/item.module.css';
-import { getEnhancedItem } from '../components/utils/itemUtils';
+import { getItemObject } from '../components/utils/itemUtils';
 
 const Sculptures = ({ data }) => {
   return (
@@ -19,7 +19,7 @@ const Sculptures = ({ data }) => {
             return sculpture !== null ? (
               <Item
                 key={sculpture.title}
-                item={getEnhancedItem(sculpture, ITEM.SCULPTURE.TYPE)}
+                item={getItemObject(sculpture, ITEM.SCULPTURE.TYPE)}
                 first={i < 4}
               />
             ) : null;

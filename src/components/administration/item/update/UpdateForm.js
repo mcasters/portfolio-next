@@ -8,7 +8,6 @@ import { canSubmitData, submitUpdateItem } from '../../../utils/formUtils';
 import ImagePart from '../ImagePart';
 import OldImagePart from './OldImagePart';
 import DataPart from '../DataPart';
-import { getItemInputToUpdate } from '../../../utils/itemUtils';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import CONSTANT from '../../../../constants/itemConstant';
@@ -16,13 +15,13 @@ import ButtonsPart from '../ButtonsPart';
 import s from './UpdateForm.module.css';
 
 function UpdateForm({ item, close }) {
-  const [itemToUpdate, setItemToUpdate] = useState(getItemInputToUpdate(item));
+  const [itemToUpdate, setItemToUpdate] = useState(item);
   const triggerAlert = useAlert();
   const dialogRef = useRef();
   useOnClickOutside(dialogRef.current, close);
 
   const isSculpture = item.type === CONSTANT.SCULPTURE.TYPE;
-  const canSubmit = canSubmitData(itemToUpdate, isSculpture, true);
+  const canSubmit = canSubmitData(itemToUpdate, true);
 
   const { mutate } = useSWR(
     [ALL_ITEMS_ADMIN, { type: item.type }],
@@ -56,7 +55,7 @@ function UpdateForm({ item, close }) {
 
     if (error || !data) {
       triggerAlert(
-        error ? error.message || error : 'Sorry! something went wrong.',
+        error ? error : 'Sorry! something went wrong.',
         true,
       );
     } else {

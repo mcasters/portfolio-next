@@ -8,7 +8,7 @@ import { queryGraphql } from '../../data/request/request-ssr';
 import { ITEMS_BY_YEAR } from '../../data/graphql/queries';
 import Layout from '../../components/layout-components/layout/Layout';
 import s from '../styles/item.module.css';
-import { getEnhancedItem } from '../../components/utils/itemUtils';
+import { getItemObject } from '../../components/utils/itemUtils';
 
 export default function YearPage({ data }) {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function YearPage({ data }) {
             return painting !== null ? (
               <Item
                 key={painting.title}
-                item={getEnhancedItem(painting, ITEM.PAINTING.TYPE)}
+                item={getItemObject(painting, ITEM.PAINTING.TYPE)}
                 first={i < 2}
               />
             ) : null;

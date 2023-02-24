@@ -15,7 +15,7 @@ export default function AdminItem({ type }) {
   return (
     <>
       <AddForm type={type} />
-      {data && <ItemList type={type} items={data.allItems} />}
+      {data && <ItemList type={type} graphQLItems={data.allItems} />}
     </>
   );
 }

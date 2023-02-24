@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import ItemRow from '../item-row/ItemRow';
 import s from './ItemList.module.css';
 import CONSTANT from '../../../../constants/itemConstant';
-import {getEnhancedItem} from "../../../utils/itemUtils";
+import { getItemObject } from '../../../utils/itemUtils';
 
-function ItemList({ type, items }) {
+function ItemList({ type, graphQLItems }) {
   const title = 'Modification - Suppression';
 
   return (
@@ -27,10 +27,10 @@ function ItemList({ type, items }) {
           </tr>
         </thead>
         <tbody>
-          {items &&
-            items.map((item) => {
-              const enhancedItem = getEnhancedItem(item, type);
-              return <ItemRow key={item.id} item={enhancedItem} />;
+          {graphQLItems &&
+            graphQLItems.map((graphQLItem) => {
+              const item = getItemObject(graphQLItem, type);
+              return <ItemRow key={item.id} item={item} />;
             })}
         </tbody>
       </table>
@@ -40,7 +40,7 @@ function ItemList({ type, items }) {
 
 ItemList.propTypes = {
   type: PropTypes.string.isRequired,
-  items: PropTypes.array.isRequired,
+  graphQLItems: PropTypes.array.isRequired,
 };
 
 export default ItemList;

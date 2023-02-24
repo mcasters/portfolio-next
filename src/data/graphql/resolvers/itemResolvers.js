@@ -3,10 +3,10 @@ import { GraphQLScalarType, Kind } from 'graphql';
 import ModelService from '../../models/modelService';
 import { isAuth } from '../../../components/utils/authUtils';
 import {
-  addImages,
+  saveItemImages,
   deleteItemImages,
   renameItemImages,
-} from '../../../components/utils/imageUtils';
+} from '../../utils/imageUtils';
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
@@ -35,21 +35,21 @@ const itemResolvers = {
   },
 
   Mutation: {
-    addItem: async (root, { item: { type, ...data } }, { req }) => {
+    addItem: async (root, { item }, { req }) => {
       if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
 
-      const { title } = data;
+      const { title, type } = item;
       const service = new ModelService(type);
 
-      const item = await service.getByName(title);
-      if (item) throw new Error("Nom de l'item déjà existant en Bdd");
+      const itemBDD = await service.getByName(title);
+      if (itemBDD) throw new Error("Nom de l'item déjà existant en Bdd");
 
-      const res = await addImages(title, type);
+      const res = saveItemImages(item);
       if (!res) throw new Error("Erreur à l'écriture des fichiers image");
 
       let newItem;
       try {
-        newItem = await service.add(data, type);
+        newItem = await service.add(item);
       } catch (e) {
         await deleteItemImages(title, type);
         throw new Error(`Erreur à l'enregistrement en base de donnée : ${e}`);
@@ -59,45 +59,47 @@ const itemResolvers = {
 
     updateItem: async (
       root,
-      { item: { id, type, hasImages, ...data } },
+      { item },
       { req },
     ) => {
       if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
 
+      const { id, type, hasImages, ...data } = item;
+      const { title } = item;
       const modelService = new ModelService(type);
 
       const oldItem = await modelService.getById(id);
       if (!oldItem) throw new Error('Item à modifier introuvable en BDD');
 
-      const { title } = data;
-      const itemByName = await modelService.getByName(title, type);
-      if (itemByName && itemByName.id !== id)
+      const itemBdd = await modelService.getByName(title);
+      if (itemBdd && itemBdd.id !== item.id)
         throw new Error("Nom d'item déjà existant en Bdd");
 
-      const oldTitle = oldItem.title;
       let res;
 
-      if (hasImages) {
-        res = await addImages(title, type);
+      if (item.hasImages) {
+        res = await saveItemImages(item);
+        console.log(res);
         if (!res)
           throw new Error("Erreur à l'écriture des nouveaux fichiers image");
 
-        if (oldTitle !== title) {
-          res = await deleteItemImages(oldTitle, type);
+        if (oldItem.title !== item.title) {
+          res = await deleteItemImages(oldItem.title, item.type);
           if (!res)
             throw new Error(
               'Erreur à la suppression des anciens fichiers image',
             );
         }
-      } else if (oldTitle !== title) {
-        res = await renameItemImages(oldTitle, title, type);
+      } else if (oldItem.title !== title) {
+        res = await renameItemImages(oldItem.title, title, type);
+        console.log(res);
         if (!res) throw new Error('Erreur au renommage des fichiers image');
       }
 
       try {
         res = await modelService.update(id, data);
       } catch (e) {
-        if (oldTitle !== title) await renameItemImages(title, oldTitle, type);
+        if (oldItem.title !== title) await renameItemImages(title, oldItem.title, type);
         throw new Error(`Erreur à l'enregistrement en base de donnée : ${e}`);
       }
 

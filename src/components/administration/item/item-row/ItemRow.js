@@ -5,7 +5,6 @@ import s from './ItemRow.module.css';
 import ItemDeleteButton from './ItemDeleteButton';
 import UpdateButton from '../update/updateButton';
 import CONSTANT from '../../../../constants/itemConstant';
-import { getSMPaths } from '../../../utils/itemUtils';
 
 function ItemRow({ item }) {
   const FORMAT = CONSTANT.FORMAT_DATE;
@@ -20,7 +19,7 @@ function ItemRow({ item }) {
       {item.type === CONSTANT.SCULPTURE.TYPE && <td>{item.length}</td>}
       <td>
         <img
-          src={`${getSMPaths(item)[0]}`}
+          src={`${item.SMPaths[0]}`}
           alt="image admin"
           className={s.thumbnail}
         />

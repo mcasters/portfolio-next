@@ -30,9 +30,9 @@ Error handling for post methods
 
 const errorHandler = async (query, variables) => {
   try {
-    return { data: await request(api, query, variables) };
+    return { data: await request(api, query, variables)};
   } catch (e) {
-    return { error: e.response.errors[0].extensions.originalError.message || e.response.errors[0] };
+    return { error: e.response.errors[0].extensions?.originalError?.message || e.response.errors[0].message };
   }
 };
 

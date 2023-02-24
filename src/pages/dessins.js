@@ -7,7 +7,7 @@ import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';
 import ScrollTop from '../components/item-dir/ScrollTop/ScrollTop';
 import s from './styles/item.module.css';
-import { getEnhancedItem } from '../components/utils/itemUtils';
+import { getItemObject } from '../components/utils/itemUtils';
 
 const Dessins = ({ data }) => {
   return (
@@ -19,7 +19,7 @@ const Dessins = ({ data }) => {
             return drawing !== null ? (
               <Item
                 key={drawing.title}
-                item={getEnhancedItem(drawing, ITEM.DRAWING.TYPE)}
+                item={getItemObject(drawing, ITEM.DRAWING.TYPE)}
                 first={i < 2}
               />
             ) : null;

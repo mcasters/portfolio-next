@@ -3,24 +3,26 @@ import ITEM from '../../constants/itemConstant';
 
 const libraryPath = '/images';
 
-export const getItemInputGraphql = (item, type, hasImages) => {
+export const getInputGraphqlObject = (itemObject, hasImages) => {
   return {
-    type,
-    id: item.id ? item.id : undefined,
-    title: item.title,
-    date: item.date,
-    technique: item.technique,
-    description: item.description,
-    height: item.height,
-    width: item.width,
-    length: item.length,
+    type: itemObject.type,
+    id: itemObject.id ? itemObject.id : undefined,
+    title: itemObject.title,
+    date: itemObject.date,
+    technique: itemObject.technique,
+    description: itemObject.description,
+    height: itemObject.height,
+    width: itemObject.width,
+    length: itemObject.length,
     hasImages,
   };
 };
 
-export const getEmptyItemInput = (isSculpture) => {
+export const getEmptyItemObject = (type) => {
+  const isSculpture = type === ITEM.SCULPTURE.TYPE;
   return {
     id: '',
+    type,
     title: '',
     date: new Date(),
     technique: '',
@@ -29,21 +31,23 @@ export const getEmptyItemInput = (isSculpture) => {
     width: '',
     length: isSculpture ? '' : undefined,
     pictures: isSculpture ? ['', '', '', ''] : [''],
+    alt: getAltImage(type),
+    SMPaths: '',
+    MDPaths: '',
+    LGPaths: ',',
   };
 };
 
-export const getItemInputToUpdate = (item) => {
-  const isSculpture = item.type === CONSTANT.SCULPTURE.TYPE;
+export const getItemObject = (graphQLObject, type) => {
+  const { date, ...rest } = graphQLObject;
+  const paths = getPaths(graphQLObject, type);
   return {
-    id: item.id,
-    title: item.title,
-    date: new Date(item.date),
-    technique: item.technique,
-    description: item.description,
-    height: item.height,
-    width: item.width,
-    length: isSculpture ? item.length : undefined,
-    pictures: isSculpture ? ['', '', '', ''] : [''],
+    date: new Date(date),
+    ...rest,
+    type,
+    alt: getAltImage(type),
+    ...paths,
+    pictures: type === CONSTANT.SCULPTURE.TYPE ? ['', '', '', ''] : [''],
   };
 };
 
@@ -61,52 +65,44 @@ export const picturesIsFullOrEmpty = (item) => {
   return picturesIsFull(item) || picturesIsEmpty(item);
 };
 
-export const getFilenamesTab = (item) => {
+export const filenamesTab = (title, type) => {
   let tab = [];
-  if (item.type === CONSTANT.SCULPTURE.TYPE) {
+  if (type === CONSTANT.SCULPTURE.TYPE) {
     let i;
     for (i = 1; i < 5; i++) {
-      tab[i - 1] = `${item.title}_${i}.jpg`;
+      tab[i - 1] = `${title}_${i}.jpg`;
     }
   } else {
-    tab[0] = `${item.title}.jpg`;
+    tab[0] = `${title}.jpg`;
   }
   return tab;
 };
 
-export const getMainPaths = (item) => {
-  const filenames = getFilenamesTab(item);
-  const path = `${libraryPath}${getConst(item.type).IMAGE.PATH}`;
-
+export const getMainPaths = (filenames, type) => {
+  const path = `${libraryPath}${getConst(type).IMAGE.PATH}`;
   return filenames.map((filename) => `${path}/${filename}`);
 };
 
-export const getMDPaths = (item) => {
-  const filenames = getFilenamesTab(item);
-  const path = `${libraryPath}${getConst(item.type).IMAGE.PATH_MD}`;
-
+export const getMDPaths = (filenames, type) => {
+  const path = `${libraryPath}${getConst(type).IMAGE.PATH_MD}`;
   return filenames.map((filename) => `${path}/${filename}`);
 };
 
-export const getSMPaths = (item) => {
-  const filenames = getFilenamesTab(item);
-  const path = `${libraryPath}${getConst(item.type).IMAGE.PATH_SM}`;
-
+export const getSMPaths = (filenames, type) => {
+  const path = `${libraryPath}${getConst(type).IMAGE.PATH_SM}`;
   return filenames.map((filename) => `${path}/${filename}`);
 };
 
-export const getEnhancedItem = (item, type) => {
-  const prov = {...item, type};
+const getPaths = (graphQLObject, type) => {
+  const filenames = filenamesTab(graphQLObject.title, type);
   return {
-    ...prov,
-    alt: getAltImage(prov),
-    SMPaths: getSMPaths(prov),
-    MDPaths: getMDPaths(prov),
-    LGPaths: getMainPaths(prov),
+    SMPaths: getSMPaths(filenames, type),
+    MDPaths: getMDPaths(filenames, type),
+    LGPaths: getMainPaths(filenames, type),
   };
 };
 
-const getConst = (type) => {
+export const getConst = (type) => {
   switch (type) {
     case CONSTANT.PAINTING.TYPE:
       return CONSTANT.PAINTING;
@@ -119,8 +115,8 @@ const getConst = (type) => {
   }
 };
 
-export const getAltImage = (item) => {
-  switch (item.type) {
+export const getAltImage = (type) => {
+  switch (type) {
     case ITEM.PAINTING.TYPE:
       return ITEM.PAINTING.IMAGE.ALT_IMAGE;
     case ITEM.DRAWING.TYPE:
