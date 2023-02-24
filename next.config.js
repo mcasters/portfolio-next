@@ -1,15 +1,15 @@
-/* eslint-disable no-undef */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 module.exports = (phase, { defaultConfig }) => {
-  return {
-    /* config options here */
-    // Only be available on the server side
-    serverRuntimeConfig: {},
-
+  const nextConfig = {
     // Available on both server and client
     publicRuntimeConfig: {
       ls_key: 'admin',
       ls_value: 'key',
     },
   };
+
+  return withBundleAnalyzer(nextConfig);
 };

@@ -13,10 +13,12 @@
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js",
     "info": "next info",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build-analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@graphql-tools/schema": "^9.0.16",
+    "@next/bundle-analyzer": "^13.1.6",
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
     "date-fns": "^2.0.0",
@@ -35,7 +37,6 @@
     "react-day-picker": "^8.5.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
-    "react-markdown": "^8.0.5",
     "react-popper": "^2.3.0",
     "sequelize": "^6.0.0",
     "sharp": "^0.31.3",
