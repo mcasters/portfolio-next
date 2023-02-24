@@ -16,7 +16,7 @@ export default function Footer() {
         <span className={s.dot}>·</span>
         <LoginControl />
         <span className={s.dot}>·</span>
-        <Link href={ROUTES.PRIVACY} as={NAMES.PRIVACY} className={s.link} legacyBehavior={false}>
+        <Link href={ROUTES.PRIVACY} className={s.link} legacyBehavior={false}>
           {NAMES.PRIVACY}
         </Link>
         <div className={s.text}>
