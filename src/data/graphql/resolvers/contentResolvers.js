@@ -1,7 +1,6 @@
 import { isAuth } from '../../../components/utils/authUtils';
-import { addImages } from '../../../components/utils/imageUtils';
 import { Content } from '../../models';
-import CONTENT from '../../../constants/content';
+import { saveContentImage } from '../../utils/imageUtils';
 
 const contentResolvers = {
   Query: {
@@ -41,10 +40,8 @@ const contentResolvers = {
     addPicture: async (root, { title }, { req }, _info) => {
       if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
 
-      const res = await addImages(title, CONTENT.TYPE);
-
-      if (!res) throw new Error("Erreur à l'écriture des fichiers");
-
+      const res = saveContentImage(title);
+      if (!res) throw new Error("Erreur à l'écriture du fichier");
       return true;
     },
   },

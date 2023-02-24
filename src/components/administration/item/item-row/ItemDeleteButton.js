@@ -27,7 +27,7 @@ function ItemDeleteButton({ id, type }) {
           triggerAlert('Item supprimé', false);
         } else
           triggerAlert(
-            error ? error.message : "Échec de la suppression de l'item",
+            error ? error : "Échec de la suppression de l'item",
             true,
           );
       }}

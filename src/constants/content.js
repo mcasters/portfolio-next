@@ -21,7 +21,6 @@ const CONTENT = {
   HOME_IMAGE_LANDSCAPE: 'home-landscape',
   HOME_IMAGE_PORTRAIT_FILENAME: 'home-portrait.jpg',
   HOME_IMAGE_LANDSCAPE_FILENAME: 'home-landscape.jpg',
-  HOME_IMAGE_ALT: 'Oeuvre de Marion Casters',
 };
 
 export default CONTENT;

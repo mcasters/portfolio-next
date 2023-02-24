@@ -52,12 +52,8 @@ function EditPictureForm({ pictureTitle }) {
     e.preventDefault();
 
     const { data, error } = await submitImageContent(pictureTitle, newFile);
-
-    if (error || !data) {
-      triggerAlert(
-        error.message ? error.message : "Échec de l'ajout de l'image",
-        true,
-      );
+    if (error || !data.addPicture) {
+      triggerAlert(error ? error : "Échec de l'ajout de l'image", true);
     } else {
       triggerAlert('Image ajoutée', false);
       clear();
@@ -73,7 +69,7 @@ function EditPictureForm({ pictureTitle }) {
         alt={
           pictureTitle === CONT_CONST.PRESENTATION_IMAGE_TITLE
             ? CONT_CONST.PRESENTATION_IMAGE_ALT
-            : CONT_CONST.HOME_IMAGE_ALT
+            : "Image de la page d'accueil"
         }
       />
       <form
