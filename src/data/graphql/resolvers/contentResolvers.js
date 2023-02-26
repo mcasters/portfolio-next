@@ -1,6 +1,5 @@
 import { isAuth } from '../../../components/utils/authUtils';
 import { Content } from '../../models';
-import { saveContentImage } from '../../utils/imageUtils';
 
 const contentResolvers = {
   Query: {
@@ -34,15 +33,6 @@ const contentResolvers = {
         });
       }
       return content;
-    },
-
-    // eslint-disable-next-line no-unused-vars
-    addPicture: async (root, { title }, { req }, _info) => {
-      if (!(await isAuth(req))) throw new Error("Erreur d'authentification");
-
-      const res = saveContentImage(title);
-      if (!res) throw new Error("Erreur à l'écriture du fichier");
-      return true;
     },
   },
 };

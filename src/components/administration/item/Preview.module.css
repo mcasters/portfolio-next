@@ -1,10 +1,10 @@
 .imagePreviewContainer {
   display: inline-block;
+  width: 45%;
 }
 
 .imagePreview {
   display: block;
-  max-width: 60%;
-  max-height: 80vh;
+  max-width: 70%;
   margin: 0 auto 1em;
 }

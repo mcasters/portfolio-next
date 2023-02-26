@@ -78,6 +78,19 @@ export const filenamesTab = (title, type) => {
   return tab;
 };
 
+export const filenamesTab2 = (title, type) => {
+  let tab = [];
+  if (type === CONSTANT.SCULPTURE.TYPE) {
+    let i;
+    for (i = 1; i < 5; i++) {
+      tab[i - 1] = `${title}_${i}.webp`;
+    }
+  } else {
+    tab[0] = `${title}.webp`;
+  }
+  return tab;
+};
+
 export const getMainPaths = (filenames, type) => {
   const path = `${libraryPath}${getConst(type).IMAGE.PATH}`;
   return filenames.map((filename) => `${path}/${filename}`);

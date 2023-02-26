@@ -7,6 +7,7 @@ import ImagePart from '../item/ImagePart';
 import ButtonsPart from '../item/ButtonsPart';
 import { submitImageContent } from '../../utils/formUtils';
 import s from './EditPictureContent.module.css';
+import { addPictureRequest } from '../../../data/request/request';
 
 function EditPictureForm({ pictureTitle }) {
   const [newFile, setNewFile] = useState(null);
@@ -52,12 +53,10 @@ function EditPictureForm({ pictureTitle }) {
     e.preventDefault();
 
     const { data, error } = await submitImageContent(pictureTitle, newFile);
-    if (error || !data.addPicture) {
+    if (error || !data?.saveFiles)
       triggerAlert(error ? error : "Échec de l'ajout de l'image", true);
-    } else {
-      triggerAlert('Image ajoutée', false);
-      clear();
-    }
+    else triggerAlert('Image ajoutée', false);
+    clear();
   };
 
   return (

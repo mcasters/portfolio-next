@@ -130,14 +130,8 @@ export const ADD_CONTENT = gql`
   }
 `;
 
-export const ADD_PICTURE = gql`
-  mutation AddPicture($title: String!) {
-    addPicture(title: $title)
-  }
-`;
-
-export const SAVE_FILE_IN_TEMP = gql`
-  mutation SaveFilesInTemp($files: [File]!, $filenames: [String]!) {
-    saveFilesInTemp(files: $files, filenames: $filenames)
+export const SAVE_FILES = gql`
+  mutation SaveFiles($files: [File]!, $filenames: [String]!, $type: String!) {
+    saveFiles(files: $files, filenames: $filenames, type: $type)
   }
 `;

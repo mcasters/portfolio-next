@@ -1,7 +1,6 @@
 import {
   addItemRequest,
-  addPictureRequest,
-  saveFilesInTempRequest,
+  saveFilesRequest,
   updateItemRequest,
 } from '../../data/request/request';
 import CONSTANT from '../../constants/itemConstant';
@@ -11,6 +10,7 @@ import {
   picturesIsFull,
   picturesIsFullOrEmpty,
 } from './itemUtils';
+import CONTENT from '../../constants/content';
 
 export const canSubmitData = (itemObject, isUpdate) => {
   const isSculpture = itemObject.type === CONSTANT.SCULPTURE.TYPE;
@@ -33,40 +33,40 @@ export const canSubmitData = (itemObject, isUpdate) => {
   );
 };
 
+export const submitAddItem = async (itemObject) => {
+  if (!canSubmitData(itemObject, false))
+    return { error: 'Donnée(s) manquante(s)' };
+
+  const { data, error } = await saveFilesRequest(
+    itemObject.pictures,
+    filenamesTab(itemObject.title, itemObject.type),
+    itemObject.type,
+  );
+
+  return error || !data?.saveFiles
+    ? { error } || { error: "Erreur à l'upload du(des) fichier(s)" }
+    : await addItemRequest(getInputGraphqlObject(itemObject, true));
+};
 export const submitUpdateItem = async (itemObject) => {
   if (!canSubmitData(itemObject, true))
     return { error: 'Donnée(s) manquante(s)' };
 
   let hasImage = false;
   if (picturesIsFull(itemObject)) {
-    const { data, error } = await saveFilesInTempRequest(
+    const { data, error } = await saveFilesRequest(
       itemObject.pictures,
       filenamesTab(itemObject.title, itemObject.type),
+      itemObject.type,
     );
-    if (!data.saveFilesInTemp || error)
+    console.log(data);
+    console.log(error);
+    if (error || !data?.saveFiles)
       return { error } || { error: "Erreur à l'upload du(des) fichier(s)" };
     hasImage = true;
   }
   return await updateItemRequest(getInputGraphqlObject(itemObject, hasImage));
 };
 
-export const submitAddItem = async (itemObject) => {
-  if (!canSubmitData(itemObject, false))
-    return { error: 'Donnée(s) manquante(s)' };
-
-  const { data, error } = await saveFilesInTempRequest(
-    itemObject.pictures,
-    filenamesTab(itemObject.title, itemObject.type),
-  );
-
-  return error || !data.saveFilesInTemp
-    ? { error } || { error: "Erreur à l'upload du(des) fichier(s)" }
-    : await addItemRequest(getInputGraphqlObject(itemObject, true));
-};
-
 export const submitImageContent = async (title, file) => {
-  const { data, error } = await saveFilesInTempRequest([file], [`${title}.jpg`]);
-  return error || !data.saveFilesInTemp
-    ? { error } || { error: "Erreur à l'upload du fichier" }
-    : await addPictureRequest(title);
+  return await saveFilesRequest([file], [`${title}.jpg`], CONTENT.TYPE);
 };

@@ -3,7 +3,6 @@
 }
 
 .oldImagePreview {
-  max-width: 60%;
-  max-height: 80vh;
-  margin-bottom: 1em;
+  max-width: 24%;
+  margin: 0.2em;
 }

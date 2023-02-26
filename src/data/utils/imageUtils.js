@@ -1,57 +1,43 @@
 /*eslint-disable no-undef*/
-import { existsSync, copyFile, rename, unlink, access, constants } from 'fs';
-import { writeFile } from 'node:fs/promises';
-import Jimp from 'jimp';
+import { rename, unlink, access, constants } from 'fs';
+import sharp from 'sharp';
 
 import ITEM from '../../constants/itemConstant';
 import IMAGE from '../../constants/image';
 import { filenamesTab, getConst } from '../../components/utils/itemUtils';
+import CONTENT from '../../constants/content';
 
 const serverLibraryPath = process.env.PHOTOS_PATH;
 
 /****************
  * Entry point *
  ****************/
-export const saveFilesInTmp = async (files, filenames) => {
-  const tempPaths = getTempPaths(filenames);
-
-  for (const [i, file] of files.entries()) {
-    const readableStream = file.stream();
-    await writeFile(tempPaths[i], readableStream);
-  }
+export const saveFiles = async (files, filenames, type) => {
   function exists(path) {
     access(path, constants.F_OK, (err) => !err);
   }
-  return tempPaths.every(exists);
-};
 
-export const saveItemImages = async (graphqlInputObject) => {
-  const paths = getPaths(graphqlInputObject.title, graphqlInputObject.type);
-  let res = true;
-
-  for (const [i, tempPath] of paths.tempPaths.entries()) {
-    res =
-      storeImage(tempPath, paths.mainPaths[i]) &&
-      storeImageWithResize(tempPath, paths.MDPaths[i], ITEM.MD_PX) &&
-      storeImageWithResize(tempPath, paths.SMPaths[i], ITEM.SM_PX);
+  const paths = getPaths(filenames, type);
+  console.log(paths);
+  if (type === CONTENT.TYPE) {
+    return await storeImage(files[0], paths.contentPath, 0);
   }
-  if (!res)
-    deleteAllImages(graphqlInputObject.title, graphqlInputObject.type, true);
-  else paths.tempPaths.every(deleteImage);
-  return res;
-};
 
-export const saveContentImage = async (title) => {
-  const targetPath = getMiscellaneousPath(title);
-  const tempPath = getTempPaths([`${title}.jpg`])[0];
-  const res = storeImage(tempPath, targetPath);
-  deleteImage(tempPath);
-  return res;
+  for (const [i, file] of files.entries()) {
+    await storeImage(file, paths.mainPaths[i], 0);
+    await storeImage(file, paths.MDPaths[i], ITEM.MD_PX);
+    await storeImage(file, paths.SMPaths[i], ITEM.SM_PX);
+  }
+  return (
+    (await paths.mainPaths.every(exists)) &&
+    (await paths.MDPaths.every(exists)) &&
+    (await paths.SMPaths.every(exists))
+  );
 };
 
 export const renameItemImages = async (oldTitle, newTitle, type) => {
-  const oldPaths = getPaths(oldTitle, type);
-  const newPaths = getPaths(newTitle, type);
+  const oldPaths = getPaths(filenamesTab(oldTitle, type), type);
+  const newPaths = getPaths(filenamesTab(newTitle, type), type);
 
   const promises = [];
   oldPaths.mainPaths.forEach((oldPath, i) => {
@@ -67,29 +53,52 @@ export const renameItemImages = async (oldTitle, newTitle, type) => {
 };
 
 export const deleteItemImages = (title, type) => {
-  return deleteAllImages(title, type, false);
+  const paths = getPaths(filenamesTab(title, type), type);
+
+  return (
+    paths.mainPaths.every(deleteImage) &&
+    paths.MDPaths.every(deleteImage) &&
+    paths.SMPaths.every(deleteImage)
+  );
 };
 
 /****************
  * End entry point *
  ****************/
 
-export const storeImage = async (source, dest) => {
-  copyFile(source, dest, (err) => {
-    return !err;
-  });
-  return true;
-};
+const storeImage = async (file, dest, px) => {
+  const bufferFile = Buffer.from(await file.arrayBuffer());
+  const image = sharp(bufferFile);
 
-const storeImageWithResize = async (originalPath, targetPath, px) => {
-  await Jimp.read(`${originalPath}`, (err, img) => {
-    if (err) return false;
-    const isLandscape = img.getHeight() < img.getWidth();
-    const width = isLandscape ? px : Jimp.AUTO;
-    const height = isLandscape ? Jimp.AUTO : px;
-    img.resize(width, height).quality(75).write(`${targetPath}`);
-  });
-  return true;
+  return px === 0
+    ? image
+        .withMetadata({
+          exif: {
+            IFD0: {
+              Copyright: 'Marion Casters',
+            },
+          },
+        })
+        .webp({
+          quality: 80,
+        })
+        .toFile(dest, (err) => !err)
+    : image
+        .resize(px, px, {
+          fit: sharp.fit.inside,
+          withoutEnlargement: true,
+        })
+        .withMetadata({
+          exif: {
+            IFD0: {
+              Copyright: 'Marion Casters',
+            },
+          },
+        })
+        .webp({
+          quality: 80,
+        })
+        .toFile(dest, (err) => !err);
 };
 
 const renameItemImage = async (oldPath, newPath) => {
@@ -109,23 +118,6 @@ const deleteImage = (path) => {
   return true;
 };
 
-const deleteAllImages = (title, type, withTempDir) => {
-  const paths = getPaths(title, type);
-
-  const res = withTempDir ? paths.tempPaths.every(deleteImage) : true;
-  return (
-    res &&
-    paths.mainPaths.every(deleteImage) &&
-    paths.MDPaths.every(deleteImage) &&
-    paths.SMPaths.every(deleteImage)
-  );
-};
-
-const getTempPaths = (filenames) => {
-  const tempPath = `${serverLibraryPath}${IMAGE.TEMP.PATH}`;
-  return filenames.map((filename) => `${tempPath}/${filename}`);
-};
-
 const getSMPaths = (filenames, type) => {
   const path = `${serverLibraryPath}${getConst(type).IMAGE.PATH_SM}`;
   return filenames.map((filename) => `${path}/${filename}`);
@@ -142,17 +134,16 @@ const getMainPaths = (filenames, type) => {
   return filenames.map((filename) => `${path}/${filename}`);
 };
 
-const getPaths = (title, type) => {
-  const filenames = filenamesTab(title, type);
-  return {
-    tempPaths: getTempPaths(filenames, type),
-    mainPaths: getMainPaths(filenames, type),
-    MDPaths: getMDPaths(filenames, type),
-    SMPaths: getSMPaths(filenames, type),
-  };
+const getMiscellaneousPath = (filenames) => {
+  return `${serverLibraryPath}${IMAGE.MISCELLANEOUS.PATH}/${filenames[0]}`;
 };
 
-const getMiscellaneousPath = (title) => {
-  const libraryPath = process.env.PHOTOS_PATH;
-  return `${libraryPath}${IMAGE.MISCELLANEOUS.PATH}/${title}.jpg`;
+const getPaths = (filenames, type) => {
+  return type === CONTENT.TYPE
+    ? { contentPath: getMiscellaneousPath(filenames) }
+    : {
+        mainPaths: getMainPaths(filenames, type),
+        MDPaths: getMDPaths(filenames, type),
+        SMPaths: getSMPaths(filenames, type),
+      };
 };

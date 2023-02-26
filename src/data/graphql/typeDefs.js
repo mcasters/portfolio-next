@@ -77,8 +77,7 @@ const typeDefs = gql`
   type Mutation {
     addItem(item: ItemInput!): Item!
     addContent(contentInput: ContentInput!): Content!
-    saveFilesInTemp(files: [File], filenames: [String]): Boolean!
-    addPicture(title: String!): Boolean!
+    saveFiles(files: [File], filenames: [String], type: String): Boolean!
     updateItem(item: ItemInput!): Item!
     deleteItem(id: ID!, type: String!): Boolean!
     signUp(signUpInput: SignUpInput!): SignUpPayload!

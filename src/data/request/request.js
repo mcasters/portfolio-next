@@ -9,7 +9,7 @@ import {
   SIGNOUT,
   SIGNUP,
   UPDATE_ITEM,
-  ISAUTHENTICATED, SAVE_FILE_IN_TEMP,
+  ISAUTHENTICATED, SAVE_FILES,
 } from '../graphql/queries';
 
 /*
@@ -72,8 +72,5 @@ export const deleteItemRequest = (id, type) =>
  */
 
 // POST
-export const addPictureRequest = (title) =>
-  errorHandler(ADD_PICTURE, { title });
-
-export const saveFilesInTempRequest = (files, filenames) =>
-  errorHandler(SAVE_FILE_IN_TEMP, { files, filenames });
+export const saveFilesRequest = (files, filenames, type) =>
+  errorHandler(SAVE_FILES, { files, filenames, type });

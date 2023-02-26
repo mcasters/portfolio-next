@@ -1,3 +1,8 @@
 .container {
-  margin-top: 2em;
+  margin: 2em 0;
+}
+
+.container input[type='file'] {
+  display: inline-block;
+  width: 25%;
 }
