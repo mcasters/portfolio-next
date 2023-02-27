@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import ITEM from '../../constants/itemConstant';
+import ITEM from '../../constants/item';
 import Layout from '../../components/layout-components/layout/Layout';
 import s from '../styles/item.module.css';
 import LAYOUT from '../../constants/layout';

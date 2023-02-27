@@ -5,7 +5,7 @@ import s from './ImageButton.module.css';
 import { useEffect, useRef, useState } from 'react';
 import useViewport from '../../hooks/useWindowSize';
 import LAYOUT from '../../../constants/layout';
-import ITEM from '../../../constants/itemConstant';
+import ITEM from '../../../constants/item';
 
 function ImageButton({ item, src, index, handleLightbox, first }) {
   const buttonRef = useRef(null);

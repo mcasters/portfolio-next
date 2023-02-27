@@ -1,7 +1,7 @@
 import DataType from 'sequelize';
 import Model from './sequelize';
 import { parseISO } from 'date-fns';
-import ITEM from '../../constants/itemConstant';
+import ITEM from '../../constants/item';
 
 const Sculpture = Model.define(
   'Sculpture',

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 
 import s from './AddForm.module.css';
-import CONSTANT from '../../../../constants/itemConstant';
+import CONSTANT from '../../../../constants/item';
 import { useAlert } from '../../../alert/Alert';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
 import { fetcher } from '../../../../data/request/request';

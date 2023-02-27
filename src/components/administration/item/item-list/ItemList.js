@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import ItemRow from '../item-row/ItemRow';
 import s from './ItemList.module.css';
-import CONSTANT from '../../../../constants/itemConstant';
+import CONSTANT from '../../../../constants/item';
 import { getItemObject } from '../../../utils/itemUtils';
 
 function ItemList({ type, graphQLItems }) {

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import Item from '../../components/item-dir/item/Item';
 import ScrollTop from '../../components/item-dir/ScrollTop/ScrollTop';
-import ITEM from '../../constants/itemConstant';
+import ITEM from '../../constants/item';
 import { queryGraphql } from '../../data/request/request-ssr';
 import { ITEMS_BY_YEAR } from '../../data/graphql/queries';
 import Layout from '../../components/layout-components/layout/Layout';

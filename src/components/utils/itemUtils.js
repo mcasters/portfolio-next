@@ -1,5 +1,5 @@
-import CONSTANT from '../../constants/itemConstant';
-import ITEM from '../../constants/itemConstant';
+import CONSTANT from '../../constants/item';
+import ITEM from '../../constants/item';
 
 const libraryPath = '/images';
 
@@ -78,7 +78,7 @@ export const filenamesTab = (title, type) => {
   return tab;
 };
 
-export const filenamesTab2 = (title, type) => {
+export const filenamesTabWebp = (title, type) => {
   let tab = [];
   if (type === CONSTANT.SCULPTURE.TYPE) {
     let i;

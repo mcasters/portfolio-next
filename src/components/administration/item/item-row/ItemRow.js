@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import s from './ItemRow.module.css';
 import ItemDeleteButton from './ItemDeleteButton';
 import UpdateButton from '../update/updateButton';
-import CONSTANT from '../../../../constants/itemConstant';
+import CONSTANT from '../../../../constants/item';
 
 function ItemRow({ item }) {
   const FORMAT = CONSTANT.FORMAT_DATE;

@@ -10,7 +10,7 @@ import OldImagePart from './OldImagePart';
 import DataPart from '../DataPart';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import { ALL_ITEMS_ADMIN } from '../../../../data/graphql/queries';
-import CONSTANT from '../../../../constants/itemConstant';
+import CONSTANT from '../../../../constants/item';
 import ButtonsPart from '../ButtonsPart';
 import s from './UpdateForm.module.css';
 

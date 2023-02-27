@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 
-import ITEM from '../../../constants/itemConstant';
+import ITEM from '../../../constants/item';
 import GLOBAL_CONSTANTS from '../../../constants/globalConstants';
 import s from './Item.module.css';
 import Images from '../images/Images';

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import Item from '../components/item-dir/item/Item';
-import ITEM from '../constants/itemConstant';
+import ITEM from '../constants/item';
 import Layout from '../components/layout-components/layout/Layout';
 import { ALL_ITEMS } from '../data/graphql/queries';
 import { queryGraphql } from '../data/request/request-ssr';

@@ -2,7 +2,7 @@
 import { rename, unlink, access, constants } from 'fs';
 import sharp from 'sharp';
 
-import ITEM from '../../constants/itemConstant';
+import ITEM from '../../constants/item';
 import IMAGE from '../../constants/image';
 import { filenamesTab, getConst } from '../../components/utils/itemUtils';
 import CONTENT from '../../constants/content';
@@ -18,7 +18,6 @@ export const saveFiles = async (files, filenames, type) => {
   }
 
   const paths = getPaths(filenames, type);
-  console.log(paths);
   if (type === CONTENT.TYPE) {
     return await storeImage(files[0], paths.contentPath, 0);
   }

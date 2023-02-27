@@ -3,7 +3,7 @@ import {
   saveFilesRequest,
   updateItemRequest,
 } from '../../data/request/request';
-import CONSTANT from '../../constants/itemConstant';
+import CONSTANT from '../../constants/item';
 import {
   filenamesTab,
   getInputGraphqlObject,
@@ -58,8 +58,6 @@ export const submitUpdateItem = async (itemObject) => {
       filenamesTab(itemObject.title, itemObject.type),
       itemObject.type,
     );
-    console.log(data);
-    console.log(error);
     if (error || !data?.saveFiles)
       return { error } || { error: "Erreur à l'upload du(des) fichier(s)" };
     hasImage = true;

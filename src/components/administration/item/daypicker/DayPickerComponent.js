@@ -6,7 +6,7 @@ import { format, isValid, parse } from 'date-fns';
 import { usePopper } from 'react-popper';
 import { FaCalendar } from 'react-icons/fa';
 
-import CONSTANT from '../../../../constants/itemConstant';
+import CONSTANT from '../../../../constants/item';
 import s from './DayPickerComponent.module.css';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
