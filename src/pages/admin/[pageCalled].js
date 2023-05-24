@@ -7,7 +7,7 @@ import AdminContact from '../../components/administration/AdminContact';
 import AdminNav from '../../components/layout-components/header/navigation/admin-nav/AdminNav';
 import Layout from '../../components/layout-components/layout/Layout';
 import TITLE from '../../constants/pageTitle';
-import ITEM from '../../constants/itemConstant';
+import ITEM from '../../constants/item';
 import LogoutButton from '../../components/administration/LogoutButton';
 
 export default function ContentPage({ pageCalled }) {

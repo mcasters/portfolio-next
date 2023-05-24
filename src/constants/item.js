@@ -42,6 +42,7 @@ const ITEM = {
   SM_SIZE: 'sm',
   SM_PX: 384,
   MD_PX: 640,
+  MAX_PX: 2000,
 
   FORMAT_DATE: 'dd/MM/yyyy',
 };

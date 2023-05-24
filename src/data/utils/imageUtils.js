@@ -12,26 +12,13 @@ const serverLibraryPath = process.env.PHOTOS_PATH;
 /****************
  * Entry point *
  ****************/
+
 export const saveFiles = async (files, filenames, type) => {
-  function exists(path) {
-    access(path, constants.F_OK, (err) => !err);
-  }
-
-  const paths = getPaths(filenames, type);
   if (type === CONTENT.TYPE) {
-    return await storeImage(files[0], paths.contentPath, 0);
+    return await storeImage(files[0], getMiscellaneousPath(filenames[0]), 2000);
+  } else {
+    return await storeItemImages(files, getPaths(filenames, type));
   }
-
-  for (const [i, file] of files.entries()) {
-    await storeImage(file, paths.mainPaths[i], 0);
-    await storeImage(file, paths.MDPaths[i], ITEM.MD_PX);
-    await storeImage(file, paths.SMPaths[i], ITEM.SM_PX);
-  }
-  return (
-    (await paths.mainPaths.every(exists)) &&
-    (await paths.MDPaths.every(exists)) &&
-    (await paths.SMPaths.every(exists))
-  );
 };
 
 export const renameItemImages = async (oldTitle, newTitle, type) => {
@@ -65,12 +52,95 @@ export const deleteItemImages = (title, type) => {
  * End entry point *
  ****************/
 
+const saveAndResize = (promises, sharpStream, paths, i) => {
+  promises.push(
+    sharpStream
+      .clone()
+      .resize(ITEM.MAX_PX, ITEM.MAX_PX, {
+        fit: sharp.fit.inside,
+        withoutEnlargement: true,
+      })
+      .withMetadata({
+        exif: {
+          IFD0: {
+            Copyright: 'Marion Casters',
+          },
+        },
+      })
+      .jpeg({ quality: 80 })
+      .toFile(paths.mainPaths[i]),
+  );
+
+  promises.push(
+    sharpStream
+      .clone()
+      .resize(ITEM.MD_PX, ITEM.MD_PX, {
+        fit: sharp.fit.inside,
+        withoutEnlargement: true,
+      })
+      .withMetadata({
+        exif: {
+          IFD0: {
+            Copyright: 'Marion Casters',
+          },
+        },
+      })
+      .jpeg({
+        quality: 80,
+      })
+      .toFile(paths.MDPaths[i]),
+  );
+
+  promises.push(
+    sharpStream
+      .clone()
+      .resize(ITEM.SM_PX, ITEM.SM_PX, {
+        fit: sharp.fit.inside,
+        withoutEnlargement: true,
+      })
+      .withMetadata({
+        exif: {
+          IFD0: {
+            Copyright: 'Marion Casters',
+          },
+        },
+      })
+      .jpeg({
+        quality: 80,
+      })
+      .toFile(paths.SMPaths[i]),
+  );
+};
+
+const storeItemImages = async (files, paths) => {
+  const promises = [];
+
+  for (const [i, file] of files.entries()) {
+    const bufferFile = Buffer.from(await file.arrayBuffer());
+    const sharpStream = sharp(bufferFile);
+    saveAndResize(promises, sharpStream, paths, i);
+  }
+
+  Promise.all(promises)
+    .then((res) => {
+      console.log('Done!', res);
+    })
+    .catch((err) => {
+      console.error("Error processing files, let's clean it up", err);
+      try {
+        paths.mainPaths.every(deleteImage);
+        paths.MDPaths.every(deleteImage);
+        paths.SMPaths.every(deleteImage);
+      } catch (e) {}
+    });
+};
+
 const storeImage = async (file, dest, px) => {
   const bufferFile = Buffer.from(await file.arrayBuffer());
-  const image = sharp(bufferFile);
+  const sharpStream = sharp(bufferFile);
 
   return px === 0
-    ? image
+    ? sharpStream
         .withMetadata({
           exif: {
             IFD0: {
@@ -78,11 +148,11 @@ const storeImage = async (file, dest, px) => {
             },
           },
         })
-        .webp({
+        .jpeg({
           quality: 80,
         })
         .toFile(dest, (err) => !err)
-    : image
+    : sharpStream
         .resize(px, px, {
           fit: sharp.fit.inside,
           withoutEnlargement: true,
@@ -94,7 +164,7 @@ const storeImage = async (file, dest, px) => {
             },
           },
         })
-        .webp({
+        .jpeg({
           quality: 80,
         })
         .toFile(dest, (err) => !err);
@@ -133,8 +203,8 @@ const getMainPaths = (filenames, type) => {
   return filenames.map((filename) => `${path}/${filename}`);
 };
 
-const getMiscellaneousPath = (filenames) => {
-  return `${serverLibraryPath}${IMAGE.MISCELLANEOUS.PATH}/${filenames[0]}`;
+const getMiscellaneousPath = (filename) => {
+  return `${serverLibraryPath}${IMAGE.MISCELLANEOUS.PATH}/${filename}`;
 };
 
 const getPaths = (filenames, type) => {

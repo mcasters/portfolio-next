@@ -6,9 +6,7 @@ import Footer from '../footer/Footer';
 import Main from '../main/Main';
 import { ROUTES } from '../../../constants/routes';
 import s from './Layout.module.css';
-import useElementIsUpTo from '../../hooks/useElementIsUpTo';
-import LAYOUT from '../../../constants/layout';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 const Layout = ({ children, introduction }) => {
   const [headerIsFix, setHeaderIsFix] = useState(false);
