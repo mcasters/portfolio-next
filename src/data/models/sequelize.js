@@ -8,7 +8,6 @@ const sequelize = new Sequelize(
   {
     host: process.env.DATABASE_HOST,
     dialect: 'mysql',
-    port: 8889,
     define: {
       freezeTableName: true,
       timestamps: false,
