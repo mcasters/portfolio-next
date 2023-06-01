@@ -1,5 +1,6 @@
-.noSculptureButton,
-.sculptureButton {
+.portraitSculptureButton,
+.landscapeSculptureButton,
+.button {
   position: relative;
   display: block;
   width: 75vw;
@@ -18,15 +19,19 @@
 }
 
 @media (--sm) {
-  .noSculptureButton {
+  .button {
     width: var(--max-content-width);
     height: 55vh;
   }
 
-  .sculptureButton {
+  .landscapeSculptureButton {
+    width: var(--max-content-width);
+    height: 30vh;
+  }
+
+  .portraitSculptureButton {
     display: inline-block;
     width: var(--max-content-half-width);
     height: 40vh;
-    max-width: 50%;
   }
 }
